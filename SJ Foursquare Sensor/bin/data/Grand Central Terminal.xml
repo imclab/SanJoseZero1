@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<venue>
+    <id>18974</id>
+    <name>Grand Central Terminal</name>
+    <primarycategory>
+        <id>79052</id>
+        <fullpathname>Food:Coffee Shop</fullpathname>
+        <nodename>Coffee Shop</nodename>
+        <iconurl>http://foursquare.com/img/categories/food/coffeeshop.png</iconurl>
+    </primarycategory>
+    <address>87 E 42nd St</address>
+    <crossstreet>Park Ave</crossstreet>
+    <city>New York</city>
+    <state>NY</state>
+    <zip>10017</zip>
+    <geolat>40.75304393655621</geolat>
+    <geolong>-73.97708415985107</geolong>
+    <phone>2125324900</phone>
+    <twitter>MetroNorthTweet</twitter>
+    <stats>
+        <checkins>32747</checkins>
+        <herenow>28</herenow>
+        <beenhere>
+            <me>false</me>
+        </beenhere>
+        <mayor>
+            <user>
+                <id>20879</id>
+                <firstname>Matt</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a70e052b2129.jpg</photo>
+                <gender>male</gender>
+            </user>
+            <count>51</count>
+        </mayor>
+    </stats>
+    <checkins>
+        <checkin>
+            <id>79260426</id>
+            <created>Tue, 29 Jun 10 19:29:39 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1520250</id>
+                <firstname>Kimberly</firstname>
+                <lastname>H.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4AQA4ADYYMKEYB0I.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79259548</id>
+            <created>Tue, 29 Jun 10 19:28:15 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>66256</id>
+                <firstname>Jenny</firstname>
+                <lastname>O.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/F2OHPBUUKDHC1WRD.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79258352</id>
+            <created>Tue, 29 Jun 10 19:26:30 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1417091</id>
+                <firstname>R Bugi</firstname>
+                <lastname>A.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/YCW41RALR1UGOMWU.png</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79245381</id>
+            <created>Tue, 29 Jun 10 19:06:40 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>686170</id>
+                <firstname>Mike</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/32TQ2HVVZH11XNLT.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79244765</id>
+            <created>Tue, 29 Jun 10 19:05:46 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1811887</id>
+                <firstname>Jonathan</firstname>
+                <lastname>N.</lastname>
+                <photo>http://foursquare.com/img/blank_boy.png</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79244336</id>
+            <created>Tue, 29 Jun 10 19:05:08 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1468599</id>
+                <firstname>Be</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/PQHWMGZH5TEAHAUL.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79244206</id>
+            <created>Tue, 29 Jun 10 19:04:56 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>473085</id>
+                <firstname>Aldo</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/QPCX3QWTKE4TBUUN.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79243000</id>
+            <created>Tue, 29 Jun 10 19:03:06 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>269216</id>
+                <firstname>James</firstname>
+                <lastname>O.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/BH3EGKXOLXOQHFZJ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79236612</id>
+            <created>Tue, 29 Jun 10 18:53:18 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1492004</id>
+                <firstname>Stephanie</firstname>
+                <lastname>S.</lastname>
+                <photo>http://foursquare.com/img/blank_girl.png</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79229560</id>
+            <created>Tue, 29 Jun 10 18:42:35 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>196731</id>
+                <firstname>Timothy</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/2XUWYGOV1VXNTG0Q.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79223018</id>
+            <created>Tue, 29 Jun 10 18:32:50 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1539758</id>
+                <firstname>Marshall</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/1X52OTHAVACCTEZO.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79217772</id>
+            <created>Tue, 29 Jun 10 18:24:54 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>896601</id>
+                <firstname>Jacqui</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/WAS0EYMKFHNMVXUO.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79210744</id>
+            <created>Tue, 29 Jun 10 18:14:34 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>864797</id>
+                <firstname>Brent</firstname>
+                <lastname>P.</lastname>
+                <photo>http://foursquare.com/img/blank_boy.png</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79208806</id>
+            <created>Tue, 29 Jun 10 18:11:49 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>30143</id>
+                <firstname>Marc</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/30143_1256239553018.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79206254</id>
+            <created>Tue, 29 Jun 10 18:08:14 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1007882</id>
+                <firstname>Eric</firstname>
+                <lastname>L.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ZSG0USNQZJPLS3L4.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79198711</id>
+            <created>Tue, 29 Jun 10 17:57:25 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>283</id>
+                <firstname>Josh</firstname>
+                <lastname>N.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/_1235620425.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79198365</id>
+            <created>Tue, 29 Jun 10 17:56:58 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>488043</id>
+                <firstname>Michael</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/5X2F2OUL0ZJ5DU23.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79192400</id>
+            <created>Tue, 29 Jun 10 17:49:02 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>383194</id>
+                <firstname>Matt</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ITDCKT2MKYKPHVMQ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79184669</id>
+            <created>Tue, 29 Jun 10 17:38:35 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1332080</id>
+                <firstname>Marcus</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/PUO5I1MFVGBN5OH5.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79182040</id>
+            <created>Tue, 29 Jun 10 17:35:03 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>57353</id>
+                <firstname>Chad</firstname>
+                <lastname>E.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/57353_1257394247678.png</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79167076</id>
+            <created>Tue, 29 Jun 10 17:17:16 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>26402</id>
+                <firstname>Tom</firstname>
+                <lastname>N.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/CZ5YGNTOCX3NXCWM.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79158678</id>
+            <created>Tue, 29 Jun 10 17:06:55 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>16132</id>
+                <firstname>Mick</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a50150e317f1.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79156643</id>
+            <created>Tue, 29 Jun 10 17:04:18 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1174923</id>
+                <firstname>Alisa</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/DKX3PNBTTSBGQ5C4.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79154937</id>
+            <created>Tue, 29 Jun 10 17:02:10 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>445523</id>
+                <firstname>Jennifer</firstname>
+                <lastname>F.</lastname>
+                <photo>http://foursquare.com/img/blank_girl.png</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79147929</id>
+            <created>Tue, 29 Jun 10 16:53:38 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1038820</id>
+                <firstname>Christyn</firstname>
+                <lastname>J.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/HJO2CHACDQ0L3YPC.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79141201</id>
+            <created>Tue, 29 Jun 10 16:45:44 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>749876</id>
+                <firstname>Nathan</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/0OHWKYSNIXVPYWU4.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79138218</id>
+            <created>Tue, 29 Jun 10 16:41:44 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>969017</id>
+                <firstname>Henry</firstname>
+                <lastname>C.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/AV2E422F4KR3P3YF.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+        <checkin>
+            <id>79135330</id>
+            <created>Tue, 29 Jun 10 16:37:42 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>1100864</id>
+                <firstname>Alex</firstname>
+                <lastname>T.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/FBPM34OVAIEJFBA3.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+    </checkins>
+    <tips>
+        <tip>
+            <id>1426733</id>
+            <text>The area over by tracks 36 to 42 is never crowded even during rush hour. The Biltmore Room has a flower stand, large shoe shine station &amp; news stand. Lines for the ticket machines tend to be shorter.</text>
+            <created>Fri, 25 Jun 10 18:46:24 +0000</created>
+            <user>
+                <id>467297</id>
+                <firstname>Timothy</firstname>
+                <lastname>A.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/0NX4JSGIK2IDURWI.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1397638</id>
+            <text>The one place I thought I&apos;d be able to earn my Swarm badge, I guess going upstate on a Saturday morning was not the right time. One day....</text>
+            <created>Tue, 22 Jun 10 17:40:31 +0000</created>
+            <user>
+                <id>451970</id>
+                <firstname>Chris</firstname>
+                <lastname>N.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/QFBLDNDN5AQ2JRMV.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1373874</id>
+            <text>This is a great location to stay when coming to NYC for the US Open.</text>
+            <created>Sat, 19 Jun 10 23:47:20 +0000</created>
+            <user>
+                <id>1701557</id>
+                <firstname>Linda</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/YWLCNLMAMTJ03DYL.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1348750</id>
+            <text>New timetables starting Monday 6.21.10 pay attention to changes</text>
+            <created>Fri, 18 Jun 10 00:30:08 +0000</created>
+            <user>
+                <id>1491384</id>
+                <firstname>Neil</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/TQSAJZR0HYHVS5MO.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1228024</id>
+            <text>CT for the weekend and birthday dinner with a good friend</text>
+            <created>Sat, 05 Jun 10 18:54:58 +0000</created>
+            <user>
+                <id>1528594</id>
+                <firstname>Ed</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/T5MFKD3XKUFYXQYL.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1149735</id>
+            <text>Beware of double strollers, the 42nd street entrance is the only door that will fit you</text>
+            <created>Sat, 29 May 10 17:02:59 +0000</created>
+            <user>
+                <id>932465</id>
+                <firstname>John</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/OQK2OZBIPJPWAZY3.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1093609</id>
+            <text>dont buy anything in here! to damn expensive hit up Lexington if you need stuff! duane read is right out front on 42nd n LEX</text>
+            <created>Mon, 24 May 10 06:45:13 +0000</created>
+            <user>
+                <id>854296</id>
+                <firstname>Ryan</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/CMICJG410CPO5TR1.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1070402</id>
+            <text>Cheese cake !!!</text>
+            <created>Sat, 22 May 10 03:39:58 +0000</created>
+            <user>
+                <id>764670</id>
+                <firstname>Puiz</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/2XBLNDNGJCX0PFTD.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1044534</id>
+            <text>Not as hard to navigate around as I would have expected. Shopping and food everywhere. Two Boots is awesome. I forgot to check in when I was there lol</text>
+            <created>Wed, 19 May 10 19:08:03 +0000</created>
+            <user>
+                <id>462117</id>
+                <firstname>Jason</firstname>
+                <lastname>T.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/RVGHOYCJMS0LFBAZ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1035352</id>
+            <text>Stop by Annie moores if you are waiting for a train</text>
+            <created>Tue, 18 May 10 23:02:25 +0000</created>
+            <user>
+                <id>1007304</id>
+                <firstname>Lee</firstname>
+                <lastname>R.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ZAU1OAJHHOGLC1OQ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>1011628</id>
+            <text>Welcome to Grand Central! Don&apos;t forget to check in on Foursquare from the train as well. Trains, buses, planes, &amp; boats are all valid Foursquare venues that you can become the mayor of!</text>
+            <created>Sun, 16 May 10 14:53:47 +0000</created>
+            <user>
+                <id>82157</id>
+                <firstname>Webster</firstname>
+                <lastname>L.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/-1_1256742040274.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>920247</id>
+            <text>Only open til 9:30pm otherwise you&apos;ll have to go thru the main terminal.</text>
+            <created>Fri, 07 May 10 13:55:59 +0000</created>
+            <user>
+                <id>198556</id>
+                <firstname>seth</firstname>
+                <lastname>h.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/5FRSHTDUVVAXXKBH.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>906407</id>
+            <text>This is where it all begins. Or ends. Where S returned from boarding school, where B headed to Yale, and where D and S struck up an unlikely romance. (I Will Always Love You)</text>
+            <url>http://www.gossipgirl.net/blog/</url>
+            <created>Thu, 06 May 10 02:18:53 +0000</created>
+            <user>
+                <id>749968</id>
+                <firstname>Gossip Girl</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/TBW52TWGW0QQSHSB.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>845290</id>
+            <text>Agua Fresca smoothies at Dishes are the perfect treat for your ride home after a long day at the office. Mmmm!</text>
+            <created>Wed, 28 Apr 10 23:55:23 +0000</created>
+            <user>
+                <id>472892</id>
+                <firstname>Rob</firstname>
+                <lastname>R.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/BFTW4CDYMEVFKHVN.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>838472</id>
+            <text>Watch out for the creepy hair/spa promotion guys!</text>
+            <created>Wed, 28 Apr 10 04:42:28 +0000</created>
+            <user>
+                <id>383151</id>
+                <firstname>Megan</firstname>
+                <lastname>V.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/2YUMFVDNGIOTHTNM.png</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>805503</id>
+            <text>Loop up at the northwest corner of the ceiling in the grand concourse and find the strip of grime the cleaners left to remind us how dirty gct once was.</text>
+            <created>Sat, 24 Apr 10 12:51:11 +0000</created>
+            <user>
+                <id>307005</id>
+                <firstname>Patrick</firstname>
+                <lastname>A.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/QOOHMIIK4V0WNLEN.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>789394</id>
+            <text>Magnolias bakery is comming soon!</text>
+            <created>Thu, 22 Apr 10 18:28:41 +0000</created>
+            <user>
+                <id>1000222</id>
+                <firstname>Kait</firstname>
+                <lastname>S.</lastname>
+                <photo>http://foursquare.com/img/blank_girl.png</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>787702</id>
+            <text>Get HISTORIAN - 4SQ badge!</text>
+            <created>Thu, 22 Apr 10 15:09:33 +0000</created>
+            <user>
+                <id>462266</id>
+                <firstname>Carlos</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/051AI4N3EOGVWKLN.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>748981</id>
+            <text>Wisper into the corners....</text>
+            <created>Sun, 18 Apr 10 01:56:28 +0000</created>
+            <user>
+                <id>338406</id>
+                <firstname>Beco</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4SNFVEYQ5GDUKZIS.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>696113</id>
+            <text>Stop by Murray&apos;s for the best cheese in NYC. Say hi to my friend Will</text>
+            <created>Sun, 11 Apr 10 17:23:54 +0000</created>
+            <user>
+                <id>680416</id>
+                <firstname>Tim the cheeseman</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/A4EJ1URL2CTVR14C.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>662097</id>
+            <text>GCT really needs a Dunkin Donuts to go with all these Starbucks!</text>
+            <created>Wed, 07 Apr 10 11:37:05 +0000</created>
+            <user>
+                <id>262279</id>
+                <firstname>Joseph</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/JQTR03VDYZFKMKDE.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>648862</id>
+            <text>Learn the difference between Grand Central Terminal and Grand Central Station. Impress your friends!</text>
+            <created>Mon, 05 Apr 10 17:47:36 +0000</created>
+            <user>
+                <id>11098</id>
+                <firstname>Jimmy</firstname>
+                <lastname>A.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/3NHK4QKHJ0SA4QQU.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>646493</id>
+            <text>In your commuting rush take a moment to notice the gorgeous sliding pocket doors that separate the tracks from the main hall.</text>
+            <created>Mon, 05 Apr 10 11:05:44 +0000</created>
+            <user>
+                <id>69862</id>
+                <firstname>Annie</firstname>
+                <lastname>R.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/IONNOTGI0IE03XGT.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>614719</id>
+            <text>Look at the ceiling in the Main Concourse. A single dark patch remains above the Michael Jordan Steakhouse, left untouched by renovators to remind visitors of the grime that once covered the ceiling.</text>
+            <created>Wed, 31 Mar 10 22:33:14 +0000</created>
+            <user>
+                <id>1041</id>
+                <firstname>Devin</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/VYZMVC0XTK5H2M2M.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>604171</id>
+            <text>You have to check out the secret speakeasy called the Campbell Apartment--very cool hidden jem.</text>
+            <created>Tue, 30 Mar 10 14:18:52 +0000</created>
+            <user>
+                <id>152295</id>
+                <firstname>Martine</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/OCFXUGGWFBIINO0Z.gif</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>601062</id>
+            <text>The 67 tracks are numbered according to their geographic location in the terminal building rather than the trains&apos; destinations, because all of the trains terminate at Grand Central.</text>
+            <created>Tue, 30 Mar 10 02:09:16 +0000</created>
+            <user>
+                <id>376887</id>
+                <firstname>HISTORY Channel</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4FIIHC1FYYHZBN10.jpg</photo>
+                <gender>none</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>580261</id>
+            <text>To the tip from lucky magazine, hire a fact checker... The manhattan mall???</text>
+            <created>Sat, 27 Mar 10 11:59:41 +0000</created>
+            <user>
+                <id>461100</id>
+                <firstname>Jesse</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/1TZWAQ153HPKPFMS.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>560469</id>
+            <text>Look for the girls dressed in camo on 3/24 giving away makeup at 4pm thru 6pm!!!</text>
+            <created>Wed, 24 Mar 10 20:10:53 +0000</created>
+            <user>
+                <id>196406</id>
+                <firstname>Steve</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/H5IPYO24HFRCVWFS.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>558012</id>
+            <text>I use http://www.mnrmobile.com/ to get live train AND track info for Grand Central on my iPhone</text>
+            <url>http://www.mnrmobile.com/</url>
+            <created>Wed, 24 Mar 10 14:14:51 +0000</created>
+            <user>
+                <id>68918</id>
+                <firstname>Robert</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/GEHWUR43OU2ZXGPZ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>538280</id>
+            <text>Most of the food is overpriced and okay. Not great. Zaros is fast for morning commute goodies.</text>
+            <created>Sun, 21 Mar 10 23:35:15 +0000</created>
+            <user>
+                <id>560342</id>
+                <firstname>dearmrjack</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/XUCT4NVNHKNIPB30.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>505358</id>
+            <text>The place isn&apos;t as grand as I thought...not so central either...</text>
+            <created>Wed, 17 Mar 10 23:41:15 +0000</created>
+            <user>
+                <id>265408</id>
+                <firstname>Ian</firstname>
+                <lastname>E.</lastname>
+                <photo>http://foursquare.com/img/blank_boy.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>462930</id>
+            <text>I use http://www.mnrmobile.com/ to get live train AND track info for Grand Central</text>
+            <created>Fri, 12 Mar 10 13:15:29 +0000</created>
+            <user>
+                <id>68918</id>
+                <firstname>Robert</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/GEHWUR43OU2ZXGPZ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>420850</id>
+            <text>If your coming from uptown get in the 2nd car from the back of train, 1st door...leaves your right @ stairs, otherwise good luck in the clusterf#*k</text>
+            <created>Fri, 05 Mar 10 13:42:30 +0000</created>
+            <user>
+                <id>461100</id>
+                <firstname>Jesse</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/1TZWAQ153HPKPFMS.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>380287</id>
+            <text>How many movies were shot here?</text>
+            <created>Thu, 25 Feb 10 13:11:36 +0000</created>
+            <user>
+                <id>29412</id>
+                <firstname>Bill</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4CWHZRLL13WJD1HZ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>375683</id>
+            <text>Enter on 47th and Madison, trains usually leave from the first set of tracks on right hand side.</text>
+            <created>Wed, 24 Feb 10 14:29:16 +0000</created>
+            <user>
+                <id>109234</id>
+                <firstname>Vinnie</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/NKMQZ1YTDA00GJUL.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>371179</id>
+            <text>Pershing Square is right around the corner. Yumtown!</text>
+            <created>Tue, 23 Feb 10 16:46:02 +0000</created>
+            <user>
+                <id>17674</id>
+                <firstname>Girl</firstname>
+                <lastname>F.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ZWOQFYLPOMPGFQ4M.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>361280</id>
+            <text>Go to the grand hall and look up!</text>
+            <created>Sun, 21 Feb 10 17:16:42 +0000</created>
+            <user>
+                <id>425878</id>
+                <firstname>Saint Ian</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/U03SPPF24GGYPPLI.jpg</photo>
+                <gender>none</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>353035</id>
+            <text>I use &quot;station stops&quot; on my iPhone to get the train schedule</text>
+            <created>Sat, 20 Feb 10 04:02:42 +0000</created>
+            <user>
+                <id>318036</id>
+                <firstname>Kristopher</firstname>
+                <lastname>W.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/CQ5GQKOIZTWJ1CC3.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>353015</id>
+            <text>when you in GCT waiting for you train home chat up the crazies lower level food concourse</text>
+            <created>Sat, 20 Feb 10 03:57:32 +0000</created>
+            <user>
+                <id>318036</id>
+                <firstname>Kristopher</firstname>
+                <lastname>W.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/CQ5GQKOIZTWJ1CC3.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>347922</id>
+            <text>Lacey Jo says, &quot;Behold the Power of MEOW.&quot;</text>
+            <created>Fri, 19 Feb 10 04:10:59 +0000</created>
+            <user>
+                <id>104990</id>
+                <firstname>Pat</firstname>
+                <lastname>F.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/VFQQ4Y4SX5N32T4C.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>346641</id>
+            <text>$3.50 for a Vitaminwater at Hudson News . Ouch!</text>
+            <created>Thu, 18 Feb 10 22:08:39 +0000</created>
+            <user>
+                <id>103809</id>
+                <firstname>Phil</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/103809_1260362614446.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>337095</id>
+            <text>Google the amazing whispering wall</text>
+            <created>Wed, 17 Feb 10 00:03:11 +0000</created>
+            <user>
+                <id>293588</id>
+                <firstname>Rachel</firstname>
+                <lastname>A.</lastname>
+                <photo>http://foursquare.com/img/blank_girl.png</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>320368</id>
+            <text>Can&apos;t leave here without a black &amp; white cookie from Zaros. &quot;It&apos;s the perfect cookie. And yet, racial harmony eludes us...&quot;</text>
+            <created>Sat, 13 Feb 10 21:09:21 +0000</created>
+            <user>
+                <id>401042</id>
+                <firstname>T. Lynn</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/025IGVBX2AR3DW3F.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>318610</id>
+            <text>Starbucks coffee usually has poor service here. Get equally good coffee for 1/3 the price at Hot &amp; Crusty</text>
+            <created>Sat, 13 Feb 10 14:55:26 +0000</created>
+            <user>
+                <id>402071</id>
+                <firstname>Ian</firstname>
+                <lastname>J.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/1BIJMSJF1OBR53OX.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>315609</id>
+            <text>Know what&apos;s going on under GCT? Ask me, that&apos;s where I work.....</text>
+            <created>Fri, 12 Feb 10 23:45:35 +0000</created>
+            <user>
+                <id>300514</id>
+                <firstname>Christopher</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/N3QJDJZKVNBCINWP.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>315557</id>
+            <text>Have time to kill? The closest thing to a mall in NYC, the shops at Grand Central Station run the gamut from high-end lingerie to French pastries.</text>
+            <created>Fri, 12 Feb 10 23:34:59 +0000</created>
+            <user>
+                <id>337548</id>
+                <firstname>Lucky</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/33JX33IQQUT0SPLM.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>312655</id>
+            <text>Check out the Madrid Art Walk in Vanderbilt Hall, courtesy of the Spain Department of Tourism.</text>
+            <url>http://culturemob.com/events/6112482-madrid-art-walk-in-new-york-vanderbilt-hall-ny-new-york-manhattan-midtown-10017-grand-central-station</url>
+            <created>Fri, 12 Feb 10 11:45:34 +0000</created>
+            <user>
+                <id>312094</id>
+                <firstname>Brian</firstname>
+                <lastname>W.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ILDEH5DHLJFELSV3.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>294101</id>
+            <text>Don&apos;t expect much food at the food court on a Sunday evening. Most places are closed by 9pm.</text>
+            <created>Mon, 08 Feb 10 22:00:57 +0000</created>
+            <user>
+                <id>69886</id>
+                <firstname>Martin</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/69886_1255983141083.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>277006</id>
+            <text>Best oysters in the city are at Oyster Bar</text>
+            <created>Fri, 05 Feb 10 17:06:50 +0000</created>
+            <user>
+                <id>357804</id>
+                <firstname>Avi</firstname>
+                <lastname>S.</lastname>
+                <photo>http://foursquare.com/img/blank_boy.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>276978</id>
+            <text>I use Clever Commute for track announcements and delay updates.</text>
+            <url>http://www.clevercommute.com/index.php</url>
+            <created>Fri, 05 Feb 10 16:58:35 +0000</created>
+            <user>
+                <id>357877</id>
+                <firstname>Michelle</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/1JZMY3QA52WG1TEE.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>274375</id>
+            <text>If you need a quick bite to eat, head downstairs to Two Boots for a slice and a Coke.</text>
+            <url>http://grandcentralterminal.com/</url>
+            <created>Fri, 05 Feb 10 03:13:12 +0000</created>
+            <user>
+                <id>312094</id>
+                <firstname>Brian</firstname>
+                <lastname>W.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ILDEH5DHLJFELSV3.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>267832</id>
+            <text>Check out the musicians in the GrayBar passage.</text>
+            <created>Wed, 03 Feb 10 22:38:01 +0000</created>
+            <user>
+                <id>344408</id>
+                <firstname>Stephen</firstname>
+                <lastname>T.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/NJTRUOXKPEENNN4L.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>232031</id>
+            <text>Sangria from Zocalos.....</text>
+            <created>Wed, 27 Jan 10 17:44:35 +0000</created>
+            <user>
+                <id>300514</id>
+                <firstname>Christopher</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/N3QJDJZKVNBCINWP.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>226672</id>
+            <text>Download a free book at http://bookboon.com using the wireless at Starbucks - helps kill the time and saves money!</text>
+            <url>http://bookboon.com/</url>
+            <created>Tue, 26 Jan 10 16:37:31 +0000</created>
+            <user>
+                <id>274888</id>
+                <firstname>BookBoon.com</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/5O142XTTZ0USR24G.jpg</photo>
+                <gender>none</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>224286</id>
+            <text>Magnolia bakery coming soon to grand central = red velvet cupcakes on the ride home.</text>
+            <created>Tue, 26 Jan 10 01:01:47 +0000</created>
+            <user>
+                <id>196406</id>
+                <firstname>Steve</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/H5IPYO24HFRCVWFS.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>186067</id>
+            <text>I use railbandit on my blackberry to plan trips, get schedules and service updates</text>
+            <url>www.railbandit.com</url>
+            <created>Sun, 17 Jan 10 03:01:15 +0000</created>
+            <user>
+                <id>244782</id>
+                <firstname>Barry</firstname>
+                <lastname>E.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/MEAIEAR4Y21FI0L4.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>171424</id>
+            <text>3rd car from back of train will open doors perfectly opposite staircase at OG</text>
+            <created>Wed, 13 Jan 10 02:08:14 +0000</created>
+            <user>
+                <id>11575</id>
+                <firstname>Scott Ex</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/A5MWILVCLCS2F4OJ.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>167380</id>
+            <text>Go to the GC Market. You will be amazed at the selection.</text>
+            <created>Mon, 11 Jan 10 21:42:24 +0000</created>
+            <user>
+                <id>126149</id>
+                <firstname>mark</firstname>
+                <lastname>m.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/SD02HIROMBHE5R0O.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>162569</id>
+            <text>Meet people on the West Balcony, it is way easier than trying to pick out people on the ground level.</text>
+            <created>Sun, 10 Jan 10 02:23:26 +0000</created>
+            <user>
+                <id>47476</id>
+                <firstname>Liz</firstname>
+                <lastname>W.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4ab7e19565a1b.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>156844</id>
+            <text>Go for a Joe coffee.</text>
+            <created>Fri, 08 Jan 10 03:14:28 +0000</created>
+            <user>
+                <id>58803</id>
+                <firstname>Jay</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/58803_1257696422905.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>151821</id>
+            <text>In inclement weather, use the passageway on the west side of the station to walk undergroud and emerge at 45th &amp; Madison...or use the Northeast or Northwest Passages to get all the way to 47th St</text>
+            <created>Wed, 06 Jan 10 07:07:10 +0000</created>
+            <user>
+                <id>19854</id>
+                <firstname>Suman</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/19854_1256232849949.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>133188</id>
+            <text>Always arrive early. Always be prepared. Don&apos;t stand and stare at the constellations like a tourist.</text>
+            <created>Thu, 24 Dec 09 05:56:33 +0000</created>
+            <user>
+                <id>6255</id>
+                <firstname>Joe</firstname>
+                <lastname>B.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/W4HDT2KEPZJQYDEM.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>132350</id>
+            <text>Always arrange to meet friends at The Clock.</text>
+            <created>Wed, 23 Dec 09 16:56:02 +0000</created>
+            <user>
+                <id>6243</id>
+                <firstname>Tom</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4aa522718f72a.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>131115</id>
+            <text>Best place to just people watch.</text>
+            <created>Tue, 22 Dec 09 15:51:30 +0000</created>
+            <user>
+                <id>47973</id>
+                <firstname>David</firstname>
+                <lastname>L.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4ab8e1061f492.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>114335</id>
+            <text>There&apos;s nothing like streaking across the main floor area during rush hour. Tourists love it!</text>
+            <created>Wed, 09 Dec 09 13:16:27 +0000</created>
+            <user>
+                <id>32903</id>
+                <firstname>Michael</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a84d9050b607.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>112352</id>
+            <text>off-peak</text>
+            <created>Tue, 08 Dec 09 01:32:26 +0000</created>
+            <user>
+                <id>8164</id>
+                <firstname>Matt</firstname>
+                <lastname>L.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/EHG3TPY0DTSNSJSU.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>108345</id>
+            <text>Reminder: Tues., December 8th is &quot;Don&apos;t Wear Pants at Grand Central&quot; Day.</text>
+            <created>Sat, 05 Dec 09 00:11:46 +0000</created>
+            <user>
+                <id>32903</id>
+                <firstname>Michael</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a84d9050b607.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>108344</id>
+            <text>Reminder that Tuesday, December 8th, is &quot;Don&apos;t wear pants at Grand Central&quot; Day.</text>
+            <created>Sat, 05 Dec 09 00:11:27 +0000</created>
+            <user>
+                <id>32903</id>
+                <firstname>Michael</firstname>
+                <lastname>D.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a84d9050b607.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>97141</id>
+            <text>a secret, in the form of a new york minute: metro-north trains leave roughly one minute after the posted departure time. do you dare test this theory?</text>
+            <created>Thu, 26 Nov 09 15:49:35 +0000</created>
+            <user>
+                <id>33</id>
+                <firstname>Naveen</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/WJ1N4YGX2ZPMP5MK.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>87128</id>
+            <text>If you see a person walking aimlessly while staring at their blackberry, feel free to smack them across the head.</text>
+            <created>Fri, 20 Nov 09 22:15:45 +0000</created>
+            <user>
+                <id>103903</id>
+                <firstname>Les</firstname>
+                <lastname>C.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/3NMOQV0RFYGNI5EX.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>87061</id>
+            <text>Stop at Joe&apos;s the Art of Coffee. Good strong cup at a good price.</text>
+            <created>Fri, 20 Nov 09 21:49:47 +0000</created>
+            <user>
+                <id>60380</id>
+                <firstname>Steven</firstname>
+                <lastname>G.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/60380_1259180781997.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>71013</id>
+            <text>See you if you can find the one piece of ceiling they left uncleaned as a reminder</text>
+            <created>Tue, 03 Nov 09 14:50:17 +0000</created>
+            <user>
+                <id>41103</id>
+                <firstname>Sean</firstname>
+                <lastname>H.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/41103_1256507142551.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>70442</id>
+            <text>The excellent place to take the photo and good place to take a rest. There is a good cheese cake-Juniors you can enjoy!</text>
+            <created>Mon, 02 Nov 09 17:55:05 +0000</created>
+            <user>
+                <id>65675</id>
+                <firstname>Wen-Pang</firstname>
+                <lastname>P.</lastname>
+                <photo>http://foursquare.com/img/blank_boy.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>68210</id>
+            <text>I would advise not to ask someone to remove his/her feet from the seats. just saw it happen and let me just say... it didn&apos;t turn out so well for the asker.</text>
+            <created>Fri, 30 Oct 09 12:53:51 +0000</created>
+            <user>
+                <id>81197</id>
+                <firstname>kyser</firstname>
+                <lastname>t.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/-1_1256660036023.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>60412</id>
+            <text>get a shoeshine at eddies with mauro</text>
+            <created>Wed, 21 Oct 09 12:56:27 +0000</created>
+            <user>
+                <id>36179</id>
+                <firstname>Craig</firstname>
+                <lastname>P.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/36179_1256956224367.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>33598</id>
+            <text>I added Soapnana as my friend on foursquare</text>
+            <created>Fri, 28 Aug 09 16:11:02 +0000</created>
+            <user>
+                <id>6299</id>
+                <firstname>Omer</firstname>
+                <lastname>N.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a9837ac094f2.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>14011</id>
+            <text>la Cucina is a great early morning breakfast spot</text>
+            <created>Mon, 22 Jun 09 22:36:39 +0000</created>
+            <user>
+                <id>16662</id>
+                <firstname>Darren</firstname>
+                <lastname>H.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/4a3e7eea522c8.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>13996</id>
+            <text>Go to Grand Central and run across the main concourse screaming about how you are late for your boat.</text>
+            <created>Mon, 22 Jun 09 20:34:55 +0000</created>
+            <user>
+                <id>7252</id>
+                <firstname>Andy</firstname>
+                <lastname>M.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/7252_1253247646064.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>6462</id>
+            <text>visit the whispering gallery with a friend.</text>
+            <created>Sun, 12 Apr 09 23:51:12 +0000</created>
+            <user>
+                <id>10646</id>
+                <firstname>andrew</firstname>
+                <lastname>b.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/534C0DQ2ZWQGEO4W.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>5899</id>
+            <text>Go to Grand Central. Get cheap buzz from beer carts in the food court, and snack on guacamole &amp; nachos from Zocalo.</text>
+            <created>Wed, 08 Apr 09 00:12:28 +0000</created>
+            <user>
+                <id>8602</id>
+                <firstname>Angela</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/8602_1239148594.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>5897</id>
+            <text>Go to Transit Museum&apos;s Gallery Annex at Grand Central Terminal to learn what&apos;s digging under NYC (until 7/5/09). Get Ciao Bella from the food court after.</text>
+            <created>Wed, 08 Apr 09 00:09:03 +0000</created>
+            <user>
+                <id>8602</id>
+                <firstname>Angela</firstname>
+                <lastname>S.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/8602_1239148594.jpg</photo>
+                <gender>female</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>4225</id>
+            <text>Grand Central is one of the oldest US train stations still standing. Unequivocal beauty and amazing architecture. Even if you&apos;re not going anywhere go inside and just look around!</text>
+            <created>Tue, 24 Mar 09 20:42:14 +0000</created>
+            <user>
+                <id>7685</id>
+                <firstname>Matthew</firstname>
+                <lastname>K.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/7685_1237846076.jpg</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+        <tip>
+            <id>521</id>
+            <text>GCTs Whispering Gallery (in front of the Oyster Bar). Take someone cute so she can hear your sweet nothings</text>
+            <created>Wed, 28 Jan 09 12:07:20 +0000</created>
+            <user>
+                <id>33</id>
+                <firstname>Naveen</firstname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/WJ1N4YGX2ZPMP5MK.png</photo>
+                <gender>male</gender>
+            </user>
+        </tip>
+    </tips>
+    <categories>
+        <category>
+            <id>79052</id>
+            <fullpathname>Food:Coffee Shop</fullpathname>
+            <nodename>Coffee Shop</nodename>
+            <iconurl>http://foursquare.com/img/categories/food/coffeeshop.png</iconurl>
+        </category>
+        <category>
+            <id>79232</id>
+            <fullpathname>Shops:Food &amp; Drink:Food Court</fullpathname>
+            <nodename>Food Court</nodename>
+            <iconurl>http://foursquare.com/img/categories/shops/food_foodcourt.png</iconurl>
+        </category>
+        <category>
+            <id>79215</id>
+            <fullpathname>Shops:Bank / Financial</fullpathname>
+            <nodename>Bank / Financial</nodename>
+            <iconurl>http://foursquare.com/img/categories/shops/financial.png</iconurl>
+        </category>
+        <category>
+            <id>79282</id>
+            <fullpathname>Travel:Subway</fullpathname>
+            <nodename>Subway</nodename>
+            <iconurl>http://foursquare.com/img/categories/travel/subway.png</iconurl>
+        </category>
+        <category>
+            <id>79283</id>
+            <fullpathname>Travel:Train Station</fullpathname>
+            <nodename>Train Station</nodename>
+            <iconurl>http://foursquare.com/img/categories/travel/trainstation.png</iconurl>
+        </category>
+        <category>
+            <id>79278</id>
+            <fullpathname>Travel:Light Rail</fullpathname>
+            <nodename>Light Rail</nodename>
+            <iconurl>http://foursquare.com/img/categories/travel/lightrail.png</iconurl>
+        </category>
+        <category>
+            <id>96363</id>
+            <fullpathname>Travel:Train Station:Train</fullpathname>
+            <nodename>Train</nodename>
+            <iconurl>http://foursquare.com/img/categories/travel/trainstation.png</iconurl>
+        </category>
+    </categories>
+    <tags>
+        <tag>travel</tag>
+        <tag>food</tag>
+        <tag>metro-north</tag>
+        <tag>transportation</tag>
+        <tag>food court</tag>
+        <tag>train station</tag>
+        <tag>marketplace</tag>
+        <tag>tours</tag>
+        <tag>public transit</tag>
+        <tag>rail</tag>
+        <tag>commuter</tag>
+        <tag>train</tag>
+        <tag>transit</tag>
+        <tag>metro</tag>
+        <tag>shopping</tag>
+        <tag>grand central terminal</tag>
+        <tag>grand central</tag>
+        <tag>places to see in nyc</tag>
+        <tag>historian</tag>
+        <tag>history</tag>
+        <tag>new york city</tag>
+        <tag>architecture</tag>
+        <tag>gossip girl</tag>
+        <tag>socialite</tag>
+        <tag>northern access</tag>
+    </tags>
+    <specials />
+</venue>

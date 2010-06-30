@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<venue>
+    <id>101107</id>
+    <name>Rockwell Group</name>
+    <primarycategory>
+        <id>79115</id>
+        <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+        <nodename>Corporate / Office</nodename>
+        <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+    </primarycategory>
+    <address>5 Union Square West</address>
+    <crossstreet>btw 14th &amp; 15th St</crossstreet>
+    <city>New York</city>
+    <state>NY</state>
+    <geolat>40.7353618</geolat>
+    <geolong>-73.9916264</geolong>
+    <stats>
+        <checkins>46</checkins>
+        <herenow>1</herenow>
+        <beenhere>
+            <me>false</me>
+        </beenhere>
+        <mayor>
+            <user>
+                <id>618093</id>
+                <firstname>nigel</firstname>
+                <lastname>e.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/ER4LH1RTVRIFFJMI.jpg</photo>
+                <gender>male</gender>
+            </user>
+            <count>3</count>
+        </mayor>
+    </stats>
+    <checkins>
+        <checkin>
+            <id>79264395</id>
+            <created>Tue, 29 Jun 10 19:35:49 +0000</created>
+            <timezone>America/New_York</timezone>
+            <user>
+                <id>148576</id>
+                <firstname>Brett</firstname>
+                <lastname>R.</lastname>
+                <photo>http://playfoursquare.s3.amazonaws.com/userpix_thumbs/FORY3TJNZKY5DG4N.png</photo>
+                <gender>male</gender>
+            </user>
+        </checkin>
+    </checkins>
+    <categories>
+        <category>
+            <id>79115</id>
+            <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+            <nodename>Corporate / Office</nodename>
+            <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+        </category>
+    </categories>
+    <specials>
+        <special>
+            <id>22308</id>
+            <type>frequency</type>
+            <kind>nearby</kind>
+            <message>6/14 – 7/12: Get a free 16 oz. black tea lemonade for every 10th check-in. Redeem from 5 p.m. – 9 p.m. at our coffee bar.</message>
+            <venue>
+                <id>22308</id>
+                <name>Whole Foods Market</name>
+                <primarycategory>
+                    <id>79235</id>
+                    <fullpathname>Shops:Food &amp; Drink:Grocery / Supermarket</fullpathname>
+                    <nodename>Grocery / Supermarket</nodename>
+                    <iconurl>http://foursquare.com/img/categories/shops/food_grocery.png</iconurl>
+                </primarycategory>
+            </venue>
+        </special>
+    </specials>
+</venue>
