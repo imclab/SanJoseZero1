@@ -14,7 +14,7 @@
 //http://foursquare.com/venue/101107
 
 //#define CHECK_TIME 18
-#define CHECK_TIME 10
+#define CHECK_TIME 18
 #define VENUE_ID "101107"
 
 class testApp : public ofBaseApp{

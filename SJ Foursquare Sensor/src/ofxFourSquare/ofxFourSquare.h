@@ -109,11 +109,9 @@ public:
 				CURLcode result = curl_easy_perform(curl);
 				
 				if (result == CURLE_OK){
-					cout << "auth success!"<<endl;
 				}
 				curl_easy_cleanup(curl);
 			}
-		cout << "errors?"<< errorBuffer<<endl;
 			//stopThread();
 		//}
 		if (queryType == FOURSQUARE_QUERY_VENUE){
@@ -129,7 +127,6 @@ public:
 	
 	//load venues
 	void loadVenues( string xmlBuffer, bool bGetNearby=true ){
-		cout <<"loading venues! "<<endl;
 		//currentVenues.clear();
 		ofxXmlSettings xmlData;
 		xmlData.loadFromBuffer(xmlBuffer);
@@ -141,7 +138,6 @@ public:
 			if (bGetNearby) xmlData.pushTag("group",1);
 			else xmlData.pushTag("group",0);
 			
-			cout << "FOUND "<< xmlData.getNumTags("venue")<<endl;
 			for (int i=0; i<xmlData.getNumTags("venue"); i++){
 				xmlData.pushTag("venue", i);{
 					FoursquareVenue * newVenue = new FoursquareVenue();

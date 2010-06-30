@@ -17,7 +17,7 @@
             <geolat>40.750085490425846</geolat>
             <geolong>-73.9932632446289</geolong>
             <stats>
-                <herenow>36</herenow>
+                <herenow>24</herenow>
             </stats>
             <phone>2126306401</phone>
             <distance>1644</distance>
@@ -39,7 +39,7 @@
             <geolat>40.73551</geolat>
             <geolong>-73.991896</geolong>
             <stats>
-                <herenow>13</herenow>
+                <herenow>11</herenow>
             </stats>
             <phone>2127887476</phone>
             <twitter>UnSqGreenmarket</twitter>
@@ -64,7 +64,7 @@
             <geolat>40.734930330654905</geolat>
             <geolong>-73.99116039276123</geolong>
             <stats>
-                <herenow>2</herenow>
+                <herenow>3</herenow>
             </stats>
             <specials>
                 <special>
@@ -137,7 +137,7 @@
             <geolat>40.73534</geolat>
             <geolong>-73.99167</geolong>
             <stats>
-                <herenow>0</herenow>
+                <herenow>1</herenow>
             </stats>
             <distance>4</distance>
         </venue>
@@ -216,7 +216,7 @@
             <geolat>40.73512056377714</geolat>
             <geolong>-73.99131059646606</geolong>
             <stats>
-                <herenow>1</herenow>
+                <herenow>0</herenow>
             </stats>
             <distance>37</distance>
         </venue>
@@ -232,71 +232,6 @@
             <address />
             <city />
             <state />
-            <geolat>40.73525</geolat>
-            <geolong>-73.991739</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>15</distance>
-        </venue>
-        <venue>
-            <id>927039</id>
-            <name>Crumbs Bake Shop</name>
-            <primarycategory>
-                <id>114948</id>
-                <fullpathname>Food:Cupcakes</fullpathname>
-                <nodename>Cupcakes</nodename>
-                <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
-            </primarycategory>
-            <address>37 East 8th St</address>
-            <crossstreet>University/Broadway</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.735597</geolat>
-            <geolong>-73.991787</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>2126731500</phone>
-            <twitter>CrumbsBakeShop</twitter>
-            <distance>29</distance>
-        </venue>
-        <venue>
-            <id>73303</id>
-            <name>Bank of America</name>
-            <primarycategory>
-                <id>79215</id>
-                <fullpathname>Shops:Bank / Financial</fullpathname>
-                <nodename>Bank / Financial</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/financial.png</iconurl>
-            </primarycategory>
-            <address>36 E 14th St</address>
-            <crossstreet>at University Pl</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.7350489</geolat>
-            <geolong>-73.992075</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>8008414000</phone>
-            <distance>51</distance>
-        </venue>
-        <venue>
-            <id>4008880</id>
-            <name>Purume</name>
-            <primarycategory>
-                <id>79042</id>
-                <fullpathname>Food:Asian</fullpathname>
-                <nodename>Asian</nodename>
-                <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
-            </primarycategory>
-            <address />
-            <crossstreet>13th and 5th</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
             <geolat>40.73525</geolat>
             <geolong>-73.991739</geolong>
             <stats>
@@ -324,17 +259,69 @@
             <distance>52</distance>
         </venue>
         <venue>
-            <id>3833975</id>
-            <name>Paragon Sports</name>
-            <address />
-            <city />
-            <state />
-            <geolat>40.735299</geolat>
-            <geolong>-73.991678</geolong>
+            <id>73303</id>
+            <name>Bank of America</name>
+            <primarycategory>
+                <id>79215</id>
+                <fullpathname>Shops:Bank / Financial</fullpathname>
+                <nodename>Bank / Financial</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/financial.png</iconurl>
+            </primarycategory>
+            <address>36 E 14th St</address>
+            <crossstreet>at University Pl</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.7350489</geolat>
+            <geolong>-73.992075</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>8</distance>
+            <phone>8008414000</phone>
+            <distance>51</distance>
+        </venue>
+        <venue>
+            <id>927039</id>
+            <name>Crumbs Bake Shop</name>
+            <primarycategory>
+                <id>114948</id>
+                <fullpathname>Food:Cupcakes</fullpathname>
+                <nodename>Cupcakes</nodename>
+                <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
+            </primarycategory>
+            <address>37 East 8th St</address>
+            <crossstreet>University/Broadway</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.735597</geolat>
+            <geolong>-73.991787</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <phone>2126731500</phone>
+            <twitter>CrumbsBakeShop</twitter>
+            <distance>29</distance>
+        </venue>
+        <venue>
+            <id>4008880</id>
+            <name>Purume</name>
+            <primarycategory>
+                <id>79042</id>
+                <fullpathname>Food:Asian</fullpathname>
+                <nodename>Asian</nodename>
+                <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <crossstreet>13th and 5th</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <geolat>40.73525</geolat>
+            <geolong>-73.991739</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>15</distance>
         </venue>
         <venue>
             <id>244953</id>
@@ -357,6 +344,33 @@
             <distance>36</distance>
         </venue>
         <venue>
+            <id>3833975</id>
+            <name>Paragon Sports</name>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735299</geolat>
+            <geolong>-73.991678</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>8</distance>
+        </venue>
+        <venue>
+            <id>4454089</id>
+            <name>Union Square Area</name>
+            <address>union square</address>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10003</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>28</distance>
+        </venue>
+        <venue>
             <id>2181414</id>
             <name>patty&apos;s tacos (truck)</name>
             <primarycategory>
@@ -374,20 +388,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>20</distance>
-        </venue>
-        <venue>
-            <id>4454089</id>
-            <name>Union Square Area</name>
-            <address>union square</address>
-            <city>New York</city>
-            <state>New York</state>
-            <zip>10003</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>28</distance>
         </venue>
         <venue>
             <id>3986278</id>
@@ -409,25 +409,6 @@
             <distance>13</distance>
         </venue>
         <venue>
-            <id>1732678</id>
-            <name>Run by Foot Locker</name>
-            <primarycategory>
-                <id>79254</id>
-                <fullpathname>Shops:Sports &amp; Outdoors</fullpathname>
-                <nodename>Sports &amp; Outdoors</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/default.png</iconurl>
-            </primarycategory>
-            <address />
-            <city />
-            <state />
-            <geolat>40.735127</geolat>
-            <geolong>-73.991184</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>45</distance>
-        </venue>
-        <venue>
             <id>231632</id>
             <name>PhotoManhattan</name>
             <primarycategory>
@@ -447,6 +428,25 @@
             <distance>54</distance>
         </venue>
         <venue>
+            <id>1732678</id>
+            <name>Run by Foot Locker</name>
+            <primarycategory>
+                <id>79254</id>
+                <fullpathname>Shops:Sports &amp; Outdoors</fullpathname>
+                <nodename>Sports &amp; Outdoors</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735127</geolat>
+            <geolong>-73.991184</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>45</distance>
+        </venue>
+        <venue>
             <id>4065509</id>
             <name>Taxi 5G99</name>
             <primarycategory>
@@ -464,26 +464,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>12</distance>
-        </venue>
-        <venue>
-            <id>3360240</id>
-            <name>Reshma For Congress</name>
-            <primarycategory>
-                <id>96353</id>
-                <fullpathname>Home / Work / Other:Event Space</fullpathname>
-                <nodename>Event Space</nodename>
-                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
-            </primarycategory>
-            <address>Union Square</address>
-            <city>New York</city>
-            <state>New York</state>
-            <zip>10003</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>28</distance>
         </venue>
         <venue>
             <id>4732717</id>
@@ -506,6 +486,26 @@
             <phone>2126735388</phone>
             <twitter>wholefoodsnyc</twitter>
             <distance>54</distance>
+        </venue>
+        <venue>
+            <id>3360240</id>
+            <name>Reshma For Congress</name>
+            <primarycategory>
+                <id>96353</id>
+                <fullpathname>Home / Work / Other:Event Space</fullpathname>
+                <nodename>Event Space</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+            </primarycategory>
+            <address>Union Square</address>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10003</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>28</distance>
         </venue>
         <venue>
             <id>4467180</id>
@@ -534,6 +534,23 @@
             <distance>27</distance>
         </venue>
         <venue>
+            <id>3710154</id>
+            <name>Webtrends Optimize Road Show</name>
+            <address>W Union Square, New York</address>
+            <crossstreet>201 Park Avenue South</crossstreet>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10001</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <phone>2122539119</phone>
+            <twitter>clairedantoni</twitter>
+            <distance>28</distance>
+        </venue>
+        <venue>
             <id>4754845</id>
             <name>HMT Foods</name>
             <primarycategory>
@@ -551,23 +568,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>15</distance>
-        </venue>
-        <venue>
-            <id>3710154</id>
-            <name>Webtrends Optimize Road Show</name>
-            <address>W Union Square, New York</address>
-            <crossstreet>201 Park Avenue South</crossstreet>
-            <city>New York</city>
-            <state>New York</state>
-            <zip>10001</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>2122539119</phone>
-            <twitter>clairedantoni</twitter>
-            <distance>28</distance>
         </venue>
         <venue>
             <id>4006719</id>
@@ -705,6 +705,26 @@
             <distance>15</distance>
         </venue>
         <venue>
+            <id>2782835</id>
+            <name>RUN Footlocker</name>
+            <primarycategory>
+                <id>79208</id>
+                <fullpathname>Shops:Apparel</fullpathname>
+                <nodename>Apparel</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/apparel.png</iconurl>
+            </primarycategory>
+            <address>34 E 14th St</address>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.735079</geolat>
+            <geolong>-73.992176</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>56</distance>
+        </venue>
+        <venue>
             <id>1593445</id>
             <name>Buchbinder And Warren</name>
             <primarycategory>
@@ -724,26 +744,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>28</distance>
-        </venue>
-        <venue>
-            <id>2782835</id>
-            <name>RUN Footlocker</name>
-            <primarycategory>
-                <id>79208</id>
-                <fullpathname>Shops:Apparel</fullpathname>
-                <nodename>Apparel</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/apparel.png</iconurl>
-            </primarycategory>
-            <address>34 E 14th St</address>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.735079</geolat>
-            <geolong>-73.992176</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>56</distance>
         </venue>
         <venue>
             <id>3276975</id>
@@ -811,27 +811,6 @@
             <distance>34</distance>
         </venue>
         <venue>
-            <id>3480800</id>
-            <name>Fruit Stand</name>
-            <primarycategory>
-                <id>79093</id>
-                <fullpathname>Food:Food Truck / Street Food</fullpathname>
-                <nodename>Food Truck / Street Food</nodename>
-                <iconurl>http://foursquare.com/img/categories/food/streetfood.png</iconurl>
-            </primarycategory>
-            <address>University Pl</address>
-            <crossstreet>14th St</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.73512869338561</geolat>
-            <geolong>-73.99206161499023</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>44</distance>
-        </venue>
-        <venue>
             <id>126223</id>
             <name>Payless ShoeSource - 14th St</name>
             <address>34 E 14th St</address>
@@ -863,6 +842,27 @@
                 <herenow>0</herenow>
             </stats>
             <distance>18</distance>
+        </venue>
+        <venue>
+            <id>3480800</id>
+            <name>Fruit Stand</name>
+            <primarycategory>
+                <id>79093</id>
+                <fullpathname>Food:Food Truck / Street Food</fullpathname>
+                <nodename>Food Truck / Street Food</nodename>
+                <iconurl>http://foursquare.com/img/categories/food/streetfood.png</iconurl>
+            </primarycategory>
+            <address>University Pl</address>
+            <crossstreet>14th St</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.73512869338561</geolat>
+            <geolong>-73.99206161499023</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>44</distance>
         </venue>
         <venue>
             <id>1042790</id>

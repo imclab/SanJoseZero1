@@ -26,6 +26,8 @@ void testApp::setup(){
 		}settings.popTag();
 	};
 	
+	cout << "setting up sender at "<<host<<","<<port<<endl;
+	
 	//setup OSC
 	sender.setup(host, port);	
 }
@@ -53,12 +55,14 @@ void testApp::draw(){
 		string newCheckins = ofToString(venueDetails.getCurrentVenue()->getHereNow());
 		if (venueDetails.getCurrentVenue()->getNewCheckins() > 0){
 			ofSetColor(255,255,0);
+			cout << "new checkin! at "<<venueDetails.getCurrentVenue()->getName()<<endl;
 			ofDrawBitmapString("There are "+newCheckins+" people checked into "+venueDetails.getCurrentVenue()->getName()+". NEW CHECKIN!", 20, 30);
 			
 			ofxOscMessage m;
 			m.setAddress("/pluginplay/foursquare");
 			m.addStringArg(venueDetails.getCurrentVenue()->getName());
 			m.addIntArg(venueDetails.getCurrentVenue()->getHereNow());
+			sender.sendMessage(m);
 			
 		} else {
 			ofSetColor(255,255,255);
@@ -88,6 +92,7 @@ void testApp::draw(){
 				m.setAddress("/pluginplay/foursquare/nearby");
 				m.addStringArg((*venues)[i]->getName());
 				m.addIntArg((*venues)[i]->getHereNow());
+				sender.sendMessage(m);
 			} else {
 				ofSetColor(255,255,255);
 				ofDrawBitmapString("There are "+ofToString((*venues)[i]->getHereNow())+" people checked into "+(*venues)[i]->getName()+" nearby.", 20, curY);
