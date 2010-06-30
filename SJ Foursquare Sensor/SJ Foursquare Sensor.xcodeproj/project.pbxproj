@@ -109,9 +109,9 @@
 		2E71B5B211DA43ED006803C1 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
 		2E71B5B311DA43ED006803C1 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		2E71B5B511DA43ED006803C1 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
-		2E71B62011DA4BF5006803C1 /* ofxFourSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFourSquare.h; sourceTree = "<group>"; };
-		2E71B62111DA4BF5006803C1 /* FoursquareUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareUser.h; sourceTree = "<group>"; };
-		2E71B62211DA4BF5006803C1 /* FoursquareVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareVenue.h; sourceTree = "<group>"; };
+		2E7A4AC211DB900100914266 /* FoursquareUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareUser.h; sourceTree = "<group>"; };
+		2E7A4AC311DB900100914266 /* FoursquareVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareVenue.h; sourceTree = "<group>"; };
+		2E7A4AC411DB900100914266 /* ofxFourSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFourSquare.h; sourceTree = "<group>"; };
 		2EE2E35911DB84B300AA2947 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		2EE2E35E11DB84B300AA2947 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
 		2EE2E35F11DB84B300AA2947 /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
@@ -329,21 +329,21 @@
 		2E71B61811DA4BCD006803C1 /* labaddons */ = {
 			isa = PBXGroup;
 			children = (
-				2E71B61F11DA4BF5006803C1 /* ofxFourSquare */,
+				2E7A4AC111DB900100914266 /* ofxFourSquare */,
 			);
 			name = labaddons;
 			sourceTree = "<group>";
 		};
-		2E71B61F11DA4BF5006803C1 /* ofxFourSquare */ = {
+		2E7A4AC111DB900100914266 /* ofxFourSquare */ = {
 			isa = PBXGroup;
 			children = (
-				2E71B62011DA4BF5006803C1 /* ofxFourSquare.h */,
-				2E71B62111DA4BF5006803C1 /* FoursquareUser.h */,
-				2E71B62211DA4BF5006803C1 /* FoursquareVenue.h */,
+				2E7A4AC211DB900100914266 /* FoursquareUser.h */,
+				2E7A4AC311DB900100914266 /* FoursquareVenue.h */,
+				2E7A4AC411DB900100914266 /* ofxFourSquare.h */,
 			);
 			name = ofxFourSquare;
-			path = ../../../labaddons/ofxFourSquare;
-			sourceTree = SOURCE_ROOT;
+			path = src/ofxFourSquare;
+			sourceTree = "<group>";
 		};
 		2EE2E35811DB84B300AA2947 /* ofxOsc */ = {
 			isa = PBXGroup;
