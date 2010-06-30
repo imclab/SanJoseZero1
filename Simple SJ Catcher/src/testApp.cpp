@@ -11,9 +11,7 @@ void testApp::setup(){
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
-	
-	ofxDirList DIR;
-	
+		
 	//load messagestrings from xml
 	ofxXmlSettings settings;
 	settings.loadFile("settings.xml");
@@ -26,16 +24,15 @@ void testApp::setup(){
 		
 		Emitter * e = new Emitter();
 		e->setLoc(ofGetWidth()/9.0 * i,0);
-		int numImgs = DIR.listDir(ofToString(i));
-		if (numImgs > 0){
-			for (int j=0; j<numImgs; j++) e->loadImage(DIR.getPath(j));		
-		}
 		
 		if (i <numReceivers){			
 			settings.pushTag("receiver", i);
-			for (int j=0; j<settings.getNumTags("messageString"); j++){
-				e->addMessageString(settings.getValue("messageString", "", j));
-				cout<< "adding "<<settings.getValue("messageString", "", j)<<" to "<< i<<endl;
+			for (int j=0; j<settings.getNumTags("message"); j++){
+				settings.pushTag("message", j);
+					e->addMessageString(settings.getValue("messageString", ""));
+					e->loadImage(ofToDataPath(settings.getValue("image", "")));
+					cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
+				settings.popTag();
 			}
 			settings.popTag();
 		};

@@ -20,6 +20,10 @@ public:
 		bAlive = true;
 	}
 	
+	int getWidth(){
+		return img->width;
+	}
+	
 	void setImage( ofImage * _img){
 		img = _img;
 	}
@@ -38,12 +42,12 @@ public:
 	};
 	
 	bool alive(){ return bAlive; };
-
+	
+	ofPoint loc;
 private:
 	
 	bool bAlive;
 	ofImage * img;
-	ofPoint loc;
 	
 	
 };

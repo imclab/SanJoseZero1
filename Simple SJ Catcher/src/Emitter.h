@@ -11,7 +11,7 @@
 #include "ofMain.h"
 #include "Particle.h"
 
-#define EMITTER_TIME 1000
+#define EMITTER_TIME 500
 
 class Emitter
 {
@@ -31,8 +31,8 @@ public:
 	}
 	
 	void loadImage( string image ){
-		ofImage img;
-		img.loadImage(image);
+		ofImage * img = new ofImage();
+		img->loadImage(image);
 		images.push_back(img);
 	}
 	
@@ -49,7 +49,7 @@ public:
 			Particle * part = new Particle();
 			part->setLoc(0, ofGetHeight());
 			if (index > images.size()-1 || lastFoundString < 0) index = 0;
-			part->setImage(&images[index]);
+			part->setImage(images[index]);
 			particles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
@@ -79,7 +79,7 @@ public:
 	int lastFoundString;
 	
 private:
-	vector<ofImage> images;
+	vector<ofImage *> images;
 	vector <Particle *> particles;
 	int lastEmitted;
 	ofPoint loc;

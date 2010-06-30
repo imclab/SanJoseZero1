@@ -4,7 +4,6 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
-#include "ofxDirList.h"
 #include "ofxXmlSettings.h"
 #include "Emitter.h"
 

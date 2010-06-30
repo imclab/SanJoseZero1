@@ -16,7 +16,6 @@
 		9D86AF2711D136A000C5B8F3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF1F11D136A000C5B8F3 /* ofxOscMessage.cpp */; };
 		9D86AF2811D136A000C5B8F3 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF2111D136A000C5B8F3 /* ofxOscReceiver.cpp */; };
 		9D86AF2911D136A000C5B8F3 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF2311D136A000C5B8F3 /* ofxOscSender.cpp */; };
-		9D86CFB111D174E200C5B8F3 /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86CFAF11D174E200C5B8F3 /* ofxDirList.cpp */; };
 		E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE0A90E8CC67C009D7055 /* GLee.a */; };
 		E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE2E30E8CC69C009D7055 /* rtAudio.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -122,10 +121,6 @@
 		9D86AF2211D136A000C5B8F3 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		9D86AF2311D136A000C5B8F3 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		9D86AF2411D136A000C5B8F3 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
-		9D86CFAC11D174E200C5B8F3 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
-		9D86CFAD11D174E200C5B8F3 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		9D86CFAF11D174E200C5B8F3 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDirList.cpp; sourceTree = "<group>"; };
-		9D86CFB011D174E200C5B8F3 /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDirList.h; sourceTree = "<group>"; };
 		E45BE0390E8CC647009D7055 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeImage.h; path = ../../../libs/freeimage/include/FreeImage.h; sourceTree = SOURCE_ROOT; };
 		E45BE03F0E8CC650009D7055 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../../libs/fmodex/include/fmod.h; sourceTree = SOURCE_ROOT; };
 		E45BE0400E8CC650009D7055 /* fmod.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fmod.hpp; path = ../../../libs/fmodex/include/fmod.hpp; sourceTree = SOURCE_ROOT; };
@@ -331,39 +326,10 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		9D86CFAA11D174E200C5B8F3 /* ofxDirList */ = {
-			isa = PBXGroup;
-			children = (
-				9D86CFAB11D174E200C5B8F3 /* doc */,
-				9D86CFAD11D174E200C5B8F3 /* install.xml */,
-				9D86CFAE11D174E200C5B8F3 /* src */,
-			);
-			name = ofxDirList;
-			path = ../../../addons/ofxDirList;
-			sourceTree = SOURCE_ROOT;
-		};
-		9D86CFAB11D174E200C5B8F3 /* doc */ = {
-			isa = PBXGroup;
-			children = (
-				9D86CFAC11D174E200C5B8F3 /* Instructions.txt */,
-			);
-			path = doc;
-			sourceTree = "<group>";
-		};
-		9D86CFAE11D174E200C5B8F3 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				9D86CFAF11D174E200C5B8F3 /* ofxDirList.cpp */,
-				9D86CFB011D174E200C5B8F3 /* ofxDirList.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		BB4B018C10F6955C006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
 				2E7A4CAF11DBA6D400914266 /* ofxXmlSettings */,
-				9D86CFAA11D174E200C5B8F3 /* ofxDirList */,
 				9D86AF0311D136A000C5B8F3 /* ofxOsc */,
 			);
 			name = addons;
@@ -737,7 +703,6 @@
 				9D86AF2711D136A000C5B8F3 /* ofxOscMessage.cpp in Sources */,
 				9D86AF2811D136A000C5B8F3 /* ofxOscReceiver.cpp in Sources */,
 				9D86AF2911D136A000C5B8F3 /* ofxOscSender.cpp in Sources */,
-				9D86CFB111D174E200C5B8F3 /* ofxDirList.cpp in Sources */,
 				2E7A4CB911DBA6D400914266 /* tinyxml.cpp in Sources */,
 				2E7A4CBA11DBA6D400914266 /* tinyxmlerror.cpp in Sources */,
 				2E7A4CBB11DBA6D400914266 /* tinyxmlparser.cpp in Sources */,
