@@ -136,11 +136,12 @@ void testApp::draw(){
 	} glEnd();
 	
 	ofSetColor(0xffffff);
-	
+	ofEnableAlphaBlending();
 	//draw particles
 	for (int i=0; i<emitters.size(); i++){
 		emitters[i]->draw();
 	}
+	ofDisableAlphaBlending();
 	
 	string buf;
 	buf = "listening for osc messages on port" + ofToString( PORT );

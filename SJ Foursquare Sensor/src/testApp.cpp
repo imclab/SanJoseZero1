@@ -11,7 +11,6 @@ void testApp::setup(){
 	venueDetails.setAuth("brenfer@rockwellgroup.com", "kanarick");
 	radiusSearch.setAuth("brenfer@rockwellgroup.com", "kanarick");
 	
-	venueDetails.getVenueDetails("101107");
 	ofBackground(0,0,0);
 	
 	//load host + port
@@ -23,11 +22,13 @@ void testApp::setup(){
 		settings.pushTag("settings");{
 			host = settings.getValue("host","localhost");
 			port = settings.getValue("port",12345);
+			venueId = settings.getValue("venueId","101107");
 		}settings.popTag();
 	};
 	
 	cout << "setting up sender at "<<host<<","<<port<<endl;
 	
+	venueDetails.getVenueDetails(venueId);
 	//setup OSC
 	sender.setup(host, port);	
 }
@@ -41,7 +42,7 @@ void testApp::update(){
 		queryLong = venueDetails.getCurrentVenue()->geoLong;
 		
 		//rockwell group, NY
-		venueDetails.getVenueDetails("101107");
+		venueDetails.getVenueDetails(venueId);
 		radiusSearch.getVenues(queryLat,queryLong, 50);
 		lastTimeChecked = ofGetElapsedTimeMillis();
 		bChecked = true;

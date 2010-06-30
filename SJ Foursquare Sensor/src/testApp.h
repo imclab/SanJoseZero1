@@ -41,6 +41,8 @@ class testApp : public ofBaseApp{
 	
 		string queryLat, queryLong;
 		ofxOscSender sender;
+	
+		string venueId;
 };
 
 #endif
