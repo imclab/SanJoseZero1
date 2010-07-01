@@ -7,6 +7,8 @@ void testApp::setup(){
 		
 	lastTimeChecked = 0;
 	bChecked = false;
+	bNewCheckin = false;
+	bNewCheckinNearby = false;
 	
 	venueDetails.setAuth("brenfer@rockwellgroup.com", "kanarick");
 	radiusSearch.setAuth("brenfer@rockwellgroup.com", "kanarick");
@@ -46,6 +48,8 @@ void testApp::update(){
 		radiusSearch.getVenues(queryLat,queryLong, 50);
 		lastTimeChecked = ofGetElapsedTimeMillis();
 		bChecked = true;
+		bNewCheckin = false;
+		bNewCheckinNearby = false;
 	}
 }
 
@@ -56,15 +60,17 @@ void testApp::draw(){
 		string newCheckins = ofToString(venueDetails.getCurrentVenue()->getHereNow());
 		if (venueDetails.getCurrentVenue()->getNewCheckins() > 0){
 			ofSetColor(255,255,0);
-			cout << "new checkin! at "<<venueDetails.getCurrentVenue()->getName()<<endl;
-			ofDrawBitmapString("There are "+newCheckins+" people checked into "+venueDetails.getCurrentVenue()->getName()+". NEW CHECKIN!", 20, 30);
 			
 			ofxOscMessage m;
 			m.setAddress("/pluginplay/foursquare");
 			m.addStringArg(venueDetails.getCurrentVenue()->getName());
 			m.addIntArg(venueDetails.getCurrentVenue()->getHereNow());
 			sender.sendMessage(m);
-			
+			bNewCheckin = true;
+		} 
+		if (bNewCheckin){			
+			cout << "new checkin! at "<<venueDetails.getCurrentVenue()->getName()<<endl;
+			ofDrawBitmapString("There are "+newCheckins+" people checked into "+venueDetails.getCurrentVenue()->getName()+". NEW CHECKIN!", 20, 30);
 		} else {
 			ofSetColor(255,255,255);
 			ofDrawBitmapString("There are "+newCheckins+" people checked into "+venueDetails.getCurrentVenue()->getName(), 20, 30);
@@ -72,10 +78,13 @@ void testApp::draw(){
 		vector<FoursquareUser *> * users = venueDetails.getCurrentVenue()->getUsers();
 						
 		//trace people checked in
-		for (int i=0; i< (*users).size(); i++){
-			ofDrawBitmapString((*users)[i]->getName(), 20, curY);
-			curY += 15;
-		};
+		
+		if ((*users).size() > 0) ofDrawBitmapString((*users)[0]->getName(), 20, curY);
+		
+		//for (int i=0; i< (*users).size(); i++){
+//			ofDrawBitmapString((*users)[i]->getName(), 20, curY);
+//			curY += 15;
+//		};
 		curY += 15;
 	}
 	
@@ -85,20 +94,23 @@ void testApp::draw(){
 		
 		for (int i=0; i< venues->size(); i++){
 			if ((*venues)[i]->getNewCheckins() > 0){
-				cout << "new checkin! at "<<(*venues)[i]->getName()<<endl;
-				ofSetColor(255,255,0);
-				ofDrawBitmapString("There are "+ofToString((*venues)[i]->getHereNow())+" people checked into "+(*venues)[i]->getName()+" nearby. NEW CHECKIN!", 20, curY);
+				bNewCheckinNearby = true;
 				
 				ofxOscMessage m;
 				m.setAddress("/pluginplay/foursquare/nearby");
 				m.addStringArg((*venues)[i]->getName());
 				m.addIntArg((*venues)[i]->getHereNow());
 				sender.sendMessage(m);
-			} else {
-				ofSetColor(255,255,255);
-				ofDrawBitmapString("There are "+ofToString((*venues)[i]->getHereNow())+" people checked into "+(*venues)[i]->getName()+" nearby.", 20, curY);
 			}
-			curY += 15;
+			if (bNewCheckinNearby && (*venues)[i]->getHereNow() > 0){
+				ofDrawBitmapString("There are "+ofToString((*venues)[i]->getHereNow())+" people checked into "+(*venues)[i]->getName()+" nearby.", 20, curY);
+				curY += 15;
+			}
+			
+			// else {
+//				ofSetColor(255,255,255);
+//				ofDrawBitmapString("There are "+ofToString((*venues)[i]->getHereNow())+" people checked into "+(*venues)[i]->getName()+" nearby.", 20, curY);
+//			}
 		}
 	}
 }

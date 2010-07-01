@@ -3,19 +3,12 @@
 
 
 #include "ofMain.h"
+#include "twitCurl.h"
 #include "ofxXmlSettings.h"
+#include "TwitterEntry.h"
 #include "ofxOsc.h"
-#include "ofxFourSquare.h"
 
-//City hall
-//http://foursquare.com/venue/61626
-
-//RG
-//http://foursquare.com/venue/101107
-
-//#define CHECK_TIME 18
-#define CHECK_TIME 10
-#define VENUE_ID "101107"
+#define SEARCH_TIME 2000
 
 class testApp : public ofBaseApp{
 
@@ -23,6 +16,7 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void doSearch();
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
@@ -32,19 +26,17 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 		
-		int lastTimeChecked;
-		bool bNewCheckin;
-		bool bNewCheckinNearby;
+		twitCurl twitter;
+		int lastSearch;
 	
-		ofxFourSquare venueDetails;
-		ofxFourSquare radiusSearch;
-		ofxXmlSettings currentXML;
-		bool bChecked;
+		ofxXmlSettings	responseXML;
+		TwitterEntry	latestSearchEntry;
 	
-		string queryLat, queryLong;
-		ofxOscSender sender;
-	
-		string venueId;
+		vector <TwitterEntry *> entries;
+		
+		ofxOscSender	sender;
+		string			searchTerm;
+		bool			bNewEntry;
 };
 
 #endif

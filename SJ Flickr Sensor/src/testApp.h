@@ -68,20 +68,36 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		
 		void geoResponse(ofxHttpResponse & response);
-		
-		void doSearch();
+		void tagResponse(ofxHttpResponse & response);
+	
+		void doTagSearch();
+		void doGeoSearch();
 	
 		string lat, lon;
 		string radius;
+		string tags;
 	
-		bool bSearching;
+		bool bGeoSearching;
+		bool bTagSearching;
 	
-		ofxHttpUtils httpUtils;
-		int lastSearch;
-		string printString;
+		ofxHttpUtils geoSearcher;
+		ofxHttpUtils tagSearcher;
+	
+		int lastGeoSearch;
+		int lastTagSearch;
+	
+		string printGeoString;
+		string printTagString;
+		bool bGeoNew;
+		bool bTagNew;
+		
 		ofxOscSender sender;
-		FlickrPhoto latest;
-		FlickrPhoto last;
+	
+		FlickrPhoto latestGeo;
+		FlickrPhoto lastGeo;
+		
+		FlickrPhoto latestSearch;
+		FlickrPhoto lastSearch;
 };
 
 #endif

@@ -2,15 +2,22 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	httpUtils.start();
+	geoSearcher.start();
+	tagSearcher.start();
 		
-	ofAddListener(httpUtils.newResponseEvent,this,&testApp::geoResponse);
+	ofAddListener(geoSearcher.newResponseEvent,this,&testApp::geoResponse);
+	ofAddListener(tagSearcher.newResponseEvent,this,&testApp::tagResponse);
 	
 	lat = "40.735844095042395";
 	lon = "-73.9904522895813";
 	radius = "15";
-	printString = "waiting!";
-	bSearching = false;
+	printGeoString = "waiting!";
+	printTagString = "waiting!";
+	
+	bGeoSearching = false;
+	bTagSearching = false;
+	bGeoNew = false;
+	bTagNew = false;
 	
 	ofxXmlSettings settings;
 	bool bLoaded = settings.loadFile("settings.xml");
@@ -23,6 +30,7 @@ void testApp::setup(){
 			lat = settings.getValue("lat","40.735844095042395");
 			lon = settings.getValue("lon","-73.9904522895813");
 			radius = settings.getValue("radius","15");
+			tags = settings.getValue("tags", "new york");
 		}settings.popTag();
 	};
 	
@@ -30,10 +38,13 @@ void testApp::setup(){
 	
 	//setup OSC
 	sender.setup(host, port);
+	
+	doGeoSearch();
+	doTagSearch();
 }
 
 //--------------------------------------------------------------
-void testApp::doSearch(){
+void testApp::doGeoSearch(){
 	ofxHttpForm form;
 	form.action = "http://api.flickr.com/services/rest/?method=flickr.photos.search";
 	form.method = OFX_HTTP_POST;
@@ -43,21 +54,35 @@ void testApp::doSearch(){
 	form.addFormField("radius", radius);
 	form.addFormField("extras", "date_taken");
 	form.addFormField("sort", "date-taken-desc");
-	//form.addFormField("auth_token", "72157624269831681-ab173df1cc178670");
-	//form.addFormField("api_sig", "c0b180796e67e529eaae3633de5ef9bf");
+	
 	cout << form.name<<endl;
 	
-	httpUtils.addForm(form);
-	printString = "searching...";
-	bSearching = true;
+	geoSearcher.addForm(form);
+	printGeoString = "searching...";
+	bGeoSearching = true;
 }
 
 //--------------------------------------------------------------
-void testApp::geoResponse(ofxHttpResponse & response){
-	last = latest;
+void testApp::doTagSearch(){
+	ofxHttpForm form;
+	form.action = "http://api.flickr.com/services/rest/?method=flickr.photos.search";
+	form.method = OFX_HTTP_POST;
+	form.addFormField("api_key", API_KEY);
+	form.addFormField("tags", tags);
+	//form.addFormField("extras", "date_taken");
+	//form.addFormField("sort", "date-taken-desc");
 	
-	lastSearch = ofGetElapsedTimeMillis();
-	bSearching = false;
+	tagSearcher.addForm(form);
+	printTagString = "searching...";
+	bTagSearching = true;
+}
+
+//--------------------------------------------------------------
+void testApp::tagResponse(ofxHttpResponse & response){
+	lastSearch = latestSearch;
+	
+	lastTagSearch = ofGetElapsedTimeMillis();
+	bTagSearching = false;
 	
 	ofxXmlSettings xmlResponse;
 	xmlResponse.loadFromBuffer(response.responseBody);
@@ -67,19 +92,58 @@ void testApp::geoResponse(ofxHttpResponse & response){
 	xmlResponse.pushTag("rsp");
 	xmlResponse.pushTag("photos");
 	
-	latest.id = xmlResponse.getAttribute("photo", "id", "");
-	latest.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
-	latest.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
+	latestSearch.id = xmlResponse.getAttribute("photo", "id", "");
+	//latestSearch.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
+	latestSearch.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
 	
-	if (latest.id != last.id){
-		cout<<"NEW PHOTO! "<<latest.url<<endl;
+	if (latestSearch.id != lastSearch.id){
+		cout<<"NEW PHOTO! "<<latestSearch.url<<endl;
 		ofxOscMessage m;
-		m.setAddress("/pluginplay/flickr");
-		m.addStringArg(latest.url);
+		m.setAddress("/pluginplay/flickr/tags");
+		m.addStringArg(latestSearch.url);
 		sender.sendMessage(m);
+		bGeoNew = true;
+	} else {
+		bGeoNew = false;
 	}
 	
-	printString = "Got "+ofToString(xmlResponse.getNumTags("photo"))+" photos.\nThe latest id is "+latest.id+"\nwhich was taken at "+latest.dateString;
+	printTagString = "Got "+ofToString(xmlResponse.getNumTags("photo"))+" photos.\nThe latest id is "+latestSearch.id+"\nwhich was taken at "+latestSearch.dateString;
+	
+	xmlResponse.popTag();
+	xmlResponse.popTag();
+}
+
+//--------------------------------------------------------------
+void testApp::geoResponse(ofxHttpResponse & response){
+	lastGeo = latestGeo;
+	
+	lastGeoSearch = ofGetElapsedTimeMillis();
+	bGeoSearching = false;
+	
+	ofxXmlSettings xmlResponse;
+	xmlResponse.loadFromBuffer(response.responseBody);
+	
+	cout<< response.responseBody<< endl;
+	
+	xmlResponse.pushTag("rsp");
+	xmlResponse.pushTag("photos");
+	
+	latestGeo.id = xmlResponse.getAttribute("photo", "id", "");
+	latestGeo.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
+	latestGeo.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
+	
+	if (latestGeo.id != lastGeo.id){
+		cout<<"NEW PHOTO! "<<latestGeo.url<<endl;
+		ofxOscMessage m;
+		m.setAddress("/pluginplay/flickr");
+		m.addStringArg(latestGeo.url);
+		sender.sendMessage(m);
+		bTagNew = true;
+	} else {
+		bTagNew = false;
+	}
+	
+	printGeoString = "Got "+ofToString(xmlResponse.getNumTags("photo"))+" photos.\nThe latest id is "+latestGeo.id+"\nwhich was taken at "+latestGeo.dateString;
 	
 	xmlResponse.popTag();
 	xmlResponse.popTag();
@@ -87,14 +151,29 @@ void testApp::geoResponse(ofxHttpResponse & response){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	if (ofGetElapsedTimeMillis() - lastSearch > SEARCH_TIME && !bSearching){
-		doSearch();
+	if (ofGetElapsedTimeMillis() - lastGeoSearch > SEARCH_TIME && !bGeoSearching){
+		doGeoSearch();
+	}
+	if (ofGetElapsedTimeMillis() - lastTagSearch > SEARCH_TIME && !bTagSearching){
+		doTagSearch();
 	}
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	ofDrawBitmapString(printString, 20, 20);
+	if (bGeoNew){
+		ofSetColor(255,0,0);
+	} else {
+		ofSetColor(255,255,255);
+	}
+	ofDrawBitmapString(printGeoString, 20, 20);
+	
+	if (bTagNew){
+		ofSetColor(255,0,0);
+	} else {
+		ofSetColor(255,255,255);
+	}
+	ofDrawBitmapString(printTagString, 20, 100);
 }
 
 //--------------------------------------------------------------

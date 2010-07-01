@@ -57,7 +57,7 @@ public:
 	
 	//get a list of nearby venues via a lat and long
 	
-	void getVenues( string geolat, string geolong, int numResults=50, string searchWord = "" ){
+	void getVenues( string geolat, string geolong, int numResults=100, string searchWord = "" ){
 		queryType = FOURSQUARE_QUERY_VENUES;
 		if (isThreadRunning()) stopThread();
 		queryURL = "http://api.foursquare.com/v1/venues?geolat="+(geolat)+"&geolong="+(geolong)+"&l="+ofToString(numResults)+"&q="+searchWord;
