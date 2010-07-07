@@ -16,7 +16,7 @@
 #define API_KEY "9d2a1eeb72830f58dd77d56672a3e54b"
 #define SECRET "076ac459ed1b2cc9"
 
-#define SEARCH_TIME 5000
+#define SEARCH_TIME 10000
 
 class FlickrPhoto
 {

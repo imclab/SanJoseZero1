@@ -9,9 +9,17 @@
 
 #pragma once
 #include "ofMain.h"
+#include "ofEvents.h"
 #include "Particle.h"
 
 #define EMITTER_TIME 500
+
+class ParticleEventArgs : public ofEventArgs {
+	public:
+		ofPoint loc;
+		string name;
+		string address;
+};
 
 class Emitter
 {
@@ -23,6 +31,10 @@ public:
 	
 	void addMessageString( string msg ){
 		messageStrings.push_back(msg);
+	}
+	
+	void setName (string _name){
+		name = _name;
 	}
 	
 	void setLoc( float x, float y){
@@ -37,19 +49,30 @@ public:
 	}
 	
 	void update(){
+		static ParticleEventArgs particleArgs;
 		for (int i=particles.size()-1; i>=0; i--){
-			particles[i]->update();
-			if (!particles[i]->alive()) particles.erase(particles.begin()+i);
+			particles[i].update();
+			if (!particles[i].alive()){
+				particleArgs.loc.x = loc.x;
+				particleArgs.loc.y = particles[i].loc.y;
+				particleArgs.name = name;				
+				particleArgs.address = messageStrings[0];
+				ofNotifyEvent(particleLeft, particleArgs, this);
+				//Particle toDelete = particles[i];
+				particles.erase(particles.begin()+i);
+				//delete toDelete;
+			}
 		}
 	};
 	
 	void emit( int index = 0){
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			cout <<"emit!"<<endl;
-			Particle * part = new Particle();
-			part->setLoc(0, ofGetHeight());
+			Particle part;
+			part.setLoc(0, ofGetHeight());
 			if (index > images.size()-1 || lastFoundString < 0) index = 0;
-			part->setImage(images[index]);
+			part.setImage(images[index]);
+			part.setScale(.25);
 			particles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
@@ -60,7 +83,7 @@ public:
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			for (int i=0; i<particles.size(); i++){
-				particles[i]->draw();
+				particles[i].draw();
 			}
 		} ofPopMatrix();
 	};
@@ -78,9 +101,12 @@ public:
 	vector<string> messageStrings;
 	int lastFoundString;
 	
+	ofEvent<ParticleEventArgs> particleLeft;
+	
 private:
 	vector<ofImage *> images;
-	vector <Particle *> particles;
+	vector <Particle> particles;
 	int lastEmitted;
 	ofPoint loc;
+	string name;
 };

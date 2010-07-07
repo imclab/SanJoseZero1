@@ -18,6 +18,7 @@ public:
 	
 	Particle(){
 		bAlive = true;
+		scale = 1.0f;
 	}
 	
 	int getWidth(){
@@ -28,6 +29,10 @@ public:
 		img = _img;
 	}
 	
+	void setScale( float _scale){
+		scale = _scale;
+	}
+	
 	void setLoc( float x, float y){
 		loc.x = x;
 		loc.y = y;
@@ -35,10 +40,14 @@ public:
 	
 	void update(){
 		loc.y -= SPEED;
-		if (loc.y + img->height < 0) bAlive = false;
+		if (loc.y + img->height <= 0) bAlive = false;
 	}
 	void draw(){ 
-		img->draw(loc.x, loc.y);
+		ofPushMatrix();{
+			ofTranslate(loc.x, loc.y);
+			ofScale(scale, scale, scale);
+			img->draw(-getWidth()/2.0,-getWidth()/2.0);
+		} ofPopMatrix();
 	};
 	
 	bool alive(){ return bAlive; };
@@ -48,6 +57,7 @@ private:
 	
 	bool bAlive;
 	ofImage * img;
+	float scale;
 	
 	
 };

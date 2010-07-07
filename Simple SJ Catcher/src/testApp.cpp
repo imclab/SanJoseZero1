@@ -18,15 +18,16 @@ void testApp::setup(){
 	settings.pushTag("settings");
 	
 	int numReceivers = settings.getNumTags("receiver");
-	
+		
 	// Loops through directories '0' through '9'.
-	for (int i=0; i<10; i++) {
+	for (int i=0; i<numReceivers; i++) {
 		
 		Emitter * e = new Emitter();
 		e->setLoc(ofGetWidth()/9.0 * i,0);
 		
 		if (i <numReceivers){			
 			settings.pushTag("receiver", i);
+				e->setName(settings.getValue("name", "") );
 			for (int j=0; j<settings.getNumTags("message"); j++){
 				settings.pushTag("message", j);
 					e->addMessageString(settings.getValue("messageString", ""));
@@ -36,12 +37,31 @@ void testApp::setup(){
 			}
 			settings.popTag();
 		};
+		//add listener for particles leaving screen
+		ofAddListener(e->particleLeft, this, &testApp::elementLeftScreen);
 		
 		emitters.push_back(e);
 	}	
 	
-	settings.popTag();
+	//get host + port for sender
 	
+	string host = "localhost";
+	int port = 12345;
+	
+	settings.pushTag("sender");{
+		host = settings.getValue("host","localhost");
+		port = settings.getValue("port",12000);
+	} settings.popTag();
+	
+	settings.popTag();
+
+	
+	cout << "setting up sender at "<<host<<","<<port<<endl;
+	cout << "there are " << emitters.size() << endl;
+	
+	//setup OSC
+	sender.setup(host, port);
+		
 	/*
 	emitters[0]->addMessageString("/pluginplay/picnictable");
 	emitters[1]->addMessageString("/pluginplay/megaphone");
@@ -53,8 +73,8 @@ void testApp::setup(){
 	emitters[7]->addMessageString("/pluginplay/flickr");
 	emitters[8]->addMessageString("/pluginplay/foursquare");
 	emitters[8]->addMessageString("/pluginplay/foursquare/nearby");
-	 */
-	//emitters[9]->addMessageString ("/pluginplay/");
+	emitters[9]->addMessageString ("/pluginplay/");
+	*/
 }
 
 //--------------------------------------------------------------
@@ -124,6 +144,14 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+	
+	//no perspective screen
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, ofGetWidth(), 0, ofGetHeight(), -100, 2000);
+	glMatrixMode(GL_MODELVIEW);
+	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
+	
 	//emitterz
 	// draw a quad that fills the whole screen
 	glBegin(GL_QUADS);{
@@ -183,4 +211,12 @@ void testApp::windowResized(int w, int h){
 	
 }
 
+//--------------------------------------------------------------
+void testApp::elementLeftScreen( ParticleEventArgs & args ){
+	ofxOscMessage m;
+	m.setAddress(args.address);
+	m.addIntArg(args.loc.x);
+	sender.sendMessage(m);
+	
+};
 

@@ -92,6 +92,8 @@ void testApp::tagResponse(ofxHttpResponse & response){
 	xmlResponse.pushTag("rsp");
 	xmlResponse.pushTag("photos");
 	
+	if (xmlResponse.getNumTags("photo") <= 0) return;
+	
 	latestSearch.id = xmlResponse.getAttribute("photo", "id", "");
 	//latestSearch.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
 	latestSearch.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
@@ -127,7 +129,7 @@ void testApp::geoResponse(ofxHttpResponse & response){
 	
 	xmlResponse.pushTag("rsp");
 	xmlResponse.pushTag("photos");
-	
+	if (xmlResponse.getNumTags("photo")  <= 0) return;
 	latestGeo.id = xmlResponse.getAttribute("photo", "id", "");
 	latestGeo.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
 	latestGeo.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
@@ -198,7 +200,11 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+	ofxOscMessage m;
+	m.setAddress("/pluginplay/flickr");
+	m.addStringArg(latestSearch.url);
+	sender.sendMessage(m);
+	
 }
 
 //--------------------------------------------------------------

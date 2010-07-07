@@ -28,12 +28,15 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	
+	void elementLeftScreen( ParticleEventArgs & args );
+	
 	ofTrueTypeFont			font;	
 	vector<Emitter *>		emitters;	
 	
 private:
 	bool			bDrawDebug;
 	ofxOscReceiver	receiver;
+	ofxOscSender	sender;
 	
 	int				current_msg_string;
 	string			msg_strings[NUM_MSG_STRINGS];

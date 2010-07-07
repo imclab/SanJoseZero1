@@ -1,0 +1,19 @@
+8
+
+dir
+60
+svn+ssh://svn.stefanix.net/home/noema/svn/openFrameworks/libs/curl/include
+svn+ssh://svn.stefanix.net/home/noema/svn/openFrameworks
+
+
+
+2007-12-06T06:41:53.643392Z
+60
+noema
+
+
+svn:special svn:externals svn:needs-lock
+
+curl
+dir
+

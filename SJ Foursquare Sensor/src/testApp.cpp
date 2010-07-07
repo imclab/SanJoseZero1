@@ -137,7 +137,11 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+	ofxOscMessage m;
+	m.setAddress("/pluginplay/foursquare");
+	m.addStringArg(venueDetails.getCurrentVenue()->getName());
+	m.addIntArg(venueDetails.getCurrentVenue()->getHereNow());
+	sender.sendMessage(m);
 }
 
 //--------------------------------------------------------------

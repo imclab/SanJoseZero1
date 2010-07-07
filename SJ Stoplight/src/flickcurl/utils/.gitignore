@@ -1,0 +1,10 @@
+*.lo
+*.o
+.deps
+.libs
+codegen
+flickcurl
+flickrdf
+list-methods
+search-photos
+methods.lst*
