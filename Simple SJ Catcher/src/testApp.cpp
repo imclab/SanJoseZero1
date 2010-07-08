@@ -215,7 +215,7 @@ void testApp::windowResized(int w, int h){
 void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	ofxOscMessage m;
 	m.setAddress(args.address);
-	m.addIntArg(args.loc.x);
+	m.addIntArg( ofRandom(100, ofGetWidth()));//args.loc.x);
 	sender.sendMessage(m);
 	
 };

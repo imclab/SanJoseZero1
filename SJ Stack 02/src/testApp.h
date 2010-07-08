@@ -24,7 +24,7 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 		
-		vector<Emitter *>		emitters;	
+		Emitter * particleManager;
 		
 		ofxLight light1; //this will be a directional light
 		ofxLight light2; //this one a spot light

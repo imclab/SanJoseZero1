@@ -8,35 +8,7 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(120);
 	
-	//load messagestrings from xml
-	ofxXmlSettings settings;
-	settings.loadFile("settings.xml");
-	settings.pushTag("settings");
-	
-	int numReceivers = settings.getNumTags("receiver");
-	
-	// Loops through directories '0' through '9'.
-	for (int i=0; i<numReceivers; i++) {
-		
-		Emitter * e = new Emitter();
-		e->setLoc(ofGetWidth()/9.0 * i,0);
-		
-		if (i <numReceivers){			
-			settings.pushTag("receiver", i);
-			e->setName(settings.getValue("name", "") );
-			for (int j=0; j<settings.getNumTags("message"); j++){
-				settings.pushTag("message", j);
-				e->addMessageString(settings.getValue("messageString", ""));
-				e->loadModel(ofToDataPath(settings.getValue("image", "")), 5.0);
-				cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
-				settings.popTag();
-			}
-			settings.popTag();
-		};
-		
-		emitters.push_back(e);
-	}
-	settings.popTag();
+	particleManager = new Emitter();
 	
 	//lights
 	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
@@ -52,7 +24,7 @@ void testApp::setup(){
 	float L1DirectionY = 1;
 	float L1DirectionZ = 0;
 	
-	light1.directionalLight(225, 225, 225, L1DirectionX, L1DirectionY, L1DirectionZ);
+	light1.directionalLight(255, 255, 255, L1DirectionX, L1DirectionY, L1DirectionZ);
 	
 	//light2
 	float L2ConeAngle = 90;
@@ -89,28 +61,18 @@ void testApp::update(){
 		
 		bool bFound = false;
 		
-		for (int i=0; i<emitters.size(); i++){
-			if (emitters[i]->checkMessageString(m.getAddress())){
-				emitters[i]->emit(emitters[i]->lastFoundString);
-				bFound = true;
-				break;
-			}
-		}
+		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsInt32(0));
 		
-		// unrecognized message: display on screen
 		if (!bFound)
 		{
+			cout << "did not recognize: "<<m.getAddress()<<endl;
 			// unrecognized message
 		}
-		
-	}
+	};
 	
-	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->update();
-	}
-	
+	particleManager->update();
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));
-}
+};
 
 //--------------------------------------------------------------
 void testApp::draw(){
@@ -122,7 +84,9 @@ void testApp::draw(){
 	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
 	
 	ofxLightsOn();
-	// draw a quad that fills the whole screen
+	
+	// draw background gradient
+	
 	glBegin(GL_QUADS);{
 		glColor3f( .5f, .5f, .75f );
 		glVertex3f( 0.0f, 0.0f, 0.0f );
@@ -131,21 +95,18 @@ void testApp::draw(){
 		glVertex3f( ofGetWidth(), ofGetHeight(), 0.0f );
 		glVertex3f( 0.0f, ofGetHeight(), 0.0f );
 	} glEnd();
-	
-	//floor
-	ofSetColor(0x333333);
-	ofRect(0,0,ofGetWidth(), emitters[0]->originalCeiling);	
-	
+		
 	glEnable(GL_DEPTH_TEST);
-	
 	ofSetColor(0xffffff);
 	ofEnableAlphaBlending();
-	//draw particles
-	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->draw();
-	}
+	ofPushMatrix();{
+		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
+		//ofRotateY(60);
+		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
+		//draw particles
+		particleManager->draw();	
+	} ofPopMatrix();
 	ofDisableAlphaBlending();
-	
 	glDisable(GL_DEPTH_TEST);
 	
 	ofxLightsOff();

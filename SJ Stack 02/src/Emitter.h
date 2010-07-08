@@ -9,155 +9,173 @@
 
 #pragma once
 #include "ofMain.h"
-#include "ofEvents.h"
-#include "Particle.h"
 #include "ofx3DModelLoader.h"
-
-#define EMITTER_TIME 500
-#define ROTATE_TIME 5000
-
-class ParticleEventArgs : public ofEventArgs {
-	public:
-		ofPoint loc;
-		string name;
-		string address;
-};
+#include "ofxXmlSettings.h"
+#include "BuildingRow.h"
+#include "BuildingType.h"
+#include "Globals.h"
 
 class Emitter
 {
 public:
+	
 	Emitter(){
-		lastEmitted = ofGetElapsedTimeMillis();
-		lastFoundString = 0;
-		ceiling = originalCeiling = 400;
-		lastRotated = ofGetElapsedTimeMillis();
-		rotateAmount = 0;
-		baseLoc = 0;
+		//lastRotated = ofGetElapsedTimeMillis();
+		
+		//setup different building types
+		
+		ofxXmlSettings settings;
+		settings.loadFile("settings.xml");
+		settings.pushTag("settings");
+		
+		int numReceivers = settings.getNumTags("receiver");
+		for (int i=0; i<numReceivers; i++) {
+			
+			BuildingType * b = new BuildingType();
+			
+			//set base emitting positions
+			b->setPosition( 25 + (float)(ofGetWidth()/numReceivers)*i, ofGetHeight() + 25 );
+						
+			if (i <numReceivers){			
+				settings.pushTag("receiver", i);
+				//b->setName(settings.getValue("name", "") );
+				
+				for (int j=0; j<settings.getNumTags("message"); j++){
+					settings.pushTag("message", j);
+						b->addMessageString(settings.getValue("messageString", ""));
+						for (int k=0; k<settings.getNumTags("image"); k++){
+							b->loadModel(ofToDataPath(settings.getValue("image", "", k)), 5.0);
+						}
+						//cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
+					settings.popTag();
+				}
+				settings.popTag();
+			};
+			
+			types.push_back(b);
+		}
+		settings.popTag();
+		
+		//set up old rows
+		int increment = 90/ROTATE_AMOUNT;
+		
+		for (int i=1; i<=increment; i++){
+			BuildingRow * dum = new BuildingRow(500);
+			dum->rotation.x = 270 + ROTATE_AMOUNT*i;
+			oldRows.push_back(dum);
+		};
+		
+		//fill up with 2 more
+		
+		BuildingRow * dum1 = new BuildingRow(500);
+		dum1->rotation.x = 360;
+		dum1->pos.y -= dum1->getSize().y-20;
+		oldRows.push_back(dum1);
+		
+		BuildingRow * dum2 = new BuildingRow(500);
+		dum2->rotation.x = 360;
+		dum2->pos.y -= dum2->getSize().y-20;
+		dum2->pos.y -= dum2->getSize().y-20;
+		oldRows.push_back(dum2);
+		
+		//set up new row		
+		currentRow = new BuildingRow(500);
 	};
-	
-	void addMessageString( string msg ){
-		messageStrings.push_back(msg);
-	}
-	
-	void setName (string _name){
-		name = _name;
-	}
-	
-	void setLoc( float x, float y){
-		loc.x = x;
-		loc.y = y;
-	}
-	
-	void loadImage( string image ){
-		ofImage * img = new ofImage();
-		//img.loadImage(image);
-		images.push_back(img);
-	}
-	
-	void loadModel( string _model, float scale ){
-		ofx3DModelLoader * model = new ofx3DModelLoader();
-		model->loadModel(_model, 1.0);
-		model->setScale(scale, scale, scale);
-		//img.loadImage(image);
-		models.push_back(model);
-	}
+
+/***********************************************************
+	UPDATE + DRAW
+***********************************************************/
 	
 	void update(){
+		//1 - see if it's time to rotate the rows
 		if (ofGetElapsedTimeMillis() - lastRotated > ROTATE_TIME){
-			rotateAmount = 30;
-			ceiling = originalCeiling;
+			rotateAmount = ROTATE_AMOUNT;			
 			lastRotated = ofGetElapsedTimeMillis();
-			vector <Particle> realCurrent;
-			for (int i=0; i<currentStack.size(); i++){
-				realCurrent.push_back(currentStack[i]);
-			}
-			if (currentStack.size() > 0){
-				baseLoc += ofRandom(-50, 50);
-				if (baseLoc < 0) baseLoc += 100;
-				else if (baseLoc > ofGetWidth()) baseLoc -= 100;
-			}
-			currentStack.clear();
-			deadParticles.push_back(realCurrent);
-		}
+			newRow();
+		}		
 		
-		for (int j=0; j<particles.size(); j++){
-			particles[j].setCeiling(ceiling);
-		}
-		
+		//2 - rotate
 		if (rotateAmount > 0){
-			for (int i=deadParticles.size()-1; i>=0; i--){
-				
-				for (int j=0; j<deadParticles[i].size(); j++){
-					if (j != 0){
-						deadParticles[i][j].loc.y = deadParticles[i][0].loc.y;
-						deadParticles[i][j].index = j;
-					}
-					if (deadParticles[i][j].rotate.x < 100){
-						deadParticles[i][j].rotate.x += 1;
-						deadParticles[i][j].rotate.z += 10.0/90.0f;
-						deadParticles[i][j].loc.y -= deadParticles[i][j].getWidth()/50.0f;
-					} else {
-						deadParticles[i][j].loc.y -= deadParticles[i][j].getWidth()/25.0f;
-					}
+			for (int i=oldRows.size()-1; i>=0; i--){
+				if (oldRows[i]->rotation.x < 360){
+					oldRows[i]->rotation.x += ROTATE_INCREMENT;
+					//oldRows[i].rotate.z += 10.0/90.0f;
+					//oldRows[i].pos.y -= deadBuildings[i][j].getWidth()/50.0f;
+				} else {
+					oldRows[i]->pos.y -= oldRows[i]->getSize().y/(ROTATE_AMOUNT/ROTATE_INCREMENT);
 				}
 				//off screen
-				if (deadParticles[i][deadParticles[i].size()-1].loc.y < -100){
-					deadParticles.erase(deadParticles.begin()+i);
+				if (oldRows[i]->pos.y < -100){
+					oldRows.erase(oldRows.begin()+i);
 				}
 			}
-			rotateAmount -= 1;
+			rotateAmount -= ROTATE_INCREMENT;
 		}
 		
-		for (int i=particles.size()-1; i>=0; i--){
-			bool wasAlive = particles[i].alive();
-			particles[i].update();
-			if (wasAlive && !particles[i].alive()){			
-				ceiling = particles[i].loc.y + particles[i].getWidth();
-				currentStack.push_back(particles[i]);
-				particles.erase(particles.begin()+i);
+		//2 - update current row
+		currentRow->update();
+		
+		//3 - update ceiling
+		for (int i=0; i<buildings.size(); i++){
+			buildings[i]->setCeiling(currentRow->getCeiling(buildings[i]->getWhichStack()));
+		}
+		
+		//4 - update moving particles
+		for (int i=buildings.size()-1; i>=0; i--){
+			bool bWasAlive = buildings[i]->alive();
+			buildings[i]->update();
+			
+			//hit ceiling! add to stack, remove from current vector + update ceilings of all particles
+			if (bWasAlive && !buildings[i]->alive()){	
+				currentRow->addToStack( buildings[i] );
+				buildings.erase(buildings.begin()+i);
 				
-				for (int j=0; j<particles.size(); j++){
-					particles[j].setCeiling(ceiling);
+				for (int j=0; j<buildings.size(); j++){
+					buildings[j]->setCeiling( currentRow->getCeiling( buildings[j]->getWhichStack() ) );
 				}
 			}
 		}
 	};
-	
-	void emit( int index = 0){
-		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
-			cout <<"emit!"<<endl;
-			Particle part;
-			part.setLoc(baseLoc, ofGetHeight());
-			part.setCeiling(ceiling);
-			if (index > models.size()-1 || lastFoundString < 0) index = 0;
-			//part.setImage(images[index]);
-			part.setImage(models[index]);
-			particles.push_back(part);
-			lastEmitted = ofGetElapsedTimeMillis();
-		}
-		cout <<"too soon!"<<endl;
-	}
 	
 	void draw(){
 		ofPushMatrix();{
-			ofTranslate(loc.x, loc.y);
-			for (int i=0; i<particles.size(); i++){
-				particles[i].draw();
+			
+			for (int i=0; i<oldRows.size(); i++){
+				oldRows[i]->draw();
 			}
-			for (int i=0; i<currentStack.size(); i++){
-				currentStack[i].draw();
-			}
-			for (int i=0; i<deadParticles.size(); i++){
-				for (int j=0; j<deadParticles[i].size(); j++){
-					deadParticles[i][j].draw();
-				}
+			
+			currentRow->draw();
+						
+			for (int i=0; i<buildings.size(); i++){
+				buildings[i]->draw();
 			}
 		} ofPopMatrix();
+	};	
+	
+	void newRow(){
+		oldRows.push_back( currentRow );
+		currentRow = new BuildingRow(500);
 	};
 	
-	bool checkMessageString(string msg){
-		for (int i=0; i<messageStrings.size(); i++){
-			if (messageStrings[i] == msg){
+/***********************************************************
+	MANAGE ASSETS
+***********************************************************/
+		
+	bool checkMessageString(string msg, float position){
+		for (int i=0; i<types.size(); i++){
+			int messageIndex = types[i]->checkMessageString(msg);
+			if (messageIndex >= 0){		
+				
+				//try to emit
+				if (types[i]->emit()){
+					Building * part = new Building();
+					Stack * stack = currentRow->getClosestStack(position);
+					part->setStackIndex(stack->index);
+					part->setPos( stack->getPosition().x , types[i]->getPosition().y, 0 );
+					part->setCeiling( currentRow->getCeiling(stack->index) );					
+					part->setImage( types[i]->getModel(messageIndex) );
+					buildings.push_back(part);
+				}				
 				lastFoundString = i;
 				return true;
 			}
@@ -165,23 +183,21 @@ public:
 		return false;
 	}
 	
-	vector<string> messageStrings;
 	int lastFoundString;
-	
-	ofEvent<ParticleEventArgs> particleLeft;
 	float originalCeiling;
 	
 private:
-	vector<ofImage *> images;
-	vector<ofx3DModelLoader *> models;
-	vector <Particle> particles;
-	vector <Particle> currentStack;
-	vector <vector <Particle> > deadParticles;
-	int lastEmitted;
-	ofPoint loc;
-	string name;
-	float ceiling;
-	float baseLoc;
+	//vector <Building> particles;
+	//vector <Building> currentStack;
+	//vector <vector <Building> > deadBuildings;
+	
+	vector <Building *> buildings;
+	BuildingRow * currentRow;
+	vector<BuildingRow *> oldRows;	
+	
+	vector <BuildingType *> types;	
+	
+	float basepos;
 	
 	float rotateAmount;
 	int lastRotated;
