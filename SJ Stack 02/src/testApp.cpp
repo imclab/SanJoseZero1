@@ -77,11 +77,44 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	//no perspective screen
+	/*
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, ofGetWidth(), 0, ofGetHeight(), -100, 2000);
 	glMatrixMode(GL_MODELVIEW);
 	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
+	*/
+	
+	//light perspective screen
+	int w, h;
+	
+	w = ofGetWidth();
+	h = ofGetHeight();
+	
+	float halfFov, theTan, screenFov, aspect;
+	screenFov 		= 40.0f; //adjust this to alter the perspective
+	
+	//do other normal set up
+	
+	float eyeX 		= (float)w / 2.0;
+	float eyeY 		= (float)h / 2.0;
+	halfFov 		= PI * screenFov / 360.0;
+	theTan 			= tanf(halfFov);
+	float dist 		= eyeY / theTan;
+	float nearDist 	= dist / 50.0;	// near / far clip plane
+	float farDist 	= dist * 50.0;
+	aspect 			= (float)w/(float)h;
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(screenFov, aspect, nearDist, farDist);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
+	
+	glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+  	glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
 	
 	ofxLightsOn();
 	
@@ -134,7 +167,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+	particleManager->emitRandom();
 }
 
 //--------------------------------------------------------------
