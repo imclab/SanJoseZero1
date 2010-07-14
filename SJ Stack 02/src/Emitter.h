@@ -157,6 +157,12 @@ public:
 		currentRow = new BuildingRow(500);
 	};
 	
+	void emitRandom( ){
+		int ran = (int) ofRandom(0, types.size());
+		
+		checkMessageString(types[ran]->getRandomMessageString(), ofRandom(0, ofGetWidth()));
+	};
+	
 /***********************************************************
 	MANAGE ASSETS
 ***********************************************************/

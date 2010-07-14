@@ -38,6 +38,10 @@ public:
 		return emitPosition;
 	}
 	
+	string getRandomMessageString(){
+		return messageStrings[(int)ofRandom(0, messageStrings.size())];
+	}
+	
 	void addMessageString( string msg ){
 		messageStrings.push_back(msg);
 	};
