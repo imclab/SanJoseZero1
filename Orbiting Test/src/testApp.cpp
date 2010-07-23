@@ -4,6 +4,8 @@ bool comparisonFunction( particle * a, particle * b ) {
 	return a->mass > b->mass; 
 }  
 
+//jg change to test commit
+
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofBackground(0,0,0);
