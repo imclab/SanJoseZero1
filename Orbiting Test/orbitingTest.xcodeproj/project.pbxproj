@@ -39,6 +39,14 @@
 		E4C242CD10CC650E004149E2 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C242CC10CC650E004149E2 /* libfmodex.dylib */; };
 		E4C2443910CC7693004149E2 /* openFrameworks-Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */; };
 		E4C246DA10CCAE22004149E2 /* freeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C246D910CCAE22004149E2 /* freeimage.a */; };
+		E7E3244811FA30C700DE53E2 /* LineGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E3244611FA30C700DE53E2 /* LineGenerator.cpp */; };
+		E7E3270911FA551B00DE53E2 /* ofxFBOTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E326F011FA551B00DE53E2 /* ofxFBOTexture.cpp */; };
+		E7E3270A11FA551B00DE53E2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E326F611FA551B00DE53E2 /* main.cpp */; };
+		E7E3270B11FA551B00DE53E2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E326F711FA551B00DE53E2 /* testApp.cpp */; };
+		E7E3270C11FA551B00DE53E2 /* ofxMSASpline2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E326FE11FA551B00DE53E2 /* ofxMSASpline2D.cpp */; };
+		E7E3270D11FA551B00DE53E2 /* ofxMSASpline3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E3270011FA551B00DE53E2 /* ofxMSASpline3D.cpp */; };
+		E7E3270E11FA551B00DE53E2 /* ofxMSASurface3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E3270411FA551B00DE53E2 /* ofxMSASurface3D.cpp */; };
+		E7E3270F11FA551B00DE53E2 /* ofShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7E3270711FA551B00DE53E2 /* ofShader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +144,30 @@
 		E4C2429310CC5C38004149E2 /* freetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freetype.a; path = ../../../libs/freetype/lib/osx/freetype.a; sourceTree = SOURCE_ROOT; };
 		E4C242CC10CC650E004149E2 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = ../../../libs/fmodex/lib/osx/libfmodex.dylib; sourceTree = SOURCE_ROOT; };
 		E4C246D910CCAE22004149E2 /* freeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freeimage.a; path = ../../../libs/FreeImage/lib/osx/freeimage.a; sourceTree = SOURCE_ROOT; };
+		E7E3244611FA30C700DE53E2 /* LineGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineGenerator.cpp; sourceTree = "<group>"; };
+		E7E3244711FA30C700DE53E2 /* LineGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineGenerator.h; sourceTree = "<group>"; };
+		E7E3266211FA50B100DE53E2 /* ShardComposite.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ShardComposite.frag; path = bin/data/ShardComposite.frag; sourceTree = SOURCE_ROOT; };
+		E7E3266311FA50B100DE53E2 /* ShardComposite.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ShardComposite.vert; path = bin/data/ShardComposite.vert; sourceTree = SOURCE_ROOT; };
+		E7E326F011FA551B00DE53E2 /* ofxFBOTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFBOTexture.cpp; sourceTree = "<group>"; };
+		E7E326F111FA551B00DE53E2 /* ofxFBOTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFBOTexture.h; sourceTree = "<group>"; };
+		E7E326F311FA551B00DE53E2 /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		E7E326F611FA551B00DE53E2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E7E326F711FA551B00DE53E2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testApp.cpp; sourceTree = "<group>"; };
+		E7E326F811FA551B00DE53E2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testApp.h; sourceTree = "<group>"; };
+		E7E326F911FA551B00DE53E2 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		E7E326FA11FA551B00DE53E2 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		E7E326FC11FA551B00DE53E2 /* ofxMSASpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASpline.h; sourceTree = "<group>"; };
+		E7E326FD11FA551B00DE53E2 /* ofxMSASpline1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASpline1D.h; sourceTree = "<group>"; };
+		E7E326FE11FA551B00DE53E2 /* ofxMSASpline2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSASpline2D.cpp; sourceTree = "<group>"; };
+		E7E326FF11FA551B00DE53E2 /* ofxMSASpline2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASpline2D.h; sourceTree = "<group>"; };
+		E7E3270011FA551B00DE53E2 /* ofxMSASpline3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSASpline3D.cpp; sourceTree = "<group>"; };
+		E7E3270111FA551B00DE53E2 /* ofxMSASpline3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASpline3D.h; sourceTree = "<group>"; };
+		E7E3270211FA551B00DE53E2 /* ofxMSASplineInterpolationTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASplineInterpolationTypes.h; sourceTree = "<group>"; };
+		E7E3270311FA551B00DE53E2 /* ofxMSASplineTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASplineTemplate.h; sourceTree = "<group>"; };
+		E7E3270411FA551B00DE53E2 /* ofxMSASurface3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSASurface3D.cpp; sourceTree = "<group>"; };
+		E7E3270511FA551B00DE53E2 /* ofxMSASurface3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSASurface3D.h; sourceTree = "<group>"; };
+		E7E3270711FA551B00DE53E2 /* ofShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofShader.cpp; sourceTree = "<group>"; };
+		E7E3270811FA551B00DE53E2 /* ofShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofShader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,6 +425,13 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E7E326EF11FA551B00DE53E2 /* ofxFBOTexture */,
+				E7E326F211FA551B00DE53E2 /* ofxMSASpline */,
+				E7E3270611FA551B00DE53E2 /* ofxShaderARB */,
+				E7E3266211FA50B100DE53E2 /* ShardComposite.frag */,
+				E7E3266311FA50B100DE53E2 /* ShardComposite.vert */,
+				E7E3244611FA30C700DE53E2 /* LineGenerator.cpp */,
+				E7E3244711FA30C700DE53E2 /* LineGenerator.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
@@ -486,6 +525,71 @@
 			path = ../../../libs/FreeImage/lib/osx;
 			sourceTree = SOURCE_ROOT;
 		};
+		E7E326EF11FA551B00DE53E2 /* ofxFBOTexture */ = {
+			isa = PBXGroup;
+			children = (
+				E7E326F011FA551B00DE53E2 /* ofxFBOTexture.cpp */,
+				E7E326F111FA551B00DE53E2 /* ofxFBOTexture.h */,
+			);
+			path = ofxFBOTexture;
+			sourceTree = "<group>";
+		};
+		E7E326F211FA551B00DE53E2 /* ofxMSASpline */ = {
+			isa = PBXGroup;
+			children = (
+				E7E326F311FA551B00DE53E2 /* changelog.txt */,
+				E7E326F411FA551B00DE53E2 /* example */,
+				E7E326F911FA551B00DE53E2 /* install.xml */,
+				E7E326FA11FA551B00DE53E2 /* LICENSE.txt */,
+				E7E326FB11FA551B00DE53E2 /* src */,
+			);
+			path = ofxMSASpline;
+			sourceTree = "<group>";
+		};
+		E7E326F411FA551B00DE53E2 /* example */ = {
+			isa = PBXGroup;
+			children = (
+				E7E326F511FA551B00DE53E2 /* src */,
+			);
+			path = example;
+			sourceTree = "<group>";
+		};
+		E7E326F511FA551B00DE53E2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E7E326F611FA551B00DE53E2 /* main.cpp */,
+				E7E326F711FA551B00DE53E2 /* testApp.cpp */,
+				E7E326F811FA551B00DE53E2 /* testApp.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E7E326FB11FA551B00DE53E2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E7E326FC11FA551B00DE53E2 /* ofxMSASpline.h */,
+				E7E326FD11FA551B00DE53E2 /* ofxMSASpline1D.h */,
+				E7E326FE11FA551B00DE53E2 /* ofxMSASpline2D.cpp */,
+				E7E326FF11FA551B00DE53E2 /* ofxMSASpline2D.h */,
+				E7E3270011FA551B00DE53E2 /* ofxMSASpline3D.cpp */,
+				E7E3270111FA551B00DE53E2 /* ofxMSASpline3D.h */,
+				E7E3270211FA551B00DE53E2 /* ofxMSASplineInterpolationTypes.h */,
+				E7E3270311FA551B00DE53E2 /* ofxMSASplineTemplate.h */,
+				E7E3270411FA551B00DE53E2 /* ofxMSASurface3D.cpp */,
+				E7E3270511FA551B00DE53E2 /* ofxMSASurface3D.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E7E3270611FA551B00DE53E2 /* ofxShaderARB */ = {
+			isa = PBXGroup;
+			children = (
+				E7E3270711FA551B00DE53E2 /* ofShader.cpp */,
+				E7E3270811FA551B00DE53E2 /* ofShader.h */,
+			);
+			path = ofxShaderARB;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -570,6 +674,14 @@
 				53B73F0111FA0B3100287726 /* ofxMatrix4x4.cpp in Sources */,
 				53B73F0211FA0B3100287726 /* ofxQuaternion.cpp in Sources */,
 				53D6A80911FA2A9700CA6599 /* particle.cpp in Sources */,
+				E7E3244811FA30C700DE53E2 /* LineGenerator.cpp in Sources */,
+				E7E3270911FA551B00DE53E2 /* ofxFBOTexture.cpp in Sources */,
+				E7E3270A11FA551B00DE53E2 /* main.cpp in Sources */,
+				E7E3270B11FA551B00DE53E2 /* testApp.cpp in Sources */,
+				E7E3270C11FA551B00DE53E2 /* ofxMSASpline2D.cpp in Sources */,
+				E7E3270D11FA551B00DE53E2 /* ofxMSASpline3D.cpp in Sources */,
+				E7E3270E11FA551B00DE53E2 /* ofxMSASurface3D.cpp in Sources */,
+				E7E3270F11FA551B00DE53E2 /* ofShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

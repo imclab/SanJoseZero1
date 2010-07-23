@@ -33,7 +33,13 @@ void testApp::setup(){
 	//	sprintf(filename, "mypng%5d.png", i);
 	//}
 	
+	int numlines = 200;
+	int nodesperline = 20;
+	lines.setup(numlines, nodesperline);
+	
 	ofEnableSmoothing();
+	ofSetLogLevel(OF_LOG_SILENT);
+	
 }
 
 //--------------------------------------------------------------
@@ -97,6 +103,8 @@ void testApp::update(){
 			}
 		}
 	}*/
+	
+	lines.update(particles);
 }
 
 //--------------------------------------------------------------
@@ -104,11 +112,18 @@ void testApp::draw(){
 	ofFill();
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	ofEnableAlphaBlending();
+	
+	ofPushStyle();
+	
+	lines.draw();
+	
+	ofPopStyle();
+	
+	ofPushStyle();
+	
 	ofSetColor(0,130,130, 200);
 	
-	
 	ofSetColor(0x000000);
-	
 	ofNoFill();
 	for (int i = 0; i < particles.size(); i++){
 		ofSetColor(0,0,0);
@@ -122,6 +137,10 @@ void testApp::draw(){
 		ofSetColor(255,0,0);
 		vortexes[v].v.draw();
 	}
+	
+	
+	ofPopStyle();
+	
 }
 
 //--------------------------------------------------------------

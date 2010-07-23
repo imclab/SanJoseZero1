@@ -4,7 +4,7 @@
 
 #include "ofMain.h"
 #include "particle.h"
-
+#include "LineGenerator.h"
 struct vort {
 	int dir;
 	particle v;
@@ -30,6 +30,8 @@ class testApp : public ofBaseApp{
 		vector <vort> vortexes;
 		
 		ofImage textures[10];
+	
+	LineGenerator lines;
 };
 
 #endif
