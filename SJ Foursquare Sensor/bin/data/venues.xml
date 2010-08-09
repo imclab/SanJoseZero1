@@ -2,6 +2,28 @@
 <venues>
     <group type="Trending Now">
         <venue>
+            <id>8980</id>
+            <name>Madison Square Park</name>
+            <primarycategory>
+                <id>79194</id>
+                <fullpathname>Parks &amp; Outdoors:Park</fullpathname>
+                <nodename>Park</nodename>
+                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
+            </primarycategory>
+            <address>23rd &amp; 26th St</address>
+            <crossstreet>btw 5th &amp; Madison Ave</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10010</zip>
+            <geolat>40.742274235036035</geolat>
+            <geolong>-73.98789882659912</geolong>
+            <stats>
+                <herenow>10</herenow>
+            </stats>
+            <phone>2125381884</phone>
+            <distance>831</distance>
+        </venue>
+        <venue>
             <id>19462</id>
             <name>New York Penn Station</name>
             <primarycategory>
@@ -10,92 +32,21 @@
                 <nodename>Subway</nodename>
                 <iconurl>http://foursquare.com/img/categories/travel/subway.png</iconurl>
             </primarycategory>
-            <address>7th Ave &amp; W 32nd St</address>
+            <address>7th Ave</address>
+            <crossstreet>btw 31st St &amp; 33rd St</crossstreet>
             <city>New York</city>
             <state>NY</state>
             <zip>10001</zip>
-            <geolat>40.750085490425846</geolat>
-            <geolong>-73.9932632446289</geolong>
+            <geolat>40.749987956993444</geolat>
+            <geolong>-73.99240493774414</geolong>
             <stats>
-                <herenow>64</herenow>
+                <herenow>50</herenow>
             </stats>
             <phone>2126306401</phone>
-            <distance>1644</distance>
-        </venue>
-        <venue>
-            <id>5372841</id>
-            <name>Heatpocalypse NYC</name>
-            <primarycategory>
-                <id>79193</id>
-                <fullpathname>Parks &amp; Outdoors:Other - Parks &amp; Outdoor</fullpathname>
-                <nodename>Other - Parks &amp; Outdoor</nodename>
-                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
-            </primarycategory>
-            <address>City Widt</address>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.731031244789854</geolat>
-            <geolong>-73.99163246154785</geolong>
-            <stats>
-                <herenow>131</herenow>
-            </stats>
-            <distance>482</distance>
+            <distance>1629</distance>
         </venue>
     </group>
     <group type="Nearby">
-        <venue>
-            <id>42247</id>
-            <name>Union Square Greenmarket</name>
-            <primarycategory>
-                <id>79235</id>
-                <fullpathname>Shops:Food &amp; Drink:Grocery / Supermarket</fullpathname>
-                <nodename>Grocery / Supermarket</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/food_grocery.png</iconurl>
-            </primarycategory>
-            <address>1 Union Square West</address>
-            <crossstreet>Btw 15th St &amp; 17th St</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>2127887476</phone>
-            <twitter>UnSqGreenmarket</twitter>
-            <distance>28</distance>
-        </venue>
-        <venue>
-            <id>22308</id>
-            <name>Whole Foods Market</name>
-            <primarycategory>
-                <id>79235</id>
-                <fullpathname>Shops:Food &amp; Drink:Grocery / Supermarket</fullpathname>
-                <nodename>Grocery / Supermarket</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/food_grocery.png</iconurl>
-            </primarycategory>
-            <address>4 Union Square South</address>
-            <crossstreet>btw Broadway &amp; University Pl</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.734930330654905</geolat>
-            <geolong>-73.99116039276123</geolong>
-            <stats>
-                <herenow>6</herenow>
-            </stats>
-            <specials>
-                <special>
-                    <id>22308</id>
-                    <type>frequency</type>
-                    <message>6/14 – 7/12: Get a free 16 oz. black tea lemonade for every 10th check-in. Redeem from 5 p.m. – 9 p.m. at our coffee bar.</message>
-                </special>
-            </specials>
-            <phone>2126735388</phone>
-            <twitter>WholeFoodsNYC</twitter>
-            <distance>62</distance>
-        </venue>
         <venue>
             <id>128496</id>
             <name>DSW</name>
@@ -113,7 +64,7 @@
             <geolat>40.7351326</geolat>
             <geolong>-73.9915547</geolong>
             <stats>
-                <herenow>2</herenow>
+                <herenow>0</herenow>
             </stats>
             <phone>2126742146</phone>
             <twitter>DSWShoeLovers</twitter>
@@ -161,23 +112,52 @@
             <distance>4</distance>
         </venue>
         <venue>
-            <id>4749041</id>
-            <name>Union Square Steps</name>
+            <id>5739400</id>
+            <name>Duane Reade</name>
             <primarycategory>
-                <id>79193</id>
-                <fullpathname>Parks &amp; Outdoors:Other - Parks &amp; Outdoor</fullpathname>
-                <nodename>Other - Parks &amp; Outdoor</nodename>
-                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
+                <id>79222</id>
+                <fullpathname>Shops:Drug Store / Pharmacy</fullpathname>
+                <nodename>Drug Store / Pharmacy</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/drugstore.png</iconurl>
             </primarycategory>
-            <address />
+            <address>52 E 14th St</address>
+            <crossstreet>btw 4th Ave &amp; Broadway</crossstreet>
             <city>New York</city>
-            <state>New York</state>
-            <geolat>40.73512056377714</geolat>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.73490106397246</geolat>
             <geolong>-73.99131059646606</geolong>
             <stats>
-                <herenow>1</herenow>
+                <herenow>0</herenow>
             </stats>
-            <distance>37</distance>
+            <specials>
+                <special>
+                    <id>5739400</id>
+                    <type>count</type>
+                    <message>For our grand opening in Union Square, we’re giving away a $10 gift card to the 1st 100 people that unlock this special. Gift cards must be redeemed from a store manager the same day it is unlocked.</message>
+                </special>
+            </specials>
+            <distance>57</distance>
+        </venue>
+        <venue>
+            <id>101107</id>
+            <name>Rockwell Group</name>
+            <primarycategory>
+                <id>79115</id>
+                <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+                <nodename>Corporate / Office</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+            </primarycategory>
+            <address>5 Union Square West</address>
+            <crossstreet>btw 14th &amp; 15th St</crossstreet>
+            <city>New York</city>
+            <state>NY</state>
+            <geolat>40.7353618</geolat>
+            <geolong>-73.9916264</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>0</distance>
         </venue>
         <venue>
             <id>95691</id>
@@ -200,46 +180,6 @@
             <distance>28</distance>
         </venue>
         <venue>
-            <id>70903</id>
-            <name>One Union Square</name>
-            <primarycategory>
-                <id>79196</id>
-                <fullpathname>Parks &amp; Outdoors:Plaza / Square</fullpathname>
-                <nodename>Plaza / Square</nodename>
-                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
-            </primarycategory>
-            <address>One Union Square</address>
-            <crossstreet>14th Street</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.735525</geolat>
-            <geolong>-73.991926</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>31</distance>
-        </venue>
-        <venue>
-            <id>101107</id>
-            <name>Rockwell Group</name>
-            <primarycategory>
-                <id>79115</id>
-                <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
-                <nodename>Corporate / Office</nodename>
-                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
-            </primarycategory>
-            <address>5 Union Square West</address>
-            <crossstreet>btw 14th &amp; 15th St</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.7353618</geolat>
-            <geolong>-73.9916264</geolong>
-            <stats>
-                <herenow>1</herenow>
-            </stats>
-            <distance>0</distance>
-        </venue>
-        <venue>
             <id>4096727</id>
             <name>Garden Of Eden Marketplace</name>
             <primarycategory>
@@ -257,25 +197,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>15</distance>
-        </venue>
-        <venue>
-            <id>3659868</id>
-            <name>Union Square Train Station</name>
-            <primarycategory>
-                <id>79282</id>
-                <fullpathname>Travel:Subway</fullpathname>
-                <nodename>Subway</nodename>
-                <iconurl>http://foursquare.com/img/categories/travel/subway.png</iconurl>
-            </primarycategory>
-            <address />
-            <city />
-            <state />
-            <geolat>40.735775</geolat>
-            <geolong>-73.991333</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>52</distance>
         </venue>
         <venue>
             <id>4008880</id>
@@ -298,6 +219,19 @@
             <distance>15</distance>
         </venue>
         <venue>
+            <id>3833975</id>
+            <name>Paragon Sports</name>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735299</geolat>
+            <geolong>-73.991678</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>8</distance>
+        </venue>
+        <venue>
             <id>2181414</id>
             <name>patty&apos;s tacos (truck)</name>
             <primarycategory>
@@ -317,6 +251,25 @@
             <distance>20</distance>
         </venue>
         <venue>
+            <id>3659868</id>
+            <name>Union Square Train Station</name>
+            <primarycategory>
+                <id>79282</id>
+                <fullpathname>Travel:Subway</fullpathname>
+                <nodename>Subway</nodename>
+                <iconurl>http://foursquare.com/img/categories/travel/subway.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735775</geolat>
+            <geolong>-73.991333</geolong>
+            <stats>
+                <herenow>1</herenow>
+            </stats>
+            <distance>52</distance>
+        </venue>
+        <venue>
             <id>73303</id>
             <name>Bank of America</name>
             <primarycategory>
@@ -333,23 +286,48 @@
             <geolat>40.7350489</geolat>
             <geolong>-73.992075</geolong>
             <stats>
-                <herenow>1</herenow>
+                <herenow>0</herenow>
             </stats>
             <phone>8008414000</phone>
             <distance>51</distance>
         </venue>
         <venue>
-            <id>3833975</id>
-            <name>Paragon Sports</name>
+            <id>3986278</id>
+            <name>Pattty&apos;s Tacos</name>
+            <primarycategory>
+                <id>79076</id>
+                <fullpathname>Food:Mexican</fullpathname>
+                <nodename>Mexican</nodename>
+                <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
+            </primarycategory>
             <address />
-            <city />
-            <state />
-            <geolat>40.735299</geolat>
-            <geolong>-73.991678</geolong>
+            <city>New York</city>
+            <state>NY</state>
+            <geolat>40.735269</geolat>
+            <geolong>-73.991526</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>8</distance>
+            <distance>13</distance>
+        </venue>
+        <venue>
+            <id>5883550</id>
+            <name>Union Square Park Mini Fountain</name>
+            <primarycategory>
+                <id>79194</id>
+                <fullpathname>Parks &amp; Outdoors:Park</fullpathname>
+                <nodename>Park</nodename>
+                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <city>New York</city>
+            <state>NY</state>
+            <geolat>40.73534006285762</geolat>
+            <geolong>-73.99126768112183</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>30</distance>
         </venue>
         <venue>
             <id>244953</id>
@@ -372,89 +350,34 @@
             <distance>36</distance>
         </venue>
         <venue>
-            <id>3986278</id>
-            <name>Pattty&apos;s Tacos</name>
+            <id>6158422</id>
+            <name>Lamman</name>
             <primarycategory>
-                <id>79076</id>
-                <fullpathname>Food:Mexican</fullpathname>
-                <nodename>Mexican</nodename>
+                <id>79110</id>
+                <fullpathname>Food:Vietnamese</fullpathname>
+                <nodename>Vietnamese</nodename>
                 <iconurl>http://foursquare.com/img/categories/food/default.png</iconurl>
-            </primarycategory>
-            <address />
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.735269</geolat>
-            <geolong>-73.991526</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>13</distance>
-        </venue>
-        <venue>
-            <id>927039</id>
-            <name>Crumbs Bake Shop</name>
-            <primarycategory>
-                <id>114948</id>
-                <fullpathname>Food:Cupcakes</fullpathname>
-                <nodename>Cupcakes</nodename>
-                <iconurl>http://foursquare.com/img/categories/food/cupcakes.png</iconurl>
-            </primarycategory>
-            <address>37 East 8th St</address>
-            <crossstreet>University/Broadway</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.735597</geolat>
-            <geolong>-73.991787</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>2126731500</phone>
-            <twitter>CrumbsBakeShop</twitter>
-            <distance>29</distance>
-        </venue>
-        <venue>
-            <id>4065509</id>
-            <name>Taxi 5G99</name>
-            <primarycategory>
-                <id>79999</id>
-                <fullpathname>Travel:Taxi</fullpathname>
-                <nodename>Taxi</nodename>
-                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
             </primarycategory>
             <address />
             <city />
             <state />
-            <geolat>40.735248</geolat>
-            <geolong>-73.991654</geolong>
+            <geolat>40.735184</geolat>
+            <geolong>-73.991548</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>12</distance>
+            <distance>20</distance>
         </venue>
         <venue>
-            <id>231632</id>
-            <name>PhotoManhattan</name>
+            <id>3360240</id>
+            <name>Reshma For Congress</name>
             <primarycategory>
-                <id>78960</id>
-                <fullpathname>Arts &amp; Entertainment:Art Gallery</fullpathname>
-                <nodename>Art Gallery</nodename>
-                <iconurl>http://foursquare.com/img/categories/arts_entertainment/artgallery.png</iconurl>
+                <id>96353</id>
+                <fullpathname>Home / Work / Other:Event Space</fullpathname>
+                <nodename>Event Space</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
             </primarycategory>
-            <address>51 14th St</address>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.7354654</geolat>
-            <geolong>-73.992258</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>54</distance>
-        </venue>
-        <venue>
-            <id>4454089</id>
-            <name>Union Square Area</name>
-            <address>union square</address>
+            <address>Union Square</address>
             <city>New York</city>
             <state>New York</state>
             <zip>10003</zip>
@@ -464,6 +387,25 @@
                 <herenow>0</herenow>
             </stats>
             <distance>28</distance>
+        </venue>
+        <venue>
+            <id>4285865</id>
+            <name>Jean Ferre Hair salon</name>
+            <primarycategory>
+                <id>79248</id>
+                <fullpathname>Shops:Salon / Barbershop</fullpathname>
+                <nodename>Salon / Barbershop</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/salon_barber.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735255</geolat>
+            <geolong>-73.991736</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>15</distance>
         </venue>
         <venue>
             <id>4732717</id>
@@ -488,26 +430,6 @@
             <distance>54</distance>
         </venue>
         <venue>
-            <id>3360240</id>
-            <name>Reshma For Congress</name>
-            <primarycategory>
-                <id>96353</id>
-                <fullpathname>Home / Work / Other:Event Space</fullpathname>
-                <nodename>Event Space</nodename>
-                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
-            </primarycategory>
-            <address>Union Square</address>
-            <city>New York</city>
-            <state>New York</state>
-            <zip>10003</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>28</distance>
-        </venue>
-        <venue>
             <id>894660</id>
             <name>15 Union Square West</name>
             <address />
@@ -519,6 +441,19 @@
                 <herenow>0</herenow>
             </stats>
             <distance>27</distance>
+        </venue>
+        <venue>
+            <id>4467180</id>
+            <name>Dr. Jays.com office</name>
+            <address />
+            <city>New York</city>
+            <state>NY</state>
+            <geolat>40.73537</geolat>
+            <geolong>-73.99179</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>13</distance>
         </venue>
         <venue>
             <id>1732678</id>
@@ -540,36 +475,6 @@
             <distance>45</distance>
         </venue>
         <venue>
-            <id>4467180</id>
-            <name>Dr. Jays.com office</name>
-            <address />
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.73537</geolat>
-            <geolong>-73.99179</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>13</distance>
-        </venue>
-        <venue>
-            <id>3710154</id>
-            <name>Webtrends Optimize Road Show</name>
-            <address>W Union Square, New York</address>
-            <crossstreet>201 Park Avenue South</crossstreet>
-            <city>New York</city>
-            <state>New York</state>
-            <zip>10001</zip>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <phone>2122539119</phone>
-            <twitter>clairedantoni</twitter>
-            <distance>28</distance>
-        </venue>
-        <venue>
             <id>4754845</id>
             <name>HMT Foods</name>
             <primarycategory>
@@ -587,6 +492,42 @@
                 <herenow>0</herenow>
             </stats>
             <distance>15</distance>
+        </venue>
+        <venue>
+            <id>4065509</id>
+            <name>Taxi 5G99</name>
+            <primarycategory>
+                <id>79999</id>
+                <fullpathname>Travel:Taxi</fullpathname>
+                <nodename>Taxi</nodename>
+                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735248</geolat>
+            <geolong>-73.991654</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>12</distance>
+        </venue>
+        <venue>
+            <id>3710154</id>
+            <name>Webtrends Optimize Road Show</name>
+            <address>W Union Square, New York</address>
+            <crossstreet>201 Park Avenue South</crossstreet>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10001</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <phone>2122539119</phone>
+            <twitter>clairedantoni</twitter>
+            <distance>28</distance>
         </venue>
         <venue>
             <id>1511558</id>
@@ -607,65 +548,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>0</distance>
-        </venue>
-        <venue>
-            <id>1350795</id>
-            <name>HSBC</name>
-            <primarycategory>
-                <id>79215</id>
-                <fullpathname>Shops:Bank / Financial</fullpathname>
-                <nodename>Bank / Financial</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/financial.png</iconurl>
-            </primarycategory>
-            <address>15 Union Sq W</address>
-            <crossstreet>at 15th St</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.735846</geolat>
-            <geolong>-73.9912046</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>64</distance>
-        </venue>
-        <venue>
-            <id>4249255</id>
-            <name>Taxi 2V47</name>
-            <primarycategory>
-                <id>79999</id>
-                <fullpathname>Travel:Taxi</fullpathname>
-                <nodename>Taxi</nodename>
-                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
-            </primarycategory>
-            <address />
-            <city>New York</city>
-            <state>New York</state>
-            <geolat>40.735032</geolat>
-            <geolong>-73.991028</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>62</distance>
-        </venue>
-        <venue>
-            <id>5027226</id>
-            <name>east side copies</name>
-            <primarycategory>
-                <id>79140</id>
-                <fullpathname>Home / Work / Other:Other - Buildings</fullpathname>
-                <nodename>Other - Buildings</nodename>
-                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
-            </primarycategory>
-            <address />
-            <city />
-            <state />
-            <geolat>40.73525</geolat>
-            <geolong>-73.991739</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>15</distance>
         </venue>
         <venue>
             <id>4006719</id>
@@ -690,6 +572,131 @@
             <distance>28</distance>
         </venue>
         <venue>
+            <id>6410047</id>
+            <name>The Hunger Project</name>
+            <address>5 Union Square West</address>
+            <crossstreet>E 14th Street</crossstreet>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10003</zip>
+            <geolat>40.7353618</geolat>
+            <geolong>-73.9916264</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <phone>2122519100</phone>
+            <twitter>HungerProject</twitter>
+            <distance>0</distance>
+        </venue>
+        <venue>
+            <id>6110508</id>
+            <name>Village Bleachers Laundromat</name>
+            <primarycategory>
+                <id>79241</id>
+                <fullpathname>Shops:Laundry</fullpathname>
+                <nodename>Laundry</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <city>New York</city>
+            <state>New York</state>
+            <geolat>40.735773</geolat>
+            <geolong>-73.991603</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>45</distance>
+        </venue>
+        <venue>
+            <id>5027226</id>
+            <name>east side copies</name>
+            <primarycategory>
+                <id>79140</id>
+                <fullpathname>Home / Work / Other:Other - Buildings</fullpathname>
+                <nodename>Other - Buildings</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.73525</geolat>
+            <geolong>-73.991739</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>15</distance>
+        </venue>
+        <venue>
+            <id>5913788</id>
+            <name>Forever21</name>
+            <primarycategory>
+                <id>79208</id>
+                <fullpathname>Shops:Apparel</fullpathname>
+                <nodename>Apparel</nodename>
+                <iconurl>http://foursquare.com/img/categories/shops/apparel.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.734795</geolat>
+            <geolong>-73.991377</geolong>
+            <stats>
+                <herenow>1</herenow>
+            </stats>
+            <distance>66</distance>
+        </venue>
+        <venue>
+            <id>6744968</id>
+            <name>archLAB</name>
+            <primarycategory>
+                <id>79115</id>
+                <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+                <nodename>Corporate / Office</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735596</geolat>
+            <geolong>-73.991777</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>29</distance>
+        </venue>
+        <venue>
+            <id>7149228</id>
+            <name>NYC Taxi 1W72</name>
+            <primarycategory>
+                <id>79999</id>
+                <fullpathname>Travel:Taxi</fullpathname>
+                <nodename>Taxi</nodename>
+                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
+            </primarycategory>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735358</geolat>
+            <geolong>-73.991977</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>29</distance>
+        </venue>
+        <venue>
+            <id>1042790</id>
+            <name>Seventh Level of Hell</name>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735533</geolat>
+            <geolong>-73.991305</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>33</distance>
+        </venue>
+        <venue>
             <id>3511072</id>
             <name>Champion Parking</name>
             <address />
@@ -705,23 +712,52 @@
             <distance>44</distance>
         </venue>
         <venue>
-            <id>4285865</id>
-            <name>Jean Ferre Hair salon</name>
-            <primarycategory>
-                <id>79248</id>
-                <fullpathname>Shops:Salon / Barbershop</fullpathname>
-                <nodename>Salon / Barbershop</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/salon_barber.png</iconurl>
-            </primarycategory>
+            <id>6846654</id>
+            <name>Max brenner chocolate shop</name>
             <address />
-            <city />
-            <state />
-            <geolat>40.735255</geolat>
-            <geolong>-73.991736</geolong>
+            <city>New York</city>
+            <state>NY</state>
+            <zip>10003</zip>
+            <geolat>40.735221</geolat>
+            <geolong>-73.991081</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>15</distance>
+            <distance>48</distance>
+        </venue>
+        <venue>
+            <id>1593445</id>
+            <name>Buchbinder And Warren</name>
+            <primarycategory>
+                <id>79115</id>
+                <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
+                <nodename>Corporate / Office</nodename>
+                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+            </primarycategory>
+            <address>1 union square west</address>
+            <crossstreet>14th street</crossstreet>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10003</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>28</distance>
+        </venue>
+        <venue>
+            <id>2628488</id>
+            <name>4L17 NYC Taxi</name>
+            <address />
+            <city>New York</city>
+            <state>New York</state>
+            <geolat>40.735763</geolat>
+            <geolong>-73.991652</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>44</distance>
         </venue>
         <venue>
             <id>3480800</id>
@@ -743,25 +779,6 @@
                 <herenow>0</herenow>
             </stats>
             <distance>44</distance>
-        </venue>
-        <venue>
-            <id>2741368</id>
-            <name>9T20 NYC Taxi</name>
-            <primarycategory>
-                <id>79999</id>
-                <fullpathname>Travel:Taxi</fullpathname>
-                <nodename>Taxi</nodename>
-                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
-            </primarycategory>
-            <address />
-            <city />
-            <state />
-            <geolat>40.735296</geolat>
-            <geolong>-73.991827</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>18</distance>
         </venue>
         <venue>
             <id>549312</id>
@@ -802,32 +819,18 @@
             <distance>51</distance>
         </venue>
         <venue>
-            <id>3487615</id>
-            <name>Aqua bar</name>
-            <address />
-            <city>New York</city>
-            <state>New York</state>
-            <geolat>40.735763</geolat>
-            <geolong>-73.991652</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>44</distance>
-        </venue>
-        <venue>
-            <id>1593445</id>
-            <name>Buchbinder And Warren</name>
+            <id>2924818</id>
+            <name>Mighty Mutts</name>
             <primarycategory>
-                <id>79115</id>
-                <fullpathname>Home / Work / Other:Corporate / Office</fullpathname>
-                <nodename>Corporate / Office</nodename>
-                <iconurl>http://foursquare.com/img/categories/building/default.png</iconurl>
+                <id>79194</id>
+                <fullpathname>Parks &amp; Outdoors:Park</fullpathname>
+                <nodename>Park</nodename>
+                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
             </primarycategory>
-            <address>1 union square west</address>
-            <crossstreet>14th street</crossstreet>
+            <address>Union square south</address>
+            <crossstreet>14th and University</crossstreet>
             <city>New York</city>
-            <state>New York</state>
-            <zip>10003</zip>
+            <state>NY</state>
             <geolat>40.73551</geolat>
             <geolong>-73.991896</geolong>
             <stats>
@@ -836,37 +839,23 @@
             <distance>28</distance>
         </venue>
         <venue>
-            <id>126223</id>
-            <name>Payless ShoeSource - 14th St</name>
-            <address>34 E 14th St</address>
-            <crossstreet>at 5th Ave</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.735079</geolat>
-            <geolong>-73.992176</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>56</distance>
-        </venue>
-        <venue>
-            <id>1479540</id>
-            <name>Locust Grove Fruit</name>
+            <id>2741368</id>
+            <name>9T20 NYC Taxi</name>
             <primarycategory>
-                <id>79231</id>
-                <fullpathname>Shops:Food &amp; Drink:Farmer&apos;s Market</fullpathname>
-                <nodename>Farmer&apos;s Market</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/default.png</iconurl>
+                <id>79999</id>
+                <fullpathname>Travel:Taxi</fullpathname>
+                <nodename>Taxi</nodename>
+                <iconurl>http://foursquare.com/img/categories/travel/taxi.png</iconurl>
             </primarycategory>
-            <address>Union Square West</address>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.735583949875455</geolat>
-            <geolong>-73.99098873138428</geolong>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735296</geolat>
+            <geolong>-73.991827</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>59</distance>
+            <distance>18</distance>
         </venue>
         <venue>
             <id>1012134</id>
@@ -880,6 +869,22 @@
                 <herenow>0</herenow>
             </stats>
             <distance>34</distance>
+        </venue>
+        <venue>
+            <id>7043309</id>
+            <name>Rick&apos;s Picks @ Union Square Greenmarket</name>
+            <address>1 Union Square West</address>
+            <crossstreet>Btw 15th St &amp; 17th St</crossstreet>
+            <city>New York</city>
+            <state>New York</state>
+            <zip>10003</zip>
+            <geolat>40.73551</geolat>
+            <geolong>-73.991896</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <twitter>rickspicksnyc</twitter>
+            <distance>28</distance>
         </venue>
         <venue>
             <id>3276975</id>
@@ -901,70 +906,17 @@
             <distance>59</distance>
         </venue>
         <venue>
-            <id>2924818</id>
-            <name>Mighty Mutts</name>
-            <primarycategory>
-                <id>79194</id>
-                <fullpathname>Parks &amp; Outdoors:Park</fullpathname>
-                <nodename>Park</nodename>
-                <iconurl>http://foursquare.com/img/categories/parks_outdoors/default.png</iconurl>
-            </primarycategory>
-            <address>Union square south</address>
-            <crossstreet>14th and University</crossstreet>
-            <city>New York</city>
-            <state>NY</state>
-            <geolat>40.73551</geolat>
-            <geolong>-73.991896</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>28</distance>
-        </venue>
-        <venue>
-            <id>2782835</id>
-            <name>RUN Footlocker</name>
-            <primarycategory>
-                <id>79208</id>
-                <fullpathname>Shops:Apparel</fullpathname>
-                <nodename>Apparel</nodename>
-                <iconurl>http://foursquare.com/img/categories/shops/apparel.png</iconurl>
-            </primarycategory>
-            <address>34 E 14th St</address>
-            <city>New York</city>
-            <state>NY</state>
-            <zip>10003</zip>
-            <geolat>40.735079</geolat>
-            <geolong>-73.992176</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>56</distance>
-        </venue>
-        <venue>
-            <id>1042790</id>
-            <name>Seventh Level of Hell</name>
+            <id>6686946</id>
+            <name>New Valentino&apos;s</name>
             <address />
             <city />
             <state />
-            <geolat>40.735533</geolat>
-            <geolong>-73.991305</geolong>
+            <geolat>40.735292</geolat>
+            <geolong>-73.99121</geolong>
             <stats>
                 <herenow>0</herenow>
             </stats>
-            <distance>33</distance>
-        </venue>
-        <venue>
-            <id>5053170</id>
-            <name>NYC Taxi 6k14</name>
-            <address />
-            <city />
-            <state />
-            <geolat>40.735072</geolat>
-            <geolong>-73.991735</geolong>
-            <stats>
-                <herenow>0</herenow>
-            </stats>
-            <distance>33</distance>
+            <distance>35</distance>
         </venue>
         <venue>
             <id>5208568</id>
@@ -978,6 +930,32 @@
                 <herenow>0</herenow>
             </stats>
             <distance>45</distance>
+        </venue>
+        <venue>
+            <id>3487615</id>
+            <name>Aqua bar</name>
+            <address />
+            <city>New York</city>
+            <state>New York</state>
+            <geolat>40.735763</geolat>
+            <geolong>-73.991652</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>44</distance>
+        </venue>
+        <venue>
+            <id>5053170</id>
+            <name>NYC Taxi 6k14</name>
+            <address />
+            <city />
+            <state />
+            <geolat>40.735072</geolat>
+            <geolong>-73.991735</geolong>
+            <stats>
+                <herenow>0</herenow>
+            </stats>
+            <distance>33</distance>
         </venue>
     </group>
 </venues>

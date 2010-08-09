@@ -2,8 +2,20 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	cout << "listening for osc messages on port " << PORT << "\n";
-	receiver.setup( PORT );
+	//load settings from xml
+	ofxXmlSettings settings;
+	settings.loadFile("settings.xml");
+	settings.pushTag("settings");{
+		
+		//get port for receiver
+		int rPort = 12345;
+		settings.pushTag("receiver");{
+			rPort = settings.getValue("port",12001);
+		} settings.popTag();
+		receiver.setup( rPort );
+		cout<<"receiving at "<<rPort<<endl;
+	} settings.popTag();
+	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
 	ofSetFrameRate(120);
@@ -59,9 +71,11 @@ void testApp::update(){
 		ofxOscMessage m;
 		receiver.getNextMessage( &m );
 		
+		cout<<"got message "<<m.getAddress()<<endl;
+		
 		bool bFound = false;
 		
-		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsInt32(0));
+		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsFloat(0));
 		
 		if (!bFound)
 		{
@@ -134,7 +148,7 @@ void testApp::draw(){
 	ofEnableAlphaBlending();
 	ofPushMatrix();{
 		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-		//ofRotateY(60);
+		//ofRotateY(mouseX - ofGetWidth());
 		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
 		//draw particles
 		particleManager->draw();	
@@ -177,6 +191,6 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-
+	particleManager->windowResized();
 }
 

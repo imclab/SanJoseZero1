@@ -19,12 +19,12 @@ void testApp::setup(){
 	ofSetFrameRate(60);
 	
 	
-	for (int i = 0; i < 12; i++){
-		particle myParticle;
-		myParticle.textures = textures;
-		myParticle.setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
-		particles.push_back(myParticle);
-	}
+	//for (int i = 0; i < 12; i++){
+//		particle myParticle;
+//		myParticle.textures = textures;
+//		myParticle.setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
+//		particles.push_back(myParticle);
+//	}
 	
 	//ofSetBackgroundAuto(false);
 	
@@ -37,6 +37,61 @@ void testApp::setup(){
 	int nodesperline = 20;
 	lines.setup(numlines, nodesperline);
 	
+	//setup OSC
+		
+	//load settings from xml
+	ofxXmlSettings settings;
+	settings.loadFile("settings.xml");
+	settings.pushTag("settings");{
+		
+		//get port for receiver
+		int rPort = 12345;
+		settings.pushTag("receiver");{
+			rPort = settings.getValue("port",12000);
+		} settings.popTag();
+		
+		receiver.setup( rPort );
+		
+		//get host + port for sender
+		
+		string host = "localhost";
+		int port = 12345;
+		
+		settings.pushTag("sender");{
+			host = settings.getValue("host","localhost");
+			port = settings.getValue("port",12000);
+		} settings.popTag();
+		
+		cout << "setting up sender at "<<host<<","<<port<<endl;
+		sender.setup(host, port);
+		
+		//get textures
+		int numReceivers = settings.getNumTags("catcher");
+		
+		// Loops through directories '0' through '9'.
+		for (int i=0; i<numReceivers; i++) {
+						
+			if (i <numReceivers){			
+				settings.pushTag("catcher", i);
+								
+				for (int j=0; j<settings.getNumTags("message"); j++){
+					
+					sjType * type = new sjType();
+					type->name = settings.getValue("name", "");
+					
+					settings.pushTag("message", j);
+					type->address = settings.getValue("messageString", "");
+					type->image.loadImage(ofToDataPath(settings.getValue("image", "")));
+					cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
+					settings.popTag();
+					particleTypes.push_back(type);
+				}
+				settings.popTag();
+			};
+		}
+		
+	} settings.popTag();		
+	 	
 	ofEnableSmoothing();
 	ofSetLogLevel(OF_LOG_SILENT);
 	
@@ -44,7 +99,38 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	for(int v=0;v<vortexes.size();v++)
+	//get OSC
+	
+	// check for waiting messages
+	while( receiver.hasWaitingMessages() )
+	{
+		// get the next message
+		ofxOscMessage m;
+		receiver.getNextMessage( &m );
+		
+		bool bFound = true;
+		
+		for (int i=0; i<particleTypes.size(); i++){
+			if (m.getAddress() == particleTypes[i]->address){
+				vort V;
+				V.v.setInitialCondition((float) m.getArgAsFloat(0), ofGetHeight(), ofRandom(-10,10), ofRandom(-10, -2));
+				V.dir=1;
+				V.name = m.getAddress();
+				vortexes.push_back(V);	
+				
+				particle myParticle;
+				myParticle.name = m.getAddress();
+				myParticle.texture = &particleTypes[i]->image;
+				myParticle.setInitialCondition(m.getArgAsFloat(0), ofGetHeight(), ofRandom(-10,10), ofRandom(-20, -5));
+				particles.push_back(myParticle);
+			}
+			
+		}
+	}
+	
+	//update particles
+	
+	for(int v=vortexes.size()-1;v>=0;v--)
 	{
 		vortexes[v].v.resetForce();
 		vortexes[v].v.update();
@@ -79,10 +165,23 @@ void testApp::update(){
 		}
 	}
 	
-	for (int i = 0; i < particles.size(); i++){
+	for (int i = particles.size()-1; i >= 0; i--){
 		particles[i].addDampingForce();
 		particles[i].update();
 		particles[i].bounceOffWalls();
+		
+		
+		//element left screen!
+		if (particles[i].pos.y < 0){
+			cout<<"left! "<<particles[i].name<<endl;
+						
+			ofxOscMessage m;
+			m.setAddress( particles[i].name );
+			m.addFloatArg((float) particles[i].pos.x);
+			sender.sendMessage(m);
+			
+			particles.erase(particles.begin()+i);
+		}
 	}
 	
 	
@@ -135,7 +234,7 @@ void testApp::draw(){
 	{
 		ofFill();
 		ofSetColor(255,0,0);
-		vortexes[v].v.draw();
+		//vortexes[v].v.draw();
 	}
 	
 	
@@ -145,6 +244,7 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+	if (key == 'f') ofToggleFullscreen();
 
 }
 

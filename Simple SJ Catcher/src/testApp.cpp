@@ -41,7 +41,7 @@ void testApp::setup(){
 		ofAddListener(e->particleLeft, this, &testApp::elementLeftScreen);
 		
 		emitters.push_back(e);
-	}	
+	}
 	
 	//get host + port for sender
 	
@@ -208,15 +208,17 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-	
+	for (int i=0; i<emitters.size(); i++){
+		emitters[i]->setLoc(ofGetWidth()/9.0 * i,0);
+	}
 }
 
 //--------------------------------------------------------------
 void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	ofxOscMessage m;
 	m.setAddress(args.address);
-	m.addIntArg( ofRandom(100, ofGetWidth()));//args.loc.x);
-	sender.sendMessage(m);
-	
+	//normalize x coord
+	m.addFloatArg( (float) args.loc.x );
+	sender.sendMessage(m);	
 };
 

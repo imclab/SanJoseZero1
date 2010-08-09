@@ -285,10 +285,11 @@ void particle::draw(){
 	glPushMatrix();
 	glTranslated(pos.x,pos.y,0);
 	glRotatef(rot,0,0,1);
-	if(textures==NULL)
+	if(texture==NULL)
 		ofRect(0,0,20,20);
 	else
-		textures[type].draw(0,0,20,20);
+		texture->draw(0,0,20,20);
+		//textures[type].draw(0,0,20,20);
 	
 	
 	glLineWidth(1);
@@ -324,15 +325,17 @@ void particle::bounceOffWalls(){
 		bDidICollide = true;
 	}
 	
+	//want to leave screen, so only bounce off the bottom
+	
 	if (pos.y > maxy){
 		pos.y = maxy; // move to the edge, (important!)
 		vel.y *= -1;
 		bDidICollide = true;
-	} else if (pos.y < miny){
+	}/* else if (pos.y < miny){
 		pos.y = miny; // move to the edge, (important!)
 		vel.y *= -1;
 		bDidICollide = true;
-	}
+	}*/
 	
 	if (bDidICollide == true && bDampedOnCollision == true){
 		vel *= 0.3;

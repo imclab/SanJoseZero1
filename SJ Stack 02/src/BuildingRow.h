@@ -32,7 +32,7 @@ public:
 		color.g = 50;//ofRandom(0, 255);
 		color.b = 50;//ofRandom(0, 255);
 		pos.x = 0;//ofGetWidth()/2.0;
-		pos.y = 100;//ofGetHeight()/2.0;
+		pos.y = ofGetHeight()/2.0;
 		rotation.x = 270;
 		size.x = ofGetWidth();
 		size.y = 70;
@@ -122,6 +122,11 @@ public:
 				stacks[i]->draw();
 			};
 		} ofPopMatrix();
+	};
+	
+	void windowResized(){
+		pos.y = ofGetHeight()/2.0;
+		size.x = ofGetWidth();
 	};
 	
 	ofPoint rotation;

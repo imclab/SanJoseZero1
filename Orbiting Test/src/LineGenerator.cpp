@@ -37,7 +37,7 @@ void LineGenerator::setup(int numLines, int numNodes)
 		}
 	}
 	
-	mask.allocate(ofGetWidth(), ofGetHeight(), GL_RGB);
+	mask.allocate(ofGetWidth(), ofGetHeight(), GL_RGB, 4);
 	
 	shader.loadShader("ShardComposite");
 	shader.setShaderActive(true);

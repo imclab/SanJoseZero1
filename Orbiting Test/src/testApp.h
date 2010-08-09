@@ -5,9 +5,19 @@
 #include "ofMain.h"
 #include "particle.h"
 #include "LineGenerator.h"
+#include "ofxOsc.h"
+#include "ofxXmlSettings.h"
+
 struct vort {
 	int dir;
 	particle v;
+	string name;
+};
+
+struct sjType {
+	string address;
+	ofImage image;
+	string name;
 };
 
 class testApp : public ofBaseApp{
@@ -25,13 +35,18 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 
-	vector<particle> particles;
+		vector <particle> particles;
 //		vector <particle *> objects;
 		vector <vort> vortexes;
+		vector<sjType *> particleTypes;
 		
 		ofImage textures[10];
 	
 	LineGenerator lines;
+	
+private:
+	ofxOscReceiver	receiver;
+	ofxOscSender	sender;
 };
 
 #endif

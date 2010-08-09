@@ -7,6 +7,7 @@
 class particle
 {
     public:
+		string name;
         ofxVec2f pos;
         ofxVec2f vel;
         ofxVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
@@ -37,15 +38,16 @@ class particle
 		float damping;
 		float rot;
 	
-	int mass;
+		int mass;
+		
+		vector<ofPoint>trail;
 	
-	vector<ofPoint>trail;
+		float rotChange;
 	
-	float rotChange;
+		int type;
 	
-	int type;
-	
-	ofImage * textures;
+		ofImage * textures;	
+		ofImage * texture;
 
     protected:
     private:

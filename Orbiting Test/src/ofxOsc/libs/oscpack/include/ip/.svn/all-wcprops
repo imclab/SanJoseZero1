@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip
+END
+IpEndpointName.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip/IpEndpointName.h
+END
+PacketListener.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip/PacketListener.h
+END
+UdpSocket.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip/UdpSocket.h
+END
+TimerListener.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip/TimerListener.h
+END
+NetworkingUtils.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2/trunk/OF_0061_LAB/core/addons/ofxOsc/libs/oscpack/include/ip/NetworkingUtils.h
+END

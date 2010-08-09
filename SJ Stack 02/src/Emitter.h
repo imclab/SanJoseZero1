@@ -28,7 +28,7 @@ public:
 		settings.loadFile("settings.xml");
 		settings.pushTag("settings");
 		
-		int numReceivers = settings.getNumTags("receiver");
+		int numReceivers = settings.getNumTags("catcher");
 		for (int i=0; i<numReceivers; i++) {
 			
 			BuildingType * b = new BuildingType();
@@ -37,7 +37,7 @@ public:
 			b->setPosition( 25 + (float)(ofGetWidth()/numReceivers)*i, ofGetHeight() + 25 );
 						
 			if (i <numReceivers){			
-				settings.pushTag("receiver", i);
+				settings.pushTag("catcher", i);
 				//b->setName(settings.getValue("name", "") );
 				
 				for (int j=0; j<settings.getNumTags("message"); j++){
@@ -59,24 +59,37 @@ public:
 		//set up old rows
 		int increment = 90/ROTATE_AMOUNT;
 		
+		float curY = 0;
+		
 		for (int i=1; i<=increment; i++){
 			BuildingRow * dum = new BuildingRow(500);
 			dum->rotation.x = 270 + ROTATE_AMOUNT*i;
 			oldRows.push_back(dum);
+			
+			curY = dum->getSize().y;
 		};
-		
+		//
+//		for (int i=0; i<4; i++){
+//			BuildingRow * dum = new BuildingRow(500);
+//			dum->rotation.x = 360;
+//			dum->pos.y += curY*(i+1);
+//			oldRows.push_back(dum);
+//			cout << dum->pos.y<<endl;
+//			curY = 5;
+//		}
+				
 		//fill up with 2 more
 		
 		BuildingRow * dum1 = new BuildingRow(500);
 		dum1->rotation.x = 360;
 		dum1->pos.y -= dum1->getSize().y-20;
 		oldRows.push_back(dum1);
-		
-		BuildingRow * dum2 = new BuildingRow(500);
-		dum2->rotation.x = 360;
-		dum2->pos.y -= dum2->getSize().y-20;
-		dum2->pos.y -= dum2->getSize().y-20;
-		oldRows.push_back(dum2);
+//		
+//		BuildingRow * dum2 = new BuildingRow(500);
+//		dum2->rotation.x = 360;
+//		dum2->pos.y -= dum2->getSize().y-20;
+//		dum2->pos.y -= dum2->getSize().y-20;
+//		oldRows.push_back(dum2);
 		
 		//set up new row		
 		currentRow = new BuildingRow(500);
@@ -191,6 +204,18 @@ public:
 	
 	int lastFoundString;
 	float originalCeiling;
+	
+	void windowResized(){
+		for (int i=0; i<oldRows.size(); i++){
+			oldRows[i]->windowResized();
+		}
+		
+		currentRow->windowResized();
+		
+		for (int i=0; i<types.size(); i++){			
+			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() + 25 );
+		}
+	}
 	
 private:
 	//vector <Building> particles;
