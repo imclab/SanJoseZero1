@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2ECBAECA11DCD8C100C82C40 /* twitcurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAEC211DCD8C100C82C40 /* twitcurl.cpp */; };
-		2ECBAED711DCD91200C82C40 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECBAED611DCD91200C82C40 /* libcurl.a */; };
 		2ECBAF3211DCF0AF00C82C40 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2B11DCF0AF00C82C40 /* tinyxml.cpp */; };
 		2ECBAF3311DCF0AF00C82C40 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2D11DCF0AF00C82C40 /* tinyxmlerror.cpp */; };
 		2ECBAF3411DCF0AF00C82C40 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2E11DCF0AF00C82C40 /* tinyxmlparser.cpp */; };
@@ -19,6 +18,7 @@
 		2ECBAF8411DD1DDF00C82C40 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF7B11DD1DDF00C82C40 /* ofxOscMessage.cpp */; };
 		2ECBAF8511DD1DDF00C82C40 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF7D11DD1DDF00C82C40 /* ofxOscReceiver.cpp */; };
 		2ECBAF8611DD1DDF00C82C40 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF7F11DD1DDF00C82C40 /* ofxOscSender.cpp */; };
+		2ED16C7D1211FEBC00AFB75A /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED16C7C1211FEBC00AFB75A /* libcurl.a */; };
 		E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE0A90E8CC67C009D7055 /* GLee.a */; };
 		E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE2E30E8CC69C009D7055 /* rtAudio.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -92,14 +92,6 @@
 /* Begin PBXFileReference section */
 		2ECBAEC211DCD8C100C82C40 /* twitcurl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = twitcurl.cpp; sourceTree = "<group>"; };
 		2ECBAEC511DCD8C100C82C40 /* twitcurl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitcurl.h; sourceTree = "<group>"; };
-		2ECBAECE11DCD91200C82C40 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
-		2ECBAECF11DCD91200C82C40 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
-		2ECBAED011DCD91200C82C40 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
-		2ECBAED111DCD91200C82C40 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
-		2ECBAED211DCD91200C82C40 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
-		2ECBAED311DCD91200C82C40 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
-		2ECBAED411DCD91200C82C40 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		2ECBAED611DCD91200C82C40 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		2ECBAF2911DCF0AF00C82C40 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		2ECBAF2B11DCF0AF00C82C40 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		2ECBAF2C11DCF0AF00C82C40 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
@@ -134,6 +126,14 @@
 		2ECBAF7E11DD1DDF00C82C40 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		2ECBAF7F11DD1DDF00C82C40 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		2ECBAF8011DD1DDF00C82C40 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		2ED16C741211FEBC00AFB75A /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		2ED16C751211FEBC00AFB75A /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		2ED16C761211FEBC00AFB75A /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		2ED16C771211FEBC00AFB75A /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		2ED16C781211FEBC00AFB75A /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		2ED16C791211FEBC00AFB75A /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		2ED16C7A1211FEBC00AFB75A /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		2ED16C7C1211FEBC00AFB75A /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		E45BE0390E8CC647009D7055 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeImage.h; path = ../../../libs/freeimage/include/FreeImage.h; sourceTree = SOURCE_ROOT; };
 		E45BE03F0E8CC650009D7055 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../../libs/fmodex/include/fmod.h; sourceTree = SOURCE_ROOT; };
 		E45BE0400E8CC650009D7055 /* fmod.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fmod.hpp; path = ../../../libs/fmodex/include/fmod.hpp; sourceTree = SOURCE_ROOT; };
@@ -204,9 +204,9 @@
 				E4C2429410CC5C38004149E2 /* freetype.a in Frameworks */,
 				E4C242CD10CC650E004149E2 /* libfmodex.dylib in Frameworks */,
 				E4C246DA10CCAE22004149E2 /* freeimage.a in Frameworks */,
-				2ECBAED711DCD91200C82C40 /* libcurl.a in Frameworks */,
 				2ECBAF8111DD1DDF00C82C40 /* osc.a in Frameworks */,
 				2ECBAF8211DD1DDF00C82C40 /* oscpack.a in Frameworks */,
+				2ED16C7D1211FEBC00AFB75A /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,46 +222,6 @@
 			name = twitcurl;
 			path = ../../../libs/twitcurl;
 			sourceTree = SOURCE_ROOT;
-		};
-		2ECBAECB11DCD91200C82C40 /* curl */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAECC11DCD91200C82C40 /* include */,
-				2ECBAED511DCD91200C82C40 /* lib */,
-			);
-			name = curl;
-			path = ../../../libs/curl;
-			sourceTree = SOURCE_ROOT;
-		};
-		2ECBAECC11DCD91200C82C40 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAECD11DCD91200C82C40 /* curl */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		2ECBAECD11DCD91200C82C40 /* curl */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAECE11DCD91200C82C40 /* curl.h */,
-				2ECBAECF11DCD91200C82C40 /* curlver.h */,
-				2ECBAED011DCD91200C82C40 /* easy.h */,
-				2ECBAED111DCD91200C82C40 /* mprintf.h */,
-				2ECBAED211DCD91200C82C40 /* multi.h */,
-				2ECBAED311DCD91200C82C40 /* stdcheaders.h */,
-				2ECBAED411DCD91200C82C40 /* types.h */,
-			);
-			path = curl;
-			sourceTree = "<group>";
-		};
-		2ECBAED511DCD91200C82C40 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAED611DCD91200C82C40 /* libcurl.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
 		};
 		2ECBAF2711DCF08200C82C40 /* addons */ = {
 			isa = PBXGroup;
@@ -409,11 +369,51 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		2ED16C711211FEBC00AFB75A /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				2ED16C721211FEBC00AFB75A /* include */,
+				2ED16C7B1211FEBC00AFB75A /* lib */,
+			);
+			name = curl;
+			path = src/curl;
+			sourceTree = "<group>";
+		};
+		2ED16C721211FEBC00AFB75A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				2ED16C731211FEBC00AFB75A /* curl */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		2ED16C731211FEBC00AFB75A /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				2ED16C741211FEBC00AFB75A /* curl.h */,
+				2ED16C751211FEBC00AFB75A /* curlver.h */,
+				2ED16C761211FEBC00AFB75A /* easy.h */,
+				2ED16C771211FEBC00AFB75A /* mprintf.h */,
+				2ED16C781211FEBC00AFB75A /* multi.h */,
+				2ED16C791211FEBC00AFB75A /* stdcheaders.h */,
+				2ED16C7A1211FEBC00AFB75A /* types.h */,
+			);
+			path = curl;
+			sourceTree = "<group>";
+		};
+		2ED16C7B1211FEBC00AFB75A /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				2ED16C7C1211FEBC00AFB75A /* libcurl.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		E45BE0360E8CC5DE009D7055 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				2ED16C711211FEBC00AFB75A /* curl */,
 				2ECBAF2711DCF08200C82C40 /* addons */,
-				2ECBAECB11DCD91200C82C40 /* curl */,
 				2ECBAEAD11DCD8C100C82C40 /* twitcurl */,
 				E45BEED60E8CCB34009D7055 /* core */,
 			);
@@ -877,8 +877,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/src/curl/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_14 = "\"$(SRCROOT)/../../../libs/fmodex/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_15 = "\"$(SRCROOT)/../../../libs/freetype/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
@@ -1012,8 +1014,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/src/curl/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_14 = "\"$(SRCROOT)/../../../libs/fmodex/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_15 = "\"$(SRCROOT)/../../../libs/freetype/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
@@ -1069,8 +1073,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/src/curl/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_14 = "\"$(SRCROOT)/../../../libs/fmodex/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_15 = "\"$(SRCROOT)/../../../libs/freetype/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
