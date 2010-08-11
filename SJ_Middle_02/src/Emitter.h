@@ -51,10 +51,10 @@ public:
 	void update(){
 		static ParticleEventArgs particleArgs;
 		for (int i=particles.size()-1; i>=0; i--){
-			particles[i].update();
-			if (!particles[i].alive()){
+			particles[i]->update();
+			if (!particles[i]->alive()){
 				particleArgs.loc.x = loc.x;
-				particleArgs.loc.y = particles[i].loc.y;
+				particleArgs.loc.y = particles[i]->loc.y;
 				particleArgs.name = name;				
 				particleArgs.address = messageStrings[0];
 				ofNotifyEvent(particleLeft, particleArgs, this);
@@ -68,11 +68,11 @@ public:
 	void emit( int index = 0){
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			cout <<"emit!"<<endl;
-			Particle part;
-			part.setLoc(0, ofGetHeight());
+			Particle* part = new Particle();
+			part->setLoc(0, ofGetHeight());
 			if (index > images.size()-1 || lastFoundString < 0) index = 0;
-			part.setImage(images[index]);
-			part.setScale(.25);
+			part->setImage(images[index]);
+			part->setScale(.25);
 			particles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
@@ -83,7 +83,7 @@ public:
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			for (int i=0; i<particles.size(); i++){
-				particles[i].draw();
+				particles[i]->draw();
 			}
 		} ofPopMatrix();
 	};
@@ -105,7 +105,7 @@ public:
 	
 private:
 	vector<ofImage *> images;
-	vector <Particle> particles;
+	vector <Particle* > particles;
 	int lastEmitted;
 	ofPoint loc;
 	string name;

@@ -5,6 +5,9 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+	
+	ofSetVerticalSync(true);
+	
 	// listen on the given port
 	cout << "listening for osc messages on port " << PORT << "\n";
 	receiver.setup( PORT );
@@ -22,7 +25,7 @@ void testApp::setup(){
 	// Loops through directories '0' through '9'.
 	for (int i=0; i<numReceivers; i++) {
 		
-		Emitter * e = new Emitter();
+		Emitter* e = new Emitter();
 		e->setLoc(ofGetWidth()/9.0 * i,0);
 		
 		if (i <numReceivers){			
@@ -61,24 +64,22 @@ void testApp::setup(){
 	
 	//setup OSC
 	sender.setup(host, port);
-		
-	/*
-	emitters[0]->addMessageString("/pluginplay/picnictable");
-	emitters[1]->addMessageString("/pluginplay/megaphone");
-	emitters[2]->addMessageString("/pluginplay/birdfeeder");
-	emitters[3]->addMessageString("/pluginplay/hopscotch");
-	emitters[4]->addMessageString("/pluginplay/stoplight");
-	emitters[5]->addMessageString("/pluginplay/playground");
-	emitters[6]->addMessageString("/pluginplay/twitter");
-	emitters[7]->addMessageString("/pluginplay/flickr");
-	emitters[8]->addMessageString("/pluginplay/foursquare");
-	emitters[8]->addMessageString("/pluginplay/foursquare/nearby");
-	emitters[9]->addMessageString ("/pluginplay/");
-	*/
+	
+	
+	
+	// TEST 3D STUFF
+//	testHop.loadModel("hopscotch/hops00.3ds", 20);
+//	testHop.setRotation(0, 90, 1, 0, 0);
+//	testHop.setRotation(1, 270, 0, 0, 1);
+//	testHop.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+//	testHop.setRotation(1, 270 + ofGetElapsedTimef() * 60, 0, 1, 1);
+//	testHop.setRotation(1, 270 + ofGetElapsedTimef() * 60, 270 + ofGetElapsedTimef() * 60, 0, 1);
+//	testHop.setRotation(1, 270 + ofGetElapsedTimef() * 60, 0, 1, 1);
+	
 	
 	// hide old messages
 	for ( int i=0; i<NUM_MSG_STRINGS; i++ )
@@ -150,18 +151,34 @@ void testApp::draw(){
 	glLoadIdentity();
 	glOrtho(0, ofGetWidth(), 0, ofGetHeight(), -100, 2000);
 	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();	
 	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
 	
 	//emitterz
 	// draw a quad that fills the whole screen
 	glBegin(GL_QUADS);{
-		glColor3f( 0.0f, 0.3f, 0.3f );
+		glColor3f( 255.0f, 255.0f, 255.0f );
 		glVertex3f( 0.0f, 0.0f, 0.0f );
 		glVertex3f( ofGetWidth(), 0.0f, 0.0f );
-		glColor3f( 0.0f, 0.0f, 0.0f );
+		glColor3f( 0.0f, 0.3f, 0.3f );
 		glVertex3f( ofGetWidth(), ofGetHeight(), 0.0f );
 		glVertex3f( 0.0f, ofGetHeight(), 0.0f );
 	} glEnd();
+	
+//	glEnable(GL_DEPTH_TEST);
+//	ofSetColor(255,255,255,255);
+//	ofEnableAlphaBlending();
+//	ofPushMatrix();{
+//		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
+//		//ofRotateY(mouseX - ofGetWidth());
+//		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
+//		//draw particles
+//		testHop.draw();
+//
+//	} ofPopMatrix();
+//	testHop.draw();	
+//	ofDisableAlphaBlending();
+//	glDisable(GL_DEPTH_TEST);
 	
 	ofSetColor(0xffffff);
 	ofEnableAlphaBlending();

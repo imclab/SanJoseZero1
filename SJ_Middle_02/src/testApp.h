@@ -6,6 +6,7 @@
 #include "ofxOsc.h"
 #include "ofxXmlSettings.h"
 #include "Emitter.h"
+#include "ofx3DModelLoader.h"
 
 // listen on port 12345
 //#define HOST "localhost"
@@ -31,7 +32,10 @@ public:
 	void elementLeftScreen( ParticleEventArgs & args );
 	
 	ofTrueTypeFont			font;	
-	vector<Emitter *>		emitters;	
+	vector<Emitter* >		emitters;
+	
+	// TESTING 3D STUFF
+//	ofx3DModelLoader testHop;
 	
 private:
 	bool			bDrawDebug;
