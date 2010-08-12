@@ -101,8 +101,7 @@ void testApp::update(){
 		if (!bFound)
 		{
 			// unrecognized message
-		}
-		
+		}		
 	}
 	
 	for (int i=0; i<emitters.size(); i++){
