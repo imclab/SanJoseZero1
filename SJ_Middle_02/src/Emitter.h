@@ -27,6 +27,9 @@ public:
 	Emitter(){
 		lastEmitted = ofGetElapsedTimeMillis();
 		lastFoundString = 0;
+//		modelImageListIndex = -1;
+//		model = new ofx3DModelLoader();
+		
 	};
 	
 	void addMessageString( string msg ){
@@ -42,12 +45,23 @@ public:
 		loc.y = y;
 	}
 	
-	void loadImage( string image ){
-		ofImage * img = new ofImage();
-		img->loadImage(image);
-		images.push_back(img);
+	void loadModel( string modelImage ){
+//		ofImage * img = new ofImage();
+//		img->loadImage(image);
+//		images.push_back(img);
+		
+//		ofx3DModelLoader* mdl = new ofx3DModelLoader();
+//		mdl->loadModel(model,10);
+//		models.push_back(mdl);
+
+//		model->loadModel(model,10);
+
+		modelImageList.push_back(modelImage);
+//		modelImageListIndex++;
+		
 	}
 	
+	//Memory management
 	void update(){
 		static ParticleEventArgs particleArgs;
 		for (int i=particles.size()-1; i>=0; i--){
@@ -69,10 +83,13 @@ public:
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			cout <<"emit!"<<endl;
 			Particle* part = new Particle();
+			ofx3DModelLoader* partModel = new ofx3DModelLoader();
+			partModel->loadModel(modelImageList[0],1);
 			part->setLoc(0, ofGetHeight());
-			if (index > images.size()-1 || lastFoundString < 0) index = 0;
-			part->setImage(images[index]);
-			part->setScale(.25);
+			if (index > models.size()-1 || lastFoundString < 0) index = 0;
+//			part->setImage(models[index]);
+			part->setModel(partModel);
+			part->setScale(2);
 			particles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
@@ -80,12 +97,14 @@ public:
 	}
 	
 	void draw(){
+		glEnable(GL_DEPTH_TEST);
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			for (int i=0; i<particles.size(); i++){
 				particles[i]->draw();
 			}
 		} ofPopMatrix();
+		glDisable(GL_DEPTH_TEST);
 	};
 	
 	bool checkMessageString(string msg){
@@ -104,7 +123,11 @@ public:
 	ofEvent<ParticleEventArgs> particleLeft;
 	
 private:
-	vector<ofImage *> images;
+//	vector<ofImage *> images;
+	vector<string> modelImageList;
+//	int modelImageListIndex;
+	vector<ofx3DModelLoader* > models;
+//	ofx3DModelLoader* model;
 	vector <Particle* > particles;
 	int lastEmitted;
 	ofPoint loc;

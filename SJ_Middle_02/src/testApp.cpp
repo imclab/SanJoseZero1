@@ -8,19 +8,28 @@ void testApp::setup(){
 	
 	ofSetVerticalSync(true);
 	
-	// listen on the given port
-	cout << "listening for osc messages on port " << PORT << "\n";
-	receiver.setup( PORT );
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
-	ofSetFrameRate(60);
+//	ofSetFrameRate(60);
 		
 	//load messagestrings from xml
 	ofxXmlSettings settings;
 	settings.loadFile("settings.xml");
 	settings.pushTag("settings");
 	
-	int numReceivers = settings.getNumTags("receiver");
+	//get host + port for receiver
+	string host = "localhost";
+	int port = 12345;
+	settings.pushTag("receiver");{
+		host = settings.getValue("host",host);
+//		port = settings.getValue("port",port);
+	} settings.popTag();
+	// listen on the given port
+	receiver.setup( port );
+	//	cout << "listening for osc messages on port " << PORT << "\n";
+	
+	
+	int numReceivers = settings.getNumTags("catcher");
 		
 	// Loops through directories '0' through '9'.
 	for (int i=0; i<numReceivers; i++) {
@@ -29,12 +38,12 @@ void testApp::setup(){
 		e->setLoc(ofGetWidth()/9.0 * i,0);
 		
 		if (i <numReceivers){			
-			settings.pushTag("receiver", i);
-				e->setName(settings.getValue("name", "") );
+			settings.pushTag("catcher", i);
+			e->setName(settings.getValue("name", "") );
 			for (int j=0; j<settings.getNumTags("message"); j++){
 				settings.pushTag("message", j);
 					e->addMessageString(settings.getValue("messageString", ""));
-					e->loadImage(ofToDataPath(settings.getValue("image", "")));
+					e->loadModel(ofToDataPath(settings.getValue("image", "")));
 					cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
 				settings.popTag();
 			}
@@ -47,13 +56,11 @@ void testApp::setup(){
 	}
 	
 	//get host + port for sender
-	
-	string host = "localhost";
-	int port = 12345;
-	
+	host = "localhost";
+	port = 12001;
 	settings.pushTag("sender");{
-		host = settings.getValue("host","localhost");
-		port = settings.getValue("port",12000);
+		host = settings.getValue("host",host);
+		port = settings.getValue("port",port);
 	} settings.popTag();
 	
 	settings.popTag();
@@ -63,7 +70,7 @@ void testApp::setup(){
 	cout << "there are " << emitters.size() << endl;
 	
 	//setup OSC
-	sender.setup(host, port);
+	sender.setup(host, 15000);//port);
 	
 	
 	
@@ -181,15 +188,15 @@ void testApp::draw(){
 //	glDisable(GL_DEPTH_TEST);
 	
 	ofSetColor(0xffffff);
-	ofEnableAlphaBlending();
+//	ofEnableAlphaBlending();
 	//draw particles
 	for (int i=0; i<emitters.size(); i++){
 		emitters[i]->draw();
 	}
-	ofDisableAlphaBlending();
+//	ofDisableAlphaBlending();
 	
 	string buf;
-	buf = "listening for osc messages on port" + ofToString( PORT );
+	buf = "listening for osc messages on port" + ofToString( 12000 );
 	ofDrawBitmapString( buf, 10, 20 );
 	ofSetColor( 255, 255, 255 );
 	
