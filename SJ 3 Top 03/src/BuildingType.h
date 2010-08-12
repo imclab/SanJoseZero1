@@ -59,6 +59,10 @@ public:
 		images.push_back(img);
 	};
 	
+	string getMessage (int index ){
+		return messageStrings[index];
+	};
+	
 	ofx3DModelLoader * getModel( int index ){
 		if (index > models.size()) index = models.size()-1;
 		if (index < 0) index = 0;

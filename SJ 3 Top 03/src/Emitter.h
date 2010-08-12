@@ -194,7 +194,7 @@ public:
 					part->setPos( stack->getPosition().x , types[i]->getPosition().y, 0 );
 					part->setCeiling( currentRow->getCeiling(stack->index) );					
 					part->setImage( types[i]->getModel(messageIndex) );				
-					part->setType( types[i]->getName() );
+					part->setType( types[i]->getMessage(messageIndex) );
 					buildings.push_back(part);
 				}				
 				lastFoundString = i;
