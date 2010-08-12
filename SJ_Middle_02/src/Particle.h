@@ -47,7 +47,7 @@ public:
 		bOkToDeMagnify = false;
 		bMagnifying = false;
 		maxMagnificationSize = 20.0f;
-		particleTween.setParameters(easingBounce1, ofxTween::easeOut,0.25f,maxMagnificationSize, 3000,0);
+		particleTween.setParameters(easingQuad, ofxTween::easeOut,2.0f,maxMagnificationSize, 200,0);
 	}
 	
 	
@@ -113,6 +113,7 @@ public:
 		// There will be only one magnification event
 		if (bOkToMagnify && loc.y < (ofGetHeight() * (12.0 / 15.0)) && loc.y > (ofGetHeight() / 4.5)) {
 			bMagnifying = true;
+			particleTween.start();
 //			if (curScale >= maxMagnificationSize * 99.0/100.0) {
 //				curScale = maxMagnificationSize;
 //				bOkToMagnify = false;
@@ -176,6 +177,7 @@ private:
 	ofxTween particleTween;
 	ofxEasingBounce easingBounce1;
 	ofxEasingBounce easingBounce;
+	ofxEasingQuad easingQuad;
 	int rotationDirection;
 	
 	
