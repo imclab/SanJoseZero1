@@ -20,7 +20,7 @@
 <body>
 	<table id="maintable">
 	</table>
-	<canvas id="mainCanvas">
-	</canvas>
+	<!-- <canvas id="mainCanvas">
+		</canvas> -->
 </body>
 </html>

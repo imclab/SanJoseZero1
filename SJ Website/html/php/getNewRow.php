@@ -72,7 +72,7 @@
 		for ($i=0; $i<count($buildings); $i++){
 ?>
 	<tr id="<?php echo("block:".$i); ?>">
-		<td class="row"><div><?php echo("row is ". $blocks[$i]["id"]); ?></div><br />
+		<td class="row"><div><?php // echo("row is ". $blocks[$i]["id"]); ?></div><br />
 <?php
 		for ($j=0; $j<count($buildings[$i]["rows"]); $j++){
 ?>
@@ -80,12 +80,12 @@
 <?php	
 			for ($k=0; $k<count( $buildings[$i]["rows"][$j]); $k++){
 ?>
-			<div class="building"><img width="20px" src="<?php echo($images[$buildings[$i]["rows"][$j][$k]["type"]]); ?>" /><br /></div>
+			<div class="building"><img width="40px" src="<?php echo($images[$buildings[$i]["rows"][$j][$k]["type"]]); ?>" /><br /></div>
 <?php
 			}
 			if (count( $buildings[$i]["rows"][$j]) == 0){
 ?>
-			<div class="building"><img src="images/spacer.gif" width="20px" /><br /></div>
+			<div class="building"><img src="images/spacer.gif" width="40px" height="2px" /><br /></div>
 <?php			
 			}
 
