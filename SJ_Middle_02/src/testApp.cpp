@@ -35,7 +35,7 @@ void testApp::setup(){
 	for (int i=0; i<numReceivers; i++) {
 		
 		Emitter* e = new Emitter();
-		e->setLoc(ofGetWidth()/9.0 * i,0);
+		e->setLoc(ofGetWidth()/10.0 * (i+1),0);
 		
 		if (i <numReceivers){			
 			settings.pushTag("catcher", i);
@@ -190,10 +190,14 @@ void testApp::draw(){
 	ofSetColor(0xffffff);
 //	ofEnableAlphaBlending();
 	//draw particles
+	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_CULL_FACE);
 	for (int i=0; i<emitters.size(); i++){
 		emitters[i]->draw();
 	}
-//	ofDisableAlphaBlending();
+//	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	//	ofDisableAlphaBlending();
 	
 	string buf;
 	buf = "listening for osc messages on port" + ofToString( 12000 );
@@ -233,7 +237,7 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->setLoc(ofGetWidth()/9.0 * i,0);
+		emitters[i]->setLoc(ofGetWidth()/10.0 * (i+1),0);
 	}
 }
 

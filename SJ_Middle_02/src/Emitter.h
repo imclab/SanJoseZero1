@@ -67,7 +67,7 @@ public:
 		for (int i=particles.size()-1; i>=0; i--){
 			particles[i]->update();
 			if (!particles[i]->alive()){
-				particleArgs.loc.x = loc.x;
+				particleArgs.loc.x = loc.x + particles[i]->loc.x; // must add because we translate to each emitter's x-coordinate with particle coordinate initially = 0.
 				particleArgs.loc.y = particles[i]->loc.y;
 				particleArgs.name = name;				
 				particleArgs.address = messageStrings[0];
@@ -84,6 +84,7 @@ public:
 			cout <<"emit!"<<endl;
 			Particle* part = new Particle();
 			ofx3DModelLoader* partModel = new ofx3DModelLoader();
+// MUST FIX THIS IF GOING TO HAVE MORE THAN ONE IMAGE, WHICH WE WILL!			
 			partModel->loadModel(modelImageList[0],1);
 			part->setLoc(0, ofGetHeight());
 			if (index > models.size()-1 || lastFoundString < 0) index = 0;
@@ -97,14 +98,12 @@ public:
 	}
 	
 	void draw(){
-		glEnable(GL_DEPTH_TEST);
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			for (int i=0; i<particles.size(); i++){
 				particles[i]->draw();
 			}
 		} ofPopMatrix();
-		glDisable(GL_DEPTH_TEST);
 	};
 	
 	bool checkMessageString(string msg){

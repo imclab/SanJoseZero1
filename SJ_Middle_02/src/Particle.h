@@ -11,8 +11,8 @@
 #include "ofxTween.h"
 #include "ofx3DModelLoader.h"
 
-#define SPEED 2
-#define MAX_ROTATION_VEC_LENGTH 5
+#define SPEED 3
+#define MAX_ROTATION_VEC_LENGTH 10
 
 
 class Particle
@@ -22,10 +22,12 @@ public:
 	Particle(){
 		bAlive = true;
 		
-		// 3D and Rotation
+		// 3D
 		bIn3D = false;
 		scale = 1.0f;
-//		particle3D.loadModel("hopscotch/hops00.3ds", 10);
+
+		
+		// Rotation
 		rotationCtr = 0.0;
 		xRotateVec = ofRandom(0.0, MAX_ROTATION_VEC_LENGTH);
 		yRotateVec = ofRandom(0.0, MAX_ROTATION_VEC_LENGTH);
@@ -37,17 +39,12 @@ public:
 			rotationDirection = 1;
 
 
-		
-//		cout << "New Particle created\n";
-		
-		
 		// Magnification
 		prevScale = 0.0;
 		bOkToMagnify = true;
 		bOkToDeMagnify = false;
 		bMagnifying = false;
-		maxMagnificationSize = 20.0f;
-		particleTween.setParameters(easingQuad, ofxTween::easeOut,2.0f,maxMagnificationSize, 200,0);
+		maxMagnificationSize = ofGetWidth() / (10 * 20);
 	}
 	
 	
@@ -55,142 +52,148 @@ public:
 		delete particle3D;
 	}
 	
-//	int getWidth(){
-//		return particle3D->width;
-//	}
 	
+	// Associate this particle with a 3D model
 	void setModel( ofx3DModelLoader* _particle3D){
 		particle3D = _particle3D;
-//		cout << "Model set\n";
 	}
+
 	
 	void setScale( float _scale){
 		scale = _scale;
 	}
+	
 	
 	void setLoc( float x, float y){
 		loc.x = x;
 		loc.y = y;
 	}
 	
-	void adjustTweenParams() {
-		particleTween.setParameters(easingBounce, ofxTween::easeOut,particle3D->scale.x,1.0f, 20000, 0);
-	}
 	
 	void update(){
-		float curScale;
-		// First check if we are in the magnification process, which puts everything else on pause.
-		if (bMagnifying) {
-			//do stuff
-			curScale = particleTween.update();
-			if (curScale > maxMagnificationSize * 99.0/100.0) {
-				bIn3D = true;
-				bOkToMagnify = false;
-				bMagnifying = false;
-			}
-			loc.y -= (curScale - prevScale) * 10;
-			particle3D->setScale(curScale,curScale,0);
-			prevScale = curScale;
-			return;
-		}
-		
-		loc.y -= SPEED;
+		// Check to see if we are still alive
 		if (loc.y + ofGetHeight() / 8.0 <= 0) {
 			bAlive = false;
 			return;
 		}
 		
-		
-		// Begin rotating if in 3D
-		if (bIn3D) {
-			curScale = particleTween.update();
-			particle3D->setScale(curScale, curScale, curScale);
-			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
-			rotationCtr += 0.2;
-		}
 
 		
-		// There will be only one magnification event
-		if (bOkToMagnify && loc.y < (ofGetHeight() * (12.0 / 15.0)) && loc.y > (ofGetHeight() / 4.5)) {
-			bMagnifying = true;
-			particleTween.start();
-//			if (curScale >= maxMagnificationSize * 99.0/100.0) {
-//				curScale = maxMagnificationSize;
-//				bOkToMagnify = false;
-//				bIn3D = true;
-//				particle3D.setRotation(1,0,0,0,0);
-//			}
-//				bOkToMagnify = false;
-			//}
-		} else if (!bOkToDeMagnify && loc.y < (ofGetHeight() / 4.5)) {
-			adjustTweenParams();
-			bOkToDeMagnify = true;
+		float curScale;
+		
+		// First check if we are in the magnification or demagnification process, which adjusts the y-axis location, and does tweened rotation
+		if (bMagnifying) {
+			// Adjust scale
+			curScale = particleTween.update();
+			particle3D->setScale(curScale,curScale,curScale);
+
+			// Adjust rotation
+			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+			rotationCtr += rotationTween.update();
+
+			// Adjust y-coordinate
+			loc.y -= (curScale - prevScale) * 10;
+			
+			// Check if we're done magnifying
+			if (curScale > maxMagnificationSize * 99.0/100.0) {
+				bIn3D = true;
+				bOkToMagnify = false;
+				bMagnifying = false;
+			}
+
+			prevScale = curScale;
+			return;
 		} else if (bOkToDeMagnify) {
-//			curScale = particleTween.update();
-			if (curScale < 4.0f) {
+			curScale = particleTween.update();
+			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+			rotationCtr += rotationTween.update();
+			if (curScale < 1.2f) {
 				curScale = 1.0f;
-				particle3D->setScale(curScale,curScale,curScale);
 				bOkToDeMagnify = false;
 				bIn3D = false;
 				particle3D->setRotation(0,0,0,0,0);
 			}
-//			setScale(curScale);
+			particle3D->setScale(curScale,curScale,curScale);
 		}
 		
 		
-//		cout << "loc.y= " << loc.y << ", scale: " << scale << ", curTween: " << curTween << endl;
+		
+		// Begin rotating and slow upward speed if in 3D
+		if (bIn3D) {
+			// Slow down the upward motion since we are in 3D
+			loc.y -= 0.8; 
+
+			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+			rotationCtr += 0.2;
+		} else {
+			loc.y -= SPEED;
+		}
+
+		
+		// Initiate the magnification or demagnification events
+		if (bOkToMagnify && loc.y < (ofGetHeight() * (4.0 / 4.5)) && loc.y > (ofGetHeight() / 6)) {
+			bMagnifying = true;
+			particleTween.setParameters(easingQuad, ofxTween::easeOut,2.0f,maxMagnificationSize, 200,0);
+			particleTween.start();
+
+			rotationTween.setParameters(easingCirc,ofxTween::easeOut,75.0,0.2,180,0);
+			rotationTween.start();
+			
+		// Detect when we must demagnify
+		} else if (!bOkToDeMagnify && loc.y < (ofGetHeight() / 6)) {
+			particleTween.setParameters(easingQuad, ofxTween::easeOut,particle3D->scale.x,1.0f, 200, 0);
+			particleTween.start();
+			
+			rotationTween.setParameters(easingCirc,ofxTween::easeOut,0.2,20,180,0);		
+			rotationTween.start();
+			bOkToDeMagnify = true;
+			bIn3D = false;
+		}
 	}
+
+	
 	void draw(){ 
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			ofScale(scale, scale, scale);
-//			ofRotate(rotationCtr,0,1,1);
-//			if (!bIn3D) {
-//				img->draw(-getWidth()/2.0,-getWidth()/2.0);
-//			} else {
-//				glEnable(GL_DEPTH_TEST);
-//				glEnable(GL_CULL_FACE);
-//				particle3D.draw();
-//				glDisable(GL_CULL_FACE);
-//				glDisable(GL_DEPTH_TEST);
-//			}
-//			img->draw(-getWidth()/2.0,-getWidth()/2.0);
-//			glFrontFace(GL_CCW);
-			//glEnable(GL_CULL_FACE);
 			particle3D->draw();
-			//glDisable(GL_CULL_FACE)
 		} ofPopMatrix();
 	};
 	
-	bool alive(){ return bAlive; };
+
+	bool alive() {
+		return bAlive;
+	};
+	
 	
 	ofPoint loc;
+	
 private:
-
+	bool bAlive;
+	float scale;
+	
+	
 	// Magnification
 	bool bOkToMagnify;
 	bool bOkToDeMagnify;
 	bool bMagnifying;
-	bool bIn3D;
-	float prevScale;
 	float maxMagnificationSize;
+	float prevScale;
 	ofxTween particleTween;
-	ofxEasingBounce easingBounce1;
-	ofxEasingBounce easingBounce;
 	ofxEasingQuad easingQuad;
+
+	
+	// Rotation
+	ofxTween rotationTween;
+	ofxEasingCirc easingCirc;
 	int rotationDirection;
 	
 	
 	// 3D and Rotation
+	bool bIn3D;
 	ofx3DModelLoader* particle3D;
 	float rotationCtr;
 	float xRotateVec;
 	float yRotateVec;
 	float zRotateVec;
-	
-	bool bAlive;
-//	ofImage * img;
-	float scale;
-	
-	
 };
