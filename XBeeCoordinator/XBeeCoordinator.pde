@@ -62,26 +62,29 @@ import netP5.*;
     xml = new XMLElement(this, "settings.xml");
     XMLElement oscSettings = xml.getChild("osc");
     
+    println(oscSettings.getChildCount());
+    
     println("Available serial ports:");
     println(Serial.list());   
     port = new Serial(this, Serial.list()[0], 9600); 
-    
-    int nSendPort = oscSettings.getIntAttribute("listenport");
-    if (nSendPort == 0){
-      nSendPort = sendPort;
+   
+    String nHost = oscSettings.getChild("host").getContent();
+    if (nHost == null){
+      nHost = host;
     }
-    int nListenPort = oscSettings.getIntAttribute("sendport");
+        
+    int nListenPort = Integer.parseInt(oscSettings.getChild("send").getContent());
     if (nListenPort == 0){
       nListenPort = listenPort;
     }
     
-    String nHost = oscSettings.getStringAttribute("host");
-    if (nHost == null){
-      nHost = host;
+    int nSendPort = Integer.parseInt(oscSettings.getChild("listen").getContent());
+    if (nSendPort == 0){
+      nSendPort = sendPort;
     }
     
-    oscP5 = new OscP5(this, nSendPort);
-    demoLocation = new NetAddress(nHost, nListenPort);
+    oscP5 = new OscP5(this, nListenPort);
+    demoLocation = new NetAddress(nHost, nSendPort);
     
     //setup inputs    
       //default values...
@@ -195,6 +198,15 @@ import netP5.*;
           curY += spacingY + 10;
         }
       }  
+      
+      pushMatrix();
+        translate(curX, curY);
+        fill(200);
+        textFont( font, fontSize );
+        text("sending OSC to "+host+", "+sendPort+"\n", 8, fontSize+4);
+        text("listen for OSC at "+listenPort+"\n", 8, fontSize*2+8);
+      popMatrix();
+      
     popMatrix();
   }
   
@@ -205,9 +217,10 @@ import netP5.*;
 void oscEvent(OscMessage theOscMessage) {
   /* check if theOscMessage has the address pattern we are looking for. */
   
-  if(theOscMessage.checkAddrPattern("/sendSound")==true) {
+  if(theOscMessage.checkAddrPattern("/pluginplay/sound")==true) {
       /* parse theOscMessage and extract the values from the osc message arguments. */
       String name = theOscMessage.get(0).stringValue();
+      println("caught "+name);
       //find name in array      
       for (int i=inputs.size()-1; i>=0; i--){
         Input input = (Input) inputs.get(i);

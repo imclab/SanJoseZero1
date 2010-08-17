@@ -1,7 +1,8 @@
 <settings>
 	<osc>
 		<host>localhost</host>
-		<port>12345</port>
+		<listen>12345</listen>
+		<send>12002</send>
 	</osc>
 	<sensors>
 		<sensor>
@@ -15,7 +16,7 @@
 			<sendosc>1</sendosc>
 		</sensor>
 		<sensor>
-			<name>picnic</name>
+			<name>picnictable</name>
 			<id>405DAF9E</id>
 			<sendosc>1</sendosc>
 		</sensor>
@@ -50,7 +51,7 @@
 			<sendosc>0</sendosc>
 		</sensor>
 		<sensor>
-			<name>cdm</name>
+			<name>playground</name>
 			<id>405DAFB1</id>
 			<sendosc>0</sendosc>
 		</sensor>

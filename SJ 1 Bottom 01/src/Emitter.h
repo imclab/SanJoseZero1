@@ -27,7 +27,17 @@ public:
 	Emitter(){
 		lastEmitted = ofGetElapsedTimeMillis();
 		lastFoundString = 0;
+		bSendSound = false;
+		emitDelay= EMITTER_TIME;
 	};
+	
+	void setSendSound( bool _bSendSound = true ){
+		bSendSound = _bSendSound;
+	}
+	
+	bool sendSound(){
+		return bSendSound;
+	}
 	
 	void addMessageString( string msg ){
 		messageStrings.push_back(msg);
@@ -35,6 +45,14 @@ public:
 	
 	void setName (string _name){
 		name = _name;
+	}
+	
+	string getName(){
+		return name;
+	}
+	
+	void setEmitDelay( int _emitDelay ){
+		emitDelay = _emitDelay;
 	}
 	
 	void setLoc( float x, float y){
@@ -66,7 +84,7 @@ public:
 	};
 	
 	void emit( int index = 0){
-		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
+		if (ofGetElapsedTimeMillis() - lastEmitted > emitDelay){
 			cout <<"emit!"<<endl;
 			Particle part;
 			part.setLoc(0, ofGetHeight());
@@ -109,4 +127,6 @@ private:
 	int lastEmitted;
 	ofPoint loc;
 	string name;
+	bool bSendSound;
+	int emitDelay;
 };

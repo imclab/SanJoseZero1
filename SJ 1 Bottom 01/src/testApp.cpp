@@ -6,8 +6,6 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	// listen on the given port
-	cout << "listening for osc messages on port " << PORT << "\n";
-	receiver.setup( PORT );
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
@@ -17,25 +15,33 @@ void testApp::setup(){
 	settings.loadFile("settings.xml");
 	settings.pushTag("settings");
 	
-	int numReceivers = settings.getNumTags("receiver");
+	numReceivers = settings.getNumTags("input");
 		
+	int emitDelay = 500;
+	
+	settings.pushTag("misc");{
+		emitDelay = settings.getValue("emitdelay",emitDelay);
+	} settings.popTag();
+	
 	// Loops through directories '0' through '9'.
 	for (int i=0; i<numReceivers; i++) {
 		
 		Emitter * e = new Emitter();
-		e->setLoc(ofGetWidth()/9.0 * i,0);
+		e->setLoc(ofGetWidth()/numReceivers * i,0);
 		
 		if (i <numReceivers){			
-			settings.pushTag("receiver", i);
+			settings.pushTag("input", i);{
 				e->setName(settings.getValue("name", "") );
-			for (int j=0; j<settings.getNumTags("message"); j++){
-				settings.pushTag("message", j);
-					e->addMessageString(settings.getValue("messageString", ""));
-					e->loadImage(ofToDataPath(settings.getValue("image", "")));
-					cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
-				settings.popTag();
-			}
-			settings.popTag();
+				for (int j=0; j<settings.getNumTags("message"); j++){
+					settings.pushTag("message", j);
+						e->addMessageString(settings.getValue("messageString", ""));
+						e->loadImage(ofToDataPath(settings.getValue("image", "")));
+						cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
+					settings.popTag();
+				}
+				e->setSendSound( settings.getValue("sendsound", false) );
+				e->setEmitDelay(emitDelay);
+			} settings.popTag();
 		};
 		//add listener for particles leaving screen
 		ofAddListener(e->particleLeft, this, &testApp::elementLeftScreen);
@@ -46,46 +52,48 @@ void testApp::setup(){
 	//get host + port for sender
 	
 	string host = "localhost";
-	int port = 12345;
+	int port = 12000;
+	int receiverPort = 12345;
 	
-	settings.pushTag("sender");{
-		host = settings.getValue("host","localhost");
-		port = settings.getValue("port",12000);
+	string soundHost = "localhost";
+	int soundPort = 12002;
+	
+	settings.pushTag("osc");{
+				
+		settings.pushTag("receiver");{
+			receiverPort = settings.getValue("port",12345);
+		} settings.popTag();
+		
+		settings.pushTag("sender");{
+			host = settings.getValue("host","localhost");
+			port = settings.getValue("port",12000);
+		} settings.popTag();
+		
+		settings.pushTag("soundsender");{
+			soundHost = settings.getValue("host", soundHost);
+			soundPort = settings.getValue("port",soundPort);
+		} settings.popTag();
 	} settings.popTag();
 	
 	settings.popTag();
 
+	ofSetLogLevel(OF_LOG_VERBOSE);
 	
-	cout << "setting up sender at "<<host<<","<<port<<endl;
-	cout << "there are " << emitters.size() << endl;
+	ofLog(OF_LOG_VERBOSE, "setting up receiver at "+ofToString(receiverPort));
+	ofLog(OF_LOG_VERBOSE, "setting up sender at "+host+","+ofToString(port));
+	ofLog(OF_LOG_VERBOSE, "setting up sound sender at "+soundHost+","+ofToString(soundPort));
+	ofLog(OF_LOG_VERBOSE, "there are "+ofToString((int)emitters.size()));;
 	
 	//setup OSC
+	receiver.setup( receiverPort );
 	sender.setup(host, port);
+	soundSender.setup(soundHost, soundPort);
 		
-	/*
-	emitters[0]->addMessageString("/pluginplay/picnictable");
-	emitters[1]->addMessageString("/pluginplay/megaphone");
-	emitters[2]->addMessageString("/pluginplay/birdfeeder");
-	emitters[3]->addMessageString("/pluginplay/hopscotch");
-	emitters[4]->addMessageString("/pluginplay/stoplight");
-	emitters[5]->addMessageString("/pluginplay/playground");
-	emitters[6]->addMessageString("/pluginplay/twitter");
-	emitters[7]->addMessageString("/pluginplay/flickr");
-	emitters[8]->addMessageString("/pluginplay/foursquare");
-	emitters[8]->addMessageString("/pluginplay/foursquare/nearby");
-	emitters[9]->addMessageString ("/pluginplay/");
-	*/
+	ofHideCursor();
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
-	// hide old messages
-	for ( int i=0; i<NUM_MSG_STRINGS; i++ )
-	{
-		if ( timers[i] < ofGetElapsedTimef() )
-			msg_strings[i] = "";
-	}
 	
 	// check for waiting messages
 	while( receiver.hasWaitingMessages() )
@@ -100,6 +108,13 @@ void testApp::update(){
 		for (int i=0; i<emitters.size(); i++){
 			if (emitters[i]->checkMessageString(m.getAddress())){
 				emitters[i]->emit(emitters[i]->lastFoundString);
+				cout<<"send sound? "<<emitters[i]->sendSound()<<endl;
+				if (emitters[i]->sendSound()){
+					ofxOscMessage m;
+					m.setAddress("/pluginplay/sound");
+					m.addStringArg(emitters[i]->getName());
+					soundSender.sendMessage(m);
+				}
 				bFound = true;
 				break;
 			}
@@ -108,31 +123,7 @@ void testApp::update(){
 		// unrecognized message: display on screen
 		if (!bFound)
 		{
-			// unrecognized message: display on the bottom of the screen
-			string msg_string;
-			msg_string = m.getAddress();
-			msg_string += ": ";
-			for ( int i=0; i<m.getNumArgs(); i++ )
-			{
-				// get the argument type
-				msg_string += m.getArgTypeName( i );
-				msg_string += ":";
-				// display the argument - make sure we get the right type
-				if( m.getArgType( i ) == OFXOSC_TYPE_INT32 )
-					msg_string += ofToString( m.getArgAsInt32( i ) );
-				else if( m.getArgType( i ) == OFXOSC_TYPE_FLOAT )
-					msg_string += ofToString( m.getArgAsFloat( i ) );
-				else if( m.getArgType( i ) == OFXOSC_TYPE_STRING )
-					msg_string += m.getArgAsString( i );
-				else
-					msg_string += "unknown";
-			}
-			// add to the list of strings to display
-			msg_strings[current_msg_string] = msg_string;
-			timers[current_msg_string] = ofGetElapsedTimef() + 5.0f;
-			current_msg_string = ( current_msg_string + 1 ) % NUM_MSG_STRINGS;
-			// clear the next line
-			msg_strings[current_msg_string] = "";
+			ofLog(OF_LOG_ERROR, "caught unrecognized message "+m.getAddress());
 		}
 		
 	}
@@ -171,16 +162,6 @@ void testApp::draw(){
 		emitters[i]->draw();
 	}
 	ofDisableAlphaBlending();
-	
-	string buf;
-	buf = "listening for osc messages on port" + ofToString( PORT );
-	ofDrawBitmapString( buf, 10, 20 );
-	ofSetColor( 255, 255, 255 );
-	
-	for ( int i=0; i<NUM_MSG_STRINGS; i++ )
-	{
-		ofDrawBitmapString( msg_strings[i], 10, 40+15*i );
-	}
 }
 
 //--------------------------------------------------------------
@@ -210,7 +191,7 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->setLoc(ofGetWidth()/9.0 * i,0);
+		emitters[i]->setLoc(ofGetWidth()/numReceivers * i,0);
 	}
 }
 

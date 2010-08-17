@@ -7,11 +7,6 @@
 #include "ofxXmlSettings.h"
 #include "Emitter.h"
 
-// listen on port 12345
-//#define HOST "localhost"
-#define PORT 12345
-#define NUM_MSG_STRINGS 20
-
 //--------------------------------------------------------
 class testApp : public ofBaseApp{
 	
@@ -37,13 +32,10 @@ private:
 	bool			bDrawDebug;
 	ofxOscReceiver	receiver;
 	ofxOscSender	sender;
-	
-	int				current_msg_string;
-	string			msg_strings[NUM_MSG_STRINGS];
-	float			timers[NUM_MSG_STRINGS];
-	
+	ofxOscSender	soundSender;
 	int				mouseX, mouseY;
 	string			mouseButtonState;
+	int				numReceivers;
 };
 
 #endif
