@@ -8,6 +8,8 @@ openFrameworksDebug.a
 openFrameworksUniversal.a
 *.app/
 
+application.macosx/
+
 #codeblocks files
 apps/*/*/*.layout
 apps/*/*/*.depend

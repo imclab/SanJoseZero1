@@ -96,6 +96,7 @@ void testApp::update(){
 		
 		bool bFound = false;
 		
+		cout<<"got "<<m.getAddress()<<endl;
 		for (int i=0; i<emitters.size(); i++){
 			if (emitters[i]->checkMessageString(m.getAddress())){
 				emitters[i]->emit(emitters[i]->lastFoundString);
