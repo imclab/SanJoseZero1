@@ -23,11 +23,13 @@ public:
 		bAlive = true;
 		
 		// 3D
+//		particle3D->setScale(1.0,1.0,0);
 		bIn3D = false;
 		scale = 1.0f;
 
 		
 		// Rotation
+		bPre3D = true;
 		rotationCtr = 0.0;
 		xRotateVec = ofRandom(0.0, MAX_ROTATION_VEC_LENGTH);
 		yRotateVec = ofRandom(0.0, MAX_ROTATION_VEC_LENGTH);
@@ -77,8 +79,7 @@ public:
 			return;
 		}
 		
-
-		
+	
 		float curScale;
 		
 		// First check if we are in the magnification or demagnification process, which adjusts the y-axis location, and does tweened rotation
@@ -125,6 +126,11 @@ public:
 
 			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
 			rotationCtr += 0.2;
+//		} else if (bPre3D) {
+////			particle3D->setScale(2.0,1.0,1.0);
+//			loc.y -= SPEED;
+//			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+//			rotationCtr += 0.8;
 		} else {
 			loc.y -= SPEED;
 		}
@@ -132,6 +138,9 @@ public:
 		
 		// Initiate the magnification or demagnification events
 		if (bOkToMagnify && loc.y < (ofGetHeight() * (4.0 / 4.5)) && loc.y > (ofGetHeight() / 6)) {
+			bPre3D = false;
+//			particle3D->setScale(1.0,1.0,1.0);
+			
 			bMagnifying = true;
 			particleTween.setParameters(easingQuad, ofxTween::easeOut,2.0f,maxMagnificationSize, 200,0);
 			particleTween.start();
@@ -187,6 +196,7 @@ private:
 	ofxTween rotationTween;
 	ofxEasingCirc easingCirc;
 	int rotationDirection;
+	bool bPre3D;
 	
 	
 	// 3D and Rotation
