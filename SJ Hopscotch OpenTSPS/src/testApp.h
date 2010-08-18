@@ -45,7 +45,7 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 		void personWillLeave( ofxTSPSPerson* leavingPerson, ofxTSPSScene* scene );
 		void personUpdated( ofxTSPSPerson* updatedPerson, ofxTSPSScene* scene );
 	
-		void sendSignal(int quadIndex);
+		void sendOscMessage(int quadIndex);
 	
         #ifdef _USE_LIVE_VIDEO
 		  ofVideoGrabber 		vidGrabber;
@@ -61,7 +61,7 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 	//hopscotch
 		int drawMode;
 		Hopscotch hopscotch;
-		time_t lastEmitTimes[10];
+		time_t lastEmitTimes[NUM_OF_QUADS];
 	
 	//status bar stuff
 		ofImage statusBar;

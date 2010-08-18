@@ -3,6 +3,8 @@
  *  Hopscotch Confetti
  *
  *  Created by Brett Renfer on 3/5/10.
+ *  Modified by Zack Boka on 8/18/10 to use Optical flow for movement
+ *  detection in quads.
  *  Copyright 2010 Rockwell Group. All rights reserved.
  *
  */
@@ -12,13 +14,15 @@
 #include "Quad.h"
 #include "ofxOsc.h"
 
+#define NUM_OF_QUADS 7
+
 class Hopscotch : public ofRectangle{
 public:
 	
 	ofxXmlSettings settings;
 	int numRects;
 	vector <Quad> quads;
-	string names[17];
+	string names[NUM_OF_QUADS];
 	
 	ofxOscSender sender;
 	string oscHost;
@@ -35,24 +39,23 @@ public:
 		names[4] = "five";
 		names[5] = "six";
 		names[6] = "seven";
-		names[7] = "eight";
-		names[8] = "nine";
-		names[9] = "ten";
-		names[10] = "eleven";
-		names[11] = "twelve";
-		names[12] = "thirteen";
-		names[13] = "fourteen";
-		names[14] = "fifteen";
-		names[15] = "sixteen";
-		names[16] = "seventeen";
+//		names[7] = "eight";
+//		names[8] = "nine";
+//		names[9] = "ten";
+//		names[10] = "eleven";
+//		names[11] = "twelve";
+//		names[12] = "thirteen";
+//		names[13] = "fourteen";
+//		names[14] = "fifteen";
+//		names[15] = "sixteen";
+//		names[16] = "seventeen";
 		
 		loadSettings();
 		
 		x = 350;
 		y = 10;
 		
-//		sender.setup(oscHost, oscPort);
-		sender.setup("localhost",12345);
+		sender.setup(oscHost, oscPort);
 		cout<<"SETTING UP OSC "<<oscHost<<":"<<oscPort<<endl;
 	};
 	
@@ -113,16 +116,16 @@ public:
 		Quad dummyQuad;
 		return dummyQuad;
 	}
-		
-	void send( int quadIndex, string eventName ){
+
+	
+	// ZACK: modified to send the given quad's specific address
+	void send(int quadIndex) {
 		ofxOscMessage m;
-		
-		stringstream ss;
-		ss<<"cyaHopscotch/"<<eventName<<"/";
-		m.setAddress(ss.str());
+		m.setAddress(quads[quadIndex].address);
 		m.addIntArg(quadIndex);
 		sender.sendMessage(m);
 	}
+
 	
 	void mousePressed( int mX, int mY ){
 		mX -= x;
@@ -270,6 +273,7 @@ public:
 		saveSettings();
 	};
 	
+	// ZACK: modified to get the specific quad's image address from the XML file
 	void loadSettings(){
 		settings.loadFile(ofToDataPath("settings/hopscotchsettings.xml", true));
 		
@@ -355,17 +359,8 @@ public:
 	}
 	
 	
-	// ZACK: return the requested quad
-	Quad getQuad(int quad) {
-		return quads[quad];
+	// ZACK: return a pointer to the requested quad
+	Quad* getQuad(int quad) {
+		return &quads[quad];
 	}
-	
-	
-	void sendSignal(int quadIndex) {
-		ofxOscMessage m;
-		m.setAddress(quads[quadIndex].address);
-		m.addIntArg(quadIndex);
-		sender.sendMessage(m);
-	}
-	
 };

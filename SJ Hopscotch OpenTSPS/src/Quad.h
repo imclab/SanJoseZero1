@@ -19,7 +19,7 @@ public:
 	vector <ofPoint *> points;
 	string name;
 	int index;
-	string address;
+	string address; // OSC address for the quad
 
 	Quad()
 	: name(""){

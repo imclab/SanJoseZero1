@@ -74,7 +74,7 @@ void testApp::setup(){
 	drawMode = 0;
 	
 	
-	// Initialize last times to the current time
+	// ZACK: Initialize last emit times for each quad to the current time
 	for (int i = 0; i < hopscotch.numRects; i++) {
 		time(&lastEmitTimes[i]);
 	}
@@ -111,39 +111,34 @@ void testApp::update(){
 	
 	// ZACK: get Optical Flow for each quad
 	float x,y,w,h;
+	Quad* q;
 	for (int i = 0; i < hopscotch.numRects; i++) {
-		Quad q = hopscotch.getQuad(i);
-		x = q.p1.x / 2.0;
-		y = q.p1.y / 2.0;
-//		w = ((q.p2.x - q.p1.x) + (q.p3.x - q.p4.x)) / 2.0;
-//		h = ((q.p4.y - q.p1.y) + (q.p3.y - q.p2.y)) / 2.0;
-		w = (q.p2.x - q.p1.x) / 2.0;
-		h = (q.p4.y - q.p1.y) / 2.0;
-//		cout << "w: " << w << ", h: " << h << endl;
-		
+		q = hopscotch.getQuad(i);
+		x = (*q).p1.x / 2.0;
+		y = (*q).p1.y / 2.0;
+		w = ((*q).p2.x - (*q).p1.x) / 2.0;
+		h = ((*q).p4.y - (*q).p1.y) / 2.0;
+
+		// Get the optical flow for the quad
 		ofPoint myPoint = peopleTracker.getOpticalFlowInRegion(x,y,w,h);
 		
+		// Test that enough movement has occured to trigger a sendSignalOSC event
 		if (fabs(myPoint.x) + fabs(myPoint.y) > OPTICAL_FLOW_DETECTION_THRESHOLD) {
-			cout << "GOT IT! Quad: " << q.name << ",  " << myPoint.x << "," << myPoint.y << endl;
-			sendSignal(i);
+			cout << "GOT IT! Quad: " << (*q).name << ",  " << myPoint.x << "," << myPoint.y << endl;
+			sendOscMessage(i);
 		}
-		
-		
-//		if ((myPoint.x || myPoint.y) && q.name == "ten")
-//			cout << "Quad " << q.name << "  :  " << myPoint.x << "," << myPoint.y << endl;
-		
-		// Test the amount of movement for that quad, then send an OSC signal if reached threshold
-			// Must consider how often to send the OSC signal, and how much movement can trigger that over what period of time
 	}
 }
 
-void testApp::sendSignal(int quadIndex) {
+// ZACK: sends an OSC message for the given quad if enough time has elapsed since the last sent message for the given quad
+void testApp::sendOscMessage(int quadIndex) {
 	time_t sendTime;
 	time(&sendTime);
 	
+	// Test that enough time has elapsed since the last sent message for the given quad
 	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= EMIT_THRESHOLD_SECONDS) {
 		lastEmitTimes[quadIndex] = sendTime;
-		hopscotch.sendSignal(quadIndex);
+		hopscotch.send(quadIndex);
 		cout << "emitted: " << hopscotch.names[quadIndex] << endl;
 	} else {
 		cout << "too soon\n";
