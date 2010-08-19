@@ -46,20 +46,9 @@ public:
 	}
 	
 	void loadModel( string modelImage ){
-//		ofImage * img = new ofImage();
-//		img->loadImage(image);
-//		images.push_back(img);
-		
-//		ofx3DModelLoader* mdl = new ofx3DModelLoader();
-//		mdl->loadModel(model,10);
-//		models.push_back(mdl);
-
-//		model->loadModel(model,10);
-
 		modelImageList.push_back(modelImage);
-//		modelImageListIndex++;
-		
 	}
+
 	
 	//Memory management
 	void update(){
@@ -84,11 +73,9 @@ public:
 			cout <<"emit!"<<endl;
 			Particle* part = new Particle();
 			ofx3DModelLoader* partModel = new ofx3DModelLoader();
-// MUST FIX THIS IF GOING TO HAVE MORE THAN ONE IMAGE, WHICH WE WILL!			
-			partModel->loadModel(modelImageList[0],1);
+			partModel->loadModel(modelImageList[index],1);
 			part->setLoc(0, ofGetHeight());
 			if (index > models.size()-1 || lastFoundString < 0) index = 0;
-//			part->setImage(models[index]);
 			part->setModel(partModel);
 			part->setScale(2);
 			particles.push_back(part);
@@ -120,6 +107,10 @@ public:
 	int lastFoundString;
 	
 	ofEvent<ParticleEventArgs> particleLeft;
+	
+	string getName() {
+		return name;
+	}
 	
 private:
 //	vector<ofImage *> images;
