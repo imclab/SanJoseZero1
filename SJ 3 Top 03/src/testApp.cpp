@@ -153,7 +153,7 @@ void testApp::draw(){
 	ofEnableAlphaBlending();
 	ofPushMatrix();{
 		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-		//ofRotateY(mouseX - ofGetWidth());
+		if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
 		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
 		//draw particles
 		particleManager->draw();	
@@ -209,7 +209,7 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
+	bDragging = true;
 }
 
 //--------------------------------------------------------------
@@ -219,7 +219,7 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-
+	bDragging = false;
 }
 
 //--------------------------------------------------------------

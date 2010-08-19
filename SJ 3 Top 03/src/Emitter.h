@@ -153,19 +153,22 @@ public:
 	void draw(){
 		ofPushMatrix();{
 			
+			currentRow->draw();
+			
+			for (int i=0; i<buildings.size(); i++){
+				buildings[i]->draw();
+			}
+			
 			for (int i=0; i<oldRows.size(); i++){
 				oldRows[i]->draw();
 			}
 			
-			currentRow->draw();
 						
-			for (int i=0; i<buildings.size(); i++){
-				buildings[i]->draw();
-			}
 		} ofPopMatrix();
 	};	
 	
 	void newRow(){
+		currentRow->setComplete(true);
 		oldRows.push_back( currentRow );
 		rowIsComplete(currentRow);
 		currentRow = new BuildingRow(500);
@@ -174,7 +177,9 @@ public:
 	void emitRandom( ){
 		int ran = (int) ofRandom(0, types.size());
 		
-		checkMessageString(types[ran]->getRandomMessageString(), ofRandom(0, ofGetWidth()));
+		float ranX = ofRandom(0, ofGetWidth());
+			
+		checkMessageString(types[ran]->getRandomMessageString(), ranX);
 	};
 	
 /***********************************************************

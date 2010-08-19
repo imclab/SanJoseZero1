@@ -25,6 +25,7 @@ public:
 		height = 0;
 	};
 	
+	
 	void setPosition( float x, float y ){
 		pos.x = x;
 		pos.y = y;
@@ -59,9 +60,9 @@ public:
 	void addBuilding( Building * b ){
 		
 		//update position
-		b->rotate.x = 95;
-		b->rotate.y = 180;
-		b->setPos(0,-b->getHeight()/4.0,height);
+		b->rotate.x += -270;
+		b->rotate.y += 0;
+		b->setPos(0,b->getHeight(),height+b->getHeight()/2.0f);
 		buildings.push_back(b);
 		update();
 	};

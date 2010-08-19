@@ -28,6 +28,7 @@ public:
 	};
 	
 	void setup(){
+		bComplete = false;
 		color.r = 50;//ofRandom(0, 255);
 		color.g = 50;//ofRandom(0, 255);
 		color.b = 50;//ofRandom(0, 255);
@@ -116,8 +117,9 @@ public:
 			ofSetColor(color.r, color.g, color.b);
 			//ofSetColor(0x33333);
 			ofRect(0,0,size.x, size.y);
-			
-			ofSetColor(0xffffff);
+			if (bComplete)
+				ofSetColor(255,255,255,255);
+			else ofSetColor(0xffffff);
 			for (int i=0; i<stacks.size(); i++){
 				stacks[i]->draw();
 			};
@@ -129,6 +131,10 @@ public:
 		size.x = ofGetWidth();
 	};
 	
+	void setComplete( bool _bComplete ){
+		bComplete = _bComplete;
+	}
+	
 	ofPoint rotation;
 	ofPoint pos;
 	ofPoint size;
@@ -137,4 +143,5 @@ public:
 	
 protected:
 	float ceiling;
+	bool bComplete;
 };
