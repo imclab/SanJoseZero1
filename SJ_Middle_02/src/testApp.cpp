@@ -98,20 +98,30 @@ void testApp::update(){
 	// check for waiting messages
 	while( receiver.hasWaitingMessages() )
 	{
+		
+		cout << "RECEIVED MESSAGE!\n\n";
+		
 		// get the next message
 		ofxOscMessage m;
 		receiver.getNextMessage( &m );
 		
 		bool bFound = false;
-		
+
+		cout << "RECEIVED MESSAGE!  2\n\n";
+		cout << "contents: " << m.getAddress() << endl;
+		cout << "emmitter size: " << emitters.size() << endl;
 		for (int i=0; i<emitters.size(); i++){
+//			cout << "1\n";
+			cout << "name: " << emitters[i]->getName() << endl;
 			if (emitters[i]->checkMessageString(m.getAddress())){
+				cout << "2\n";
+				// Test if hopscotch so can send arg index?
 				emitters[i]->emit(emitters[i]->lastFoundString);
 				bFound = true;
 				break;
 			}
 		}
-		
+		cout << "3\n";
 		// unrecognized message: display on screen
 		if (!bFound)
 		{

@@ -42,6 +42,7 @@ class testApp : public ofBaseApp{
 	private:
 		ofxOscReceiver	receiver;
 		ofxOscSender	sender;
+		bool bDragging;
 	
 };
 

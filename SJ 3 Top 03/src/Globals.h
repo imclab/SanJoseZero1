@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define SPEED 10
+#define SPEED 5
 #define EMITTER_TIME 500
 #define ROTATE_TIME 5000
 #define ROTATE_AMOUNT 8

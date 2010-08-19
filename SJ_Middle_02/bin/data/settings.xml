@@ -3,21 +3,21 @@
 	<catcher>
 		<name>birdfeeder</name>
 		<message>
-			<image>models/birdfeeder/birdfeeder.3ds</image>
+            <image>models/birdfeeder/birdfeeder.3ds</image>
 			<messageString>/pluginplay/birdfeeder</messageString>
 		</message>
 	</catcher>
 	<catcher>
 		<name>flickr</name>
 		<message>
-			<image>models/flickr/flickr.3ds</image>
+            <image>models/flickr/flickr.3ds</image>
 			<messageString>/pluginplay/flickr</messageString>
 		</message>
 	</catcher>
 	<catcher>
 		<name>foursquare</name>
 		<message>
-			<image>models/foursquare/foursq00.3DS</image>
+            <image>models/foursquare/foursq00.3DS</image>
 			<messageString>/pluginplay/foursquare</messageString>
 		</message>
 		<message>
@@ -29,7 +29,31 @@
 		<name>hopscotch</name>
 		<message>
 			<image>models/hopscotch/hops00.3ds</image>
-			<messageString>/pluginplay/hopscotch</messageString>
+			<messageString>/pluginplay/hopscotch0</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_01.3ds</image>
+			<messageString>/pluginplay/hopscotch1</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_02.3ds</image>
+			<messageString>/pluginplay/hopscotch2</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_03.3ds</image>
+			<messageString>/pluginplay/hopscotch3</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_04.3ds</image>
+			<messageString>/pluginplay/hopscotch4</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_05.3ds</image>
+			<messageString>/pluginplay/hopscotch5</messageString>
+		</message>
+		<message>
+			<image>models/hopscotch/hopscotch_06.3ds</image>
+			<messageString>/pluginplay/hopscotch6</messageString>
 		</message>
 	</catcher>
 	<catcher>

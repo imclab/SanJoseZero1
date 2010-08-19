@@ -20,7 +20,7 @@ public:
 		ceiling = 0;
 		index = 0;
 		rotateAround = 0;
-		rotate.x = 5;
+		rotate.x = 0;
 		//rotate = ofRandom(0, 360);
 	}
 	
@@ -73,7 +73,8 @@ public:
 	
 	void update(){
 		position.y -= SPEED;
-		//rotate += SPEED * .5;
+		//rotate.x += SPEED * .5;
+		//rotate.y += SPEED * .5;
 		if (position.y - getHeight()/2 <= ceiling){
 			position.y = ceiling;
 			bAlive = false;
@@ -82,16 +83,16 @@ public:
 	void draw(){ 
 		ofPushMatrix();{
 			ofTranslate(position.x, position.y, position.z);
-			ofTranslate(- getHeight()/2.0,  - getHeight()/2.0);
+			//ofTranslate(getHeight()/2.0, getHeight()/2.0, getHeight()/2.0);
 			
 			ofRotateX(rotate.x);
 			ofRotateY(rotate.y);
 			ofRotateZ(rotate.z);
+			
+			//ofTranslate(-getHeight()/2.0,  -getHeight()/2.0, -getHeight()/2.0);
 			//ofRotateX(5);
 			//ofRotateZ(5);
 			//ofRotateY(15);
-
-			ofTranslate(0, getHeight()/2.0, 0);
 			img->draw();
 		} ofPopMatrix();
 	};
