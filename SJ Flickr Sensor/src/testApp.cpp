@@ -73,7 +73,7 @@ void testApp::doTagSearch(){
 	//form.addFormField("sort", "date-taken-desc");
 	
 	tagSearcher.addForm(form);
-	printTagString = "searching...";
+	printTagString = "searching tags "+tags;
 	bTagSearching = true;
 }
 
