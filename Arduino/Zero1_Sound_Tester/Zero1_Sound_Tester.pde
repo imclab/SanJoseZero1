@@ -27,7 +27,7 @@
   WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
   
   // time to play each tone in milliseconds
-  #define PLAY_TIME 200
+  #define PLAY_TIME 100
   #define error(msg) error_P(PSTR(msg)) //Define macro to put error messages in flash memory
 
 /*********************************************************************
@@ -35,6 +35,7 @@
 *********************************************************************/
   
   int count = 0;
+  int t = 0;
   
   void setup() {  
     xbee.begin(9600);
@@ -86,7 +87,6 @@
       
         if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
           LED_on = !LED_on;
-          count = 30;
           
           // got a zb rx packet
           
@@ -95,8 +95,13 @@
           
           // we're just sending '0' for now, so don't worry about
           // what's in the packet.
-          openByIndex(0); // open first file
-          wave.play();
+          if(millis()-t > PLAY_TIME){
+            t = millis();
+            wave.stop();
+            openByIndex(0); // open first file
+            wave.play();
+            count = 30;
+          }
     
           // stop after PLAY_TIME ms
           //while((millis() - t) < PLAY_TIME);

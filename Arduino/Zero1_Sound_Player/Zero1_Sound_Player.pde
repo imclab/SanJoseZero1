@@ -27,7 +27,9 @@
   WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
   
   // time to play each tone in milliseconds
-  #define PLAY_TIME 200
+  #define PLAY_TIME 100
+  int t = 0;
+  
   #define error(msg) error_P(PSTR(msg)) //Define macro to put error messages in flash memory
 
 /*********************************************************************
@@ -44,14 +46,26 @@
     // enable optimized read - some cards may timeout
     card.partialBlockRead(true);
   
-    if (!vol.init(card)) error("vol.init");
-  
-    if (!root.openRoot(vol)) error("openRoot");
-  
-    PgmPrintln("Index files");
-    indexFiles();
-    openByIndex(0); // open first file
-    wave.play();
+    // Now we will look for a FAT partition!
+    uint8_t part;
+    for (part = 0; part < 5; part++) {     // we have up to 5 slots to look in
+      if (vol.init(card, part)) 
+        break;                             // we found one, lets bail
+    }
+    if (part == 5) {                       // if we ended up not finding one  :(
+      putstring_nl("No valid FAT partition!");
+      sdErrorCheck();      // Something went wrong, lets print out why
+      // then 'halt' - do nothing!
+    } else {
+      if (!root.openRoot(vol)){
+        error("openRoot");
+      } else {
+        PgmPrintln("Index files");
+        indexFiles();
+        openByIndex(0); // open first file
+        wave.play();
+      }
+    }
   }
 
 /*********************************************************************
@@ -75,10 +89,12 @@
           // now fill our zb rx class
           xbee.getResponse().getZBRxResponse(rx);
           
-          // we're just sending '0' for now, so don't worry about
-          // what's in the packet.
-          openByIndex(0); // open first file
-          wave.play();
+          if(millis()-t > PLAY_TIME){
+            t = millis();
+            wave.stop();
+            openByIndex(0); // open first file
+            wave.play();
+          }
     
           // stop after PLAY_TIME ms
           //while((millis() - t) < PLAY_TIME);
