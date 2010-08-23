@@ -36,6 +36,8 @@ private:
 	string errorString [10];
 	
 	ofTrueTypeFont font;
+	
+	int boxX, boxY;
 };
 
 #endif
