@@ -62,11 +62,87 @@
 	<input>
 		<name>hopscotch</name>
 		<message>
-			<image>images/hops00.png</image>
-			<messageString>/pluginplay/hopscotch</messageString>
+			<messageString>/pluginplay/hopscotch_00</messageString>
 		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_10</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_20</messageString>
+		</message>	
+			
+		<message>
+			<messageString>/pluginplay/hopscotch_01</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_11</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_21</messageString>
+		</message>
+				
+		<message>
+			<messageString>/pluginplay/hopscotch_02</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_12</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_22</messageString>
+		</message>
+		
+		<message>
+			<messageString>/pluginplay/hopscotch_03</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_13</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_23</messageString>
+		</message>
+
+		<message>
+			<messageString>/pluginplay/hopscotch_04</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_14</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_24</messageString>
+		</message>		
+
+		<message>
+			<messageString>/pluginplay/hopscotch_05</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_15</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_25</messageString>
+		</message>				
+
+		<message>
+			<messageString>/pluginplay/hopscotch_06</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_16</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_26</messageString>
+		</message>		
+
+		<message>
+			<messageString>/pluginplay/hopscotch_07</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_17</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/hopscotch_27</messageString>
+		</message>		
 		<sendsound>1</sendsound>
 	</input>
+	
 	<input>
 		<name>traffic</name>
 		<message>
@@ -80,6 +156,14 @@
 		<message>
 			<image>images/play00.png</image>
 			<messageString>/pluginplay/playground</messageString>
+		</message>
+		<sendsound>1</sendsound>
+	</input>	
+	<input>
+		<name>open</name>
+		<message>
+			<image>images/open00.png</image>
+			<messageString>/pluginplay/openplug</messageString>
 		</message>
 		<sendsound>1</sendsound>
 	</input>

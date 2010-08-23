@@ -29,7 +29,7 @@ void testApp::setup(){
 	//	cout << "listening for osc messages on port " << PORT << "\n";
 	
 	
-	int numReceivers = settings.getNumTags("catcher");
+	int numReceivers = settings.getNumTags("input");
 		
 	// Loops through directories '0' through '9'.
 	for (int i=0; i<numReceivers; i++) {
@@ -38,7 +38,7 @@ void testApp::setup(){
 		e->setLoc(ofGetWidth()/10.0 * (i+1),0);
 		
 		if (i <numReceivers){			
-			settings.pushTag("catcher", i);
+			settings.pushTag("input", i);
 			e->setName(settings.getValue("name", "") );
 			for (int j=0; j<settings.getNumTags("message"); j++){
 				settings.pushTag("message", j);

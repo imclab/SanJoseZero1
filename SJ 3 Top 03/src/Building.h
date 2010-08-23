@@ -32,10 +32,18 @@ public:
 		return type;
 	}
 	
-	// FIX THIS!!!
-	
 	float getHeight(){
-		return 10*img->scale.x;
+		return img->getYdim()*img->scale.x;
+		//return img->width;
+	}
+	
+	float getWidth(){
+		return img->getXdim()*img->scale.x;
+		//return img->width;
+	}
+	
+	float getDepth(){
+		return img->getZdim()*img->scale.x;
 		//return img->width;
 	}
 	
