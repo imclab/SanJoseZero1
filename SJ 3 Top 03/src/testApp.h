@@ -8,7 +8,7 @@
 #include "Emitter.h"
 #include "ofxHttpUtils.h"
 
-#define POST_URL "http://localhost:8888/php/storebuilding.php"
+#define POST_URL "http://www.plug-in-play.com/php/storebuilding.php"
 #define PORT 12000
 
 class testApp : public ofBaseApp{
@@ -37,7 +37,7 @@ class testApp : public ofBaseApp{
 		void newResponse(ofxHttpResponse & response);
 		string responseString;
 	
-	ofxHttpUtils httpUtils;
+		ofxHttpUtils httpUtils;
 	
 	private:
 		ofxOscReceiver	receiver;

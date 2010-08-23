@@ -62,7 +62,7 @@ public:
 		//update position
 		b->rotate.x += -270;
 		b->rotate.y += 0;
-		b->setPos(0,b->getHeight(),height+b->getHeight()/2.0f);
+		b->setPos(0,b->getWidth(),height + b->getHeight()/2.0);
 		buildings.push_back(b);
 		update();
 	};

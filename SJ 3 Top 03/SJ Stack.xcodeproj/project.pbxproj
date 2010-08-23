@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		2E760176121337CE00778DF6 /* ofxHttpUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E760170121337CE00778DF6 /* ofxHttpUtils.cpp */; };
 		2E760177121337CE00778DF6 /* ofxThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E760174121337CE00778DF6 /* ofxThread.cpp */; };
-		2E776A2511E3834D007E7798 /* model3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769E811E3834C007E7798 /* model3DS.cpp */; };
-		2E776A2611E3834D007E7798 /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769EA11E3834C007E7798 /* texture3DS.cpp */; };
-		2E776A2711E3834D007E7798 /* ofx3dModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769EE11E3834C007E7798 /* ofx3dModelLoader.cpp */; };
+		2E76908212230049002136C4 /* model3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E76907A12230049002136C4 /* model3DS.cpp */; };
+		2E76908312230049002136C4 /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E76907C12230049002136C4 /* texture3DS.cpp */; };
+		2E76908412230049002136C4 /* ofx3dModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E76908012230049002136C4 /* ofx3dModelLoader.cpp */; };
 		2E776A2A11E3834D007E7798 /* ofx3DGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769F711E3834D007E7798 /* ofx3DGraphics.cpp */; };
 		2E776A2B11E3834D007E7798 /* ofxCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769FA11E3834D007E7798 /* ofxCamera.cpp */; };
 		2E776A2C11E3834D007E7798 /* ofxLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7769FD11E3834D007E7798 /* ofxLight.cpp */; };
@@ -107,15 +107,15 @@
 		2E760174121337CE00778DF6 /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
 		2E760175121337CE00778DF6 /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
 		2E760178121337CE00778DF6 /* SJ Stack 01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SJ Stack 01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E7769E511E3834C007E7798 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		2E7769E811E3834C007E7798 /* model3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model3DS.cpp; sourceTree = "<group>"; };
-		2E7769E911E3834C007E7798 /* model3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model3DS.h; sourceTree = "<group>"; };
-		2E7769EA11E3834C007E7798 /* texture3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture3DS.cpp; sourceTree = "<group>"; };
-		2E7769EB11E3834C007E7798 /* texture3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture3DS.h; sourceTree = "<group>"; };
-		2E7769EC11E3834C007E7798 /* Vector3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3DS.h; sourceTree = "<group>"; };
-		2E7769ED11E3834C007E7798 /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DBaseLoader.h; sourceTree = "<group>"; };
-		2E7769EE11E3834C007E7798 /* ofx3dModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofx3dModelLoader.cpp; sourceTree = "<group>"; };
-		2E7769EF11E3834C007E7798 /* ofx3DModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DModelLoader.h; sourceTree = "<group>"; };
+		2E76907712230049002136C4 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		2E76907A12230049002136C4 /* model3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model3DS.cpp; sourceTree = "<group>"; };
+		2E76907B12230049002136C4 /* model3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model3DS.h; sourceTree = "<group>"; };
+		2E76907C12230049002136C4 /* texture3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture3DS.cpp; sourceTree = "<group>"; };
+		2E76907D12230049002136C4 /* texture3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture3DS.h; sourceTree = "<group>"; };
+		2E76907E12230049002136C4 /* Vector3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3DS.h; sourceTree = "<group>"; };
+		2E76907F12230049002136C4 /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DBaseLoader.h; sourceTree = "<group>"; };
+		2E76908012230049002136C4 /* ofx3dModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofx3dModelLoader.cpp; sourceTree = "<group>"; };
+		2E76908112230049002136C4 /* ofx3DModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DModelLoader.h; sourceTree = "<group>"; };
 		2E7769F511E3834D007E7798 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		2E7769F711E3834D007E7798 /* ofx3DGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofx3DGraphics.cpp; sourceTree = "<group>"; };
 		2E7769F811E3834D007E7798 /* ofx3DGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DGraphics.h; sourceTree = "<group>"; };
@@ -273,35 +273,35 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		2E7769DA11E3834C007E7798 /* ofx3DModelLoader */ = {
+		2E76907612230049002136C4 /* ofx3DModelLoader */ = {
 			isa = PBXGroup;
 			children = (
-				2E7769E511E3834C007E7798 /* install.xml */,
-				2E7769E611E3834C007E7798 /* src */,
+				2E76907712230049002136C4 /* install.xml */,
+				2E76907812230049002136C4 /* src */,
 			);
 			name = ofx3DModelLoader;
-			path = ../../../addons/ofx3DModelLoader;
-			sourceTree = SOURCE_ROOT;
+			path = src/ofx3DModelLoader;
+			sourceTree = "<group>";
 		};
-		2E7769E611E3834C007E7798 /* src */ = {
+		2E76907812230049002136C4 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2E7769E711E3834C007E7798 /* 3DS */,
-				2E7769ED11E3834C007E7798 /* ofx3DBaseLoader.h */,
-				2E7769EE11E3834C007E7798 /* ofx3dModelLoader.cpp */,
-				2E7769EF11E3834C007E7798 /* ofx3DModelLoader.h */,
+				2E76907912230049002136C4 /* 3DS */,
+				2E76907F12230049002136C4 /* ofx3DBaseLoader.h */,
+				2E76908012230049002136C4 /* ofx3dModelLoader.cpp */,
+				2E76908112230049002136C4 /* ofx3DModelLoader.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		2E7769E711E3834C007E7798 /* 3DS */ = {
+		2E76907912230049002136C4 /* 3DS */ = {
 			isa = PBXGroup;
 			children = (
-				2E7769E811E3834C007E7798 /* model3DS.cpp */,
-				2E7769E911E3834C007E7798 /* model3DS.h */,
-				2E7769EA11E3834C007E7798 /* texture3DS.cpp */,
-				2E7769EB11E3834C007E7798 /* texture3DS.h */,
-				2E7769EC11E3834C007E7798 /* Vector3DS.h */,
+				2E76907A12230049002136C4 /* model3DS.cpp */,
+				2E76907B12230049002136C4 /* model3DS.h */,
+				2E76907C12230049002136C4 /* texture3DS.cpp */,
+				2E76907D12230049002136C4 /* texture3DS.h */,
+				2E76907E12230049002136C4 /* Vector3DS.h */,
 			);
 			path = 3DS;
 			sourceTree = "<group>";
@@ -491,7 +491,7 @@
 				A9E85F3911E7B16000AB48DE /* ofxOsc */,
 				2E776AAB11E39F69007E7798 /* ofxXmlSettings */,
 				2E776A9611E39F55007E7798 /* ofxVectorMath */,
-				2E7769DA11E3834C007E7798 /* ofx3DModelLoader */,
+				2E76907612230049002136C4 /* ofx3DModelLoader */,
 				2E7769F011E3834C007E7798 /* ofx3DUtils */,
 			);
 			name = addons;
@@ -870,9 +870,6 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				2E776A2511E3834D007E7798 /* model3DS.cpp in Sources */,
-				2E776A2611E3834D007E7798 /* texture3DS.cpp in Sources */,
-				2E776A2711E3834D007E7798 /* ofx3dModelLoader.cpp in Sources */,
 				2E776A2A11E3834D007E7798 /* ofx3DGraphics.cpp in Sources */,
 				2E776A2B11E3834D007E7798 /* ofxCamera.cpp in Sources */,
 				2E776A2C11E3834D007E7798 /* ofxLight.cpp in Sources */,
@@ -887,6 +884,9 @@
 				A9E85F5F11E7B16000AB48DE /* ofxOscSender.cpp in Sources */,
 				2E760176121337CE00778DF6 /* ofxHttpUtils.cpp in Sources */,
 				2E760177121337CE00778DF6 /* ofxThread.cpp in Sources */,
+				2E76908212230049002136C4 /* model3DS.cpp in Sources */,
+				2E76908312230049002136C4 /* texture3DS.cpp in Sources */,
+				2E76908412230049002136C4 /* ofx3dModelLoader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

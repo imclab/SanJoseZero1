@@ -20,7 +20,7 @@ class Emitter
 public:
 	
 	Emitter(){
-		//lastRotated = ofGetElapsedTimeMillis();
+		lastRotated = ofGetElapsedTimeMillis();
 		
 		//setup different building types
 		
@@ -28,7 +28,7 @@ public:
 		settings.loadFile("settings.xml");
 		settings.pushTag("settings");
 		
-		int numReceivers = settings.getNumTags("catcher");
+		int numReceivers = settings.getNumTags("input");
 		for (int i=0; i<numReceivers; i++) {
 			
 			BuildingType * b = new BuildingType();
@@ -37,7 +37,7 @@ public:
 			b->setPosition( 25 + (float)(ofGetWidth()/numReceivers)*i, ofGetHeight() + 25 );
 						
 			if (i <numReceivers){			
-				settings.pushTag("catcher", i);
+				settings.pushTag("input", i);
 				b->setName(settings.getValue("name", "") );
 				
 				for (int j=0; j<settings.getNumTags("message"); j++){
