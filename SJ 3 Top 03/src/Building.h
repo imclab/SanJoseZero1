@@ -24,6 +24,10 @@ public:
 		//rotate = ofRandom(0, 360);
 	}
 	
+	string getData(){
+		return data;
+	};
+	
 	void setType(string _type){
 		type = _type;
 	}
@@ -113,6 +117,7 @@ public:
 private:
 	ofPoint position;
 	string type;
+	string data;
 	
 	bool bAlive;
 	ofx3DModelLoader * img;

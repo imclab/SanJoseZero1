@@ -116,19 +116,6 @@
 		<message>
 			<image>models/hopscotch/hopscotch_l_06.3ds</image>
 			<messageString>/pluginplay/hopscotch_26</messageString>
-		</message>		
-
-		<message>
-			<image>models/hopscotch/hopscotch_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_07</messageString>
-		</message>
-		<message>
-			<image>models/hopscotch/hopscotch_m_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_17</messageString>
-		</message>
-		<message>
-			<image>models/hopscotch/hopscotch_l_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_27</messageString>
 		</message>
 	</input>
 	<input>
@@ -141,7 +128,7 @@
 	<input>
 		<name>picnic</name>
 		<message>
-			<image>models/picnic/picnic.3ds</image>
+			<image>models/picnic/picnic00.3ds</image>
 			<messageString>/pluginplay/picnictable</messageString>
 		</message>
 	</input>
@@ -173,8 +160,13 @@
 			<messageString>/pluginplay/openplug</messageString>
 		</message>
 	</input>
-	<receiver>
-		<host>localhost</host>
-		<port>12001</port>
-	</receiver>
+	<osc>
+		<receiver>
+			<port>12001</port>
+		</receiver>
+		<sender>
+			<host>localhost</host>
+			<port>12005</port>
+		</sender>
+	</osc>
 </settings>
