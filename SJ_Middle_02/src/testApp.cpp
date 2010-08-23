@@ -22,7 +22,7 @@ void testApp::setup(){
 	int port = 12345;
 	settings.pushTag("receiver");{
 		host = settings.getValue("host",host);
-//		port = settings.getValue("port",port);
+		port = settings.getValue("port",port);
 	} settings.popTag();
 	// listen on the given port
 	receiver.setup( port );
@@ -70,7 +70,7 @@ void testApp::setup(){
 	cout << "there are " << emitters.size() << endl;
 	
 	//setup OSC
-	sender.setup(host, 15000);//port);
+	sender.setup(host,port);
 	
 	
 	
