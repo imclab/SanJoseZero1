@@ -6,7 +6,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	// listen on the given port
-	ofBackground( 150,150,150);
+	ofBackground( 106,186,205);
 	ofSetFrameRate(60);
 		
 	//load font
@@ -25,13 +25,13 @@ void testApp::setup(){
 		emitDelay = settings.getValue("emitdelay",emitDelay);
 	} settings.popTag();
 	
-	int curX = 50;
-	int curY = 10;
+	boxX = 50;
+	boxY = 10;
 	
 	for (int i=0; i<numReceivers; i++) {
 		Emitter * e = new Emitter();	
-		e->x = curX;
-		e->y = curY;
+		e->x = boxX;
+		e->y = boxY;
 		e->setFont(&font);
 		
 		if (i <numReceivers){			
@@ -48,10 +48,10 @@ void testApp::setup(){
 			} settings.popTag();
 		};
 		
-		curX += e->width+10;
-		if (curX + e->width > ofGetWidth()){
-			curX = 50;
-			curY += e->height + 10;
+		boxX += e->width+10;
+		if (boxX + e->width > ofGetWidth()){
+			boxX = 50;
+			boxY += e->height + 10;
 		};
 		
 		emitters.push_back(e);
@@ -168,7 +168,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){	
 	ofSetColor(0xffffff);
-	ofDrawBitmapString("Framenum: "+ofToString(ofGetFrameNum()), 20, 20);
+	font.drawString("OSC Router\nFramerate: "+ofToString(ofGetFrameRate()), boxX, 14+boxY);
 	/* for (int i=0; i<NUM_STRINGS; i++){
 		ofSetColor(0xff0000);
 		ofDrawBitmapString(errorString[i], 20, 40+20*i);
