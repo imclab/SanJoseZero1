@@ -9,14 +9,21 @@ void testApp::setup(){
 		
 		//get port for receiver
 		int rPort = 12345;
-		rPort = settings.getValue("receiver:port",12001);
+		rPort = settings.getValue("osc:receiver:port",12001);
 		receiver.setup( rPort );
 		
 		int sPort = 12005;
 		string sHost = "localhost";
-		sPort = settings.getValue("sender:port",sPort);
-		sHost = settings.getValue("sender:host",sHost);
-		sender.setup(sHost, sPort);
+		sPort = settings.getValue("osc:loggerSender:port",sPort);
+		sHost = settings.getValue("osc:loggerSender:host",sHost);		
+		loggerSender.setup(sHost, sPort);
+		
+		int cPort = 12010;
+		string cHost = "localhost";
+		cPort = settings.getValue("osc:calibrationSender:port",sPort);
+		cHost = settings.getValue("osc:calibrationSender:host",sHost);
+		calibrationSender.setup(sHost, sPort);
+		
 	} settings.popTag();
 	
 	ofBackground( 0, 0, 0 );
@@ -64,7 +71,19 @@ void testApp::setup(){
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
 	
+	// add listener to send to the logger app
 	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);	
+	
+	// PLACEHOLDER: send calibration: # of rows
+	ofxOscMessage rowMessage;
+	rowMessage.setAddress("/pluginplay/calibration/numrows");
+	rowMessage.addIntArg((int) NUMBER_OF_ROWS);
+	calibrationSender.sendMessage(rowMessage);	
+	
+	ofxOscMessage spacerMessage;
+	rowMessage.setAddress("/pluginplay/calibration/buffers");
+	rowMessage.addFloatArg( ROW_BUFFER);
+	calibrationSender.sendMessage(rowMessage);
 }
 
 //--------------------------------------------------------------
@@ -75,17 +94,34 @@ void testApp::update(){
 		// get the next message
 		ofxOscMessage m;
 		receiver.getNextMessage( &m );
-		
-		cout<<"got message "<<m.getAddress()<<endl;
-		
+				
 		bool bFound = false;
 		
 		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsFloat(0));
 		
 		if (!bFound)
 		{
-			cout << "did not recognize: "<<m.getAddress()<<endl;
-			// unrecognized message
+			//is it a calibration message?
+			if ( m.getAddress() == "/pluginplay/getcalibration"){
+				
+				ofxOscMessage rowMessage;
+				rowMessage.setAddress("/pluginplay/calibration/numrows");
+				rowMessage.addIntArg((int) NUMBER_OF_ROWS);
+				calibrationSender.sendMessage(rowMessage);	
+				
+				ofxOscMessage spacerMessage;
+				rowMessage.setAddress("/pluginplay/calibration/buffers");
+				rowMessage.addFloatArg( ROW_BUFFER);
+				calibrationSender.sendMessage(rowMessage);
+				
+			//nope!
+			} else {
+				// unrecognized message
+				cout << "did not recognize: "<<m.getAddress()<<endl;
+			}
+
+			
+			
 		}
 	};
 	
@@ -95,59 +131,41 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	//no perspective screen
-	/*
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, ofGetWidth(), 0, ofGetHeight(), -100, 2000);
-	glMatrixMode(GL_MODELVIEW);
-	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
-	*/
+	//slight perspective screen
+		int w, h;
+		
+		w = ofGetWidth();
+		h = ofGetHeight();
+		
+		float halfFov, theTan, screenFov, aspect;
+		screenFov 		= 40.0f; //adjust this to alter the perspective
+		
+		//do other normal set up
+		
+		float eyeX 		= (float)w / 2.0;
+		float eyeY 		= (float)h / 2.0;
+		halfFov 		= PI * screenFov / 360.0;
+		theTan 			= tanf(halfFov);
+		float dist 		= eyeY / theTan;
+		float nearDist 	= dist / 50.0;	// near / far clip plane
+		float farDist 	= dist * 50.0;
+		aspect 			= (float)w/(float)h;
+		
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective(screenFov, aspect, nearDist, farDist);
+		
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
+		
+		glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+		glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
 	
-	//light perspective screen
-	int w, h;
-	
-	w = ofGetWidth();
-	h = ofGetHeight();
-	
-	float halfFov, theTan, screenFov, aspect;
-	screenFov 		= 40.0f; //adjust this to alter the perspective
-	
-	//do other normal set up
-	
-	float eyeX 		= (float)w / 2.0;
-	float eyeY 		= (float)h / 2.0;
-	halfFov 		= PI * screenFov / 360.0;
-	theTan 			= tanf(halfFov);
-	float dist 		= eyeY / theTan;
-	float nearDist 	= dist / 50.0;	// near / far clip plane
-	float farDist 	= dist * 50.0;
-	aspect 			= (float)w/(float)h;
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(screenFov, aspect, nearDist, farDist);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0.0, 0.0, 1.0, 0.0);
-	
-	glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-  	glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
+	//draw things
 	
 	ofxLightsOn();
 	
-	// draw background gradient
-	
-	glBegin(GL_QUADS);{
-		glColor3f( .5f, .5f, .75f );
-		glVertex3f( 0.0f, 0.0f, 0.0f );
-		glVertex3f( ofGetWidth(), 0.0f, 0.0f );
-		glColor3f( 0.0f, 0.3f, 0.3f );
-		glVertex3f( ofGetWidth(), ofGetHeight(), 0.0f );
-		glVertex3f( 0.0f, ofGetHeight(), 0.0f );
-	} glEnd();
-		
 	glEnable(GL_DEPTH_TEST);
 	ofSetColor(0xffffff);
 	ofEnableAlphaBlending();
@@ -184,7 +202,7 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 			//form.addFormField("buildings["+ofToString(index)+"][index]", ofToString(j));
 		}
 	}
-	sender.sendMessage(newRowMessage);	
+	loggerSender.sendMessage(newRowMessage);	
 	
 };
 
@@ -205,7 +223,7 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	bDragging = true;
+	//bDragging = true;
 }
 
 //--------------------------------------------------------------

@@ -5,6 +5,11 @@
  *  Created by brenfer on 7/8/10.
  *  Copyright 2010 Rockwell Group. All rights reserved.
  *
+ 
+ THIS STORES ALL THE STUFF RELATED TO A TYPE:
+ - name
+ - messageStrings (for OSC)
+ - 3D Model(s) [associated to messagestrings] 
  */
 
 #pragma once

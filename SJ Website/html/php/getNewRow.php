@@ -16,13 +16,13 @@
 	
 	$blocks = array();
 	//connect to db
-	$link = mysql_connect('localhost', 'root', 'root');
+	$link = mysql_connect('localhost', 'zero1_sanjose', 'kanarick');
 	if (!$link) {
 	    die('Could not connect: ' . mysql_error());
 	} else {
 	}
 	
-	mysql_select_db('san_jose',$link);
+	mysql_select_db('zero1_pluginplay1',$link);
 	
 	$sql = "SELECT * FROM `sj_city_block` ORDER BY `id` DESC limit 0, 100";
 	$result = mysql_query($sql);
@@ -54,6 +54,7 @@
 		$numBuildings = mysql_num_rows($result);		
 		$row = 0;
 		$newRow = array();
+		$buildings[$i]["rows"] = array();
 		array_push($buildings[$i]["rows"], $newRow);
 		
 		for ($j=0; $j<$numBuildings; $j++){
@@ -71,7 +72,7 @@
 	echo($newCurrentRow . ";");
 		for ($i=0; $i<count($buildings); $i++){
 ?>
-	<tr id="<?php echo("block:".$i); ?>">
+	<tr id="<?php echo("block:".$i); echo($blocks[$i]['id']); ?>">
 		<td class="row"><div><?php // echo("row is ". $blocks[$i]["id"]); ?></div><br />
 <?php
 		for ($j=0; $j<count($buildings[$i]["rows"]); $j++){
