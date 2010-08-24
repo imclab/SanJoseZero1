@@ -74,6 +74,10 @@ public:
 	void setScale( float scaleX, float scaleY );
 	ofPoint scale;
 	
+	// ZACK BOKA: Keep track of current OpenTSPS view
+	bool bCameraView;
+	
+	
 protected:
 	ofxXmlSettings	xml;
 	string xmlFile;

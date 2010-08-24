@@ -83,6 +83,12 @@ class ofxTSPSGuiManager {
 
 	void loadSettings ( string xml );
 	
+	// ZACK BOKA: Added to be able to control active view within quadGui instance
+	//            so as to control in which view the image gets warped.
+	//            (i.e., the image can only get warped when in Camera View).
+	void changeGuiCameraView(bool bCameraView);
+	
+	
   protected:
 	//a little goofy way to keep track of custom params. works but i'm open to suggestions
 	ofxLabGui panel;

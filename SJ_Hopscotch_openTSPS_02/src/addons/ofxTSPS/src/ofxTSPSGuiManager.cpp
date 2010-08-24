@@ -502,6 +502,14 @@ void ofxTSPSGuiManager::drawQuadGui( int x, int y, int width, int height ){
 	drawQuadGui();
 };
 
+// ZACK BOKA: Added to be able to control active view within quadGui instance
+//            so as to control in which view the image gets warped.
+//            (i.e., the image can only get warped when in Camera View).
+void ofxTSPSGuiManager::changeGuiCameraView(bool bCameraView) {
+	quadGui.bCameraView = bCameraView;
+};
+
+
 /***************************************************************
  GET EVENTS FROM GUI BUTTONS
  ***************************************************************/
