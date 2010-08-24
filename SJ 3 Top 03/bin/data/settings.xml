@@ -172,9 +172,13 @@
 		<receiver>
 			<port>12001</port>
 		</receiver>
-		<sender>
+		<loggerSender>
 			<host>localhost</host>
 			<port>12005</port>
-		</sender>
+		</loggerSender>
+		<calibrationSender>
+			<host>localhost</host>
+			<port>12010</port>
+		</loggerSender>
 	</osc>
 </settings>

@@ -33,10 +33,7 @@ public:
 		for (int i=0; i<numReceivers; i++) {
 			
 			BuildingType * b = new BuildingType();
-			
-			//set base emitting positions
-			b->setPosition( 25 + (float)(ofGetWidth()/numReceivers)*i, ofGetHeight() + 25 );
-						
+									
 			if (i <numReceivers){			
 				settings.pushTag("input", i);
 				b->setName(settings.getValue("name", "") );
@@ -57,6 +54,8 @@ public:
 		}
 		settings.popTag();
 		
+	//THIS PART BARELY WORKS...
+		
 		//set up old rows
 		int increment = 90/ROTATE_AMOUNT;
 		
@@ -69,30 +68,13 @@ public:
 			
 			curY = dum->getSize().y;
 		};
-		//
-//		for (int i=0; i<4; i++){
-//			BuildingRow * dum = new BuildingRow(500);
-//			dum->rotation.x = 360;
-//			dum->pos.y += curY*(i+1);
-//			oldRows.push_back(dum);
-//			cout << dum->pos.y<<endl;
-//			curY = 5;
-//		}
-				
-		//fill up with 2 more
 		
 		BuildingRow * dum1 = new BuildingRow(500);
 		dum1->rotation.x = 360;
 		dum1->pos.y -= dum1->getSize().y-20;
 		oldRows.push_back(dum1);
-//		
-//		BuildingRow * dum2 = new BuildingRow(500);
-//		dum2->rotation.x = 360;
-//		dum2->pos.y -= dum2->getSize().y-20;
-//		dum2->pos.y -= dum2->getSize().y-20;
-//		oldRows.push_back(dum2);
-		
-		//set up new row		
+				
+		//set up first row		
 		currentRow = new BuildingRow(500);
 	};
 
@@ -126,15 +108,15 @@ public:
 			rotateAmount -= ROTATE_INCREMENT;
 		}
 		
-		//2 - update current row
+		//3 - update current row
 		currentRow->update();
 		
-		//3 - update ceiling
+		//4 - update ceiling
 		for (int i=0; i<buildings.size(); i++){
 			buildings[i]->setCeiling(currentRow->getCeiling(buildings[i]->getWhichStack()));
 		}
 		
-		//4 - update moving particles
+		//5 - update moving particles
 		for (int i=buildings.size()-1; i>=0; i--){
 			bool bWasAlive = buildings[i]->alive();
 			buildings[i]->update();

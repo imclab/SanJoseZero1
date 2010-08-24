@@ -39,11 +39,11 @@ public:
 		size.y = 70;
 		
 		//build base columns
-		float increment = (float)ofGetWidth()/ROW_WIDTH;
+		float increment = (float)(ofGetWidth()-ROW_BUFFER*2)/NUMBER_OF_ROWS;
 		
-		for (int i=0; i<increment; i++){
+		for (int i=0; i<NUMBER_OF_ROWS; i++){
 			Stack * s = new Stack(i);
-			s->setPosition(ROW_WIDTH*i, 0);
+			s->setPosition(ROW_BUFFER + i*increment, 0);
 			stacks.push_back(s);
 		};
 	}
