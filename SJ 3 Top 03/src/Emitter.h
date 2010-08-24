@@ -20,7 +20,8 @@ class Emitter
 public:
 	
 	Emitter(){
-		lastRotated = ofGetElapsedTimeMillis();
+		rotateAmount = 0;
+		lastRotated = 0;//ofGetElapsedTimeMillis();
 		
 		//setup different building types
 		

@@ -209,7 +209,11 @@ public:
 	void loadModel(const char* filename, float scale = 1);
 	void loadModel(string filename, float scale);	
     void draw();
-
+	
+	float getXdim(){return fabs(m_boundingBox.maxX - m_boundingBox.minX);}
+	float getYdim(){return fabs(m_boundingBox.maxY - m_boundingBox.minY);}
+	float getZdim(){return fabs(m_boundingBox.maxZ - m_boundingBox.minZ);}	
+	
     std::string getFilename(){return m_filename;}
 	const material3DS& getMaterial(const std::string &matName){return m_materials[matName];}
 };

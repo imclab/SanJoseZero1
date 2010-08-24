@@ -117,19 +117,6 @@
 			<image>models/hopscotch/hopscotch_l_06.3ds</image>
 			<messageString>/pluginplay/hopscotch_26</messageString>
 		</message>		
-
-		<message>
-			<image>models/hopscotch/hopscotch_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_07</messageString>
-		</message>
-		<message>
-			<image>models/hopscotch/hopscotch_m_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_17</messageString>
-		</message>
-		<message>
-			<image>models/hopscotch/hopscotch_l_07.3ds</image>
-			<messageString>/pluginplay/hopscotch_27</messageString>
-		</message>
 	</input>
 	<input>
 		<name>megaphone</name>

@@ -10,7 +10,7 @@ class ofx3DBaseLoader{
 		virtual void loadModel(string model){}
 		virtual ~ofx3DBaseLoader(){}
 		virtual void draw(){ printf("hello\n"); }
-
+		
 		bool hasTexture;
 
 };

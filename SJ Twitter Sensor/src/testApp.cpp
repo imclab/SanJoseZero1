@@ -80,7 +80,6 @@ void testApp::doSearch(){
 		m.setAddress("/pluginplay/twitter");
 		m.addStringArg(latestSearchEntry.author.name);
 		m.addStringArg(latestSearchEntry.entry);
-		cout<<"here?"<<endl;
 		sender.sendMessage(m);
 	} else {
 		bNewEntry = false;

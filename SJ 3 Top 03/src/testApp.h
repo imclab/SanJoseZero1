@@ -6,9 +6,7 @@
 #include "ofx3DUtils.h"
 #include "ofxOsc.h"
 #include "Emitter.h"
-#include "ofxHttpUtils.h"
 
-#define POST_URL "http://www.plug-in-play.com/php/storebuilding.php"
 #define PORT 12000
 
 class testApp : public ofBaseApp{
@@ -34,10 +32,6 @@ class testApp : public ofBaseApp{
 		
 		//logging stuff
 		void rowIsComplete( BuildingRow * &completedRow);
-		void newResponse(ofxHttpResponse & response);
-		string responseString;
-	
-		ofxHttpUtils httpUtils;
 	
 	private:
 		ofxOscReceiver	receiver;

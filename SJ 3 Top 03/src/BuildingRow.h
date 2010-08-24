@@ -82,9 +82,7 @@ public:
 				columnIndex = i;
 			};
 		};
-		
-		cout << "closest to "<< position<<" is "<< stacks[columnIndex]->getPosition().x<<":"<<stacks.size()<<endl;
-				
+						
 		return stacks[columnIndex];
 	};
 	

@@ -9,11 +9,14 @@ void testApp::setup(){
 		
 		//get port for receiver
 		int rPort = 12345;
-		settings.pushTag("receiver");{
-			rPort = settings.getValue("port",12001);
-		} settings.popTag();
+		rPort = settings.getValue("receiver:port",12001);
 		receiver.setup( rPort );
-		cout<<"receiving at "<<rPort<<endl;
+		
+		int sPort = 12005;
+		string sHost = "localhost";
+		sPort = settings.getValue("sender:port",sPort);
+		sHost = settings.getValue("sender:host",sHost);
+		sender.setup(sHost, sPort);
 	} settings.popTag();
 	
 	ofBackground( 0, 0, 0 );
@@ -49,7 +52,7 @@ void testApp::setup(){
 	float L2DirectionZ = 1;
 	
 	
-	 light2.spotLight(255, 255, 255, 
+	light2.spotLight(255, 255, 255, 
 					 L2PosX, L2PosY, L2PosZ, 
 					 L2DirectionX, L2DirectionY, L2DirectionZ,
 					 L2ConeAngle,
@@ -61,10 +64,7 @@ void testApp::setup(){
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
 	
-	//setup httputils + listening to response from Emitter
-	
-	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
-	ofAddListener(httpUtils.newResponseEvent,this,&testApp::newResponse);
+	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);	
 }
 
 //--------------------------------------------------------------
@@ -166,31 +166,27 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::rowIsComplete( BuildingRow * &completedRow ){
-	ofxHttpForm form;
-	form.action = POST_URL;
-	form.method = OFX_HTTP_POST;
-	int index = 0;
+	
+	ofxOscMessage newRowMessage;
+	newRowMessage.setAddress("/pluginplay/newrow");
 	
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		for (int j=0; j<completedRow->stacks[i]->buildings.size(); j++){
 			Building * b = completedRow->stacks[i]->buildings[j];
 			
-			form.addFormField("buildings["+ofToString(index)+"][type]", b->getType());
-			form.addFormField("buildings["+ofToString(index)+"][data]", "");//b->getData());
-			form.addFormField("buildings["+ofToString(index)+"][row]", ofToString(i));
-			form.addFormField("buildings["+ofToString(index)+"][index]", ofToString(j));
-			index++;
+			newRowMessage.addStringArg(b->getType());
+			newRowMessage.addStringArg(b->getData());
+			newRowMessage.addStringArg(ofToString(i));
+			newRowMessage.addStringArg(ofToString(j));
+			//form.addFormField("buildings["+ofToString(index)+"][type]", b->getType());
+			//form.addFormField("buildings["+ofToString(index)+"][data]", "");//b->getData());
+			//form.addFormField("buildings["+ofToString(index)+"][row]", ofToString(i));
+			//form.addFormField("buildings["+ofToString(index)+"][index]", ofToString(j));
 		}
 	}
+	sender.sendMessage(newRowMessage);	
 	
-	httpUtils.addForm(form);
 };
-
-//--------------------------------------------------------------
-void testApp::newResponse(ofxHttpResponse & response){
-	responseString = ofToString(response.status) + ": " + response.responseBody;
-	cout <<responseString<<endl;
-}
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){

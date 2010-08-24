@@ -47,14 +47,17 @@ public:
 	
 	void loadModel( string modelImage ){
 		modelImageList.push_back(modelImage);
+		ofx3DModelLoader* partModel = new ofx3DModelLoader();
+		partModel->loadModel(modelImage,1);
+		models.push_back(partModel);
 	}
-
 	
 	//Memory management
 	void update(){
 		static ParticleEventArgs particleArgs;
 		for (int i=particles.size()-1; i>=0; i--){
 			particles[i]->update();
+			
 			if (!particles[i]->alive()){
 				particleArgs.loc.x = loc.x + particles[i]->loc.x; // must add because we translate to each emitter's x-coordinate with particle coordinate initially = 0.
 				particleArgs.loc.y = particles[i]->loc.y;
@@ -71,12 +74,11 @@ public:
 	void emit( int index = 0){
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			cout <<"emit!"<<endl;
-			Particle* part = new Particle();
-			ofx3DModelLoader* partModel = new ofx3DModelLoader();
-			partModel->loadModel(modelImageList[index],1);
-			part->setLoc(0, ofGetHeight());
 			if (index > models.size()-1 || lastFoundString < 0) index = 0;
-			part->setModel(partModel);
+			
+			Particle* part = new Particle();
+			part->setLoc(0, ofGetHeight());			
+			part->setModel(models[index]);
 			part->setScale(2);
 			particles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
@@ -101,7 +103,12 @@ public:
 			}
 		}
 		return false;
-	}
+	}	
+	
+	void emitRandom( ){
+		int ran = (int) ofRandom(0, messageStrings.size());				
+		emit(ran);
+	};
 	
 	vector<string> messageStrings;
 	int lastFoundString;
