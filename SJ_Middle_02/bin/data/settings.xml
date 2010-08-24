@@ -146,11 +146,11 @@
 			<messageString>/pluginplay/signal_00</messageString>
 		</message>
 		<message>
-			<image>models/signal/signal_01.3ds</image>
+			<image>models/signal/signal_02.3ds</image>
 			<messageString>/pluginplay/signal_01</messageString>
 		</message>
 		<message>
-			<image>models/signal/signal_02.3ds</image>
+			<image>models/signal/signal_03.3ds</image>
 			<messageString>/pluginplay/signal_02</messageString>
 		</message>        
 	</input>
@@ -163,7 +163,7 @@
 	</input>
 	<receiver>
 		<host>localhost</host>
-		<port>12000</port>
+		<port>12345</port>
 	</receiver>
 	<sender>
 		<host>localhost</host>
