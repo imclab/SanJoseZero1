@@ -54,6 +54,21 @@ void ofx3DModelLoader::setScale(float x, float y, float z){
 }
 
 //-------------------------------------------
+float ofx3DModelLoader::getXdim(){
+	return ((model3DS *) model)->getXdim();	
+};
+
+//-------------------------------------------
+float ofx3DModelLoader::getYdim(){
+	return ((model3DS *) model)->getYdim();	
+};
+
+//-------------------------------------------
+float ofx3DModelLoader::getZdim(){
+	return ((model3DS *) model)->getZdim();
+};
+
+//-------------------------------------------
 void ofx3DModelLoader::setRotation(int which, float angle, float rot_x, float rot_y, float rot_z){
 
     if(which + 1 > numRotations){

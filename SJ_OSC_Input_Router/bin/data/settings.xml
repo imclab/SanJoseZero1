@@ -171,7 +171,7 @@
 		<sender>
 			<host>localhost</host>
 			<!-- <host>10.1.2.110</host> -->
-			<port>12005</port>
+			<port>12000</port>
 		</sender>	
 		<soundsender>
 			<host>localhost</host>

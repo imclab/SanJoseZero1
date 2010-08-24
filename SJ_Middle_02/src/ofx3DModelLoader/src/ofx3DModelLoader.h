@@ -14,7 +14,11 @@ class ofx3DModelLoader{
     void setScale(float x, float y, float z);
     void setRotation(int which, float angle, float rot_x, float rot_y, float r_z);
     void draw();
-
+	
+	float getXdim();
+	float getYdim();
+	float getZdim();
+	
     vector <float> rotAngle;
     vector <ofPoint> rotAxis;
     ofPoint scale;

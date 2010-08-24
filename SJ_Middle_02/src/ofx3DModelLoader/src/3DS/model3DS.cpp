@@ -602,7 +602,7 @@ void model3DS::draw(){
 
 
 	std::vector<mesh3DS>::iterator meshIter;
-
+	
 	glPushMatrix();
 		glTranslatef(-m_centerX,-m_centerY,-m_centerZ);
 

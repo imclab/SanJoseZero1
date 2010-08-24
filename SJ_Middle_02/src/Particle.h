@@ -21,12 +21,13 @@ public:
 	
 	Particle(){
 		bAlive = true;
+		loc.x = loc.y = loc.z = 0;
 		
 		// 3D
 //		particle3D->setScale(1.0,1.0,0);
 		bIn3D = false;
 		scale = 1.0f;
-
+		curScale = 1.0f;
 		
 		// Rotation
 		bPre3D = true;
@@ -74,22 +75,15 @@ public:
 	
 	void update(){
 		// Check to see if we are still alive
-		if (loc.y + ofGetHeight() / 8.0 <= 0) {
+		if (loc.y + particle3D->getYdim() <= 0) {
 			bAlive = false;
 			return;
 		}
-		
-	
-		float curScale;
-		
+			
 		// First check if we are in the magnification or demagnification process, which adjusts the y-axis location, and does tweened rotation
 		if (bMagnifying) {
 			// Adjust scale
 			curScale = particleTween.update();
-			particle3D->setScale(curScale,curScale,curScale);
-
-			// Adjust rotation
-			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
 			rotationCtr += rotationTween.update();
 
 			// Adjust y-coordinate
@@ -112,9 +106,9 @@ public:
 				curScale = 1.0f;
 				bOkToDeMagnify = false;
 				bIn3D = false;
-				particle3D->setRotation(0,0,0,0,0);
+				xRotateVec = yRotateVec = zRotateVec = 0.;
+				//particle3D->setRotation(0,0,0,0,0);
 			}
-			particle3D->setScale(curScale,curScale,curScale);
 		}
 		
 		
@@ -165,6 +159,12 @@ public:
 		ofPushMatrix();{
 			ofTranslate(loc.x, loc.y);
 			ofScale(scale, scale, scale);
+			
+			particle3D->setScale(curScale,curScale,curScale);
+			
+			// Adjust rotation
+			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+			
 			particle3D->draw();
 		} ofPopMatrix();
 	};
@@ -179,8 +179,8 @@ public:
 	
 private:
 	bool bAlive;
-	float scale;
-	
+	float scale;	
+	float curScale;
 	
 	// Magnification
 	bool bOkToMagnify;
@@ -190,7 +190,6 @@ private:
 	float prevScale;
 	ofxTween particleTween;
 	ofxEasingQuad easingQuad;
-
 	
 	// Rotation
 	ofxTween rotationTween;
