@@ -3,17 +3,17 @@
 	$buildings = $_POST["buildings"];
 	
 	//connect to db
-	$link = mysql_connect('localhost', 'root', 'root');
+	$link = mysql_connect('localhost', 'zero1_sanjose', 'kanarick');
 	if (!$link) {
 	    die('Could not connect: ' . mysql_error());
 	} else {
 		echo("connected!\n");
 	}
 	
-	mysql_select_db('san_jose',$link);
+	mysql_select_db('zero1_pluginplay1',$link);
 	
 	//create city block
-	$sql = "INSERT INTO `san_jose`.`sj_city_block` (`id`, `time`) VALUES (UNIX_TIMESTAMP(), NOW());";
+	$sql = "INSERT INTO `zero1_pluginplay1`.`sj_city_block` (`id`, `time`) VALUES (UNIX_TIMESTAMP(), NOW());";
 	$result = mysql_query($sql);
 	if (!$result) {
 	    die('Invalid query: ' . mysql_error());
