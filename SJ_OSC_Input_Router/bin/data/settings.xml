@@ -146,9 +146,14 @@
 	<input>
 		<name>traffic</name>
 		<message>
-			<image>images/signal00.png</image>
-			<messageString>/pluginplay/signal</messageString>
+			<messageString>/pluginplay/signal_00</messageString>
 		</message>
+		<message>
+			<messageString>/pluginplay/signal_01</messageString>
+		</message>
+		<message>
+			<messageString>/pluginplay/signal_02</messageString>
+		</message>        
 		<sendsound>1</sendsound>
 	</input>
 	<input>

@@ -143,8 +143,16 @@
 		<name>signal</name>
 		<message>
 			<image>models/signal/signal.3ds</image>
-			<messageString>/pluginplay/signal</messageString>
+			<messageString>/pluginplay/signal_00</messageString>
 		</message>
+		<message>
+			<image>models/signal/signal_01.3ds</image>
+			<messageString>/pluginplay/signal_01</messageString>
+		</message>
+		<message>
+			<image>models/signal/signal_02.3ds</image>
+			<messageString>/pluginplay/signal_02</messageString>
+		</message>        
 	</input>
 	<input>
 		<name>twitter</name>
