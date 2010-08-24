@@ -101,8 +101,27 @@ void testApp::update(){
 		
 		if (!bFound)
 		{
-			cout << "did not recognize: "<<m.getAddress()<<endl;
-			// unrecognized message
+			//is it a calibration message?
+			if ( m.getAddress() == "/pluginplay/getcalibration"){
+				
+				ofxOscMessage rowMessage;
+				rowMessage.setAddress("/pluginplay/calibration/numrows");
+				rowMessage.addIntArg((int) NUMBER_OF_ROWS);
+				calibrationSender.sendMessage(rowMessage);	
+				
+				ofxOscMessage spacerMessage;
+				rowMessage.setAddress("/pluginplay/calibration/buffers");
+				rowMessage.addFloatArg( ROW_BUFFER);
+				calibrationSender.sendMessage(rowMessage);
+				
+			//nope!
+			} else {
+				// unrecognized message
+				cout << "did not recognize: "<<m.getAddress()<<endl;
+			}
+
+			
+			
 		}
 	};
 	
