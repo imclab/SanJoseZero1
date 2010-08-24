@@ -193,6 +193,7 @@ class ofxTSPSPeopleTracker : public ofxCvBlobListener {
 		ofPoint getOpticalFlowInRegion(float x, float y, float w, float h);
 		bool inAdjustedView();
 		ofxCvColorImage getAdjustedColorImage();
+		ofxTSPSOscSender* getOSCsender(); 
 		
 	
 	

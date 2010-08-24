@@ -73,6 +73,9 @@ void testApp::setup(){
 	peopleTracker.loadFont("fonts/times.ttf", 10);
 	peopleTracker.setListener( this );
 	peopleTracker.enableOpticalFlow(true);
+	
+	// Set up OSC sender client
+	hopscotch.sender = peopleTracker.getOSCsender();
 
 	/*
 	//THIS IS HOW YOU CAN ADD CUSTOM PARAMETERS TO THE GUI

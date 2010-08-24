@@ -1029,3 +1029,7 @@ bool ofxTSPSPeopleTracker::inAdjustedView() {
 ofxCvColorImage ofxTSPSPeopleTracker::getAdjustedColorImage() {
 	return adjustedView.getColorImage();
 }
+
+ofxTSPSOscSender* ofxTSPSPeopleTracker::getOSCsender() {
+	return &oscClient;
+}

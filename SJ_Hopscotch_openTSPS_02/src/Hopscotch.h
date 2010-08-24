@@ -24,7 +24,7 @@ public:
 	vector <Quad> quads;
 	string names[NUM_OF_QUADS];
 	
-	ofxOscSender sender;
+	ofxTSPSOscSender* sender;
 	string oscHost;
 	int oscPort;
 	
@@ -55,7 +55,7 @@ public:
 		x = 350;
 		y = 10;
 		
-		sender.setup(oscHost, oscPort);
+//		sender.setup(oscHost, oscPort);
 		cout<<"SETTING UP OSC "<<oscHost<<":"<<oscPort<<endl;
 	};
 	
@@ -121,10 +121,10 @@ public:
 	// ZACK: modified to send the given quad's specific address
 	void send(int quadIndex, int size) {
 		ofxOscMessage m;
-		m.setAddress(quads[quadIndex].address + ofToString(size) + ofToString(quadIndex));
+		m.setAddress(quads[quadIndex].address + "_" + ofToString(size) + ofToString(quadIndex));
 		cout << "Sending quad: " << m.getAddress() << endl;
 		m.addIntArg(quadIndex);
-		sender.sendMessage(m);
+		sender->send(m);
 	}
 
 	

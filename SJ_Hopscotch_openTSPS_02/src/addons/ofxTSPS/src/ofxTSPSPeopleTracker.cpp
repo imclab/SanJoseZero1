@@ -1006,3 +1006,7 @@ void ofxTSPSPeopleTracker::updateViewRectangles(){
 ofPoint ofxTSPSPeopleTracker::getOpticalFlowInRegion(float x, float y, float w, float h) {
 	return opticalFlow.flowInRegion(x,y,w,h);
 }
+
+ofxTSPSOscSender* ofxTSPSPeopleTracker::getOSCsender() {
+	return &oscClient;
+}

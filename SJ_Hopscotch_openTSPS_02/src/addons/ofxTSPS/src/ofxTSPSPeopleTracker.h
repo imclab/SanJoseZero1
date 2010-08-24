@@ -191,6 +191,8 @@ class ofxTSPSPeopleTracker : public ofxCvBlobListener {
 	
 		// ZACK: for accessing Optical Flow in specific regions
 		ofPoint getOpticalFlowInRegion(float x, float y, float w, float h);
+		ofxTSPSOscSender* getOSCsender(); 
+	
 	
 	protected:
 	

@@ -55,7 +55,7 @@
     <val_0>1.000000</val_0>
 </SEND_OSC_CONTOURS>
 <SENSE_OPTICAL_FLOW>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </SENSE_OPTICAL_FLOW>
 <MIN_OPTICAL_FLOW>
     <val_0>5.000000</val_0>
