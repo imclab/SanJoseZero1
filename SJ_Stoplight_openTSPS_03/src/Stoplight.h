@@ -31,9 +31,9 @@ public:
 	
 	Stoplight(){
 		
-		names[0] = "red";
-		names[1] = "yellow";
-		names[2] = "green";
+		names[0] = "RED";
+		names[1] = "YELLOW";
+		names[2] = "GREEN";
 //		names[3] = "four";
 //		names[4] = "five";
 //		names[5] = "six";
@@ -81,6 +81,8 @@ public:
 			ofEllipse(quads[i].p4.x, quads[i].p4.y, 5, 5);
 			
 			ofSetColor(0xffffff);
+			ofDrawBitmapString("topL", quads[i].p1.x - 15, quads[i].p1.y - 5);
+			ofDrawBitmapString("botL", quads[i].p4.x - 15, quads[i].p4.y + 10);
 			ofDrawBitmapString(names[i], (quads[i].p1.x + quads[i].p3.x)/2, (quads[i].p1.y + quads[i].p3.y)/2);
 		}
 		ofFill();

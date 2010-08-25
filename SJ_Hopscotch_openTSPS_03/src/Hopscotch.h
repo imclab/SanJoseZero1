@@ -32,13 +32,13 @@ public:
 	
 	Hopscotch(){
 		
-		names[0] = "one";
-		names[1] = "two";
-		names[2] = "three";
-		names[3] = "four";
-		names[4] = "five";
-		names[5] = "six";
-		names[6] = "seven";
+		names[0] = "ONE";
+		names[1] = "TWO";
+		names[2] = "THREE";
+		names[3] = "FOUR";
+		names[4] = "FIVE";
+		names[5] = "SIX";
+		names[6] = "SEVEN";
 //		names[7] = "eight";
 //		names[8] = "nine";
 //		names[9] = "ten";
@@ -83,6 +83,8 @@ public:
 			ofEllipse(quads[i].p4.x, quads[i].p4.y, 5, 5);
 			
 			ofSetColor(0xffffff);
+			ofDrawBitmapString("topL", quads[i].p1.x - 15, quads[i].p1.y - 5);
+			ofDrawBitmapString("botL", quads[i].p4.x - 15, quads[i].p4.y + 10);
 			ofDrawBitmapString(names[i], (quads[i].p1.x + quads[i].p3.x)/2, (quads[i].p1.y + quads[i].p3.y)/2);
 		}
 		ofFill();
