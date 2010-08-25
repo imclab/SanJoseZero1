@@ -9,6 +9,8 @@
 
 #pragma once
 
+#define DEBUG false
+
 class Quad
 {	
 public:

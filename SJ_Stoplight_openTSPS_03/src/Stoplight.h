@@ -1,9 +1,8 @@
 /*
- *  Hopscotch.h
- *  Hopscotch Confetti
+ *  Stoplight.h
  *
- *  Created by Brett Renfer on 3/5/10.
- *  Modified by Zack Boka on 8/18/10 to use Optical flow for movement
+ *  Base code (Hopscotch.h) created by Brett Renfer on 3/5/10.
+ *  Modified by Zack Boka on 8/18/10 into Stoplight.h
  *  detection in quads.
  *  Copyright 2010 Rockwell Group. All rights reserved.
  *
@@ -16,7 +15,7 @@
 
 #define NUM_OF_QUADS 7
 
-class Hopscotch : public ofRectangle{
+class Stoplight : public ofRectangle{
 public:
 	
 	ofxXmlSettings settings;
@@ -30,15 +29,15 @@ public:
 	
 	ofPoint testPoint;
 	
-	Hopscotch(){
+	Stoplight(){
 		
 		names[0] = "red";
 		names[1] = "yellow";
 		names[2] = "green";
-		names[3] = "four";
-		names[4] = "five";
-		names[5] = "six";
-		names[6] = "seven";
+//		names[3] = "four";
+//		names[4] = "five";
+//		names[5] = "six";
+//		names[6] = "seven";
 //		names[7] = "eight";
 //		names[8] = "nine";
 //		names[9] = "ten";
@@ -55,7 +54,6 @@ public:
 		x = 350;
 		y = 10;
 		
-//		sender.setup(oscHost, oscPort);
 		cout<<"SETTING UP OSC "<<oscHost<<":"<<oscPort<<endl;
 	};
 	
@@ -122,7 +120,7 @@ public:
 	void send(int quadIndex) {
 		ofxOscMessage m;
 		m.setAddress(quads[quadIndex].address + "_0" + ofToString(quadIndex));
-		cout << "Sending address: " << m.getAddress() << endl;
+		if (DEBUG) cout << "Sending address: " << m.getAddress() << endl;
 		m.addIntArg(quadIndex);
 		sender->send(m);
 	}
@@ -276,7 +274,7 @@ public:
 	
 	// ZACK: modified to get the specific quad's image address from the XML file
 	void loadSettings(){
-		settings.loadFile(ofToDataPath("settings/hopscotchsettings.xml", true));
+		settings.loadFile(ofToDataPath("settings/stoplightsettings.xml", true));
 		
 		settings.pushTag("settings",0);
 		oscHost = settings.getValue("oscHost", "localhost", 0);
@@ -301,7 +299,7 @@ public:
 	}
 	
 	void saveSettings(){
-		settings.loadFile(ofToDataPath("settings/hopscotchsettings.xml", true));
+		settings.loadFile(ofToDataPath("settings/stoplightsettings.xml", true));
 		
 		if (!settings.tagExists("settings", 0)){
 			settings.addTag("settings");
@@ -333,7 +331,7 @@ public:
 			
 			settings.popTag();
 		}	
-		settings.saveFile(ofToDataPath("settings/hopscotchsettings.xml", true));
+		settings.saveFile(ofToDataPath("settings/stoplightsettings.xml", true));
 	}
 	
 	//UTILS

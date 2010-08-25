@@ -1,5 +1,6 @@
 #include "testApp.h"
 
+
 class TSPSPersonAttributes {
 public:
 	TSPSPersonAttributes(){
@@ -39,10 +40,9 @@ void testApp::setup(){
 	greenLight.red = 0;
 	greenLight.green = 255;
 	greenLight.blue = 0;
-	bRedSetColor = false;
-	bYellowSetColor = false;
-	bGreenSetColor = false;
 	lightIndex = 0;
+	colorSet = -1;
+	colorSetCtr = 0;
 	
 	
 	
@@ -75,8 +75,11 @@ void testApp::setup(){
 	peopleTracker.enableOpticalFlow(true);
 	
 	// Set up OSC sender client
-	hopscotch.sender = peopleTracker.getOSCsender();
+	stoplight.sender = peopleTracker.getOSCsender();
 
+	opticalFlowDetectionThreshold = peopleTracker.getOpticalFlowThreshold();
+//	particleEmitThresholdSeconds = peopleTracker.getParticleEmitThresholdSeconds();
+	
 	/*
 	//THIS IS HOW YOU CAN ADD CUSTOM PARAMETERS TO THE GUI
 	peopleTracker.addSlider("custom INTEGER", &itestValue, 0, ofGetWidth());
@@ -102,14 +105,14 @@ void testApp::setup(){
 	
 	
 	// ZACK: Initialize last emit times for each quad to the current time
-	for (int i = 0; i < hopscotch.numRects; i++) {
+	for (int i = 0; i < stoplight.numRects; i++) {
 		time(&lastEmitTimes[i]);
 	}
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-
+	
     bool bNewFrame = false;
 
 	#ifdef _USE_LIVE_VIDEO
@@ -135,52 +138,50 @@ void testApp::update(){
 			//now make sweet interactivity with these people!
 		}
 	}
-/*
-	// ZACK: get Optical Flow for each quad
+	
+	
+	
+	// OPTICAL FLOW
+	// ZACK: Get optical flow for the current light (quad) we are sensing.
+	bool bOpticalFlowTriggered = false;
+	Quad* q = stoplight.getQuad(lightIndex);
 	float x1,y1,w1,h1;
-	Quad* q;
-	for (int i = 0; i < hopscotch.numRects; i++) {
-		q = hopscotch.getQuad(i);
-		x1 = (*q).p1.x / 2.0;
-		y1 = (*q).p1.y / 2.0;
-		w1 = ((*q).p2.x - (*q).p1.x) / 2.0;
-		h1 = ((*q).p4.y - (*q).p1.y) / 2.0;
-
-		// Get the optical flow for the quad
-		ofPoint myPoint = peopleTracker.getOpticalFlowInRegion(x1,y1,w1,h1);
-		
-		// Test that enough movement has occured to trigger a sendSignalOSC event
-		if (fabs(myPoint.x) + fabs(myPoint.y) > OPTICAL_FLOW_DETECTION_THRESHOLD) {
-			cout << "GOT IT! Quad: " << (*q).name << ",  " << myPoint.x << "," << myPoint.y << endl;
-//			sendOscMessage(i);
-			
-		}
+	// Get the quad points / region
+	x1 = (*q).p1.x / 2.0;
+	y1 = (*q).p1.y / 2.0;
+	w1 = ((*q).p2.x - (*q).p1.x) / 2.0;
+	h1 = ((*q).p4.y - (*q).p1.y) / 2.0;
+	// Get the optical flow for the quad
+	ofPoint myPoint = peopleTracker.getOpticalFlowInRegion(x1,y1,w1,h1);
+	// Test that enough movement has occured to trigger a sendSignal OSC event
+	if (fabs(myPoint.x) + fabs(myPoint.y) > *opticalFlowDetectionThreshold) {
+		bOpticalFlowTriggered = true;
 	}
-*/
+
 	
-	// Get the pixels from the selected quad
-	Quad* lightQ = hopscotch.getQuad(lightIndex);
-	//	unsigned char* thePixels = colorImg.getPixels();
 	
+	// COLOR SENSING
+	// ZACK: Search the pixels of the given light (quad) to see if we have a matching light
+	bool bMatchedColor = false;
+	Quad* lightQ = stoplight.getQuad(lightIndex);
 	int x,y,w,h;
+	// Get the quad points / region
 	x = (int)((*lightQ).p1.x);// / 2.0);
 	y = (int)((*lightQ).p1.y);// / 2.0);
 	w = ((*lightQ).p2.x - (*lightQ).p1.x);// / 2.0;
 	h = ((*lightQ).p4.y - (*lightQ).p1.y);// / 2.0;
-	
+	// Get the image and region of interest (ROI) whose pixels will be searched
 	warpedImage = peopleTracker.getAdjustedColorImage();
-	//TESTING
 	warpedImage.resetROI();
 	warpedImage.setROI(x,y,w,h);
+	// Get and iterate through the pixels for the quad
 	unsigned char* px = warpedImage.getRoiPixels();
 	ofxColor curPixel;
 	float colorDist;
-//	cout << "lightIndex: " << lightIndex << endl;
 	for (int j = 0; j < (w * h); j++) {
 		curPixel.red = (int)px[j * 3];
 		curPixel.green = (int)px[j * 3 + 1];
 		curPixel.blue = (int)px[j * 3 + 2];
-//		cout << endl << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
 		
 		if (lightIndex == 0) {
 			colorDist = redLight.distance(curPixel,OF_COLOR_RGB);
@@ -190,65 +191,55 @@ void testApp::update(){
 			colorDist = greenLight.distance(curPixel,OF_COLOR_RGB);
 		}
 		
+		// See if the current pixel matches the set color for this quad
 		if (colorDist < 0.1) {
+			bMatchedColor = true;
+			break;
+		}
+	}
+	warpedImage.resetROI();
+	
+
+	
+	// OSC SIGNAL
+	// ZACK BOKA: Send OSC message based on what kind of sensing we are doing and change the lightIndex if an OSC even has been triggered above
+	if (peopleTracker.bColorSensingEnabled && peopleTracker.bOpticalFlowEnabled) {
+		if (bMatchedColor && bOpticalFlowTriggered) {
+			if (DEBUG) {
+				cout << "BOTH\n";
+				cout << "light: " << (*lightQ).name << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
+			}
 			sendOscMessage(lightIndex);
-			cout << "light: " << lightIndex << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
+				if (lightIndex == 0)
+				lightIndex = 2;
+			else
+				lightIndex--;
+		}
+	} else if (peopleTracker.bColorSensingEnabled) {
+		if (bMatchedColor) {
+			if (DEBUG) {
+				cout << "COLOR SENSING\n";
+				cout << "light: " << (*lightQ).name << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
+			}
+			sendOscMessage(lightIndex);
+				if (lightIndex == 0)
+				lightIndex = 2;
+			else
+				lightIndex--;
+		}
+	} else if (peopleTracker.bOpticalFlowEnabled) {
+		if (bOpticalFlowTriggered) {
+			if (DEBUG) {
+				cout << "OPTICAL FLOW\n";
+				cout << "light: " << (*lightQ).name << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
+			}
+			sendOscMessage(lightIndex);
 			if (lightIndex == 0)
 				lightIndex = 2;
 			else
 				lightIndex--;
-			break;
-		}
-
-	}
-	
-	
-	//	for (int j = 0; j < 800000; j++) {
-	//		px[j] = (char)0;
-	//	}
-	//	colorImg.setFromPixels(px,camWidth,camHeight);
-	//	colorImg.resetROI();
-	//	peopleTracker.update(colorImg);
-	
-	
-	
-	//TESTING
-	
-	
-	
-/*	 
-	// Loop through the pixels in the given range
-	ofxColor pixelColor;
-	int pixelIndex;
-	float colorDist;
-	for (int startY = y; startY < (*lightQ).p4.y; startY++) {
-		pixelIndex = (camWidth * startY) + x;
-		for (int startX = x; startX < (*lightQ).p2.x; startX++) {
-			pixelColor.red = thePixels[pixelIndex++];
-			pixelColor.green = thePixels[pixelIndex++];
-			pixelColor.blue = thePixels[pixelIndex++];
-			colorDist = lightColors[lightIndex]->distance(pixelColor,OF_COLOR_RGB);
-			
-			if (pixelColor.red > 200 && pixelColor.green < 50 && pixelColor.blue < 50) {
-				cout << "lightIndex: " << lightIndex << ",  color: " << pixelColor.red << "," << pixelColor.green << "," << pixelColor.blue << ", colorDist: " << colorDist << endl;
-				bOK = false;
-			}
-			
-			// Check if the difference between the colors is big enough to have detected a light change
-			if (colorDist <= 0.001) { // Not sure what the value should be -- check the ofxColor class distance funciton
-				//Found a change
-				cout << "GOT CHANGE!  " << lightIndex << endl;
-				// send OSC message
-				lightIndex = ++lightIndex % 3;
-				break;
-			}
 		}
 	}
-*/ 
-	
-	
-	warpedImage.resetROI();
-	
 }
 
 // ZACK: sends an OSC message for the given quad if enough time has elapsed since the last sent message for the given quad
@@ -256,14 +247,17 @@ void testApp::sendOscMessage(int quadIndex) {
 	time_t sendTime;
 	time(&sendTime);
 	
+	lastEmitTimes[quadIndex] = sendTime;
+	stoplight.send(quadIndex);
+
 	// Test that enough time has elapsed since the last sent message for the given quad
-	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= EMIT_THRESHOLD_SECONDS) {
-		lastEmitTimes[quadIndex] = sendTime;
-		hopscotch.send(quadIndex);
-		cout << "emitted: " << hopscotch.names[quadIndex] << endl;
-	} else {
-		cout << "too soon\n";
-	}
+//	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= *particleEmitThresholdSeconds) {
+//		lastEmitTimes[quadIndex] = sendTime;
+//		stoplight.send(quadIndex);
+//		if (DEBUG) cout << "emitted: " << stoplight.names[quadIndex] << endl;
+//	} else {
+//		if (DEBUG) cout << "too soon\n";
+//	}
 }
 
 
@@ -277,10 +271,10 @@ void testApp::personEntered( ofxTSPSPerson* newPerson, ofxTSPSScene* scene )
 	ofLog(OF_LOG_VERBOSE, "person %d of size %f entered!\n", newPerson->pid, newPerson->area);
 	drawStatus[0] = 10;
 
-	Quad q = hopscotch.testSquare(newPerson->boundingRect.x+newPerson->boundingRect.width/2, newPerson->boundingRect.y+newPerson->boundingRect.height/2);
+	Quad q = stoplight.testSquare(newPerson->boundingRect.x+newPerson->boundingRect.width/2, newPerson->boundingRect.y+newPerson->boundingRect.height/2);
 	if (q.active){
 //		cout << "In an active square!   " << q.index << endl;
-//		hopscotch.send(q.index, "personEntered");
+//		stoplight.send(q.index, "personEntered");
 	}
 	
 }
@@ -292,10 +286,10 @@ void testApp::personMoved( ofxTSPSPerson* activePerson, ofxTSPSScene* scene )
 	ofLog(OF_LOG_VERBOSE, "person %d of moved to (%f,%f)!\n", activePerson->pid, activePerson->boundingRect.x, activePerson->boundingRect.y);
 	drawStatus[1] = 10;
 	
-	Quad q = hopscotch.testSquare(activePerson->boundingRect.x+activePerson->boundingRect.width/2, activePerson->boundingRect.y+activePerson->boundingRect.height/2);
+	Quad q = stoplight.testSquare(activePerson->boundingRect.x+activePerson->boundingRect.width/2, activePerson->boundingRect.y+activePerson->boundingRect.height/2);
 	if (q.active){
 //		cout << "In an active sqaure (Moved)   " << q.index << endl;
-//		hopscotch.send(q.index, "personMoved");
+//		stoplight.send(q.index, "personMoved");
 	}
 	
 }
@@ -315,9 +309,9 @@ void testApp::personUpdated( ofxTSPSPerson* updatedPerson, ofxTSPSScene* scene )
 	ofLog(OF_LOG_VERBOSE, "updated %d person\n", updatedPerson->pid);
 	drawStatus[1] = 10;
 	
-	Quad q = hopscotch.testSquare(updatedPerson->boundingRect.x+updatedPerson->boundingRect.width/2, updatedPerson->boundingRect.y+updatedPerson->boundingRect.height/2);
+	Quad q = stoplight.testSquare(updatedPerson->boundingRect.x+updatedPerson->boundingRect.width/2, updatedPerson->boundingRect.y+updatedPerson->boundingRect.height/2);
 	if (q.active){
-//		hopscotch.send(q.index, "personUpdated");
+//		stoplight.send(q.index, "personUpdated");
 	}
 }
 
@@ -357,8 +351,8 @@ void testApp::draw(){
 	sprintf(numPeople, "%i", peopleTracker.totalPeople());
 	timesBoldItalic.drawString(numPeople,350,740);
 
-	if (drawMode == DRAW_MODE_HOPSCOTCH){
-		hopscotch.draw();
+	if (drawMode == DRAW_MODE_STOPLIGHT){
+		stoplight.draw();
 	}
 	
 	//TESTING
@@ -367,15 +361,19 @@ void testApp::draw(){
 	ofRect(theX,theY,100,100);
 	
 	ofSetColor(100,255,255);
-	if (bRedSetColor) {
-		string rString = "RED LIGHT: setting sensing color";
-		ofDrawBitmapString(rString, 362, 24);
-	} else if (bYellowSetColor) {
-		string yString = "YELLOW LIGHT: setting sensing color";
-		ofDrawBitmapString(yString,362,24);
-	} else if (bGreenSetColor) {
-		string gString = "GREEN LIGHT: setting sensing color";
-		ofDrawBitmapString(gString,362,24);
+	if (colorSetCtr) {
+		if (colorSet == 0) {
+			string rString = "RED LIGHT: setting sensing color";
+			ofDrawBitmapString(rString, 362, 24);
+		} else if (colorSet == 1) {
+			string yString = "YELLOW LIGHT: setting sensing color";
+			ofDrawBitmapString(yString,362,24);
+		} else if (colorSet == 2) {
+			string gString = "GREEN LIGHT: setting sensing color";
+			ofDrawBitmapString(gString,362,24);
+		}
+		
+		colorSetCtr--;
 	}
 
 }
@@ -395,26 +393,6 @@ void testApp::keyPressed  (int key){
 			drawMode++;
 			if (drawMode > 1) drawMode = 0;
 		}break;
-		case 'r':{
-			bRedSetColor = true;
-			bYellowSetColor = false;
-			bGreenSetColor = false;
-		}break;
-		case 'y':{
-			bRedSetColor = false;
-			bYellowSetColor = true;
-			bGreenSetColor = false;
-		}break;
-		case 'g':{
-			bRedSetColor = false;
-			bYellowSetColor = false;
-			bGreenSetColor = true;
-		}break;
-		case 's':{
-			bRedSetColor = false;
-			bYellowSetColor = false;
-			bGreenSetColor = false;
-		}break;			
 	}
 }
 
@@ -424,64 +402,72 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	if (drawMode == DRAW_MODE_HOPSCOTCH){
-		hopscotch.mouseDragged(x, y);
+	if (drawMode == DRAW_MODE_STOPLIGHT){
+		stoplight.mouseDragged(x, y);
 	}
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	//TESTING
-	Quad testq = hopscotch.testSquare(x - 360,y - 22);
+
+	// Did we click inside a quad and thus need to set the color for that quad?
+	Quad testq = stoplight.testSquare(x - 360,y - 22);
 	bool bSetColor = false;
-	cout << (x - 364) << ":" << (y - 22) << ", " << testq.active << endl;
+	if (DEBUG) cout << "Mouse pressed coordinates: " << (x - 364) << ":" << (y - 22) << endl;
 	if (testq.active) {
-		cout << "CLICKED INSIDE QUAD: " << testq.name << endl;
+		if (DEBUG) cout << "CLICKED INSIDE QUAD: " << testq.name << endl;
 		bSetColor = true;
 	}
 	
-	theX = x + 30;
-	theY = y + 30;
+	// Set the coordinates for the 'color square'
+	theX = x + 40;
+	theY = y + 40;
 	
+
+	// Get the color of the pixel that was clicked on
 	warpedImage.resetROI();
 	warpedImage.setROI(x - 364,y - 22, 1, 1);   //(x - 352, y - 14, 1,1);
 	unsigned char* px = warpedImage.getRoiPixels();
-	cout << "\n" << (int)px[0] << ":" << (int)px[1] << ":" << (int)px[2] << endl;
 	warpedImage.resetROI();
+	// Set the 'color square' color based on the pixel color
 	r = (int)px[0];
 	g = (int)px[1];
 	b = (int)px[2];
+	// Set the color for a quad if we clicked inside that quad
 	if (bSetColor && peopleTracker.inAdjustedView()) {
 		if (testq.name == "red") {
 			redLight.red = r;
 			redLight.green = g;
 			redLight.blue = b;
-			cout << "set color: " << r << ":" << g << ":" << b << endl;
+			colorSet = 0;
+			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		} else if (testq.name == "yellow") {
 			yellowLight.red = r;
 			yellowLight.green = g;
 			yellowLight.blue = b;
-			cout << "set color: " << r << ":" << g << ":" << b << endl;
+			colorSet = 1;
+			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		} else {
 			greenLight.red = r;
 			greenLight.green = g;
 			greenLight.blue = b;
-			cout << "set color: " << r << ":" << g << ":" << b << endl;
+			colorSet = 2;
+			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		}
+		
+		colorSetCtr = 30;
 	}
 	
-	//launch urls
-//	if ( x >= 812 && x <= 995 && y >= 723 && y <= 733 ) ofLaunchBrowser(TSPS_HOME_PAGE);
-//	else if ( x >= 812 && x <= 995 && y >= 733 && y <= 743 ) ofLaunchBrowser(TSPS_GOOGLE_PAGE);
-	if (drawMode == DRAW_MODE_HOPSCOTCH){
-		hopscotch.mousePressed(x, y);
+
+	if (drawMode == DRAW_MODE_STOPLIGHT){
+		stoplight.mousePressed(x, y);
 	}
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-	if (drawMode == DRAW_MODE_HOPSCOTCH){
-		hopscotch.mouseReleased();
+	if (drawMode == DRAW_MODE_STOPLIGHT){
+		stoplight.mouseReleased();
 	}
 }
 

@@ -194,7 +194,12 @@ class ofxTSPSPeopleTracker : public ofxCvBlobListener {
 		bool inAdjustedView();
 		ofxCvColorImage getAdjustedColorImage();
 		ofxTSPSOscSender* getOSCsender(); 
-		
+		float opticalFlowDetectionThreshold;
+		float* getOpticalFlowThreshold();
+		bool bColorSensingEnabled;
+		bool bOpticalFlowEnabled;
+//		float particleEmitThresholdSeconds;
+//		float* getParticleEmitThresholdSeconds();
 	
 	
 	protected:

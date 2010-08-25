@@ -71,7 +71,10 @@ public:
 	bool bCentroidDampen;
 	
 	//sensing vars
+//	float emithThresholdSeconds;
+	bool bColorSensing;
 	bool bTrackOpticalFlow;
+	float thresholdOpticalFlow;
 	float minOpticalFlow;
 	float maxOpticalFlow;
 	bool bDetectHaar;

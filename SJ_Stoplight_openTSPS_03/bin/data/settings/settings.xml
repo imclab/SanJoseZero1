@@ -73,10 +73,10 @@
     <val_0>1.000000</val_0>
 </SEND_OSC>
 <OSC_HOST>
-    <val_0>127.0.0.1</val_0>
+    <val_0>10.1.2.161</val_0>
 </OSC_HOST>
 <OSC_PORT>
-    <val_0>12000</val_0>
+    <val_0>12345</val_0>
 </OSC_PORT>
 <SEND_TUIO>
     <val_0>0.000000</val_0>
@@ -88,8 +88,14 @@
     <val_0>3333</val_0>
 </TUIO_PORT>
 <SEND_TCP>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </SEND_TCP>
 <TCP_PORT>
     <val_0>3335</val_0>
 </TCP_PORT>
+<COLOR_SENSING>
+    <val_0>1.000000</val_0>
+</COLOR_SENSING>
+<THRESHOLD_OPTICAL_FLOW>
+    <val_0>2000</val_0>
+</THRESHOLD_OPTICAL_FLOW>

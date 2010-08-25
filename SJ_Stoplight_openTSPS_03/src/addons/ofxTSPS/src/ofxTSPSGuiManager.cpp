@@ -196,6 +196,15 @@ void ofxTSPSGuiManager::setup(){
 	optionsGroup->seBaseColor(58,187,147);
 	optionsGroup->setShowText(false);
 	panel.addToggle("track and send contours", "SEND_OSC_CONTOURS", false);
+	panel.addToggle("enable color sensing", "COLOR_SENSING", true);
+
+	// ZACK BOKA: Control particle emit frequency
+//	guiTypeGroup* emitGroup = panel.addGroup("particle emission");
+//	emitGroup->setBackgroundColor(148,129,85);
+//	emitGroup->setBackgroundSelectColor(148,129,85);
+//	emitGroup->seBaseColor(34,151,210);
+//	emitGroup->setShowText(false);
+//	panel.addTextField("particle emit threshold", "THRESHOLD_PARTICLE_EMIT", "1.0", 200, 20);
 	
 	guiTypeGroup * opticalGroup = panel.addGroup("optical flow");
 	opticalGroup->setBackgroundColor(148,129,85);
@@ -204,6 +213,7 @@ void ofxTSPSGuiManager::setup(){
 	opticalGroup->setShowText(false);
 	//optical flow
 	panel.addToggle("track and send optical flow in blobs", "SENSE_OPTICAL_FLOW", true);
+	panel.addTextField("threshold for triggering a particle release:", "THRESHOLD_OPTICAL_FLOW","2000", 200, 20);
 	panel.addSlider("filter vectors smaller than:", "MIN_OPTICAL_FLOW", 0, 0, 5.0, false);
 	panel.addSlider("clamp vectors: larger than", "MAX_OPTICAL_FLOW", 10, 5.0, 200, false);
 	
@@ -228,18 +238,6 @@ void ofxTSPSGuiManager::setup(){
 	//JG 1/21/10 disabled this feature to simplify the interface
 	//	panel.addSlider("min. checkable haar size (%)", "MIN_HAAR", .1f, 0.0001f, 1.0f, false);
 	//	panel.addSlider("max. checkable haar size (%)", "MAX_HAAR", .5f, 0.0001f, 1.0f, false);
-	
-	
-	// ZACK BOKA: Add stoplight sensing for San Jose zero1 project
-//	guiTypeGroup* stoplightGroup = panel.addGroup("set stoplight colors");
-//	stoplightGroup->setBackgroundColor(148,129,85);
-//	stoplightGroup->setBackgroundSelectColor(148,129,85);
-//	stoplightGroup->seBaseColor(34,151,210);
-//	stoplightGroup->setShowText(false);
-//	panel.addToggle("STOPLIGHT: set red", "STOPLIGHT_RED", false);
-//	panel.addToggle("STOPLIGHT: set yellow", "STOPLIGHT_YELLOW", false);
-//	panel.addToggle("STOPLIGHT: set green", "STOPLIGHT_GREEN", false);
-	
 	
 	
 	//communication
@@ -398,9 +396,14 @@ void ofxTSPSGuiManager::update(ofEventArgs &e)
 	p_Settings->bLearnBackgroundProgressive = panel.getValueB("RELEARN");
 	p_Settings->fLearnRate = panel.getValueF("RELEARN_BACKGROUND");
 	panel.setGroupActive("background", "background relearn", p_Settings->bLearnBackgroundProgressive);
+
+	// ZACK: control the frequency of the particle emissions
+//	p_Settings->emithThresholdSeconds = (float) atof(panel.getValueS("THRESHOLD_PARTICLE_EMIT",0,"1.0").c_str());
 	
 	p_Settings->bFindHoles = !(panel.getValueB("FIND_HOLES"));
 	p_Settings->bTrackOpticalFlow = panel.getValueB("SENSE_OPTICAL_FLOW");
+	p_Settings->thresholdOpticalFlow = (float) atof(panel.getValueS("THRESHOLD_OPTICAL_FLOW",0,"2000").c_str());
+	p_Settings->bColorSensing = panel.getValueB("COLOR_SENSING");
 	panel.setGroupActive("sensing", "optical flow", p_Settings->bTrackOpticalFlow);
 	
 	//JG 12/8/09 GUI-REDUX:

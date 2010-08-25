@@ -21,6 +21,10 @@ ofxTSPSSettings* ofxTSPSSettings::getInstance()
 		single->bLearnBackground = false;
 		single->bTrackOpticalFlow = false;
 		
+		//ZACK BOKA
+		single->thresholdOpticalFlow = 2000;
+//		single->emithThresholdSeconds = 1;
+		
 		single->bLearnBackgroundProgressive = true;
 		single->trackType = TRACK_LIGHT;
 		single->bLearnBackground = true;
