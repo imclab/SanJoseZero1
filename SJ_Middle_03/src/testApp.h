@@ -8,6 +8,7 @@
 #include "Emitter.h"
 #include "BuildingType.h"
 #include "ofx3DModelLoader.h"
+#include "phyParticleSystem.h"
 
 #include "Columns.h"
 
@@ -31,6 +32,7 @@ public:
 	
 	ofTrueTypeFont			font;	
 	Emitter					particleManager;
+	phyParticleSystem		* pSystem;
 	
 private:
 	bool			bDrawDebug;

@@ -94,6 +94,7 @@ public:
 		ofx3DModelLoader * model = new ofx3DModelLoader();
 		model->loadModel(_model, 1.0);
 		model->setScale(scale, scale, scale);
+		//model->setPosition(model->getXdim()/2.0, model->getYdim()/2.0f, model->getZdim()/2.0f);
 		models.push_back(model);
 	};
 	
