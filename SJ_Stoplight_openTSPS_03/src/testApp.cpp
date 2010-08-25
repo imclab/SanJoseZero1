@@ -105,9 +105,9 @@ void testApp::setup(){
 	
 	
 	// ZACK: Initialize last emit times for each quad to the current time
-	for (int i = 0; i < stoplight.numRects; i++) {
-		time(&lastEmitTimes[i]);
-	}
+//	for (int i = 0; i < stoplight.numRects; i++) {
+//		time(&lastEmitTimes[i]);
+//	}
 }
 
 //--------------------------------------------------------------
@@ -242,7 +242,7 @@ void testApp::update(){
 	}
 }
 
-// ZACK: sends an OSC message for the given quad if enough time has elapsed since the last sent message for the given quad
+// ZACK: sends an OSC message for the given quad
 void testApp::sendOscMessage(int quadIndex) {
 	time_t sendTime;
 	time(&sendTime);
