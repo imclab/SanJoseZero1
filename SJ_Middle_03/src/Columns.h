@@ -17,7 +17,7 @@ public:
 	
 	//setup with default variables
 	Columns(){
-		setNumColumns( 5, 100.0f, 100.0f);		
+		setNumColumns( 5, 200.0f, 100.0f);		
 	};
 	
 	int getNumColumns(){ return numColums; };	
@@ -46,11 +46,18 @@ public:
 		int closestIndex = -1;
 		
 		for (int i=0; i<column_vect.size(); i++){
-			if (fabs(column_vect[i].x - x) < dist){
+			if (fabs(x - column_vect[i].x) < dist){
 				closestIndex = i;
+				dist = fabs(x - column_vect[i].x);
 			};
 		};
 		return column_vect[closestIndex];
+	};
+	
+	void draw(){
+		for (int i=0; i<column_vect.size(); i++){
+			ofCircle(column_vect[i].x, column_vect[i].y, 20);
+		}
 	};
 	
 protected:

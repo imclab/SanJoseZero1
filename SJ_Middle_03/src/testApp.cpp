@@ -35,34 +35,42 @@ void testApp::setup(){
 		
 		int numInputs = settings.getNumTags("input");
 		
+		//THIS NEEDS TO BE DYNAMIC!
+		
 		float buffer = 100.0f;
 		float increment = (float) (increment*2.0f + ofGetWidth())/numInputs;
 		
-		for (int i=0; i<numInputs; i++) {			
-			Emitter* e = new Emitter();
-			e->setLoc(buffer + increment * (i+1),0);
-			e->attachColumns(&columns);
+		//particleManager
+		
+		for (int i=0; i<numInputs; i++) {	
+			BuildingType * type = new BuildingType();
+			type->setPosition(buffer + increment * (i+1),0);
 			
 			if (i <numInputs){			
 				settings.pushTag("input", i);
-				e->setName(settings.getValue("name", "") );
+				type->setName(settings.getValue("name", "") );
 				for (int j=0; j<settings.getNumTags("message"); j++){
 					settings.pushTag("message", j);
-						e->addMessageString(settings.getValue("messageString", ""));
-						e->loadModel(ofToDataPath(settings.getValue("image", "")));
+						type->addMessageString(settings.getValue("messageString", ""));
+						type->loadModel(ofToDataPath(settings.getValue("image", "")));
 					settings.popTag();
 				}
 				settings.popTag();
 			};
-			//add listener for particles leaving screen
-			ofAddListener(e->particleLeft, this, &testApp::elementLeftScreen);
 			
-			emitters.push_back(e);
+			particleManager.addType(type);
 		}	
 	} settings.popTag();
 	
-	//try to get calibration settings from the top
+	particleManager.attachColumns(&columns);
 	
+	//add listener for particles leaving screen
+	ofAddListener(particleManager.particleLeft, this, &testApp::elementLeftScreen);
+	
+	//try to get calibration settings from the top
+	ofxOscMessage getCalibration;
+	getCalibration.setAddress( "/pluginplay/getcalibration" );
+	sender.sendMessage(getCalibration);
 }
 
 //--------------------------------------------------------------
@@ -76,13 +84,8 @@ void testApp::update(){
 		receiver.getNextMessage( &m );
 		
 		bool bFound = false;
-		for (int i=0; i<emitters.size(); i++){
-			if (emitters[i]->checkMessageString(m.getAddress())){
-				emitters[i]->emit(emitters[i]->lastFoundString);
-				bFound = true;
-				break;
-			}
-		}
+		bFound = particleManager.checkAndEmit(m.getAddress());
+			
 		// unrecognized message ;(
 		if (!bFound)
 		{
@@ -97,9 +100,10 @@ void testApp::update(){
 	
 	// check for calibration messages
 	while ( calibrationReceiver.hasWaitingMessages() ){
+		cout<<"got calibration"<<endl;
 		// get the next message
 		ofxOscMessage m;
-		receiver.getNextMessage( &m );
+		calibrationReceiver.getNextMessage( &m );
 		
 		if ( m.getAddress() == "/pluginplay/calibration/numrows"){
 			numColumns = m.getArgAsInt32(0);
@@ -116,9 +120,8 @@ void testApp::update(){
 	if (bNewCalibration)
 		columns.setNumColumns(numColumns, spacing, border);
 	
-	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->update();
-	}
+	particleManager.update();
+	
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));
 }
 
@@ -137,17 +140,30 @@ void testApp::draw(){
 	//draw particles
 	glEnable(GL_DEPTH_TEST);
 //	glEnable(GL_CULL_FACE);
-	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->draw();
-	}
+	particleManager.draw();
 //	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor( 255, 255, 255 );
+	columns.draw();
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed  (int key){
 	if (key =='f') ofToggleFullscreen();
+	
+	if (key == '1'){
+		int ran = ofRandom(0, particleManager.getNumTypes());
+		particleManager.emitRandom(ran);
+	} else if (key == '2'){		
+		int ran = ofRandom(0, particleManager.getNumTypes()-1);
+		particleManager.emitRandom(ran);
+		particleManager.emitRandom(ran+1);
+	} else if (key == '3'){		
+		int ran = ofRandom(0, particleManager.getNumTypes()-2);
+		particleManager.emitRandom(ran);
+		particleManager.emitRandom(ran+1);
+		particleManager.emitRandom(ran+2);
+	}
 }
 
 //--------------------------------------------------------------
@@ -162,8 +178,6 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	int ran = ofRandom(0, emitters.size());
-	emitters[ran]->emitRandom();
 }
 
 //--------------------------------------------------------------
@@ -173,9 +187,6 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-	for (int i=0; i<emitters.size(); i++){
-		emitters[i]->setLoc(ofGetWidth()/10.0 * (i+1),0);
-	}
 }
 
 //--------------------------------------------------------------

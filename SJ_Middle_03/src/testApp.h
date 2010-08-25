@@ -6,6 +6,7 @@
 #include "ofxOsc.h"
 #include "ofxXmlSettings.h"
 #include "Emitter.h"
+#include "BuildingType.h"
 #include "ofx3DModelLoader.h"
 
 #include "Columns.h"
@@ -29,7 +30,7 @@ public:
 	void elementLeftScreen( ParticleEventArgs & args );
 	
 	ofTrueTypeFont			font;	
-	vector<Emitter* >		emitters;
+	Emitter					particleManager;
 	
 private:
 	bool			bDrawDebug;

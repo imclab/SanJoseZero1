@@ -20,9 +20,9 @@ void testApp::setup(){
 		
 		int cPort = 12010;
 		string cHost = "localhost";
-		cPort = settings.getValue("osc:calibrationSender:port",sPort);
-		cHost = settings.getValue("osc:calibrationSender:host",sHost);
-		calibrationSender.setup(sHost, sPort);
+		cPort = settings.getValue("osc:calibrationSender:port",cPort);
+		cHost = settings.getValue("osc:calibrationSender:host",cHost);
+		calibrationSender.setup(cHost, cPort);
 		
 	} settings.popTag();
 	
@@ -81,9 +81,14 @@ void testApp::setup(){
 	calibrationSender.sendMessage(rowMessage);	
 	
 	ofxOscMessage spacerMessage;
-	rowMessage.setAddress("/pluginplay/calibration/buffers");
-	rowMessage.addFloatArg( ROW_BUFFER);
-	calibrationSender.sendMessage(rowMessage);
+	spacerMessage.setAddress("/pluginplay/calibration/buffers");
+	spacerMessage.addFloatArg( ROW_BUFFER);
+	calibrationSender.sendMessage(spacerMessage);
+	
+	ofxOscMessage spaceMessage;
+	spaceMessage.setAddress("/pluginplay/calibration/buffers");
+	spaceMessage.addFloatArg( ROW_SPACING );
+	calibrationSender.sendMessage(spaceMessage);
 }
 
 //--------------------------------------------------------------
@@ -104,15 +109,21 @@ void testApp::update(){
 			//is it a calibration message?
 			if ( m.getAddress() == "/pluginplay/getcalibration"){
 				
+				
 				ofxOscMessage rowMessage;
 				rowMessage.setAddress("/pluginplay/calibration/numrows");
 				rowMessage.addIntArg((int) NUMBER_OF_ROWS);
 				calibrationSender.sendMessage(rowMessage);	
 				
 				ofxOscMessage spacerMessage;
-				rowMessage.setAddress("/pluginplay/calibration/buffers");
-				rowMessage.addFloatArg( ROW_BUFFER);
-				calibrationSender.sendMessage(rowMessage);
+				spacerMessage.setAddress("/pluginplay/calibration/buffers");
+				spacerMessage.addFloatArg( ROW_BUFFER);
+				calibrationSender.sendMessage(spacerMessage);
+				
+				ofxOscMessage spaceMessage;
+				spaceMessage.setAddress("/pluginplay/calibration/buffers");
+				spaceMessage.addFloatArg( ROW_SPACING );
+				calibrationSender.sendMessage(spaceMessage);
 				
 			//nope!
 			} else {

@@ -10,6 +10,7 @@
 #pragma once
 #include "ofMain.h"
 #include "ofEvents.h"
+#include "BuildingType.h"
 #include "Particle.h"
 #include "Columns.h"
 
@@ -18,7 +19,7 @@
 class ParticleEventArgs : public ofEventArgs {
 	public:
 		ofPoint loc;
-		string name;
+		//string name;
 		string address;
 		string data;
 };
@@ -27,37 +28,21 @@ class Emitter
 {
 public:
 	Emitter(){
-		lastEmitted = ofGetElapsedTimeMillis();
-		lastFoundString = 0;
-//		modelImageListIndex = -1;
-//		model = new ofx3DModelLoader();
-		
+		lastEmitted = ofGetElapsedTimeMillis();	
 	};
+	
+	void addType( BuildingType * type ){
+		types.push_back(type);
+	};
+	
+	int getNumTypes(){
+		return types.size();
+	}
 	
 	void attachColumns( Columns * _columns){
 		columns = _columns;
 	};
-	
-	void addMessageString( string msg ){
-		messageStrings.push_back(msg);
-	}
-	
-	void setName (string _name){
-		name = _name;
-	}
-	
-	void setLoc( float x, float y){
-		loc.x = x;
-		loc.y = y;
-	}
-	
-	void loadModel( string modelImage ){
-		modelImageList.push_back(modelImage);
-		ofx3DModelLoader* partModel = new ofx3DModelLoader();
-		partModel->loadModel(modelImage,1);
-		models.push_back(partModel);
-	}
-	
+		
 	//Memory management
 	void update(){
 		static ParticleEventArgs particleArgs;
@@ -65,10 +50,11 @@ public:
 			particles[i]->update();
 			
 			if (!particles[i]->alive()){
-				particleArgs.loc.x = particles[i]->getLoc().x; // must add because we translate to each emitter's x-coordinate with particle coordinate initially = 0.
+				particleArgs.loc.x = particles[i]->getLoc().x;
 				particleArgs.loc.y = particles[i]->getLoc().y;
-				particleArgs.name = name;
-				particleArgs.address = messageStrings[0];
+				particleArgs.address = particles[i]->getMessageString();
+				particleArgs.data = particles[i]->getData();
+				
 				ofNotifyEvent(particleLeft, particleArgs, this);
 				//Particle toDelete = particles[i];
 				particles.erase(particles.begin()+i);
@@ -77,16 +63,16 @@ public:
 		}
 	};
 	
-	void emit( int index = 0){
-		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
-			cout <<"emit!"<<endl;
-			if (index > models.size()-1 || lastFoundString < 0) index = 0;
-			
+	void emit( int whichType, int index = 0, string data = ""){
+		BuildingType * type = types[whichType];
+		if (type->canEmit()){			
 			Particle* part = new Particle();
-			part->setLoc(loc.x, ofGetHeight());			
-			part->setModel(models[index]);
+			part->setLoc(type->getPosition().x, ofGetHeight());			
+			part->setModel(type->getModel(index));
 			part->setScale(2);
-			part->setEndPoint(columns->getClosestColumn(loc.x).x, columns->getClosestColumn(loc.x).y);
+			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
+			part->setMessageString(types[whichType]->getMessageString(index));
+			part->setData(data);
 			part->start();
 			
 			particles.push_back(part);
@@ -105,35 +91,34 @@ public:
 	};
 	
 	bool checkMessageString(string msg){
-		for (int i=0; i<messageStrings.size(); i++){
-			if (messageStrings[i] == msg){
-				lastFoundString = i;
+		for (int i=0; i<types.size(); i++){
+			if (types[i]->checkMessageString(msg) >= 0)
+				return true;
+		}
+		return false;
+	}
+	
+	bool checkAndEmit(string msg, string data=""){		
+		for (int i=0; i<types.size(); i++){
+			int index = types[i]->checkMessageString(msg);
+			if (index >= 0){
+				emit(i, index, data);
 				return true;
 			}
 		}
 		return false;
-	}	
-	
-	void emitRandom( ){
-		int ran = (int) ofRandom(0, messageStrings.size());				
-		emit(ran);
 	};
 	
-	vector<string> messageStrings;
-	int lastFoundString;
+	void emitRandom(int which){
+		int index = types[which]->getRandomMessageStringIndex();
+		emit(which, index);
+	};
 	
 	ofEvent<ParticleEventArgs> particleLeft;
 	
-	string getName() {
-		return name;
-	}
-	
 private:
-	vector<string> modelImageList;
-	vector<ofx3DModelLoader* > models;
 	vector <Particle* > particles;
 	int lastEmitted;
-	ofPoint loc;
-	string name;
 	Columns * columns;
+	vector <BuildingType *> types;
 };

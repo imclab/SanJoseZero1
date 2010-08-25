@@ -72,19 +72,51 @@ public:
 		scale = _scale;
 	}
 	
+	//location
+	
 	void setLoc( float x, float y){
 		loc.x = x;
 		loc.y = y;
-	}
-	
-	ofPoint getLoc(){
-		return loc;
 	}
 	
 	void setEndPoint( float x, float y ){
 		targetPoint.x = x;
 		targetPoint.y = y;
 	}
+	
+	ofPoint getLoc(){
+		return loc;
+	}
+	
+	//frame
+	
+	int getFrame(){
+		return frame;
+	}
+	
+	//msg string
+	
+	void setMessageString( string msg ){
+		messageString = msg;
+	} 
+	
+	string getMessageString(){
+		return messageString;
+	}
+	
+	//data
+	
+	void setData( string d ){
+		data = d;
+	} 
+	
+	string getData(){
+		return data;
+	}
+	
+/***************************************************************
+	 START TWEEN(S)
+***************************************************************/	
 	
 	void start(){
 		cout<<"tween x: "<<loc.x<<","<<targetPoint.x<<endl;
@@ -134,23 +166,15 @@ public:
 			}
 		}
 		
+		//update x and y
+		
 		loc.x = positionXTween.update();
 		loc.y = positionYTween.update();
 		
 		// Begin rotating and slow upward speed if in 3D
 		if (bIn3D) {
-			// Slow down the upward motion since we are in 3D
-			loc.y -= 0.8; 
-
 			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
 			rotationCtr += 0.2;
-//		} else if (bPre3D) {
-////			particle3D->setScale(2.0,1.0,1.0);
-//			loc.y -= SPEED;
-//			particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
-//			rotationCtr += 0.8;
-		} else {
-			loc.y -= SPEED;
 		}
 
 		
@@ -201,8 +225,15 @@ public:
 	bool alive() {
 		return bAlive;
 	};
+
+	
 	
 private:
+	
+	//important storage vars!
+	string messageString;
+	string data;
+	
 	bool bAlive;
 	float scale;	
 	float curScale;
