@@ -498,7 +498,6 @@ void ShapeBatchRenderer::draw()
 			else if(shapeMode == SBR_TRIANGLE)
 				glDrawArrays(GL_TRIANGLES, l*numObjectsPerLayer*shapeMode, numObjects[l]*shapeMode);
 		}
-		//cout<<"layer: "<<l<<" startIndex: "<<l*numObjectsPerLayer*(shapeMode*3)<<endl;
 	}
 	
 	if(safeMode)

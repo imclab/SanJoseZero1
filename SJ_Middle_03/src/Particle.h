@@ -26,22 +26,11 @@ public:
 	
 	Particle(){
 		bAlive = true;
-		
-		bIn3D = false;
+		bSend = bSent = false;
 		
 		vel.x = 0;
 		vel.y = -5;
 		
-		// Rotation
-		bPre3D = true;
-		
-		float rotationDir = ofRandomuf();
-		if (rotationDir < 0.5)
-			rotationDirection = -1;
-		else
-			rotationDirection = 1;
-		
-		rotateSpeed = ofRandom(3.0f, 10.0f);
 
 		// Magnification
 		bOkToMagnify = true;
@@ -53,8 +42,8 @@ public:
 		scale.z = .1;
 		
 		setTweenTime(3000);
-		setTweenStart( ofGetHeight() * 3.0 / 4.0);
-		setTweenEnd( ofGetHeight() / 4.0);
+		setTransformStart( ofGetHeight() * 3.0 / 4.0);
+		setTransformEnd( ofGetHeight() / 4.0);
 		
 		extrudeTimer = 0;
 		minScale = 2.0f;
@@ -150,11 +139,11 @@ public:
 		duration = tweenTime;
 	}
 	
-	void setTweenStart( float _startPos){
+	void setTransformStart( float _startPos){
 		startPos = _startPos;
 	}
 	
-	void setTweenEnd( float _endPos ){
+	void setTransformEnd( float _endPos ){
 		endPos.y = _endPos;
 	}
 	
@@ -176,10 +165,19 @@ public:
 	
 	void update(){
 		// Check to see if we are still alive
-		if (pos.y + particle3D->getYdim()*2.0 < endPoint.y){
+		if (pos.y + getHeight()/2.0f < 0 && !bSend){
+			bSend = true;
+		}
+		
+		if (pos.y <= endPoint.y){
 			bAlive = false;
 			return;
-		}
+		} else if (index != 0){
+			if (!neighbors[0]->bAlive){
+				bAlive = false;
+				return;
+			}
+		}				
 		
 		ofxVec3f destPt;
 		
@@ -200,12 +198,17 @@ public:
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
+			if (bOkToDeMagnify){
+				maxspeed = 5.0f;
+			}
+			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
 			float d;
 			
 			destPt = neighbors[index-1]->getLoc();
-			destPt.y += neighbors[index-1]->getHeight();
+			destPt.y += neighbors[index-1]->getHeight()/2.0f;
+						
 			desired = destPt - pos;  // A vector pointing from the location to the target
 			d = ofDist3D(destPt.x, destPt.y, destPt.z, pos.x, pos.y, pos.z);
 			
@@ -217,18 +220,24 @@ public:
 				// Steering = Desired minus Velocity
 				steer = desired - vel;
 				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
-				steer.y = ofClamp(steer.y, -maxforce, maxforce); 
+				steer.y = ofClamp(steer.y, -maxforce, maxforce);
 				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
 			}
 			
-			acc += steer;
+			acc += steer;			
+			rotation -= (rotation - neighbors[0]->rotation)/50.0f;
 			
 		//fly around all crazy if home particle + have children
-		} else if ( bMagnifying && !bOkToDeMagnify && neighbors.size() > 0){
+			
+		} else if ( (bMagnifying || bOkToDeMagnify) && neighbors.size() > 0){
 			
 			//steer
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
+			
+			if (bOkToDeMagnify){
+				maxspeed = 5.0f;
+			}
 			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
@@ -238,7 +247,7 @@ public:
 			d = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, pos.x, pos.y, pos.z);
 				
 			// If the distance is greater than 0, calc steering (otherwise return zero vector)
-			if (d > 0.5) {				
+			if (d > 10) {				
 				desired /= d; // Normalize desired
 				desired *= maxspeed;
 				if (d < 100){
@@ -249,19 +258,31 @@ public:
 				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
 				steer.y = ofClamp(steer.y, -maxforce, maxforce); 
 				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
-			} else {
-				targetPoint.x = ofRandom(0,ofGetWidth());
-				targetPoint.y = pos.y - ofRandom(50,250);
-				
-				if (targetPoint.y < endPos.y){
-					cout<<"targeting "<<endPoint.x<<":"<<endPoint.y<<endl;
+			} else if (!bOkToDeMagnify && !bSend) {
+				if (targetPoint.y == endPos.y){
 					targetPoint.x = endPoint.x;
 					targetPoint.y = endPoint.y;
+					targetPoint.z = 0;
+				} else {
+					targetPoint.x = ofRandom(0,ofGetWidth());
+					targetPoint.y = pos.y - ofRandom(50,250);
+					targetPoint.z = ofRandom(-500,0);
+					
+					if (targetPoint.y < endPos.y){
+						targetPoint.x = endPoint.x;
+						targetPoint.y = endPoint.y;
+						targetPoint.z = 0;
+					}
 				}
-			}
+			} /*else {
+				bAlive = false;
+			};*/
+			
+			ofxVec3f heading = vel.getNormalized();
+			rotation -= (rotation - heading*90.0f)/5.0f;
 			
 			acc += steer;
-		};
+		}
 		
 	//alter scale and rotation
 		
@@ -278,9 +299,6 @@ public:
 				//bMagnifying = false;
 			}
 			
-			rotation.x += rotateSpeed*rotationDirection;
-			rotation.y += rotateSpeed*rotationDirection;
-			rotation.z += rotateSpeed*rotationDirection;
 			if (rotation.x >= 360){
 				rotation.x = rotation.y = rotation.z -= 360;
 			} else if (rotation.x <= -360){
@@ -294,14 +312,15 @@ public:
 				scale.x = ofLerp(maxScale, minScale, extrudeTimer/10.);
 				scale.y = ofLerp(maxScale, minScale, extrudeTimer/10.);
 				
-				rotation.x = ofLerp(lastRotation.x, 0.0f, extrudeTimer/10.);
-				rotation.y = ofLerp(lastRotation.y, 0.0f, extrudeTimer/10.);
-				rotation.z = ofLerp(lastRotation.z, 0.0f, extrudeTimer/10.);
+				rotation.x = ofLerp(lastRotation.x, targetRotation.x, extrudeTimer/10.);
+				rotation.y = ofLerp(lastRotation.y, targetRotation.y, extrudeTimer/10.);
+				rotation.z = ofLerp(lastRotation.z, targetRotation.z, extrudeTimer/10.);
 				
 				if (index == 0){
 					pos.x = ofLerp(lastPosition.x, endPos.x, extrudeTimer/10.);
 					pos.y = ofLerp(lastPosition.y, endPos.y, extrudeTimer/10.);
 					pos.z = ofLerp(lastPosition.z, endPos.z, extrudeTimer/10.);
+					 
 				};
 				
 			} else {
@@ -311,13 +330,16 @@ public:
 				rotation.y = targetRotation.y;
 				rotation.z = targetRotation.z;
 				
-				if (index == 0 && extrudeTimer < 110.0f){
+				//if (bSend){
+				if ( index == 0 ){
 					extrudeTimer++;
-					pos.x = ofLerp(endPos.x, endPoint.x, (extrudeTimer - 10.0f)/100.0f);
-					pos.y = ofLerp(endPos.y, endPoint.y, (extrudeTimer - 10.0f)/100.0f);
-					pos.z = ofLerp(endPos.z, endPoint.z, (extrudeTimer - 10.0f)/100.0f);
-				}
-			}
+					/*
+					pos.x = ofLerp(endPos.x, endPoint.x, (extrudeTimer - 10.0f)/100.0);
+					pos.y = ofLerp(endPos.y, endPoint.y, (extrudeTimer - 10.0f)/100.0);
+					pos.z = ofLerp(endPos.z, endPoint.z, (extrudeTimer - 10.0f)/100.0);
+					 */
+				};
+			};
 		};
 		
 		if (( pos.y < endPos.y || (index != 0 && neighbors[0]->bOkToDeMagnify) ) && !bOkToDeMagnify){
@@ -327,27 +349,38 @@ public:
 			
 			lastRotation = rotation;
 			
-			if (lastRotation.x < 0){
-				targetRotation.x = -0.0f;
-				targetRotation.y = -0.0f;
-				targetRotation.z = -0.0f;
+			ofPoint rotateZero = 0.0f;
+			ofPoint rotate360 = ofPoint(360,360,360);
+			ofPoint rotate360N = ofPoint(-360,-360,-360);
+						
+			float d1 = lastRotation.distance(rotateZero);
+			float d2 = lastRotation.distance(rotate360);
+			float d3 = lastRotation.distance(rotate360N);
+			
+			float mininmum = fmin(d1, min(d2, d3));
+			
+			if (mininmum == d1){
+				targetRotation = rotateZero;
+			} else if (mininmum == d2){
+				targetRotation = rotate360;
 			} else {
-				targetRotation.x = 360.0f;
-				targetRotation.y = 360.0f;
-				targetRotation.z = 360.0f;
-			}			
+				targetRotation = rotate360N;
+			}
 			lastPosition = pos;
-		}
+		};
 		
 		//update position
 		
 		vel += acc;
-		pos += vel;
-		
+		if ((!bOkToDeMagnify || bSend) || index == 0){
+			pos += vel;
+		} else {
+			pos = neighbors[index-1]->getLoc();
+			pos.y += neighbors[index-1]->getHeight();
+		}
 		acc = 0;	
 	}
-	
-	
+		
 	float ofDist3D(float x1, float y1, float z1, float x2, float y2, float z2 ) {
 		return sqrt(double((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2)));
 	}
@@ -361,9 +394,9 @@ public:
 		ofPushMatrix();{
 			if (index != 0){
 				ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
-				ofRotateX(neighbors[0]->rotation.x);
-				ofRotateY(neighbors[0]->rotation.y);
-				ofRotateZ(neighbors[0]->rotation.z);
+				ofRotateX(rotation.x);
+				ofRotateY(rotation.y);
+				ofRotateZ(rotation.z);
 				
 				//ofRotateX(rotation.x);
 				//ofRotateY(rotation.y);
@@ -379,11 +412,13 @@ public:
 			}
 			// Adjust rotation
 			//particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
+			
 			if (bDebugMode){
 				ofSetColor(index*150,50,50);
 				ofRect(-getWidth()/2.0f,-getHeight()/2.0f, getWidth(), getHeight());
 				ofSetColor(0xffffff);
 				ofDrawBitmapString(ofToString(index), -getWidth(), 0);
+				
 			} else {
 				particle3D->setScale(scale.x,scale.y,scale.z);
 				particle3D->draw();
@@ -395,11 +430,19 @@ public:
 	bool alive() {
 		return bAlive;
 	};
+	
+	bool bSent;
+	
+	bool send(){
+		return bSend;
+	}
+	
 	bool bMagnifying;
 	bool bOkToMagnify;
 	bool bOkToDeMagnify;
 	
-	ofPoint rotation, lastRotation, targetRotation;
+	ofxVec3f rotation, lastRotation, targetRotation;
+	int index;
 	
 private:
 	bool bDebugMode;
@@ -414,14 +457,13 @@ private:
 	//timing vars
 	int duration, subDuration;
 	
-	bool bAlive;
+	bool bAlive,bSend;
 	ofPoint scale;
 	float minScale, maxScale;
 	float rotateSpeed;
 	
 	//NEIGHBOR VARS:
 	int frame;
-	int index;
 	vector<Particle *>neighbors;
 	
 	//extruding

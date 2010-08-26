@@ -23,6 +23,7 @@ public:
 	BuildingType(){		
 		lastEmitted = ofGetElapsedTimeMillis();
 		EMITTER_TIME = 500;
+		bPressed = false;
 	}
 	
 	void setEmitterTime( int time ){
@@ -108,6 +109,19 @@ public:
 		return -1;
 	};
 	
+	bool bPressed;
+	
+	bool pressed (int mx, int my){
+		int tolerance = 20;
+		if ( mx >= emitPosition.x && mx <= emitPosition.x + tolerance 
+			&& my >= emitPosition.y && my <= emitPosition.y + tolerance){
+			bPressed = true;
+			return true;
+		};
+		bPressed = false;
+		return false;
+	};
+	
 private:	
 	
 	vector<string> messageStrings;
@@ -119,6 +133,7 @@ private:
 	string name;
 	
 	int EMITTER_TIME;
+	
 	
 	ofPoint emitPosition;
 };

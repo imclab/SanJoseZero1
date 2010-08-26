@@ -11,6 +11,7 @@
 		2E7A4CBA11DBA6D400914266 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A4CB411DBA6D400914266 /* tinyxmlerror.cpp */; };
 		2E7A4CBB11DBA6D400914266 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A4CB511DBA6D400914266 /* tinyxmlparser.cpp */; };
 		2E7A4CBC11DBA6D400914266 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A4CB711DBA6D400914266 /* ofxXmlSettings.cpp */; };
+		2EFA26DB1226FF120057884F /* ofxFBOTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA26D91226FF120057884F /* ofxFBOTexture.cpp */; };
 		9ABC50781212FE7600C41A05 /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC505C1212FE7600C41A05 /* ofxEasing.cpp */; };
 		9ABC50791212FE7600C41A05 /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC505E1212FE7600C41A05 /* ofxEasingBack.cpp */; };
 		9ABC507A1212FE7600C41A05 /* ofxEasingBounce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC50601212FE7600C41A05 /* ofxEasingBounce.cpp */; };
@@ -51,7 +52,7 @@
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
-		E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */; };
+		E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -120,6 +121,8 @@
 		2E7A4CB511DBA6D400914266 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2E7A4CB711DBA6D400914266 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		2E7A4CB811DBA6D400914266 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		2EFA26D91226FF120057884F /* ofxFBOTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFBOTexture.cpp; sourceTree = "<group>"; };
+		2EFA26DA1226FF120057884F /* ofxFBOTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFBOTexture.h; sourceTree = "<group>"; };
 		9ABC50581212FE7600C41A05 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9ABC505C1212FE7600C41A05 /* ofxEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasing.cpp; sourceTree = "<group>"; };
 		9ABC505D1212FE7600C41A05 /* ofxEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
@@ -248,7 +251,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */,
+				E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */,
 				E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */,
 				E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
@@ -308,6 +311,15 @@
 				2E7A4CB811DBA6D400914266 /* ofxXmlSettings.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		2EFA26D81226FF120057884F /* ofxFboTexture */ = {
+			isa = PBXGroup;
+			children = (
+				2EFA26D91226FF120057884F /* ofxFBOTexture.cpp */,
+				2EFA26DA1226FF120057884F /* ofxFBOTexture.h */,
+			);
+			path = ofxFboTexture;
 			sourceTree = "<group>";
 		};
 		9ABC50521212FE7600C41A05 /* ofxTween */ = {
@@ -531,6 +543,7 @@
 		A91605B71225C02500B2B08C /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				2EFA26D81226FF120057884F /* ofxFboTexture */,
 				A91604221225A82F00B2B08C /* ofxVectorMath */,
 				A91604121225A81900B2B08C /* ofxShapeBatchRenderer */,
 				9ABC52B1121351E100C41A05 /* ofx3DModelLoader */,
@@ -776,7 +789,7 @@
 		E4C2421710CC549C004149E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */,
+				E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -904,10 +917,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */ = {
+		E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworksDebug.a;
+			path = openFrameworksUniversal.a;
 			remoteRef = E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -966,6 +979,7 @@
 				A91604321225A82F00B2B08C /* ofxMatrix3x3.cpp in Sources */,
 				A91604331225A82F00B2B08C /* ofxMatrix4x4.cpp in Sources */,
 				A91604341225A82F00B2B08C /* ofxQuaternion.cpp in Sources */,
+				2EFA26DB1226FF120057884F /* ofxFBOTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
