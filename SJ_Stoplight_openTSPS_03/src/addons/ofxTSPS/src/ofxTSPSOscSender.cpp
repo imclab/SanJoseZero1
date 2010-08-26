@@ -61,7 +61,7 @@ void ofxTSPSOscSender::update(){
  SEND
 ***************************************************************/
 
-
+/* NOT NEEDED FOR STOPLIGHT
 void ofxTSPSOscSender::personEntered ( ofxTSPSPerson * p, ofPoint centroid, int cameraWidth, int cameraHeight, bool bSendContours ){
 	ofxOscMessage m;
 	m.setAddress("TSPS/personEntered/");
@@ -187,6 +187,7 @@ void ofxTSPSOscSender::personWillLeave ( ofxTSPSPerson * p, ofPoint centroid, in
 	
 	send(m);	
 };
+*/
 
 /*
  

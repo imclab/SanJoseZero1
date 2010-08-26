@@ -428,9 +428,9 @@ void ofxTSPSPeopleTracker::trackPeople()
 //			else{
 			ofPoint centroid = p->getCentroidNormalized(width, height);
 			if( p->velocity.x != 0 || p->velocity.y != 0){
-				oscClient.personMoved(p, centroid, width, height, p_Settings->bSendOscContours);
+//				oscClient.personMoved(p, centroid, width, height, p_Settings->bSendOscContours);
 			}
-			oscClient.personMoved(p, centroid, width, height, p_Settings->bSendOscContours);
+//			oscClient.personMoved(p, centroid, width, height, p_Settings->bSendOscContours);
 //			}
 		}
 		
@@ -485,7 +485,7 @@ void ofxTSPSPeopleTracker::blobOn( int x, int y, int id, int order )
 	}
 	if(bOscEnabled){
 		ofPoint centroid = newPerson->getCentroidNormalized(width, height);
-		oscClient.personEntered(newPerson, centroid, width, height, p_Settings->bSendOscContours);
+//		oscClient.personEntered(newPerson, centroid, width, height, p_Settings->bSendOscContours);
 	}
 	if(bTcpEnabled){
 		ofPoint centroid = newPerson->getCentroidNormalized(width, height);
@@ -516,7 +516,7 @@ void ofxTSPSPeopleTracker::blobOff( int x, int y, int id, int order )
 	//send osc kill message if enabled
 	if (bOscEnabled){
 		ofPoint centroid = p->getCentroidNormalized(width, height);
-		oscClient.personWillLeave(p, centroid, width, height, p_Settings->bSendOscContours);
+//		oscClient.personWillLeave(p, centroid, width, height, p_Settings->bSendOscContours);
 	};
 	
 	//send tcp kill message if enabled
