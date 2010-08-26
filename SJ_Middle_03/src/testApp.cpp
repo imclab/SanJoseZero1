@@ -52,7 +52,7 @@ void testApp::setup(){
 				for (int j=0; j<settings.getNumTags("message"); j++){
 					settings.pushTag("message", j);
 						type->addMessageString(settings.getValue("messageString", ""));
-						type->loadModel(ofToDataPath(settings.getValue("image", "")));
+						type->loadModel(ofToDataPath(settings.getValue("image", "")), 4.0f);
 					settings.popTag();
 				}
 				settings.popTag();
@@ -75,7 +75,6 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-		
 	// check for waiting messages
 	while( receiver.hasWaitingMessages() )
 	{
@@ -129,13 +128,13 @@ void testApp::update(){
 void testApp::draw(){
 	
 	//no perspective screen
-	glMatrixMode(GL_PROJECTION);
+/*	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, ofGetWidth(), 0, ofGetHeight(), -100, 2000);
 	glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();	
 	glTranslatef(ofGetWidth()/2.0f, -ofGetHeight()/2.0f,0);
-
+*/
 	ofSetColor(0xffffff);
 	//draw particles
 	glEnable(GL_DEPTH_TEST);
@@ -163,12 +162,25 @@ void testApp::keyPressed  (int key){
 		particleManager.emitRandom(ran);
 		particleManager.emitRandom(ran+1);
 		particleManager.emitRandom(ran+2);
+	}else if (key == '4'){		
+		int ran = ofRandom(0, particleManager.getNumTypes()-3);
+		particleManager.emitRandom(ran);
+		particleManager.emitRandom(ran+1);
+		particleManager.emitRandom(ran+2);
+		particleManager.emitRandom(ran+3);
+	}else if (key == '5'){		
+		int ran = ofRandom(0, particleManager.getNumTypes()-4);
+		particleManager.emitRandom(ran);
+		particleManager.emitRandom(ran+1);
+		particleManager.emitRandom(ran+2);
+		particleManager.emitRandom(ran+3);
+		particleManager.emitRandom(ran+4);
 	}
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-	
+	//particleManager.debug(x,y);
 }
 
 //--------------------------------------------------------------

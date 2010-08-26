@@ -32,6 +32,12 @@
 		9D86AF2711D136A000C5B8F3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF1F11D136A000C5B8F3 /* ofxOscMessage.cpp */; };
 		9D86AF2811D136A000C5B8F3 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF2111D136A000C5B8F3 /* ofxOscReceiver.cpp */; };
 		9D86AF2911D136A000C5B8F3 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D86AF2311D136A000C5B8F3 /* ofxOscSender.cpp */; };
+		A91604191225A81900B2B08C /* ShapeBatchRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604131225A81900B2B08C /* ShapeBatchRenderer.cpp */; };
+		A916041A1225A81900B2B08C /* phyParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604151225A81900B2B08C /* phyParticle.cpp */; };
+		A916041B1225A81900B2B08C /* phyParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604171225A81900B2B08C /* phyParticleSystem.cpp */; };
+		A91604321225A82F00B2B08C /* ofxMatrix3x3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604251225A82F00B2B08C /* ofxMatrix3x3.cpp */; };
+		A91604331225A82F00B2B08C /* ofxMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604271225A82F00B2B08C /* ofxMatrix4x4.cpp */; };
+		A91604341225A82F00B2B08C /* ofxQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A916042C1225A82F00B2B08C /* ofxQuaternion.cpp */; };
 		E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE0A90E8CC67C009D7055 /* GLee.a */; };
 		E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE2E30E8CC69C009D7055 /* rtAudio.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -176,6 +182,26 @@
 		9D86AF2311D136A000C5B8F3 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		9D86AF2411D136A000C5B8F3 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
 		A91602421225697E00B2B08C /* BuildingType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingType.h; sourceTree = "<group>"; };
+		A91604131225A81900B2B08C /* ShapeBatchRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShapeBatchRenderer.cpp; sourceTree = "<group>"; };
+		A91604141225A81900B2B08C /* ShapeBatchRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeBatchRenderer.h; sourceTree = "<group>"; };
+		A91604151225A81900B2B08C /* phyParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = phyParticle.cpp; sourceTree = "<group>"; };
+		A91604161225A81900B2B08C /* phyParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = phyParticle.h; sourceTree = "<group>"; };
+		A91604171225A81900B2B08C /* phyParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = phyParticleSystem.cpp; sourceTree = "<group>"; };
+		A91604181225A81900B2B08C /* phyParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = phyParticleSystem.h; sourceTree = "<group>"; };
+		A91604231225A82F00B2B08C /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		A91604251225A82F00B2B08C /* ofxMatrix3x3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMatrix3x3.cpp; sourceTree = "<group>"; };
+		A91604261225A82F00B2B08C /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMatrix3x3.h; sourceTree = "<group>"; };
+		A91604271225A82F00B2B08C /* ofxMatrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMatrix4x4.cpp; sourceTree = "<group>"; };
+		A91604281225A82F00B2B08C /* ofxMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMatrix4x4.h; sourceTree = "<group>"; };
+		A91604291225A82F00B2B08C /* ofxPoint2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint2f.h; sourceTree = "<group>"; };
+		A916042A1225A82F00B2B08C /* ofxPoint3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint3f.h; sourceTree = "<group>"; };
+		A916042B1225A82F00B2B08C /* ofxPoint4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint4f.h; sourceTree = "<group>"; };
+		A916042C1225A82F00B2B08C /* ofxQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxQuaternion.cpp; sourceTree = "<group>"; };
+		A916042D1225A82F00B2B08C /* ofxQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxQuaternion.h; sourceTree = "<group>"; };
+		A916042E1225A82F00B2B08C /* ofxVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec2f.h; sourceTree = "<group>"; };
+		A916042F1225A82F00B2B08C /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec3f.h; sourceTree = "<group>"; };
+		A91604301225A82F00B2B08C /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec4f.h; sourceTree = "<group>"; };
+		A91604311225A82F00B2B08C /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVectorMath.h; sourceTree = "<group>"; };
 		E45BE0390E8CC647009D7055 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeImage.h; path = ../../../libs/freeimage/include/FreeImage.h; sourceTree = SOURCE_ROOT; };
 		E45BE03F0E8CC650009D7055 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../../libs/fmodex/include/fmod.h; sourceTree = SOURCE_ROOT; };
 		E45BE0400E8CC650009D7055 /* fmod.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fmod.hpp; path = ../../../libs/fmodex/include/fmod.hpp; sourceTree = SOURCE_ROOT; };
@@ -463,6 +489,79 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		A91604121225A81900B2B08C /* ofxShapeBatchRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				A91604131225A81900B2B08C /* ShapeBatchRenderer.cpp */,
+				A91604141225A81900B2B08C /* ShapeBatchRenderer.h */,
+			);
+			path = ofxShapeBatchRenderer;
+			sourceTree = "<group>";
+		};
+		A91604221225A82F00B2B08C /* ofxVectorMath */ = {
+			isa = PBXGroup;
+			children = (
+				A91604231225A82F00B2B08C /* install.xml */,
+				A91604241225A82F00B2B08C /* src */,
+			);
+			name = ofxVectorMath;
+			path = ../../../addons/ofxVectorMath;
+			sourceTree = SOURCE_ROOT;
+		};
+		A91604241225A82F00B2B08C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A91604251225A82F00B2B08C /* ofxMatrix3x3.cpp */,
+				A91604261225A82F00B2B08C /* ofxMatrix3x3.h */,
+				A91604271225A82F00B2B08C /* ofxMatrix4x4.cpp */,
+				A91604281225A82F00B2B08C /* ofxMatrix4x4.h */,
+				A91604291225A82F00B2B08C /* ofxPoint2f.h */,
+				A916042A1225A82F00B2B08C /* ofxPoint3f.h */,
+				A916042B1225A82F00B2B08C /* ofxPoint4f.h */,
+				A916042C1225A82F00B2B08C /* ofxQuaternion.cpp */,
+				A916042D1225A82F00B2B08C /* ofxQuaternion.h */,
+				A916042E1225A82F00B2B08C /* ofxVec2f.h */,
+				A916042F1225A82F00B2B08C /* ofxVec3f.h */,
+				A91604301225A82F00B2B08C /* ofxVec4f.h */,
+				A91604311225A82F00B2B08C /* ofxVectorMath.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A91605B71225C02500B2B08C /* addons */ = {
+			isa = PBXGroup;
+			children = (
+				A91604221225A82F00B2B08C /* ofxVectorMath */,
+				A91604121225A81900B2B08C /* ofxShapeBatchRenderer */,
+				9ABC52B1121351E100C41A05 /* ofx3DModelLoader */,
+				9ABC50521212FE7600C41A05 /* ofxTween */,
+			);
+			name = addons;
+			sourceTree = "<group>";
+		};
+		A91605B81225C03000B2B08C /* particleEffects */ = {
+			isa = PBXGroup;
+			children = (
+				A91604151225A81900B2B08C /* phyParticle.cpp */,
+				A91604161225A81900B2B08C /* phyParticle.h */,
+				A91604171225A81900B2B08C /* phyParticleSystem.cpp */,
+				A91604181225A81900B2B08C /* phyParticleSystem.h */,
+			);
+			name = particleEffects;
+			sourceTree = "<group>";
+		};
+		A91605B91225C03C00B2B08C /* buildingParticles */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A4B2411DB96B400914266 /* Emitter.h */,
+				A91602421225697E00B2B08C /* BuildingType.h */,
+				2E7A4B2511DB96EA00914266 /* Particle.h */,
+				2E78C359122468B3007663E7 /* Column.h */,
+				2E78C35A1224693C007663E7 /* Columns.h */,
+			);
+			name = buildingParticles;
+			sourceTree = "<group>";
+		};
 		BB4B018C10F6955C006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -664,16 +763,12 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9ABC52B1121351E100C41A05 /* ofx3DModelLoader */,
-				9ABC50521212FE7600C41A05 /* ofxTween */,
+				A91605B91225C03C00B2B08C /* buildingParticles */,
+				A91605B81225C03000B2B08C /* particleEffects */,
+				A91605B71225C02500B2B08C /* addons */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
-				2E7A4B2411DB96B400914266 /* Emitter.h */,
-				A91602421225697E00B2B08C /* BuildingType.h */,
-				2E7A4B2511DB96EA00914266 /* Particle.h */,
-				2E78C359122468B3007663E7 /* Column.h */,
-				2E78C35A1224693C007663E7 /* Columns.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -865,6 +960,12 @@
 				9ABC52BD121351E100C41A05 /* model3DS.cpp in Sources */,
 				9ABC52BE121351E100C41A05 /* texture3DS.cpp in Sources */,
 				9ABC52BF121351E100C41A05 /* ofx3dModelLoader.cpp in Sources */,
+				A91604191225A81900B2B08C /* ShapeBatchRenderer.cpp in Sources */,
+				A916041A1225A81900B2B08C /* phyParticle.cpp in Sources */,
+				A916041B1225A81900B2B08C /* phyParticleSystem.cpp in Sources */,
+				A91604321225A82F00B2B08C /* ofxMatrix3x3.cpp in Sources */,
+				A91604331225A82F00B2B08C /* ofxMatrix4x4.cpp in Sources */,
+				A91604341225A82F00B2B08C /* ofxQuaternion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,6 +45,39 @@ public:
 		
 	//Memory management
 	void update(){
+		
+		//first, update all the particles emitted with their neighbors
+		ofPoint endPoint;
+		
+		//figure out how far into negative we need to go
+		float negativeStackHeight = 0;
+		
+		for (int i=0; i<currentParticles.size(); i++){
+			negativeStackHeight += currentParticles[i]->getHeight();
+		}
+		
+		for (int i=0; i<currentParticles.size(); i++){
+			if (i == 0){
+				endPoint = currentParticles[i]->getEndPoint();
+				endPoint.y = -negativeStackHeight;
+				//endPoint.z += ofRandom(-200,400);
+			}
+			currentParticles[i]->setIndex(i);
+			for (int j=0; j<currentParticles.size(); j++){
+				if (j != i){
+					currentParticles[i]->addNeighbor(currentParticles[j]);
+					//adjust its end position
+					currentParticles[i]->setEndPoint(endPoint.x, endPoint.y, endPoint.z);
+					endPoint.y += currentParticles[i]->getHeight();
+				}
+			};
+		};
+		
+		// then clear out the array
+		currentParticles.clear();
+		
+		//then do the normal update routine
+		
 		static ParticleEventArgs particleArgs;
 		for (int i=particles.size()-1; i>=0; i--){
 			particles[i]->update();
@@ -69,13 +102,12 @@ public:
 			Particle* part = new Particle();
 			part->setLoc(type->getPosition().x, ofGetHeight());			
 			part->setModel(type->getModel(index));
-			part->setScale(2);
 			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
 			part->setMessageString(types[whichType]->getMessageString(index));
 			part->setData(data);
-			part->start();
 			
 			particles.push_back(part);
+			currentParticles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
 		cout <<"too soon!"<<endl;
@@ -114,11 +146,21 @@ public:
 		emit(which, index);
 	};
 	
+	void debug( int x, int y){
+		if (particles.size() > 0)
+			particles[0]->setLoc(x,y);
+	}
 	ofEvent<ParticleEventArgs> particleLeft;
 	
-private:
 	vector <Particle* > particles;
+	
+private:
 	int lastEmitted;
 	Columns * columns;
 	vector <BuildingType *> types;
+	
+	//running vector of particles emitted on this frame
+	// NOTE: CHANGE THIS TO BE MORE FLEXIBLE (e.g. not emitted on the EXACT same frame...)
+	
+	vector <Particle *> currentParticles;
 };
