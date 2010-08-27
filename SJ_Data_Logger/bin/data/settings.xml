@@ -1,0 +1,8 @@
+<settings>
+	<osc>
+		<port>12005</port>
+	</osc>
+	<server>
+		<url>http://www.plug-in-play.com/php/storebuilding.php</url>
+	</server>
+</settings>
