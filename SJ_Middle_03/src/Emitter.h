@@ -29,8 +29,8 @@ class Emitter
 {
 public:
 	Emitter(){
-		lastEmitted = ofGetElapsedTimeMillis();	
-		particleGroupTolerance = 0;
+		lastEmitted = lastGrouped = ofGetElapsedTimeMillis();	
+		particleGroupTolerance = 300;
 		
 		//calibration stuff
 		bStartDragging = bEndDragging = false;
@@ -73,8 +73,10 @@ public:
 		};
 		
 		// then clear out the array
-		currentParticles.clear();
-		
+		if (ofGetElapsedTimeMillis() - lastGrouped > particleGroupTolerance){
+			lastGrouped = ofGetElapsedTimeMillis();
+			currentParticles.clear();
+		}
 		//then do the normal update routine
 		
 		static ParticleEventArgs particleArgs;
