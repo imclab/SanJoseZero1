@@ -8,7 +8,11 @@
 #include "Emitter.h"
 #include "BuildingType.h"
 #include "ofx3DModelLoader.h"
-#include "phyParticleSystem.h"
+#include "ofxLabProjectionTools.h"
+
+#ifdef FLUID_EFFECT_SYSTEM
+#include "EffectsSystem.h"
+#endif
 
 #include "Columns.h"
 
@@ -18,7 +22,7 @@ enum {
 	LAB_MODE_P_CALIBRATE
 };
 
-#define NUM_DRAW_MODES 3
+#define NUM_DRAW_MODES 8
 
 //--------------------------------------------------------
 class testApp : public ofBaseApp{
@@ -36,6 +40,7 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	
+	void setupGui();
 	void saveSettings();
 	
 	//event to forward on particle to top app
@@ -43,9 +48,15 @@ public:
 	
 	ofTrueTypeFont			font;	
 	Emitter					particleManager;
-	phyParticleSystem		* pSystem;
-	
+		
 	int drawMode;
+	
+	ofxLabProjectionTools	projection;
+	
+	
+#ifdef FLUID_EFFECT_SYSTEM
+	EffectsSystem			effectsSystem;
+#endif
 	
 private:
 	bool			bDrawDebug;

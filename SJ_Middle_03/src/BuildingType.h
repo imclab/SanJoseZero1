@@ -22,9 +22,15 @@ public:
 	
 	BuildingType(){		
 		lastEmitted = ofGetElapsedTimeMillis();
-		EMITTER_TIME = 0;
+		setEmitterTime(0);
 		bPressed = false;
 	}
+	
+/***************************************************************
+	 GETTERS + SETTERS
+***************************************************************/
+	
+	//emit time
 	
 	void setEmitterTime( int time ){
 		EMITTER_TIME = time;
@@ -34,14 +40,15 @@ public:
 		return EMITTER_TIME;
 	}
 		
-	bool canEmit(){
-		
+	bool canEmit(){		
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			lastEmitted = ofGetElapsedTimeMillis();
 			return true;
 		}
 		return false;
 	}
+	
+	//name
 	
 	void setName (string _name){
 		name = _name;
@@ -51,6 +58,8 @@ public:
 		return name;
 	}
 	
+	//position
+	
 	void setPosition( float x, float y){
 		emitPosition.x = x;
 		emitPosition.y = y;
@@ -59,6 +68,8 @@ public:
 	ofPoint getPosition(){
 		return emitPosition;
 	}
+	
+	//message strings
 	
 	string getRandomMessageString(){
 		return messageStrings[(int)ofRandom(0, messageStrings.size())];
@@ -73,30 +84,9 @@ public:
 		messageStrings.push_back(msg);
 	};
 	
-	void loadImage( string image ){
-		ofImage * img = new ofImage();
-		images.push_back(img);
-	};
 	
 	string getMessageString (int index ){
 		return messageStrings[index];
-	};
-	
-	ofx3DModelLoader * getModel( int index ){
-		if (index > models.size()) index = models.size()-1;
-		if (index < 0) index = 0;
-		if (models.size() < 1) return new ofx3DModelLoader();
-		//return models[index];
-		return models[(int) ofRandom(0, models.size())];
-
-	};
-	
-	void loadModel( string _model, float scale=1.0f ){
-		ofx3DModelLoader * model = new ofx3DModelLoader();
-		model->loadModel(_model, 1.0);
-		model->setScale(scale, scale, scale);
-		//model->setPosition(model->getXdim()/2.0, model->getYdim()/2.0f, model->getZdim()/2.0f);
-		models.push_back(model);
 	};
 	
 	int checkMessageString(string msg){
@@ -108,6 +98,53 @@ public:
 		}
 		return -1;
 	};
+	
+	// models
+	
+	ofx3DModelLoader * getModel( int index ){
+		if (index > models.size()) index = models.size()-1;
+		if (index < 0) index = 0;
+		if (models.size() < 1) return new ofx3DModelLoader();
+		//return models[index];
+		return models[(int) ofRandom(0, models.size())];
+
+	};
+		
+	float getHeight( float scale = 1.0 ){
+		if (models.size() > 0){
+			models[0]->setScale(1.0f, 1.0f, 1.0f);
+			return models[0]->getYdim()*scale;
+		} else {
+			return 0.;
+		}
+	}
+	
+	float getWidth( float scale = 1.0 ){
+		if (models.size() > 0){
+			models[0]->setScale(1.0f, 1.0f, 1.0f);
+			return models[0]->getXdim()*scale;
+		} else {
+			return 0.;
+		}
+	}
+	
+	void loadImage( string image ){
+		ofImage * img = new ofImage();
+		images.push_back(img);
+	};
+	
+	void loadModel( string _model, float scale=1.0f ){
+		ofx3DModelLoader * model = new ofx3DModelLoader();
+		model->loadModel(_model, 1.0);
+		model->setScale(scale, scale, scale);
+		//model->setPosition(model->getXdim()/2.0, model->getYdim()/2.0f, model->getZdim()/2.0f);
+		models.push_back(model);
+		modelScales.push_back(scale);
+	};
+	
+/***************************************************************
+	MOUSE 
+***************************************************************/
 	
 	bool bPressed;
 	
@@ -122,11 +159,36 @@ public:
 		return false;
 	};
 	
+/***************************************************************
+	DEBUG 
+***************************************************************/
+	
+	void drawDebug( int x, int y ){
+		if (models.size() > 0){
+			ofPushMatrix();{
+				models[0]->setScale(modelScales[0],modelScales[0],modelScales[0]);
+				ofTranslate(x, y);
+				models[0]->draw();
+			} ofPopMatrix();
+		};
+	};
+	
+	void drawDebug( int x, int y, float scale ){
+		if (models.size() > 0){
+			ofPushMatrix();{
+				models[0]->setScale(scale,scale,scale);
+				ofTranslate(x, y);
+				models[0]->draw();
+			} ofPopMatrix();
+		};
+	};
+	
 private:	
 	
 	vector<string> messageStrings;
 	vector<ofImage *> images;
 	vector<ofx3DModelLoader *> models;
+	vector<float> modelScales;
 	
 	int lastFoundString;
 	int lastEmitted;

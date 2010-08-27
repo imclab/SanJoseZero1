@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <string>
 
-#define EMITTER_TIME 500
+#define EMITTER_TIME 750
 
 
 class Emitter : public ofRectangle

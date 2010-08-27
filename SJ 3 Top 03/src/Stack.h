@@ -57,11 +57,22 @@ public:
 		} ofPopMatrix();
 	};
 	
+	void setBuildingScale( float x, float y, float z ){
+		for (int i=0; i<buildings.size(); i++){
+			buildings[i]->scale.x = x;
+			buildings[i]->scale.y = y;
+			buildings[i]->scale.z = z;
+		}
+	};
+	
 	void addBuilding( Building * b ){
 		
 		//update position
 		b->rotate.x += -270;
 		b->rotate.y += 0;
+		b->rotate.z += 0;
+		b->scale.z = 1.;
+		b->scale.y = .1;
 		b->setPos(0,b->getWidth(),height + b->getHeight()/2.0);
 		buildings.push_back(b);
 		update();

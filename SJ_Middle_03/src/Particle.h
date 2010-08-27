@@ -9,12 +9,10 @@
 
 #pragma once
 #include "ofMain.h"
-#include "ofxTween.h"
 #include "ofx3DModelLoader.h"
 #include "ofxVectorMath.h"
 
 #define MAX_ROTATION_VEC_LENGTH 10
-
 
 class Particle
 {
@@ -62,6 +60,8 @@ public:
 	// Associate this particle with a 3D model
 	void setModel( ofx3DModelLoader* _particle3D){
 		particle3D = _particle3D;
+		particle3D->setScale(minScale, minScale, minScale);
+		scale.x = scale.y = minScale;
 	}
 	
 	void setScale( float _scale){
@@ -89,6 +89,14 @@ public:
 		return endPoint;
 	}
 	
+	void setMinScale( float mScale ){
+		minScale = mScale;
+	}
+	
+	void setMaxScale( float mScale ){
+		maxScale = mScale;
+	}
+	
 	//frame
 	
 	int getFrame(){
@@ -109,7 +117,7 @@ public:
 	
 	void setData( string d ){
 		data = d;
-	} 
+	}
 	
 	string getData(){
 		return data;
@@ -130,9 +138,7 @@ public:
 /***************************************************************
 	 START TWEEN(S)
 ***************************************************************/	
-	
-	bool xTweenComplete, yTweenComplete, zTweenComplete;
-	
+		
 	ofPoint startPos, endPos;	
 	
 	void setTweenTime( int tweenTime ){
@@ -151,6 +157,10 @@ public:
 	 NEIGHBORS
 ***************************************************************/
 	
+	void clearNeighbors(){
+		neighbors.clear();
+	}
+	
 	void addNeighbor( Particle * p ){
 		neighbors.push_back(p);
 	}
@@ -166,7 +176,6 @@ public:
 	void update(){
 		// Check to see if we are still alive
 		if (pos.y + getHeight()/2.0f < 0 && !bSend){
-			cout<<"send?"<<endl;
 			bSend = true;
 		}
 		
@@ -199,16 +208,19 @@ public:
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
-			if (bOkToDeMagnify){
-				maxspeed = 5.0f;
+			if (bOkToDeMagnify || (neighbors[0]->bOkToDeMagnify)){
+				maxforce = 20.0f;
+				destPt = neighbors[index-1]->getLoc();
+				destPt.y += neighbors[index-1]->getHeight()/2.0f;
+			} else {				
+				destPt = neighbors[index-1]->getLoc();
+				destPt.y += neighbors[index-1]->getHeight();
+				destPt.x -= neighbors[index-1]->getWidth();
 			}
 			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
-			float d;
-			
-			destPt = neighbors[index-1]->getLoc();
-			destPt.y += neighbors[index-1]->getHeight()/2.0f;
+			float d;			
 						
 			desired = destPt - pos;  // A vector pointing from the location to the target
 			d = ofDist3D(destPt.x, destPt.y, destPt.z, pos.x, pos.y, pos.z);
@@ -230,12 +242,13 @@ public:
 			
 		//fly around all crazy if home particle + have children
 			
-		} else if ( (bMagnifying || bOkToDeMagnify) && neighbors.size() > 0){
+		} else if ( (bMagnifying || bOkToDeMagnify) && index == 0){
 			
 			//steer
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
+			// force slowness unless on the way out
 			if (bOkToDeMagnify){
 				maxspeed = 5.0f;
 			}
@@ -251,7 +264,9 @@ public:
 			if (d > 10) {				
 				desired /= d; // Normalize desired
 				desired *= maxspeed;
-				if (d < 100){
+				
+				//slow down unless on the way out
+				if (d < 100 && !bOkToDeMagnify){
 					desired *= d/100.0f;
 				} 
 				// Steering = Desired minus Velocity
@@ -343,7 +358,7 @@ public:
 			};
 		};
 		
-		if (( pos.y < endPos.y || (index != 0 && neighbors[0]->bOkToDeMagnify) ) && !bOkToDeMagnify){
+		if (( pos.y < endPos.y /*|| (index != 0 && neighbors[0]->bOkToDeMagnify)*/ ) && !bOkToDeMagnify){
 			bMagnifying = false;
 			bOkToDeMagnify = true;
 			extrudeTimer = 0;
@@ -373,12 +388,12 @@ public:
 		//update position
 		
 		vel += acc;
-		if ((!bOkToDeMagnify || bSend) || index == 0){
+		//if ((!bOkToDeMagnify || bSend) || index == 0){
 			pos += vel;
-		} else {
+		/*} else {
 			pos = neighbors[index-1]->getLoc();
 			pos.y += neighbors[index-1]->getHeight();
-		}
+		}*/
 		acc = 0;	
 	}
 		
@@ -391,7 +406,7 @@ public:
 ***************************************************************/
 
 	
-	void draw(){ 
+	void draw(){
 		ofPushMatrix();{
 			if (index != 0){
 				ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
@@ -445,11 +460,12 @@ public:
 	ofxVec3f rotation, lastRotation, targetRotation;
 	int index;
 	
+	//position
+	ofxVec3f pos, vel, acc;
+	
 private:
 	bool bDebugMode;
 	
-	//position
-	ofxVec3f pos, vel, acc;
 	
 	//important storage vars!
 	string messageString;

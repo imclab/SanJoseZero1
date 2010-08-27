@@ -11,7 +11,7 @@ void testApp::setup(){
 	
 	//load settings from xml
 	ofxXmlSettings settings;
-	settings.loadFile("settings.xml");
+	settings.loadFile("settings/settings.xml");
 	settings.pushTag("settings");{
 		
 		//SETUP OSC
@@ -40,7 +40,7 @@ void testApp::setup(){
 		
 		particleManager.setTransformStart(transformStart);
 		particleManager.setTransformEnd(transformEnd);
-		
+				
 		//load column spacing
 		int numColumns = settings.getValue("columns:numColums",columns.getNumColumns());
 		float spacing = settings.getValue("columns:spacing", columns.getSpacing());
@@ -81,6 +81,19 @@ void testApp::setup(){
 	
 	//inital draw mode
 	drawMode = LAB_MODE_RENDER;
+		
+#ifdef FLUID_EFFECT_SYSTEM
+	effectsSystem.setup(&particleManager);
+#endif
+	
+	//setup view if not loaded via xml
+	if (!projection.bSettingsLoaded){
+		projection.addView(0,0,ofGetWidth(), ofGetHeight());
+	}
+	
+	//setup gui
+	setupGui();
+
 }
 
 //--------------------------------------------------------------
@@ -107,7 +120,15 @@ void testApp::update(){
 		}
 		
 		particleManager.update();
-	}
+#ifdef FLUID_EFFECT_SYSTEM
+		effectsSystem.update();
+#endif
+	} 
+	
+	//get values from gui
+	ofxLabGui * gui = projection.getGui();
+	particleManager.setMinScale(gui->getValueF("SCALE_MIN"));
+	particleManager.setMaxScale(gui->getValueF("SCALE_MAX"));
 	
 	bool bNewCalibration = false;
 	int numColumns = columns.getNumColumns();
@@ -145,6 +166,12 @@ void testApp::update(){
 void testApp::draw(){
 	ofSetColor(0xffffff);
 	//draw particles
+#ifdef FLUID_EFFECT_SYSTEM
+	effectsSystem.draw();
+#endif
+	
+	projection.pushView(0);
+	
 	glEnable(GL_DEPTH_TEST);
 //	glEnable(GL_CULL_FACE);
 	particleManager.draw();
@@ -152,12 +179,27 @@ void testApp::draw(){
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor( 255, 255, 255 );
 	
+	projection.popView();
+	ofEnableAlphaBlending();
+	
+	if ( drawMode == LAB_MODE_P_CALIBRATE ){
+		glDisable(GL_DEPTH_TEST);
+		ofEnableAlphaBlending();
+		ofSetColor(0,0,0,200);
+		ofRect(0, 0, ofGetWidth(), ofGetHeight());
+		ofSetColor(0xffffff);		
+		ofDisableAlphaBlending();
+		
+		//calibrate particle scale
+		particleManager.drawDebugParticles();
+	}
+	
+	projection.draw();
+	
 	if ( drawMode == LAB_MODE_CALIBRATE){
 		columns.draw();
 		particleManager.drawTransformDebug();
 		particleManager.drawTypes();
-	} else if ( drawMode == LAB_MODE_P_CALIBRATE ){
-		//calibrate particle scale
 	}
 }
 
@@ -168,12 +210,24 @@ void testApp::keyPressed  (int key){
 		drawMode++;
 		if (drawMode > NUM_DRAW_MODES-1){
 			drawMode = 0;
+			projection.setMode(0);
+		}
+		
+		if (drawMode >= 3){
+			projection.setMode(drawMode-2);
 		}
 		saveSettings();
+	} else if (key == 'd'){
+#ifdef FLUID_EFFECT_SYSTEM
+		effectsSystem.showSettings = !effectsSystem.showSettings;
+#endif
+	}
+	
+	if (drawMode != LAB_MODE_RENDER){
+		ofShowCursor();
 	}
 	
 	if (drawMode != LAB_MODE_P_CALIBRATE){
-		
 		if (key == '1'){
 			int ran = ofRandom(0, particleManager.getNumTypes());
 			particleManager.emitRandom(ran);
@@ -201,7 +255,9 @@ void testApp::keyPressed  (int key){
 			particleManager.emitRandom(ran+3);
 			particleManager.emitRandom(ran+4);
 		}
-	}
+	} else {
+		projection.drawGui(true);
+	};
 }
 
 //--------------------------------------------------------------
@@ -229,6 +285,9 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 	particleManager.windowResized(w,h);
+#ifdef FLUID_EFFECT_SYSTEM
+	effectsSystem.windowResized(w,h);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -246,7 +305,7 @@ void testApp::saveSettings(){
 	//transformEnd
 	
 	ofxXmlSettings settings;
-	settings.loadFile("settings.xml");
+	settings.loadFile("settings/settings.xml");
 	settings.pushTag("settings");{		
 		//transform start + end
 		settings.setValue("transform:start", particleManager.getTransformStart());
@@ -271,3 +330,16 @@ void testApp::saveSettings(){
 	settings.saveFile("settings.xml");
 };
 
+
+//--------------------------------------------------------------
+void testApp::setupGui(){
+	ofxLabGui * gui = projection.getGui();
+	guiTypePanel * panel = projection.addDefaultPanel("particles");
+	projection.addDefaultGroup("settings", true);
+	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
+	gui->addSlider("maximumScale", "SCALE_MAX", 10.0f, 1.0f, 30.0f, false);
+	projection.loadGuiSettings();
+	
+	gui->setPanelIndex("particles", 0);
+	gui->update();
+};

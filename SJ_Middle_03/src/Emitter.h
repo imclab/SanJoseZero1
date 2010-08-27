@@ -15,8 +15,6 @@
 #include "Columns.h"
 #include "ofxFBOTexture.h"
 
-#define EMITTER_TIME 500
-
 class ParticleEventArgs : public ofEventArgs {
 	public:
 		ofPoint loc;
@@ -28,6 +26,11 @@ class ParticleEventArgs : public ofEventArgs {
 class Emitter
 {
 public:
+	
+/***************************************************************
+	CONSTRUCTOR
+***************************************************************/
+	
 	Emitter(){
 		lastEmitted = lastGrouped = ofGetElapsedTimeMillis();	
 		particleGroupTolerance = 300;
@@ -37,10 +40,14 @@ public:
 		setTransformStart( ofGetHeight() *3./4.);
 		setTransformEnd( ofGetHeight() / 4. );		
 		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
+		setMinScale(3.0f);
+		setMaxScale(10.0f);
 	};
 
-		
-	//Memory management
+/***************************************************************
+	 UPDATE: GROUP PARTICLES, UPDATE POSITIONS, CLEAR DEAD BROS
+***************************************************************/
+	
 	void update(){
 		
 		//first, update all the particles emitted with their neighbors
@@ -51,6 +58,7 @@ public:
 		
 		for (int i=0; i<currentParticles.size(); i++){
 			negativeStackHeight += currentParticles[i]->getHeight();
+			currentParticles[i]->clearNeighbors();
 		}
 		
 		for (int i=0; i<currentParticles.size(); i++){
@@ -67,7 +75,6 @@ public:
 					//adjust its end position
 					currentParticles[i]->setEndPoint(endPoint.x, endPoint.y, endPoint.z);
 					//endPoint.y = -currentParticles[i]->getHeight();
-					cout<<endPoint.y<<endl;
 				}
 			};
 		};
@@ -106,25 +113,7 @@ public:
 		}
 	};
 	
-	void emit( int whichType, int index = 0, string data = ""){
-		BuildingType * type = types[whichType];
-		if (type->canEmit()){			
-			Particle* part = new Particle();
-			part->setLoc(type->getPosition().x, type->getPosition().y);			
-			part->setModel(type->getModel(index));
-			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
-			part->setMessageString(types[whichType]->getMessageString(index));
-			part->setData(data);
-			part->setTransformStart(transformStart);
-			part->setTransformEnd(transformEnd);
-			
-			particles.push_back(part);
-			currentParticles.push_back(part);
-			lastEmitted = ofGetElapsedTimeMillis();
-		}
-		cout <<"too soon!"<<endl;
-	}
-	
+
 	void draw(){
 		ofEnableAlphaBlending();
 		ofPushMatrix();{
@@ -156,7 +145,28 @@ public:
 	
 /***************************************************************
 	 EMIT
-***************************************************************/	
+***************************************************************/
+	
+	void emit( int whichType, int index = 0, string data = ""){
+		BuildingType * type = types[whichType];
+		if (type->canEmit()){			
+			Particle* part = new Particle();
+			part->setLoc(type->getPosition().x, type->getPosition().y);		
+			part->setTransformStart(transformStart);
+			part->setTransformEnd(transformEnd);
+			part->setMinScale(minScale);
+			part->setMaxScale(maxScale);
+			
+			part->setModel(type->getModel(index));
+			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
+			part->setMessageString(types[whichType]->getMessageString(index));
+			part->setData(data);
+			
+			particles.push_back(part);
+			currentParticles.push_back(part);
+			lastEmitted = ofGetElapsedTimeMillis();
+		}
+	}
 	
 	bool checkMessageString(string msg){
 		for (int i=0; i<types.size(); i++){
@@ -227,6 +237,26 @@ public:
 			particles[i]->setTransformEnd(transformEnd);
 		}
 	};	
+		
+	void setMinScale( float _minscale ){
+		minScale = _minscale;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMinScale(minScale);
+		};		
+	};
+	
+	void setMaxScale( float _maxscale ){
+		maxScale = _maxscale;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMaxScale(maxScale);
+		};		
+	};
+
+/***************************************************************
+	 TRANSFORM DEBUG
+***************************************************************/	
 	
 	void drawTransformDebug(){
 		if (bStartDragging)
@@ -241,9 +271,12 @@ public:
 		else 
 			ofSetColor(0xffffff);
 		ofDrawBitmapString("transform end", 10, transformEnd - 10);
-		ofLine(0, transformEnd, ofGetWidth(), transformEnd);
-		
+		ofLine(0, transformEnd, ofGetWidth(), transformEnd);		
 	};
+	
+/***************************************************************
+	 GET + SET CALIBRATION STUFF
+***************************************************************/	
 	
 	void mousePressedTransform( int x, int y ){
 		if (fabs(y - transformStart) < 5){
@@ -256,6 +289,10 @@ public:
 			};
 		};
 	};
+
+/***************************************************************
+	 MOUSE + WINDOW UTILS
+***************************************************************/	
 	
 	void mouseDragged( int x, int y ){
 		if (bStartDragging){
@@ -289,6 +326,10 @@ public:
 		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
 	}
 	
+/***************************************************************
+	 DRAW DEBUG 
+***************************************************************/	
+	
 	void drawTypes(){
 		for (int i=0; i<types.size(); i++){
 			ofSetColor(150,0,0);
@@ -296,6 +337,17 @@ public:
 			ofSetColor(0xffffff);
 			ofDrawBitmapString(types[i]->getName(), types[i]->getPosition().x, types[i]->getPosition().y-30);
 		};
+	};
+	
+	void drawDebugParticles(){
+		if (types.size() > 0){
+					
+			//little guy
+			types[0]->drawDebug(ofGetWidth()/2.0 - types[0]->getWidth(minScale)*2., ofGetHeight()/2.0f, minScale);
+			
+			//big guy
+			types[0]->drawDebug(ofGetWidth()/2.0 + types[0]->getWidth(maxScale)*2., ofGetHeight()/2.0f, maxScale);
+		}
 	};
 	
 /***************************************************************
@@ -323,6 +375,7 @@ private:
 	//calibration
 	float transformStart;
 	float transformEnd;
+	float minScale, maxScale;
 	
 	ofxFBOTexture trailsFBO;
 };

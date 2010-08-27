@@ -131,6 +131,9 @@ public:
 	
 	void setComplete( bool _bComplete ){
 		bComplete = _bComplete;
+		for (int i=0; i<stacks.size(); i++){
+			stacks[i]->setBuildingScale(1., 1.,1.);
+		}
 	}
 	
 	ofPoint rotation;
