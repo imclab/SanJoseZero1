@@ -7,8 +7,8 @@
             <messageString>/pluginplay/birdfeeder</messageString>
         </message>
         <position>
-            <x>39.000000</x>
-            <y>1046.000000</y>
+            <x>29.000000</x>
+            <y>861.000000</y>
         </position>
     </input>
     <input>
@@ -18,8 +18,8 @@
             <messageString>/pluginplay/flickr</messageString>
         </message>
         <position>
-            <x>266.000000</x>
-            <y>1049.000000</y>
+            <x>116.000000</x>
+            <y>860.000000</y>
         </position>
     </input>
     <input>
@@ -33,8 +33,8 @@
             <messageString>/pluginplay/foursquare/nearby</messageString>
         </message>
         <position>
-            <x>492.000000</x>
-            <y>1049.000000</y>
+            <x>209.000000</x>
+            <y>864.000000</y>
         </position>
     </input>
     <input>
@@ -124,8 +124,8 @@
             <messageString>/pluginplay/hopscotch_26</messageString>
         </message>
         <position>
-            <x>668.000000</x>
-            <y>1049.000000</y>
+            <x>383.000000</x>
+            <y>863.000000</y>
         </position>
     </input>
     <input>
@@ -135,8 +135,8 @@
             <messageString>/pluginplay/megaphone</messageString>
         </message>
         <position>
-            <x>839.000000</x>
-            <y>1049.000000</y>
+            <x>512.000000</x>
+            <y>859.000000</y>
         </position>
     </input>
     <input>
@@ -146,8 +146,8 @@
             <messageString>/pluginplay/picnictable</messageString>
         </message>
         <position>
-            <x>992.000000</x>
-            <y>1049.000000</y>
+            <x>667.000000</x>
+            <y>853.000000</y>
         </position>
     </input>
     <input>
@@ -157,8 +157,8 @@
             <messageString>/pluginplay/playground</messageString>
         </message>
         <position>
-            <x>1165.000000</x>
-            <y>1049.000000</y>
+            <x>758.000000</x>
+            <y>851.000000</y>
         </position>
     </input>
     <input>
@@ -176,8 +176,8 @@
             <messageString>/pluginplay/signal_02</messageString>
         </message>
         <position>
-            <x>1339.000000</x>
-            <y>1049.000000</y>
+            <x>857.000000</x>
+            <y>857.000000</y>
         </position>
     </input>
     <input>
@@ -187,8 +187,8 @@
             <messageString>/pluginplay/twitter</messageString>
         </message>
         <position>
-            <x>1471.000000</x>
-            <y>1049.000000</y>
+            <x>953.000000</x>
+            <y>857.000000</y>
         </position>
     </input>
     <osc>
@@ -205,8 +205,8 @@
         </sender>
     </osc>
     <transform>
-        <start>867.000000</start>
-        <end>367.000000</end>
+        <start>499.000000</start>
+        <end>197.000000</end>
     </transform>
     <columns>
         <numColums>5</numColums>

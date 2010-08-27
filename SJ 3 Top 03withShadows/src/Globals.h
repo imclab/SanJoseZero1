@@ -11,7 +11,7 @@
 
 #define SPEED 5
 #define EMITTER_TIME 500
-#define ROTATE_TIME 5000
+#define ROTATE_TIME 2000
 #define ROTATE_AMOUNT 8
 #define ROTATE_INCREMENT 1
 

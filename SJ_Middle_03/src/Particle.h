@@ -166,6 +166,7 @@ public:
 	void update(){
 		// Check to see if we are still alive
 		if (pos.y + getHeight()/2.0f < 0 && !bSend){
+			cout<<"send?"<<endl;
 			bSend = true;
 		}
 		

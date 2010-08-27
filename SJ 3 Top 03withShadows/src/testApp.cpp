@@ -131,11 +131,11 @@ void testApp::update(){
 	
 	
 	//LARS-temporary	
-	if (fCounter/ofGetFrameRate() > 0.2){		
+	/*if (fCounter/ofGetFrameRate() > 0.2){		
 		particleManager->emitRandom();
 		fCounter = 0.0;
 	}
-	fCounter++;
+	fCounter++;*/
 	//temporary, just to create blocks
 	
 	particleManager->update();

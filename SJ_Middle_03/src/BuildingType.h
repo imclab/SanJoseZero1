@@ -22,7 +22,7 @@ public:
 	
 	BuildingType(){		
 		lastEmitted = ofGetElapsedTimeMillis();
-		EMITTER_TIME = 500;
+		EMITTER_TIME = 0;
 		bPressed = false;
 	}
 	

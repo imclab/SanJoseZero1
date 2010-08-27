@@ -91,7 +91,14 @@ public:
 				ofNotifyEvent(particleLeft, particleArgs, this);
 				particles[i]->bSent = true;
 			} else if (!particles[i]->alive()){
-				cout<<"dead! "<<particles[i]->index<<endl;
+				if (!particles[i]->bSent){
+					particleArgs.loc.x = particles[i]->getLoc().x;
+					particleArgs.loc.y = particles[i]->getLoc().y;
+					particleArgs.address = particles[i]->getMessageString();
+					particleArgs.data = particles[i]->getData();
+					
+					ofNotifyEvent(particleLeft, particleArgs, this);
+				}				
 				particles.erase(particles.begin()+i);
 			}
 		}
