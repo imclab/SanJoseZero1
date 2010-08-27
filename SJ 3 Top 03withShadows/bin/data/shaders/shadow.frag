@@ -27,11 +27,11 @@ void main()
 	vec4 sCoord = ShadowCoord / ShadowCoord.w ;	
 	float shadowVal = 0.0;			
 	int i,j;	
-	vec2 o = vec2(mod((floor(sCoord.xy)), 2.0)) * 2.0;
 	
+	//shadowVal += lookup(sampStep * o * 0.5, sCoord);
 	for(i=-1; i<2;i++){
 		for(j=-1; j<2; j++){
-			vec2 offsetVal = sampStep * (vec2(i,j)+o);
+			vec2 offsetVal = sampStep * vec2(i,j);
 			shadowVal += lookup(offsetVal, sCoord);
 		}
 	}

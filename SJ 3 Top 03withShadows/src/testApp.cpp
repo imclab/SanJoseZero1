@@ -93,7 +93,8 @@ void testApp::setup(){
 	
 	//fbo
 	//fbo.allocate(1024, 1024, GL_RGBA, 4);
-	fbo.allocate(2048, 2048, true);//using older FBO version for the time being
+	//fbo.allocate(2048, 2048, true);//using older FBO version for the time being
+	fbo.allocate(1024, 1024, true);//using older FBO version for the time being
 	fbo.clear(1.0, 1.0, 1.0, 1.f);
 	
     glGenTextures(1, &depthTexture);
