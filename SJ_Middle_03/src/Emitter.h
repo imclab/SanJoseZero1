@@ -13,8 +13,7 @@
 #include "BuildingType.h"
 #include "Particle.h"
 #include "Columns.h"
-
-#define EMITTER_TIME 500
+#include "ofxFBOTexture.h"
 
 class ParticleEventArgs : public ofEventArgs {
 	public:
@@ -27,23 +26,28 @@ class ParticleEventArgs : public ofEventArgs {
 class Emitter
 {
 public:
+	
+/***************************************************************
+	CONSTRUCTOR
+***************************************************************/
+	
 	Emitter(){
-		lastEmitted = ofGetElapsedTimeMillis();	
-	};
-	
-	void addType( BuildingType * type ){
-		types.push_back(type);
-	};
-	
-	int getNumTypes(){
-		return types.size();
-	}
-	
-	void attachColumns( Columns * _columns){
-		columns = _columns;
-	};
+		lastEmitted = lastGrouped = ofGetElapsedTimeMillis();	
+		particleGroupTolerance = 300;
 		
-	//Memory management
+		//calibration stuff
+		bStartDragging = bEndDragging = false;
+		setTransformStart( ofGetHeight() *3./4.);
+		setTransformEnd( ofGetHeight() / 4. );		
+		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
+		setMinScale(3.0f);
+		setMaxScale(10.0f);
+	};
+
+/***************************************************************
+	 UPDATE: GROUP PARTICLES, UPDATE POSITIONS, CLEAR DEAD BROS
+***************************************************************/
+	
 	void update(){
 		
 		//first, update all the particles emitted with their neighbors
@@ -54,10 +58,12 @@ public:
 		
 		for (int i=0; i<currentParticles.size(); i++){
 			negativeStackHeight += currentParticles[i]->getHeight();
+			currentParticles[i]->clearNeighbors();
 		}
 		
 		for (int i=0; i<currentParticles.size(); i++){
 			if (i == 0){
+				negativeStackHeight += currentParticles[i]->getHeight();
 				endPoint = currentParticles[i]->getEndPoint();
 				endPoint.y = -negativeStackHeight;
 				//endPoint.z += ofRandom(-200,400);
@@ -68,39 +74,89 @@ public:
 					currentParticles[i]->addNeighbor(currentParticles[j]);
 					//adjust its end position
 					currentParticles[i]->setEndPoint(endPoint.x, endPoint.y, endPoint.z);
-					endPoint.y += currentParticles[i]->getHeight();
+					//endPoint.y = -currentParticles[i]->getHeight();
 				}
 			};
 		};
 		
 		// then clear out the array
-		currentParticles.clear();
-		
+		if (ofGetElapsedTimeMillis() - lastGrouped > particleGroupTolerance){
+			lastGrouped = ofGetElapsedTimeMillis();
+			currentParticles.clear();
+		}
 		//then do the normal update routine
 		
 		static ParticleEventArgs particleArgs;
-		for (int i=particles.size()-1; i>=0; i--){
+		for (int i=0; i<particles.size(); i++){
 			particles[i]->update();
-			
-			if (!particles[i]->alive()){
+		}
+		for (int i=particles.size()-1; i>=0; i--){			
+			if (particles[i]->send() && !particles[i]->bSent){
 				particleArgs.loc.x = particles[i]->getLoc().x;
 				particleArgs.loc.y = particles[i]->getLoc().y;
 				particleArgs.address = particles[i]->getMessageString();
 				particleArgs.data = particles[i]->getData();
 				
 				ofNotifyEvent(particleLeft, particleArgs, this);
-				//Particle toDelete = particles[i];
+				particles[i]->bSent = true;
+			} else if (!particles[i]->alive()){
+				if (!particles[i]->bSent){
+					particleArgs.loc.x = particles[i]->getLoc().x;
+					particleArgs.loc.y = particles[i]->getLoc().y;
+					particleArgs.address = particles[i]->getMessageString();
+					particleArgs.data = particles[i]->getData();
+					
+					ofNotifyEvent(particleLeft, particleArgs, this);
+				}				
 				particles.erase(particles.begin()+i);
-				//delete toDelete;
 			}
 		}
 	};
+	
+
+	void draw(){
+		ofEnableAlphaBlending();
+		ofPushMatrix();{
+			
+			ofSetColor(0xffffff);
+			/*glDisable(GL_DEPTH_TEST);
+			trailsFBO.draw(0, 0);
+			glEnable(GL_DEPTH_TEST);*/
+			
+			//ofTranslate(loc.x, loc.y);
+			for (int i=0; i<particles.size(); i++){
+				/*if (particles[i]->bMagnifying){
+					trailsFBO.swapIn();
+					glDisable(GL_DEPTH_TEST);
+					particles[i]->draw();
+					glEnable(GL_DEPTH_TEST);
+					trailsFBO.swapOut();
+				}*/
+				particles[i]->draw();
+			}
+			/*trailsFBO.begin();
+			ofSetColor(0,0,0,10);
+			glDisable(GL_DEPTH_TEST);
+			ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
+			trailsFBO.end();*/
+		} ofPopMatrix();
+		ofDisableAlphaBlending();
+	};
+	
+/***************************************************************
+	 EMIT
+***************************************************************/
 	
 	void emit( int whichType, int index = 0, string data = ""){
 		BuildingType * type = types[whichType];
 		if (type->canEmit()){			
 			Particle* part = new Particle();
-			part->setLoc(type->getPosition().x, ofGetHeight());			
+			part->setLoc(type->getPosition().x, type->getPosition().y);		
+			part->setTransformStart(transformStart);
+			part->setTransformEnd(transformEnd);
+			part->setMinScale(minScale);
+			part->setMaxScale(maxScale);
+			
 			part->setModel(type->getModel(index));
 			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
 			part->setMessageString(types[whichType]->getMessageString(index));
@@ -110,17 +166,7 @@ public:
 			currentParticles.push_back(part);
 			lastEmitted = ofGetElapsedTimeMillis();
 		}
-		cout <<"too soon!"<<endl;
 	}
-	
-	void draw(){
-		ofPushMatrix();{
-			//ofTranslate(loc.x, loc.y);
-			for (int i=0; i<particles.size(); i++){
-				particles[i]->draw();
-			}
-		} ofPopMatrix();
-	};
 	
 	bool checkMessageString(string msg){
 		for (int i=0; i<types.size(); i++){
@@ -146,21 +192,190 @@ public:
 		emit(which, index);
 	};
 	
-	void debug( int x, int y){
-		if (particles.size() > 0)
-			particles[0]->setLoc(x,y);
-	}
-	ofEvent<ParticleEventArgs> particleLeft;
+/***************************************************************
+	GET PARTICLES
+ ***************************************************************/	
 	
 	vector <Particle* > particles;
+	
+/***************************************************************
+	 GET + SET CALIBRATION STUFF
+***************************************************************/	
+	
+	bool bStartDragging, bEndDragging;
+	
+	void addType( BuildingType * type ){
+		types.push_back(type);
+	};
+	
+	int getNumTypes(){
+		return types.size();
+	}
+	
+	BuildingType * getType( int which ){
+		return types[which];
+	}
+	
+	float getTransformStart(){
+		return transformStart;
+	};
+	
+	void setTransformStart( float _start ){
+		transformStart = _start;
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setTransformStart(transformStart);
+		}
+	}
+	
+	float getTransformEnd(){
+		return transformEnd;
+	};
+	
+	void setTransformEnd( float _end ){
+		transformEnd = _end;		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setTransformEnd(transformEnd);
+		}
+	};	
+		
+	void setMinScale( float _minscale ){
+		minScale = _minscale;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMinScale(minScale);
+		};		
+	};
+	
+	void setMaxScale( float _maxscale ){
+		maxScale = _maxscale;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMaxScale(maxScale);
+		};		
+	};
+
+/***************************************************************
+	 TRANSFORM DEBUG
+***************************************************************/	
+	
+	void drawTransformDebug(){
+		if (bStartDragging)
+			ofSetColor(0xff0000);
+		else 
+			ofSetColor(0xffffff);
+		ofDrawBitmapString("transform start", 10, transformStart - 10);
+		ofLine(0, transformStart, ofGetWidth(), transformStart);
+		
+		if (bEndDragging)
+			ofSetColor(0xff0000);
+		else 
+			ofSetColor(0xffffff);
+		ofDrawBitmapString("transform end", 10, transformEnd - 10);
+		ofLine(0, transformEnd, ofGetWidth(), transformEnd);		
+	};
+	
+/***************************************************************
+	 GET + SET CALIBRATION STUFF
+***************************************************************/	
+	
+	void mousePressedTransform( int x, int y ){
+		if (fabs(y - transformStart) < 5){
+			bStartDragging = true;
+		} else if (fabs(y - transformEnd) < 5){
+			bEndDragging = true;
+		} else {
+			for (int i=0; i<types.size(); i++){
+				types[i]->pressed(x,y);
+			};
+		};
+	};
+
+/***************************************************************
+	 MOUSE + WINDOW UTILS
+***************************************************************/	
+	
+	void mouseDragged( int x, int y ){
+		if (bStartDragging){
+			if (y > transformEnd + 5)
+				transformStart = y;
+			else 
+				transformStart = transformEnd + 5;
+		} else if (bEndDragging){
+			if (y < transformStart - 5)
+				transformEnd = y;
+			else 
+				transformEnd = transformStart - 5;
+		} else {
+			for (int i=0; i<types.size(); i++){
+				if (types[i]->bPressed){
+					types[i]->setPosition(x,y);
+				}
+			}
+		};
+	};
+	
+	void mouseReleased(){
+		bStartDragging = bEndDragging = false;
+		for (int i=0; i<types.size(); i++){
+			types[i]->bPressed = false;
+		}
+		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
+	};
+	
+	void windowResized( int x, int y){
+		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
+	}
+	
+/***************************************************************
+	 DRAW DEBUG 
+***************************************************************/	
+	
+	void drawTypes(){
+		for (int i=0; i<types.size(); i++){
+			ofSetColor(150,0,0);
+			ofRect(types[i]->getPosition().x, types[i]->getPosition().y, 20, 20);
+			ofSetColor(0xffffff);
+			ofDrawBitmapString(types[i]->getName(), types[i]->getPosition().x, types[i]->getPosition().y-30);
+		};
+	};
+	
+	void drawDebugParticles(){
+		if (types.size() > 0){
+					
+			//little guy
+			types[0]->drawDebug(ofGetWidth()/2.0 - types[0]->getWidth(minScale)*2., ofGetHeight()/2.0f, minScale);
+			
+			//big guy
+			types[0]->drawDebug(ofGetWidth()/2.0 + types[0]->getWidth(maxScale)*2., ofGetHeight()/2.0f, maxScale);
+		}
+	};
+	
+/***************************************************************
+	GET + SET CALIBRATION STUFF
+***************************************************************/	
+	
+	void attachColumns( Columns * _columns){
+		columns = _columns;
+	};
+	
+	ofEvent<ParticleEventArgs> particleLeft;
 	
 private:
 	int lastEmitted;
 	Columns * columns;
-	vector <BuildingType *> types;
+	vector <BuildingType *> types;	
 	
 	//running vector of particles emitted on this frame
 	// NOTE: CHANGE THIS TO BE MORE FLEXIBLE (e.g. not emitted on the EXACT same frame...)
 	
+	int particleGroupTolerance;
+	int lastGrouped;
 	vector <Particle *> currentParticles;
+	
+	//calibration
+	float transformStart;
+	float transformEnd;
+	float minScale, maxScale;
+	
+	ofxFBOTexture trailsFBO;
 };

@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+# osx noise
+.DS_Store
+profile
+
+# xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+
+.svn
+
+=======
 *.mode1v3
 *.pbxuser
 build/
@@ -44,3 +57,4 @@ apps/*/*/Debug Linux
 apps/*/*/Release Linux
 apps/*/*/Debug Linux64
 apps/*/*/Release Linux64
+>>>>>>> 6c131f20d69561b001a1f7f0e4f9434ef3fd44a0

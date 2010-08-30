@@ -22,6 +22,8 @@ public:
 		rotateAround = 0;
 		rotate.x = 0;
 		//rotate = ofRandom(0, 360);
+		scale.z = .1;
+		scale.x = scale.y = 1.0f;
 	}
 	
 	string getData(){
@@ -95,6 +97,7 @@ public:
 	void draw(){ 
 		ofPushMatrix();{
 			ofTranslate(position.x, position.y, position.z);
+			ofScale(scale.x, scale.y, scale.z);
 			//ofTranslate(getHeight()/2.0, getHeight()/2.0, getHeight()/2.0);
 			
 			ofRotateX(rotate.x);
@@ -112,6 +115,7 @@ public:
 	bool alive(){ return bAlive; };
 	
 	ofPoint rotate;
+	ofPoint scale;
 	float rotateAround;
 	int index;
 private:
