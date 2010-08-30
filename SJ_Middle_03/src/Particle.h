@@ -9,6 +9,7 @@
 
 #pragma once
 #include "ofMain.h"
+#include "BuildingType.h"
 #include "ofx3DModelLoader.h"
 #include "ofxVectorMath.h"
 
@@ -22,24 +23,25 @@ public:
 	CONSTRUCTOR
 ***************************************************************/
 	
+	ofColor color;
+	
 	Particle(){
 		bAlive = true;
 		bSend = bSent = false;
 		
-		vel.x = 0;
-		vel.y = -5;
+		setMinSpeed(5.);
 		
-
+		vel.x = 0;
+		vel.y = -minSpeed;
+		
 		// Magnification
-		bOkToMagnify = true;
-		bOkToDeMagnify = false;
-		bMagnifying = false;
+		bLeaving = false;
+		bTransforming = false;
 		
 		frame = ofGetFrameNum();
 		scale.x = scale.y = 2.0f;
-		scale.z = .1;
+		scale.z = .01;
 		
-		setTweenTime(3000);
 		setTransformStart( ofGetHeight() * 3.0 / 4.0);
 		setTransformEnd( ofGetHeight() / 4.0);
 		
@@ -47,6 +49,14 @@ public:
 		minScale = 2.0f;
 		maxScale = 10.0f;
 		bDebugMode = false;
+		bUpdated = false;
+		bFoundNewColumn = false;
+		drawType = -1;
+		
+		color.r = ofRandom(0,255);
+		color.g = ofRandom(0,255);
+		color.b = ofRandom(0,255);
+		count = 0;
 	}
 	
 	~Particle() {
@@ -80,6 +90,10 @@ public:
 		endPoint.y = y;
 		endPoint.z = z;
 	}
+	
+	void setEndPointX( float x ){
+		endPoint.x = endPos.x = x;
+	};
 	
 	ofxVec3f getLoc(){
 		return pos;
@@ -136,15 +150,11 @@ public:
 	}
 	
 /***************************************************************
-	 START TWEEN(S)
+	 SET TARGET POINT(S)
 ***************************************************************/	
 		
 	ofPoint startPos, endPos;	
-	
-	void setTweenTime( int tweenTime ){
-		duration = tweenTime;
-	}
-	
+		
 	void setTransformStart( float _startPos){
 		startPos = _startPos;
 	}
@@ -152,6 +162,21 @@ public:
 	void setTransformEnd( float _endPos ){
 		endPos.y = _endPos;
 	}
+	
+	void setTargetPoint( float x, float y, float z ){
+		targetPoint.x = x;
+		targetPoint.y = y;
+		targetPoint.z = z;
+	};
+	
+	void setTargetPointX( float x ){
+		targetPoint.x = x;
+	};
+	
+	void setTargetPointY( float y ){
+		targetPoint.y = y;
+	};
+	
 	
 /***************************************************************
 	 NEIGHBORS
@@ -168,62 +193,64 @@ public:
 	void setIndex( int _index ){
 		index = _index;
 	}
-
+	
+	bool isMasterParticle(){
+		return index == 0 && neighbors.size() > 0;
+	}
+	
 /***************************************************************
-	UPDATE
+	 GET UPDATED POSITION OR VELOCITY
 ***************************************************************/
 	
-	void update(){
-		// Check to see if we are still alive
-		if (pos.y + getHeight()/2.0f < 0 && !bSend){
-			bSend = true;
-		}
-		
-		if (pos.y <= endPoint.y){
-			bAlive = false;
-			return;
-		} else if (index != 0){
-			if (!neighbors[0]->bAlive){
-				bAlive = false;
-				return;
-			}
-		}				
-		
-		ofxVec3f destPt;
-		
-		// are we past the threshold? + are we a follower particle?
-		
-		if (pos.y < startPos.y && !bMagnifying && !bOkToDeMagnify){
-			bMagnifying = true;
-			
-			targetPoint.x = ofRandom(0, ofGetWidth());
-			targetPoint.y = pos.y - 50;
-		}
+	//call getNextPoint(1) to get velocity
+	//getNextPoint() or getNextPoint(0) return position
+	
+	// NOTE: does not update vars, just returns what next ones will be
+	
+	ofxVec3f getNextPoint(int which = 0){
+		//localize variables to function
+		ofxVec3f destPt, nPos, nAcc, nVel;
+		nPos = pos;
+		nAcc = acc;
+		nVel = vel;
 		
 		// seek home particle if not particle #0
 		
-		if ( (bMagnifying || bOkToDeMagnify) && index != 0){
+		if ( (bTransforming || bLeaving) && index != 0){
 			
 			//steer
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
-			if (bOkToDeMagnify || (neighbors[0]->bOkToDeMagnify)){
+			if (bLeaving || (neighbors[0]->bLeaving)){
 				maxforce = 20.0f;
-				destPt = neighbors[index-1]->getLoc();
-				destPt.y += neighbors[index-1]->getHeight()/2.0f;
+				if ( neighbors[index-1]->bUpdated){
+					destPt = neighbors[index-1]->getLoc();
+					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				} else {
+					destPt = neighbors[index-1]->getNextPoint();
+					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				};
+				
 			} else {				
-				destPt = neighbors[index-1]->getLoc();
-				destPt.y += neighbors[index-1]->getHeight();
+				//destPt = neighbors[index-1]->getNextPoint();
+				if ( neighbors[index-1]->bUpdated){
+					destPt = neighbors[index-1]->getLoc();
+					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				} else {
+					destPt = neighbors[index-1]->getNextPoint();
+					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				};
+				
 				destPt.x -= neighbors[index-1]->getWidth();
 			}
 			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
 			float d;			
-						
-			desired = destPt - pos;  // A vector pointing from the location to the target
-			d = ofDist3D(destPt.x, destPt.y, destPt.z, pos.x, pos.y, pos.z);
+			
+			desired = destPt - nPos;  // A vector pointing from the location to the target
+			d = ofDist3D(destPt.x, destPt.y, destPt.z, nPos.x, nPos.y, nPos.z);
 			
 			// If the distance is greater than 0, calc steering (otherwise return zero vector)
 			if (d > 0) {				
@@ -231,57 +258,56 @@ public:
 				desired *= maxspeed;
 				if (d < 100) desired *= d/100.0f;
 				// Steering = Desired minus Velocity
-				steer = desired - vel;
+				steer = desired - nVel;
 				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
 				steer.y = ofClamp(steer.y, -maxforce, maxforce);
 				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
 			}
 			
-			acc += steer;			
-			rotation -= (rotation - neighbors[0]->rotation)/50.0f;
+			nAcc += steer;
 			
-		//fly around all crazy if home particle + have children
+			//fly around all crazy if home particle + have children
 			
-		} else if ( (bMagnifying || bOkToDeMagnify) && index == 0){
+		} else if ( (bTransforming || bLeaving) && index == 0){
 			
 			//steer
 			float maxspeed = 30.0f; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
 			// force slowness unless on the way out
-			if (bOkToDeMagnify){
-				maxspeed = 5.0f;
+			if (bLeaving){
+				maxspeed = minSpeed;
 			}
 			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
 			float d;
 			
-			desired = targetPoint - pos;  // A vector pointing from the location to the 
-			d = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, pos.x, pos.y, pos.z);
-				
+			desired = targetPoint - nPos;  // A vector pointing from the location to the 
+			d = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, nPos.x, nPos.y, nPos.z);
+			
 			// If the distance is greater than 0, calc steering (otherwise return zero vector)
 			if (d > 10) {				
 				desired /= d; // Normalize desired
 				desired *= maxspeed;
 				
 				//slow down unless on the way out
-				if (d < 100 && !bOkToDeMagnify){
+				if (d < 100 && !bLeaving){
 					desired *= d/100.0f;
 				} 
 				// Steering = Desired minus Velocity
-				steer = desired - vel;
+				steer = desired - nVel;
 				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
 				steer.y = ofClamp(steer.y, -maxforce, maxforce); 
 				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
-			} else if (!bOkToDeMagnify && !bSend) {
+			} else if (!bLeaving && !bSend) {
 				if (targetPoint.y == endPos.y){
 					targetPoint.x = endPoint.x;
 					targetPoint.y = endPoint.y;
 					targetPoint.z = 0;
 				} else {
 					targetPoint.x = ofRandom(0,ofGetWidth());
-					targetPoint.y = pos.y - ofRandom(50,250);
+					targetPoint.y = nPos.y - ofRandom(50,250);
 					targetPoint.z = ofRandom(-500,0);
 					
 					if (targetPoint.y < endPos.y){
@@ -291,28 +317,96 @@ public:
 					}
 				}
 			} /*else {
-				bAlive = false;
-			};*/
-			
-			ofxVec3f heading = vel.getNormalized();
-			rotation -= (rotation - heading*90.0f)/5.0f;
-			
-			acc += steer;
+			   bAlive = false;
+			   };*/
+						
+			nAcc += steer;
 		}
+		
+		nVel += nAcc;
+		//nPos += nVel;
+		if ((!bLeaving || bSend) || index == 0){
+			nPos += nVel;
+		} else {
+			nPos = destPt;
+		}
+		
+		//cheater variable
+		if (which == 0){
+			return nPos;
+		} else {
+			return nVel;
+		}
+	};
+
+/***************************************************************
+	UPDATE
+***************************************************************/
+	
+	void update(){
+		//store last value
+		prevRotation = rotation;
+		prevPos = pos;
+		
+		// Check to see if we are still alive
+		if (pos.y <= 0 && !bSend){
+			bSend = true;
+		}
+		
+		if (!bAlive) return;
+		
+		if (pos.y <= endPoint.y){
+			bAlive = false;
+						
+			return;
+		} else if (index == 0){
+			bool nAlive = false;
+			
+			for (int i=0; i<neighbors.size(); i++){
+				if (neighbors[i]->bAlive){
+					nAlive = true;
+				};
+			};
+			if (!nAlive && neighbors.size() > 0){
+				bAlive = false;
+				return;
+			}
+		}	
+		
+		// are we past the threshold? + are we a follower particle?
+		
+		if (pos.y < startPos.y && !bTransforming && !bLeaving){
+			bTransforming = true;
+			
+			targetPoint.x = ofRandom(0, ofGetWidth());
+			targetPoint.y = pos.y - 50;
+		}		
 		
 	//alter scale and rotation
 		
-		if (bMagnifying){
+		//rotatiom
+		if (bTransforming){
+			if (index == 0){
+				ofxVec3f heading = getNextPoint(1).getNormalized()*90.0f;
+				rotation -= (rotation - heading)/5.0f;
+			} else {
+				rotation -= (rotation - neighbors[0]->rotation)/50.0f;
+			}
+		}
+		
+		//new values
+		
+		if (bTransforming){
 			if (extrudeTimer < 10){
 				extrudeTimer++;
-				scale.z = ofLerp(.1, maxScale, extrudeTimer/10.);
+				scale.z = ofLerp(.01, maxScale, extrudeTimer/10.);
 				scale.x = ofLerp(minScale, maxScale, extrudeTimer/10.);
 				scale.y = ofLerp(minScale, maxScale, extrudeTimer/10.);
 			} else {
 				scale.x = maxScale;
 				scale.y = maxScale;
 				scale.z = maxScale;
-				//bMagnifying = false;
+				//bTransforming = false;
 			}
 			
 			if (rotation.x >= 360){
@@ -321,10 +415,12 @@ public:
 				rotation.x = rotation.y = rotation.z += 360;
 			}
 			
-		} else if (bOkToDeMagnify){
+		//scaling back to normal
+			
+		} else if (bLeaving){
 			if (extrudeTimer < 10){
 				extrudeTimer++;
-				scale.z = ofLerp(maxScale, .1, extrudeTimer/10.);
+				scale.z = ofLerp(maxScale, .01, extrudeTimer/10.);
 				scale.x = ofLerp(maxScale, minScale, extrudeTimer/10.);
 				scale.y = ofLerp(maxScale, minScale, extrudeTimer/10.);
 				
@@ -341,7 +437,7 @@ public:
 				
 			} else {
 				scale.x = scale.y = minScale;
-				scale.z = .1;
+				scale.z = .01;
 				rotation.x = targetRotation.x;
 				rotation.y = targetRotation.y;
 				rotation.z = targetRotation.z;
@@ -358,12 +454,14 @@ public:
 			};
 		};
 		
-		if (( pos.y < endPos.y /*|| (index != 0 && neighbors[0]->bOkToDeMagnify)*/ ) && !bOkToDeMagnify){
-			bMagnifying = false;
-			bOkToDeMagnify = true;
+		if (( pos.y < endPos.y /*|| (index != 0 && neighbors[0]->bLeaving)*/ ) && !bLeaving){
+			bTransforming = false;
+			bLeaving = true;
 			extrudeTimer = 0;
 			
 			lastRotation = rotation;
+			
+			//find the closest '0' rotation
 			
 			ofPoint rotateZero = 0.0f;
 			ofPoint rotate360 = ofPoint(360,360,360);
@@ -387,14 +485,19 @@ public:
 		
 		//update position
 		
-		vel += acc;
-		//if ((!bOkToDeMagnify || bSend) || index == 0){
-			pos += vel;
+		//vel += acc;
+		//pos += vel;
+				
+		vel = getNextPoint(1);
+		pos = getNextPoint();
+		
+		//if ((!bLeaving || bSend) || index == 0){
 		/*} else {
 			pos = neighbors[index-1]->getLoc();
 			pos.y += neighbors[index-1]->getHeight();
 		}*/
 		acc = 0;	
+		bUpdated = true;
 	}
 		
 	float ofDist3D(float x1, float y1, float z1, float x2, float y2, float z2 ) {
@@ -426,8 +529,6 @@ public:
 				ofRotateY( rotation.y );
 				ofRotateZ( rotation.z );
 			}
-			// Adjust rotation
-			//particle3D->setRotation(0,rotationCtr * rotationDirection,xRotateVec,yRotateVec,zRotateVec);
 			
 			if (bDebugMode){
 				ofSetColor(index*150,50,50);
@@ -438,10 +539,47 @@ public:
 			} else {
 				particle3D->setScale(scale.x,scale.y,scale.z);
 				particle3D->draw();
+				ofSetColor(index*150,50,50);
 			}
 		} ofPopMatrix();
+		bUpdated = false;
+		
+		//debug
 	};
 	
+	double count;
+	
+	void drawTrail( float rotate=0.0f){
+		ofPushMatrix();{
+			if (index != 0){
+				ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
+				ofRotateX(rotation.x);
+				ofRotateY(rotation.y);
+				ofRotateZ(rotation.z);
+				
+				//ofRotateX(rotation.x);
+				//ofRotateY(rotation.y);
+				//ofRotateZ(rotation.z);
+				ofTranslate(-neighbors[0]->getLoc().x, -neighbors[0]->getLoc().y, -neighbors[0]->getLoc().z);
+			} 
+			
+			ofTranslate(pos.x, pos.y, pos.z);
+			if (index == 0){
+				ofRotateX( rotation.x );
+				ofRotateY( rotation.y );
+				ofRotateZ( rotation.z );
+			}
+			
+			ofRotateZ(rotate);
+						
+			count +=.1;
+						
+			particle3D->setScale(scale.x/2.0f + sinf(count)*2.0f,scale.y/2.0f*2.0f+ sinf(count)*2.0f,scale.z/2.0f+ sinf(count)*2.0f);
+			ofSetColor(color.r, color.g, color.b);
+			particle3D->draw();
+			
+		} ofPopMatrix();
+	};
 
 	bool alive() {
 		return bAlive;
@@ -453,19 +591,78 @@ public:
 		return bSend;
 	}
 	
-	bool bMagnifying;
-	bool bOkToMagnify;
-	bool bOkToDeMagnify;
+	bool okToErase(){
+		bool good = true;
+		
+		for (int i=0; i<neighbors.size(); i++){
+			if (!neighbors[i]->bSent){
+				good = false;
+			};
+		};
+		
+		if (good){
+			if (index == 0){
+				for (int i=0; i<neighbors.size(); i++){
+					neighbors[i]->bAlive = false;
+				}
+			}
+		}
+		
+		if (!good && neighbors.size() > 0){
+			return false;
+		} else if (good || neighbors.size() == 0){
+			return true;
+		}
+		
+	};
+	
+/***************************************************************
+	 PUBLIC PROPS
+***************************************************************/
+	
+	// three steps: emitted, transforming, leaving
+	bool bTransforming;
+	bool bLeaving;
+	
+	// switches for checking + updating position
+	bool bUpdated;
+	bool bFoundNewColumn;
 	
 	ofxVec3f rotation, lastRotation, targetRotation;
 	int index;
 	
-	//position
+	//base particle vars
+	
 	ofxVec3f pos, vel, acc;
+	ofxVec3f prevPos, prevRotation;
+	
+	//type
+	
+	BuildingType * getType(){
+		return type;
+	}
+	
+	BuildingType * setType( BuildingType * _t ){
+		type = _t;
+	}
+	
+	//speed
+	
+	void setMinSpeed( float speed ){
+		minSpeed = speed;
+		
+		//if not doing anything yet, update base velocity
+		if (!bTransforming && !bLeaving){
+			vel.y = -minSpeed;
+		}
+	};
+	
+	int drawType;
 	
 private:
 	bool bDebugMode;
 	
+	BuildingType * type;
 	
 	//important storage vars!
 	string messageString;
@@ -477,7 +674,7 @@ private:
 	bool bAlive,bSend;
 	ofPoint scale;
 	float minScale, maxScale;
-	float rotateSpeed;
+	float minSpeed;
 	
 	//NEIGHBOR VARS:
 	int frame;
@@ -486,13 +683,7 @@ private:
 	//extruding
 	int extrudeTimer;
 	
-	// Magnification
-	
-	int rotationDirection;
-	bool bPre3D;	
-	
 	// 3D and Rotation
-	bool bIn3D;
 	ofx3DModelLoader* particle3D;
 	
 	// points to target

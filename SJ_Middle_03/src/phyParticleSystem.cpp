@@ -24,7 +24,7 @@ void phyParticleSystem::update()
 	
 	for(int i=0;i<emitter->particles.size();i++)
 	{
-		if(emitter->particles[i]->bMagnifying)
+		if(emitter->particles[i]->bTransforming)
 		{
 			for(int p=0;p<10;p++)
 			{

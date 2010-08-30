@@ -3,13 +3,19 @@
 
 
 #include "ofMain.h"
+#include "ofx3DUtils.h"
 #include "ofxOsc.h"
 #include "ofxXmlSettings.h"
 #include "Emitter.h"
 #include "BuildingType.h"
 #include "ofx3DModelLoader.h"
 #include "ofxLabProjectionTools.h"
+#include "ofxVectorMath.h"
 
+//particle effects
+#include "ParticleTrails.h"
+
+#define FLUID_EFFECT_SYSTEM
 #ifdef FLUID_EFFECT_SYSTEM
 #include "EffectsSystem.h"
 #endif
@@ -52,11 +58,17 @@ public:
 	int drawMode;
 	
 	ofxLabProjectionTools	projection;
-	
-	
+		
 #ifdef FLUID_EFFECT_SYSTEM
 	EffectsSystem			effectsSystem;
 #endif
+	
+	//lighting
+	ofxLight light1, light2;
+	ofxVec3f lightPos;
+	
+	//particle effects
+	ParticleTrails trails;
 	
 private:
 	bool			bDrawDebug;

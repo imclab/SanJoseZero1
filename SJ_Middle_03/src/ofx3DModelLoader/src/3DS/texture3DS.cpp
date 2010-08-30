@@ -10,7 +10,7 @@
 
 texture3DS::texture3DS(string filename, const int textureId){
 	
-    ofImage img;
+    //ofImage img;
     if( !img.loadImage(filename) ){
 		ofLog(OF_LOG_ERROR, "texture3DS ERROR:  Could not open %s", filename.c_str());
     }

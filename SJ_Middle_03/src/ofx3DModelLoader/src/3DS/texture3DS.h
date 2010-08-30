@@ -11,11 +11,13 @@ private:
     int m_format;
 
 public:
+	texture3DS(){};
 	texture3DS(std::string filename, const int textureId);
 
     int getWidth(){return m_width;}
     int getHeight(){return m_width;}
     int getBpp(){return m_bpp;}
+    ofImage img;
 
 };
 

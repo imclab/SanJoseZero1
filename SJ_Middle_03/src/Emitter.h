@@ -15,6 +15,8 @@
 #include "Columns.h"
 #include "ofxFBOTexture.h"
 
+#define NUM_DRAW_TYPES 2
+
 class ParticleEventArgs : public ofEventArgs {
 	public:
 		ofPoint loc;
@@ -39,7 +41,6 @@ public:
 		bStartDragging = bEndDragging = false;
 		setTransformStart( ofGetHeight() *3./4.);
 		setTransformEnd( ofGetHeight() / 4. );		
-		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
 		setMinScale(3.0f);
 		setMaxScale(10.0f);
 	};
@@ -89,6 +90,15 @@ public:
 		static ParticleEventArgs particleArgs;
 		for (int i=0; i<particles.size(); i++){
 			particles[i]->update();
+			
+			//find closest column again to limit more intense scale out
+			if (particles[i]->bLeaving && particles[i]->isMasterParticle() && !particles[i]->bFoundNewColumn){	
+				particles[i]->bFoundNewColumn = true;
+				particles[i]->setEndPointX(columns->getClosestColumn(particles[i]->getLoc().x).x);
+				particles[i]->setTargetPointX(columns->getClosestColumn(particles[i]->getLoc().x).x);
+				// you need to reset both the endpoint AND the target so it clicks into place then drifts offscreen
+			}
+			
 		}
 		for (int i=particles.size()-1; i>=0; i--){			
 			if (particles[i]->send() && !particles[i]->bSent){
@@ -96,7 +106,6 @@ public:
 				particleArgs.loc.y = particles[i]->getLoc().y;
 				particleArgs.address = particles[i]->getMessageString();
 				particleArgs.data = particles[i]->getData();
-				
 				ofNotifyEvent(particleLeft, particleArgs, this);
 				particles[i]->bSent = true;
 			} else if (!particles[i]->alive()){
@@ -105,40 +114,22 @@ public:
 					particleArgs.loc.y = particles[i]->getLoc().y;
 					particleArgs.address = particles[i]->getMessageString();
 					particleArgs.data = particles[i]->getData();
-					
 					ofNotifyEvent(particleLeft, particleArgs, this);
-				}				
-				particles.erase(particles.begin()+i);
+				}
+				if (particles[i]->okToErase()){
+					particles.erase(particles.begin()+i);
+				}
 			}
 		}
 	};
-	
 
 	void draw(){
 		ofEnableAlphaBlending();
 		ofPushMatrix();{
-			
-			ofSetColor(0xffffff);
-			/*glDisable(GL_DEPTH_TEST);
-			trailsFBO.draw(0, 0);
-			glEnable(GL_DEPTH_TEST);*/
-			
-			//ofTranslate(loc.x, loc.y);
+						
 			for (int i=0; i<particles.size(); i++){
-				/*if (particles[i]->bMagnifying){
-					trailsFBO.swapIn();
-					glDisable(GL_DEPTH_TEST);
-					particles[i]->draw();
-					glEnable(GL_DEPTH_TEST);
-					trailsFBO.swapOut();
-				}*/
 				particles[i]->draw();
 			}
-			/*trailsFBO.begin();
-			ofSetColor(0,0,0,10);
-			glDisable(GL_DEPTH_TEST);
-			ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
-			trailsFBO.end();*/
 		} ofPopMatrix();
 		ofDisableAlphaBlending();
 	};
@@ -158,9 +149,11 @@ public:
 			part->setMaxScale(maxScale);
 			
 			part->setModel(type->getModel(index));
+			part->setType(type);
 			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
 			part->setMessageString(types[whichType]->getMessageString(index));
 			part->setData(data);
+			part->drawType = (int) ofRandom(0, NUM_DRAW_TYPES);
 			
 			particles.push_back(part);
 			currentParticles.push_back(part);
@@ -319,12 +312,9 @@ public:
 		for (int i=0; i<types.size(); i++){
 			types[i]->bPressed = false;
 		}
-		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
+		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 	};
 	
-	void windowResized( int x, int y){
-		//trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
-	}
 	
 /***************************************************************
 	 DRAW DEBUG 
@@ -377,5 +367,4 @@ private:
 	float transformEnd;
 	float minScale, maxScale;
 	
-	ofxFBOTexture trailsFBO;
 };

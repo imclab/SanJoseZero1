@@ -97,6 +97,20 @@ void ofxLabGui::setDimensions(float width, float height){
 	}
 }
 
+//----------------------------------------------------------
+
+void ofxLabGui::setupOscSending( string host, int port ){
+	valueSender.setup(host, port);
+	bSendingOsc = true;
+};
+
+//----------------------------------------------------------
+
+void ofxLabGui::setupOscReceiving( int port ){
+	valueCatcher.setup(port);
+	bReceivingOsc = true;
+};
+
 //---------------------------------------------
 guiTypePanel * ofxLabGui::addPanel(string panelName, int numColumns, bool locked){
     guiTypePanel * panelPtr = new guiTypePanel();
@@ -1125,12 +1139,51 @@ void ofxLabGui::mouseDragged(float x, float y, int button){
     else if(!minimize){
         for(int i = 0; i < panels.size(); i++){
             if( i == selectedPanel ){
-
+				
+				bool updated = false;
+				
                 if(button){
-                    panels[i]->updateGui( x - prevMouse.x, y - prevMouse.y, false, true);
+                    updated = panels[i]->updateGui( x - prevMouse.x, y - prevMouse.y, false, true);
                 }else{
-                    panels[i]->updateGui( x - hitArea.x, y - hitArea.y, false, false);
+                    updated = panels[i]->updateGui( x - hitArea.x, y - hitArea.y, false, false);
                 }
+				if (updated && bSendingOsc){
+					
+					//send all update values in osc
+					
+					for (int k=0; k<panels[i]->lastUpdated.size(); k++){
+						if (panels[i]->lastUpdated[k]->lastUpdated.size() > 0){
+							for (int j=0; j<panels[i]->lastUpdated[k]->lastUpdated.size(); j++){
+								ofxOscMessage newValue;
+								newValue.setAddress(panels[i]->lastUpdated[k]->lastUpdated[j]->xmlName);
+								
+								if (panels[i]->lastUpdated[k]->lastUpdated[j]->dataType == SG_TYPE_STRING){
+									for (int l=0; l<panels[i]->lastUpdated[k]->lastUpdated[j]->value.getNumValues(); l++){
+										newValue.addStringArg(panels[i]->lastUpdated[k]->lastUpdated[j]->value.getValueS(l));
+									};
+								} else {
+									for (int l=0; l<panels[i]->lastUpdated[k]->lastUpdated[j]->value.getNumValues(); l++){
+										newValue.addFloatArg(panels[i]->lastUpdated[k]->lastUpdated[j]->value.getValueF(l));
+									};
+								}
+								valueSender.sendMessage(newValue);
+							};	
+						} else {							
+							ofxOscMessage newValue;
+							newValue.setAddress(panels[i]->lastUpdated[k]->xmlName);							
+							if (panels[i]->lastUpdated[k]->dataType == SG_TYPE_STRING){
+								for (int l=0; l<panels[i]->lastUpdated[k]->value.getNumValues(); l++){
+									newValue.addStringArg(panels[i]->lastUpdated[k]->value.getValueS(l));
+								};
+							} else {
+								for (int l=0; l<panels[i]->lastUpdated[k]->value.getNumValues(); l++){
+									newValue.addFloatArg(panels[i]->lastUpdated[k]->value.getValueF(l));
+								};
+							}
+							valueSender.sendMessage(newValue);
+						};
+					};					
+				}
             }
         }
     }
@@ -1183,6 +1236,28 @@ void ofxLabGui::keyReleased(int key)
 
 //-------------------------------
 void ofxLabGui::update(){
+	
+	if (bReceivingOsc){
+		while( valueCatcher.hasWaitingMessages() )
+		{
+			// get the next message
+			ofxOscMessage m;
+			valueCatcher.getNextMessage( &m );
+			
+			for (int i=0; i<m.getNumArgs(); i++){
+				if (m.getArgType(i) == OFXOSC_TYPE_STRING){
+					setValueS(m.getAddress(), m.getArgAsString(i));
+				} else if (m.getArgType(i) == OFXOSC_TYPE_FLOAT){
+					setValueF(m.getAddress(), m.getArgAsFloat(i));
+				} else if (m.getArgType(i) == OFXOSC_TYPE_INT32) {
+					setValueI(m.getAddress(), m.getArgAsInt32(i));
+				}
+			}
+			
+			cout<<"got message"<<m.getAddress()<<endl;
+		}
+	};
+	
     guiBaseObject::update();
 
     topBar           = ofRectangle(boundingBox.x, boundingBox.y, boundingBox.width, 20);

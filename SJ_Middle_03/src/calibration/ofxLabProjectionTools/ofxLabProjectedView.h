@@ -238,7 +238,7 @@ public:
 //----------------------------------------------------------------------------
 	
 	void beginDraw(){
-		texture.swapIn();
+		texture.begin();
 		texture.clear();
 		
 		ofPushMatrix();
@@ -251,7 +251,7 @@ public:
 	
 	void endDraw(){
 		ofPopMatrix();
-		texture.swapOut();
+		texture.end();
 		
 		for (int i=0; i<4; i++){
 			edges[i].render();			

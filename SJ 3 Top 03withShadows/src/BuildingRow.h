@@ -43,7 +43,7 @@ public:
 		
 		for (int i=0; i<NUMBER_OF_ROWS; i++){
 			Stack * s = new Stack(i);
-			s->setPosition(ROW_BUFFER + i*increment, 0);
+			s->setPosition(ROW_BUFFER + i*ROW_SPACING, 0);
 			stacks.push_back(s);
 		};
 	}

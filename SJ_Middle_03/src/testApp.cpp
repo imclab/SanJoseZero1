@@ -36,7 +36,9 @@ void testApp::setup(){
 		
 		//load transform start + end
 		float transformStart	= settings.getValue("transform:start", particleManager.getTransformStart());
-		float transformEnd		= settings.getValue("transform:end", particleManager.getTransformEnd());
+		float transformEnd		= settings.getValue("transform:end", 0);//particleManager.getTransformEnd());
+		
+		cout<<"transformerz "<<particleManager.getTransformEnd()<<":"<<transformEnd<<endl;
 		
 		particleManager.setTransformStart(transformStart);
 		particleManager.setTransformEnd(transformEnd);
@@ -81,10 +83,13 @@ void testApp::setup(){
 	
 	//inital draw mode
 	drawMode = LAB_MODE_RENDER;
-		
+	
+	//particle effects
+	trails.setup(&particleManager);
+	
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.setup(&particleManager);
-#endif
+#endif	
 	
 	//setup view if not loaded via xml
 	if (!projection.bSettingsLoaded){
@@ -93,7 +98,9 @@ void testApp::setup(){
 	
 	//setup gui
 	setupGui();
-
+	
+	//setup lights
+	//light1.pointLight(255,255,255,lightPos.x, lightPos.y, lightPos.z);
 }
 
 //--------------------------------------------------------------
@@ -123,7 +130,9 @@ void testApp::update(){
 #ifdef FLUID_EFFECT_SYSTEM
 		effectsSystem.update();
 #endif
+		trails.update();
 	} 
+	
 	
 	//get values from gui
 	ofxLabGui * gui = projection.getGui();
@@ -152,6 +161,11 @@ void testApp::update(){
 		} else if ( m.getAddress() == "/pluginplay/calibration/spacing"){
 			spacing = m.getArgAsFloat(0);
 			bNewCalibration = true;
+		} else if ( m.getAddress() == "/pluginplay/calibration/lightpos"){
+			lightPos.x = m.getArgAsFloat(0);
+			lightPos.y = m.getArgAsFloat(1);
+			lightPos.z = m.getArgAsFloat(2);
+			light1.position(lightPos.x, lightPos.y, lightPos.z);
 		}
 		saveSettings();
 	}
@@ -171,14 +185,20 @@ void testApp::draw(){
 #endif
 	
 	projection.pushView(0);
+	ofxLightsOff();
+	//ofxLightsOn();
 	
 	glEnable(GL_DEPTH_TEST);
 //	glEnable(GL_CULL_FACE);
+	
+	//draw particle effects
+	trails.draw();
+	
 	particleManager.draw();
 //	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor( 255, 255, 255 );
-	
+	//ofxLightsOff();
 	projection.popView();
 	ofEnableAlphaBlending();
 	
@@ -193,7 +213,6 @@ void testApp::draw(){
 		//calibrate particle scale
 		particleManager.drawDebugParticles();
 	}
-	
 	projection.draw();
 	
 	if ( drawMode == LAB_MODE_CALIBRATE){
@@ -284,7 +303,6 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-	particleManager.windowResized(w,h);
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.windowResized(w,h);
 #endif
@@ -327,7 +345,7 @@ void testApp::saveSettings(){
 		}
 		
 	} settings.popTag();	
-	settings.saveFile("settings.xml");
+	settings.saveFile("settings/settings.xml");	
 };
 
 
@@ -342,4 +360,5 @@ void testApp::setupGui(){
 	
 	gui->setPanelIndex("particles", 0);
 	gui->update();
+	gui->setupOscReceiving(3000);
 };

@@ -21,6 +21,8 @@ public:
 		index = 0;
 		rotateAround = 0;
 		rotate.x = 0;
+		scale.y = scale.x = scale.z = 1.0;
+		//scale.z = .01;
 		//rotate = ofRandom(0, 360);
 	}
 	
@@ -85,8 +87,6 @@ public:
 	
 	void update(){
 		position.y -= SPEED;
-		//rotate.x += SPEED * .5;
-		//rotate.y += SPEED * .5;
 		if (position.y - getHeight()/2 <= ceiling){
 			position.y = ceiling;
 			bAlive = false;
@@ -95,16 +95,10 @@ public:
 	void draw(){ 
 		ofPushMatrix();{
 			ofTranslate(position.x, position.y, position.z);
-			//ofTranslate(getHeight()/2.0, getHeight()/2.0, getHeight()/2.0);
-			
 			ofRotateX(rotate.x);
 			ofRotateY(rotate.y);
 			ofRotateZ(rotate.z);
-			
-			//ofTranslate(-getHeight()/2.0,  -getHeight()/2.0, -getHeight()/2.0);
-			//ofRotateX(5);
-			//ofRotateZ(5);
-			//ofRotateY(15);
+			ofScale(scale.x, scale.y, scale.z);
 			img->draw();			
 			
 		} ofPopMatrix();
@@ -115,6 +109,7 @@ public:
 	ofPoint rotate;
 	float rotateAround;
 	int index;
+	ofPoint scale;
 private:
 	ofPoint position;
 	string type;
