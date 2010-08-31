@@ -20,6 +20,14 @@ public:
     float	radius;
     float	alpha;
     float	mass;
+	float	min;
+	float	max;
+	
+	bool	bAlive;
+	
+	MSAParticle(){
+		bAlive = false;
+	}
 	
     void init(float x, float y);
     void update( const FluidSolver &solver, const Vec2f &windowSize, const Vec2f &invWindowSize );

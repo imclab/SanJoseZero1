@@ -42,6 +42,29 @@
                 <y>1047.000000</y>
             </point>
         </crop>
-        <overlays></overlays>
+        <overlays>
+            <overlay>
+                <position>
+                    <x>1272.000000</x>
+                    <y>648.000000</y>
+                </position>
+                <point>
+                    <x>0.000000</x>
+                    <y>0.000000</y>
+                </point>
+                <point>
+                    <x>0.000000</x>
+                    <y>0.000000</y>
+                </point>
+                <point>
+                    <x>0.000000</x>
+                    <y>0.000000</y>
+                </point>
+                <point>
+                    <x>0.000000</x>
+                    <y>0.000000</y>
+                </point>
+            </overlay>
+        </overlays>
     </view>
 </settings>

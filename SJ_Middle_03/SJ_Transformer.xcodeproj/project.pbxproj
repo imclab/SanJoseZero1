@@ -12,7 +12,7 @@
 		2E041EEA122C31FE0008C53E /* ofxLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E041EE6122C31FE0008C53E /* ofxLight.cpp */; };
 		2E04202C122C428A0008C53E /* EffectsSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042026122C428A0008C53E /* EffectsSystem.cpp */; };
 		2E04202D122C428A0008C53E /* MSAParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042028122C428A0008C53E /* MSAParticle.cpp */; };
-		2E04202E122C428A0008C53E /* MSAParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E04202A122C428A0008C53E /* MSAParticleSystem.cpp */; };
+		2E04202E122C428A0008C53E /* FluidParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E04202A122C428A0008C53E /* FluidParticleSystem.cpp */; };
 		2E0420A1122C42C20008C53E /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E04203E122C42C20008C53E /* Color.cpp */; };
 		2E0420A2122C42C20008C53E /* MSACoreGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042045122C42C20008C53E /* MSACoreGL.cpp */; };
 		2E0420A8122C42C20008C53E /* MSAFluidDrawerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042093122C42C20008C53E /* MSAFluidDrawerBase.cpp */; };
@@ -72,7 +72,7 @@
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
-		E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */; };
+		E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -142,8 +142,8 @@
 		2E042027122C428A0008C53E /* EffectsSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsSystem.h; sourceTree = "<group>"; };
 		2E042028122C428A0008C53E /* MSAParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAParticle.cpp; sourceTree = "<group>"; };
 		2E042029122C428A0008C53E /* MSAParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAParticle.h; sourceTree = "<group>"; };
-		2E04202A122C428A0008C53E /* MSAParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAParticleSystem.cpp; sourceTree = "<group>"; };
-		2E04202B122C428A0008C53E /* MSAParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAParticleSystem.h; sourceTree = "<group>"; };
+		2E04202A122C428A0008C53E /* FluidParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FluidParticleSystem.cpp; sourceTree = "<group>"; };
+		2E04202B122C428A0008C53E /* FluidParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluidParticleSystem.h; sourceTree = "<group>"; };
 		2E04203C122C42C20008C53E /* ChanTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanTraits.h; sourceTree = "<group>"; };
 		2E04203D122C42C20008C53E /* CinderMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderMath.h; sourceTree = "<group>"; };
 		2E04203E122C42C20008C53E /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
@@ -353,7 +353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */,
+				E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */,
 				E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */,
 				E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
@@ -416,8 +416,8 @@
 				2E042027122C428A0008C53E /* EffectsSystem.h */,
 				2E042028122C428A0008C53E /* MSAParticle.cpp */,
 				2E042029122C428A0008C53E /* MSAParticle.h */,
-				2E04202A122C428A0008C53E /* MSAParticleSystem.cpp */,
-				2E04202B122C428A0008C53E /* MSAParticleSystem.h */,
+				2E04202A122C428A0008C53E /* FluidParticleSystem.cpp */,
+				2E04202B122C428A0008C53E /* FluidParticleSystem.h */,
 			);
 			path = fluids;
 			sourceTree = "<group>";
@@ -1172,7 +1172,7 @@
 		E4C2421710CC549C004149E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */,
+				E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1300,10 +1300,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */ = {
+		E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworksDebug.a;
+			path = openFrameworksUniversal.a;
 			remoteRef = E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1361,7 +1361,7 @@
 				2E041EEA122C31FE0008C53E /* ofxLight.cpp in Sources */,
 				2E04202C122C428A0008C53E /* EffectsSystem.cpp in Sources */,
 				2E04202D122C428A0008C53E /* MSAParticle.cpp in Sources */,
-				2E04202E122C428A0008C53E /* MSAParticleSystem.cpp in Sources */,
+				2E04202E122C428A0008C53E /* FluidParticleSystem.cpp in Sources */,
 				2E0420A1122C42C20008C53E /* Color.cpp in Sources */,
 				2E0420A2122C42C20008C53E /* MSACoreGL.cpp in Sources */,
 				2E0420A8122C42C20008C53E /* MSAFluidDrawerBase.cpp in Sources */,

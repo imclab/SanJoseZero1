@@ -24,11 +24,11 @@ public:
 	
 	void setup( Emitter * _e ){
 		emitter = _e;
-	}	
+	}
 	
 	void update(){
 		trailsFBO.begin();
-		ofSetColor(0,0,0,15);
+		ofSetColor(0,0,0,5);
 		glDisable(GL_DEPTH_TEST);
 		ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
 		trailsFBO.end();

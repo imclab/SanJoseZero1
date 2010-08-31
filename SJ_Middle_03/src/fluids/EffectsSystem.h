@@ -2,7 +2,7 @@
 
 #include "MSAFluid.h"
 #include "MSATimer.h"
-#include "MSAParticleSystem.h"
+#include "FluidParticleSystem.h"
 
 #include "ofMain.h"
 
@@ -30,27 +30,29 @@ public:
 	void draw();
 	
 	void keyPressed  (int key);
-	void mouseMoved(int x, int y );
-	void mouseDragged(int x, int y, int button);
 	
-	void windowResized(int w, int h);
+	bool windowResized(int w, int h);
 	
 	void fadeToColor(float r, float g, float b, float speed);
-	void addToFluid(Vec2f pos, Vec2f vel, bool addColor, bool addForce);
+	void addToFluid(Vec2f pos, Vec2f vel, ofColor color, bool addColor, bool addForce);
 	
 	int					fluidCellsX;
 	bool				resizeFluid;
 	bool				drawFluid;
 	bool				drawParticles;
 	
+	float getWindowAspectRatio(){	
+		return window.x * 1.0f / window.y; 
+	};
+	
+	ofPoint loc, window;
+	
 	bool showSettings;
 	
 	MSA::FluidSolver	fluidSolver;
 	MSA::FluidDrawerGl	fluidDrawer;	
 	
-	MSAParticleSystem		particleSystem;
-	
-	MSA::Vec2f				pMouse;
+	FluidParticleSystem		particleSystem;
 	
 	Emitter * emitter;
 	

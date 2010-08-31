@@ -16,7 +16,7 @@
 #include "ParticleTrails.h"
 #include "phyParticleSystem.h"
 
-#define FLUID_EFFECT_SYSTEM
+//#define FLUID_EFFECT_SYSTEM
 #ifdef FLUID_EFFECT_SYSTEM
 #include "EffectsSystem.h"
 #endif

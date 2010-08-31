@@ -15,6 +15,7 @@ static const float MOMENTUM = 0.5f;
 static const float FLUID_FORCE = 0.6f;
 
 void MSAParticle::init(float x, float y) {
+	bAlive = true;
 	pos = Vec2f( x, y );
 	vel = Vec2f(0, 0);
 	radius = 5;
@@ -29,6 +30,16 @@ void MSAParticle::update( const FluidSolver &solver, const Vec2f &windowSize, co
 	
 	vel = solver.getVelocityAtPos( pos * invWindowSize ) * (mass * FLUID_FORCE ) * windowSize + vel * MOMENTUM;
 	pos += vel;	
+	
+	// don't bounce no more
+	
+	if (pos.y < min){//|| pos.y - vel.y < min){
+		alpha *= .75;
+	} else if (pos.y > max){// || pos.y - vel.y > min){
+		alpha *= .75;
+	};
+	
+	/*
 	
 	// bounce of edges
 	if( pos.x < 0 ) {
@@ -48,6 +59,8 @@ void MSAParticle::update( const FluidSolver &solver, const Vec2f &windowSize, co
 		pos.y = windowSize.y;
 		vel.y *= -1;
 	}
+	 */
+	 
 	
 	// hackish way to make MSAParticles glitter when the slow down a lot
 	if( vel.lengthSquared() < 1 ) {
@@ -55,7 +68,7 @@ void MSAParticle::update( const FluidSolver &solver, const Vec2f &windowSize, co
 	}
 	
 	// fade out a bit (and kill if alpha == 0);
-	alpha *= 0.999f;
+	alpha *= .8f;
 	if( alpha < 0.01f )
 		alpha = 0;
 }

@@ -47,15 +47,16 @@ public:
 		
 		extrudeTimer = 0;
 		minScale = 2.0f;
-		maxScale = 10.0f;
+		//maxScale = bMaxScale = 10.0f;
+		setMaxScale( 10.0f);
 		bDebugMode = false;
 		bUpdated = false;
 		bFoundNewColumn = false;
 		drawType = -1;
 		
-		color.r = ofRandom(0,255);
-		color.g = ofRandom(0,255);
-		color.b = ofRandom(0,255);
+		color.r = ofRandomuf()*255.;
+		color.g = ofRandomuf()*255.;
+		color.b = ofRandomuf()*255.;
 		count = 0;
 	}
 	
@@ -103,6 +104,10 @@ public:
 		return pos;
 	}
 	
+	ofxVec3f getRotatedLoc(){
+		return rotatedPos;
+	}
+	
 	ofxVec3f getEndPoint(){
 		return endPoint;
 	}
@@ -112,7 +117,9 @@ public:
 	}
 	
 	void setMaxScale( float mScale ){
-		maxScale = mScale;
+		if (bMaxScale == mScale) return;
+		bMaxScale = maxScale = mScale;
+		maxScale = mScale + ofRandomf()*5.;
 	}
 	
 	//frame
@@ -236,7 +243,7 @@ public:
 					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
 				};
 				
-			} else {				
+			} else {			
 				//destPt = neighbors[index-1]->getNextPoint();
 				if ( neighbors[index-1]->bUpdated){
 					destPt = neighbors[index-1]->getLoc();
@@ -312,7 +319,7 @@ public:
 				} else {
 					targetPoint.x = ofRandom(0,ofGetWidth());
 					targetPoint.y = nPos.y - ofRandom(50,250);
-					targetPoint.z = ofRandom(-500,0);
+					//targetPoint.z = ofRandom(-500,0);
 					
 					if (targetPoint.y < endPos.y){
 						targetPoint.x = endPoint.x;
@@ -334,7 +341,12 @@ public:
 		} else {
 			nPos = destPt;
 		}
-		
+		if (bTransforming){
+			if (nPos.y >startPos.y){
+				nPos.y = startPos.y;
+				nAcc.y *= .75;
+			}
+		}
 		//cheater variable
 		if (which == 0){
 			return nPos;
@@ -515,7 +527,10 @@ public:
 	
 	void draw(){
 		ofPushMatrix();{
+			rotatedPos = pos;
 			if (index != 0){
+				rotatedPos.rotate(1.0, neighbors[0]->getLoc(), rotation);
+				/*
 				ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
 				ofRotateX(rotation.x);
 				ofRotateY(rotation.y);
@@ -524,15 +539,15 @@ public:
 				//ofRotateX(rotation.x);
 				//ofRotateY(rotation.y);
 				//ofRotateZ(rotation.z);
-				ofTranslate(-neighbors[0]->getLoc().x, -neighbors[0]->getLoc().y, -neighbors[0]->getLoc().z);
+				ofTranslate(-neighbors[0]->getLoc().x, -neighbors[0]->getLoc().y, -neighbors[0]->getLoc().z);*/
 			} 
-			
-			ofTranslate(pos.x, pos.y, pos.z);
-			if (index == 0){
+			ofTranslate(rotatedPos.x, rotatedPos.y, rotatedPos.z);
+			//ofTranslate(pos.x, pos.y, pos.z);
+			//if (index == 0){
 				ofRotateX( rotation.x );
 				ofRotateY( rotation.y );
 				ofRotateZ( rotation.z );
-			}
+			//}
 			
 			if (bDebugMode){
 				ofSetColor(index*150,50,50);
@@ -555,19 +570,21 @@ public:
 	
 	void drawTrail( float rotate=0.0f){
 		ofPushMatrix();{
+			rotatedPos = pos;
 			if (index != 0){
-				ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
-				ofRotateX(rotation.x);
-				ofRotateY(rotation.y);
-				ofRotateZ(rotation.z);
-				
-				//ofRotateX(rotation.x);
-				//ofRotateY(rotation.y);
-				//ofRotateZ(rotation.z);
-				ofTranslate(-neighbors[0]->getLoc().x, -neighbors[0]->getLoc().y, -neighbors[0]->getLoc().z);
+				rotatedPos.rotate(1.0, neighbors[0]->getLoc(), rotation);
+				/*
+				 ofTranslate(neighbors[0]->getLoc().x, neighbors[0]->getLoc().y, neighbors[0]->getLoc().z);
+				 ofRotateX(rotation.x);
+				 ofRotateY(rotation.y);
+				 ofRotateZ(rotation.z);
+				 
+				 //ofRotateX(rotation.x);
+				 //ofRotateY(rotation.y);
+				 //ofRotateZ(rotation.z);
+				 ofTranslate(-neighbors[0]->getLoc().x, -neighbors[0]->getLoc().y, -neighbors[0]->getLoc().z);*/
 			} 
-			
-			ofTranslate(pos.x, pos.y, pos.z);
+			ofTranslate(rotatedPos.x, rotatedPos.y, rotatedPos.z);
 			if (index == 0){
 				ofRotateX( rotation.x );
 				ofRotateY( rotation.y );
@@ -637,7 +654,7 @@ public:
 	
 	//base particle vars
 	
-	ofxVec3f pos, vel, acc;
+	ofxVec3f pos, vel, acc, rotatedPos;
 	ofxVec3f prevPos, prevRotation;
 	
 	//type
@@ -677,7 +694,7 @@ private:
 	
 	bool bAlive,bSend;
 	ofPoint scale;
-	float minScale, maxScale;
+	float minScale, maxScale, bMaxScale;
 	float minSpeed;
 	
 	//NEIGHBOR VARS:

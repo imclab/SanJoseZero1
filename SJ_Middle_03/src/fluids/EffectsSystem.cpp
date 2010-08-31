@@ -11,11 +11,11 @@ void EffectsSystem::setup(Emitter * e) {
 	
 	// setup fluid stuff
 	fluidSolver.setup(100, 100);
-    fluidSolver.enableRGB(true).setFadeSpeed(0.09).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
+    fluidSolver.enableRGB(true).setFadeSpeed(0.03).setDeltaT(0.75).setVisc(0.00015).setColorDiffusion(0);
 	fluidDrawer.setup( &fluidSolver );
 	particleSystem.setFluidSolver( &fluidSolver );
 	
-	fluidCellsX			= 120;
+	fluidCellsX			= 100;
 	
 	drawFluid			= true;
 	drawParticles		= true;
@@ -41,12 +41,14 @@ void EffectsSystem::setup(Emitter * e) {
 #endif
 	
 	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)
-	pMouse = getWindowCenter();
 	resizeFluid			= true;
 	
 	ofEnableAlphaBlending();
 	ofSetBackgroundAuto(true);
 	showSettings=false;
+	loc.x = 0;
+	
+	particleSystem.setBuffer(emitter->getTransformEnd(), emitter->getTransformStart());
 }
 
 
@@ -57,7 +59,7 @@ void EffectsSystem::fadeToColor(float r, float g, float b, float speed) {
 
 
 // add force and dye to fluid, and create particles
-void EffectsSystem::addToFluid( Vec2f pos, Vec2f vel, bool addColor, bool addForce ) {
+void EffectsSystem::addToFluid( Vec2f pos, Vec2f vel, ofColor color, bool addColor, bool addForce ) {
     float speed = vel.x * vel.x  + vel.y * vel.y * getWindowAspectRatio() * getWindowAspectRatio();    // balance the x and y components of speed with the screen aspect ratio
     if(speed > 0) {
 		pos.x = constrain(pos.x, 0.0f, 1.0f);
@@ -69,14 +71,12 @@ void EffectsSystem::addToFluid( Vec2f pos, Vec2f vel, bool addColor, bool addFor
         int index = fluidSolver.getIndexForPos(pos);
 		
 		if(addColor) {
-			Color drawColor( CM_HSV, ( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
-			//			Color drawColor;
-			//			drawColor.setHSV(( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
+			Color drawColor( CM_RGB, color.r/255.0f, color.g/255.0f, color.b/255.0f );
 			
-			fluidSolver.addColorAtIndex(index, drawColor * colorMult);
+			fluidSolver.addColorAtIndex(index, drawColor * 2.0f);
 			
 			if( drawParticles )
-				particleSystem.addParticles( pos * Vec2f( getWindowSize() ), 10 );
+				particleSystem.addParticles( pos * Vec2f( getWindowSize() ), ofRandom(10,50) );
 		}
 		
 		if(addForce)
@@ -87,35 +87,25 @@ void EffectsSystem::addToFluid( Vec2f pos, Vec2f vel, bool addColor, bool addFor
 
 
 void EffectsSystem::update(){
+	
+	particleSystem.setBuffer(emitter->getTransformEnd(), emitter->getTransformStart());
+	/*if (windowResized( ofGetWidth(), emitter->getTransformStart() - emitter->getTransformEnd())){
+		resizeFluid = true;
+		loc.y = emitter->getTransformEnd();
+	}*/
+	
 	if(resizeFluid) 	{
 		fluidSolver.setSize(fluidCellsX, fluidCellsX / getWindowAspectRatio() );
 		fluidDrawer.setup(&fluidSolver);
 		resizeFluid = false;
 	}
 	
-#ifdef USE_TUIO
-	tuioClient.getMessage();
-	
-	// do finger stuff
-	list<ofxTuioCursor*>cursorList = tuioClient.getTuioCursors();
-	for(list<ofxTuioCursor*>::iterator it=cursorList.begin(); it != cursorList.end(); it++) {
-		ofxTuioCursor *tcur = (*it);
-        float vx = tcur->getXSpeed() * tuioCursorSpeedMult;
-        float vy = tcur->getYSpeed() * tuioCursorSpeedMult;
-        if(vx == 0 && vy == 0) {
-            vx = ofRandom(-tuioStationaryForce, tuioStationaryForce);
-            vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
-        }
-        addToFluid(tcur->getX(), tcur->getY(), vx, vy);
-    }
-#endif
-	
 	for(int i=0;i<emitter->particles.size();i++)
 	{
-		if (emitter->particles[i]->drawType == 0 && emitter->particles[i]->bTransforming) {
-			addToFluid( Vec2f( (ofRandomf()*emitter->particles[i]->getWidth()/2+ emitter->particles[i]->getLoc().x)/ofGetWidth(), 
-							  (ofRandomf()*emitter->particles[i]->getHeight()/2+emitter->particles[i]->getLoc().y)/ofGetHeight()), 
-					   Vec2f(emitter->particles[i]->vel.normalized().x/10.0f, emitter->particles[i]->vel.normalized().y/10.0f), true, true);
+		if (emitter->particles[i]->bTransforming) {
+			addToFluid( Vec2f( (ofRandomf()*emitter->particles[i]->getWidth()/2+ emitter->particles[i]->getRotatedLoc().x)/ofGetWidth(), 
+							  (ofRandomf()*emitter->particles[i]->getHeight()/2+(emitter->particles[i]->getRotatedLoc().y))/ofGetHeight()), 
+					   Vec2f(emitter->particles[i]->vel.normalized().x/30.0f, emitter->particles[i]->vel.normalized().y/30.0f), emitter->particles[i]->color, true, true);
 		}
 	}
 	
@@ -123,15 +113,19 @@ void EffectsSystem::update(){
 }
 
 void EffectsSystem::draw(){
-	if( drawFluid ) {
-		glColor3f(1, 1, 1);
-		fluidDrawer.draw(0, 0, getWindowWidth(), getWindowHeight());
-	} else {
-		if(getElapsedFrames()%5==0) fadeToColor( 0, 0, 0, 0.1f );
-	}
-	if( drawParticles )
-		particleSystem.updateAndDraw( drawFluid );
+	ofPushMatrix();{
+		if( drawFluid ) {
+			glColor3f(1, 1, 1);
+			fluidDrawer.draw(loc.x, loc.y, window.x, window.y);
+		} else {
+			if(getElapsedFrames()%5==0) fadeToColor( 0, 0, 0, 0.1f );
+		}
+		ofTranslate(loc.x, loc.y);
+		if( drawParticles )
+			particleSystem.updateAndDraw( drawFluid );
 		
+	} ofPopMatrix();
+	
 #ifdef USE_GUI 
 	if(showSettings)
 		gui.draw();
@@ -139,8 +133,10 @@ void EffectsSystem::draw(){
 }
 
 
-void EffectsSystem::windowResized(int w, int h) {
-	particleSystem.setWindowSize( Vec2f( w, h ) );
+bool EffectsSystem::windowResized(int w, int h) {
+	window.x = w;
+	window.y = h;
+	return particleSystem.setWindowSize( Vec2f( w, h ) );
 }
 
 
@@ -190,22 +186,3 @@ void EffectsSystem::keyPressed  (int key){
 			
     }
 }
-
-
-//--------------------------------------------------------------
-void EffectsSystem::mouseMoved(int x, int y ){
-	Vec2f eventPos = Vec2f(x, y);
-	Vec2f mouseNorm = Vec2f( eventPos) / getWindowSize();
-	Vec2f mouseVel = Vec2f( eventPos - pMouse ) / getWindowSize();
-	addToFluid( mouseNorm, mouseVel, true, true );
-	pMouse = eventPos;
-}
-
-void EffectsSystem::mouseDragged(int x, int y, int button) {
-	Vec2f eventPos = Vec2f(x, y);
-	Vec2f mouseNorm = Vec2f( eventPos ) / getWindowSize();
-	Vec2f mouseVel = Vec2f( eventPos - pMouse ) / getWindowSize();
-	addToFluid( mouseNorm, mouseVel, false, true );
-	pMouse = eventPos;
-}
-
