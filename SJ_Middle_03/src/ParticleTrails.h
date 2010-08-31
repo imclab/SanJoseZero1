@@ -33,16 +33,15 @@ public:
 		ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
 		trailsFBO.end();
 		ofSetColor(0xffffff);
-				
+		
+		glEnable(GL_DEPTH_TEST);
 		for (int i=0; i<emitter->particles.size(); i++){
 			if (emitter->particles[i]->bTransforming){// && emitter->particles[i]->drawType == 1){
-				trailsFBO.swapIn();
-				glDisable(GL_DEPTH_TEST);
+				trailsFBO.begin();
 				ofPushMatrix();
 				emitter->particles[i]->drawTrail();
 				ofPopMatrix();
-				glEnable(GL_DEPTH_TEST);
-				trailsFBO.swapOut();
+				trailsFBO.end();
 			}
 		}
 		ofSetColor(0xffffff);
@@ -53,6 +52,7 @@ public:
 		glDisable(GL_DEPTH_TEST);
 		trailsFBO.draw(0, 0);
 		glEnable(GL_DEPTH_TEST);
+		ofSetColor(255,255,255,255);
 	}
 	
 	void windowResized( ofResizeEventArgs & e ){

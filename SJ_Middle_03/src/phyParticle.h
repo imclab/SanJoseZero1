@@ -31,13 +31,13 @@ class phyParticle
         void draw();
 	
 		void bounceOffWalls();
-	
+		
+		ofColor color;
+		float mass;
 	
 		float damping;
 		float rot;
-	
-	int mass;
-	
+		
 	vector<ofPoint>trail;
 	
 	float rotChange;

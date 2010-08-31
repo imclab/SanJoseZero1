@@ -11,13 +11,13 @@ void EffectsSystem::setup(Emitter * e) {
 	
 	// setup fluid stuff
 	fluidSolver.setup(100, 100);
-    fluidSolver.enableRGB(false).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
+    fluidSolver.enableRGB(true).setFadeSpeed(0.09).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
 	fluidDrawer.setup( &fluidSolver );
 	particleSystem.setFluidSolver( &fluidSolver );
 	
 	fluidCellsX			= 120;
 	
-	drawFluid			= false;
+	drawFluid			= true;
 	drawParticles		= true;
 
 #ifdef USE_GUI 

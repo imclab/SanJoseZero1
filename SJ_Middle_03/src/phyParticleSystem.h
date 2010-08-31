@@ -12,6 +12,7 @@
 #include "Emitter.h"
 #include "phyParticle.h"
 #include "ShapeBatchRenderer.h"
+#include "ofxFBOTexture.h"
 
 class phyParticleSystem
 {
@@ -30,4 +31,5 @@ public:
 protected:
 	void drawParticles();
 	void cleanUpParticles();
+	ofxFBOTexture trails;
 };

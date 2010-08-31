@@ -44,6 +44,8 @@
 		9ABC52BE121351E100C41A05 /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC52B7121351E100C41A05 /* texture3DS.cpp */; };
 		9ABC52BF121351E100C41A05 /* ofx3dModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC52BB121351E100C41A05 /* ofx3dModelLoader.cpp */; };
 		A91604191225A81900B2B08C /* ShapeBatchRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91604131225A81900B2B08C /* ShapeBatchRenderer.cpp */; };
+		A97B8579122C9D78006CB83D /* phyParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97B8575122C9D78006CB83D /* phyParticle.cpp */; };
+		A97B857A122C9D78006CB83D /* phyParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97B8577122C9D78006CB83D /* phyParticleSystem.cpp */; };
 		C31CAF2E1227F93F007F4C20 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C31CAF271227F93F007F4C20 /* tinyxml.cpp */; };
 		C31CAF2F1227F93F007F4C20 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C31CAF291227F93F007F4C20 /* tinyxmlerror.cpp */; };
 		C31CAF301227F93F007F4C20 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C31CAF2A1227F93F007F4C20 /* tinyxmlparser.cpp */; };
@@ -70,7 +72,7 @@
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
-		E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */; };
+		E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -254,6 +256,11 @@
 		A91602421225697E00B2B08C /* BuildingType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingType.h; sourceTree = "<group>"; };
 		A91604131225A81900B2B08C /* ShapeBatchRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShapeBatchRenderer.cpp; sourceTree = "<group>"; };
 		A91604141225A81900B2B08C /* ShapeBatchRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeBatchRenderer.h; sourceTree = "<group>"; };
+		A97B8575122C9D78006CB83D /* phyParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = phyParticle.cpp; sourceTree = "<group>"; };
+		A97B8576122C9D78006CB83D /* phyParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = phyParticle.h; sourceTree = "<group>"; };
+		A97B8577122C9D78006CB83D /* phyParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = phyParticleSystem.cpp; sourceTree = "<group>"; };
+		A97B8578122C9D78006CB83D /* phyParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = phyParticleSystem.h; sourceTree = "<group>"; };
+		A97B85FC122CADCB006CB83D /* ParticleTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleTrails.h; sourceTree = "<group>"; };
 		C31CAF271227F93F007F4C20 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		C31CAF281227F93F007F4C20 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		C31CAF291227F93F007F4C20 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
@@ -346,7 +353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */,
+				E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */,
 				E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */,
 				E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
@@ -757,6 +764,11 @@
 		A91605B81225C03000B2B08C /* particleEffects */ = {
 			isa = PBXGroup;
 			children = (
+				A97B85FC122CADCB006CB83D /* ParticleTrails.h */,
+				A97B8575122C9D78006CB83D /* phyParticle.cpp */,
+				A97B8576122C9D78006CB83D /* phyParticle.h */,
+				A97B8577122C9D78006CB83D /* phyParticleSystem.cpp */,
+				A97B8578122C9D78006CB83D /* phyParticleSystem.h */,
 				2E042025122C428A0008C53E /* fluids */,
 			);
 			name = particleEffects;
@@ -1160,7 +1172,7 @@
 		E4C2421710CC549C004149E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */,
+				E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1288,10 +1300,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */ = {
+		E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworksUniversal.a;
+			path = openFrameworksDebug.a;
 			remoteRef = E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1368,6 +1380,8 @@
 				2E042113122C42DD0008C53E /* ofxSimpleGuiControl.cpp in Sources */,
 				2E042114122C42DD0008C53E /* ofxSimpleGuiPage.cpp in Sources */,
 				2E042115122C42DD0008C53E /* ofxSimpleGuiToo.cpp in Sources */,
+				A97B8579122C9D78006CB83D /* phyParticle.cpp in Sources */,
+				A97B857A122C9D78006CB83D /* phyParticleSystem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

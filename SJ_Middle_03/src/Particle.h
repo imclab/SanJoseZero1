@@ -95,6 +95,10 @@ public:
 		endPoint.x = endPos.x = x;
 	};
 	
+	ofxVec3f getVelocity(){
+		return vel;
+	}
+	
 	ofxVec3f getLoc(){
 		return pos;
 	}

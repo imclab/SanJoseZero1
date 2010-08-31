@@ -70,7 +70,7 @@ void MSAParticle::updateVertexArrays( bool drawingFluid, const Vec2f &invWindowS
 	posBuffer[vi++] = pos.y;
 	
 	int ci = i * 6;
-	if( !drawingFluid ) {
+	if( drawingFluid ) {
 		// if drawing fluid, draw lines as black & white
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;

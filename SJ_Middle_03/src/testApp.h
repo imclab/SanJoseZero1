@@ -14,6 +14,7 @@
 
 //particle effects
 #include "ParticleTrails.h"
+#include "phyParticleSystem.h"
 
 #define FLUID_EFFECT_SYSTEM
 #ifdef FLUID_EFFECT_SYSTEM
@@ -58,6 +59,7 @@ public:
 	int drawMode;
 	
 	ofxLabProjectionTools	projection;
+	//phyParticleSystem * system;
 		
 #ifdef FLUID_EFFECT_SYSTEM
 	EffectsSystem			effectsSystem;
