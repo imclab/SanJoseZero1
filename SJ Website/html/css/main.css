@@ -1,0 +1,17 @@
+.row
+{
+	height:5px;
+	padding:10px;
+	background-color:#333333;
+};
+
+.building
+{
+	float:left;
+}
+
+.stack
+{
+	float:left;
+	margin-right:20px;
+}

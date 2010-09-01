@@ -1,0 +1,10 @@
+<settings>
+<host>10.1.2.161</host>
+	<host>localhost</host>
+	<host>10.1.2.24</host>
+	<port>12345</port>
+	<lat>40.735844095042395</lat>
+	<long>-73.9904522895813</long>
+	<radius>15</radius>
+	<tags>newyork</tags>
+</settings>

@@ -1,0 +1,345 @@
+8
+
+dir
+0
+svn+ssh://svn.stefanix.net/home/noema/svn/openFrameworks/libs/libxml2/include/libxml
+svn+ssh://svn.stefanix.net/home/noema/svn/openFrameworks
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+xmlschemastypes.h
+file
+
+
+
+add
+
+nanohttp.h
+file
+
+
+
+add
+
+parser.h
+file
+
+
+
+add
+
+xmlwriter.h
+file
+
+
+
+add
+
+relaxng.h
+file
+
+
+
+add
+
+nanoftp.h
+file
+
+
+
+add
+
+xmlversion.h
+file
+
+
+
+add
+
+debugXML.h
+file
+
+
+
+add
+
+xpointer.h
+file
+
+
+
+add
+
+catalog.h
+file
+
+
+
+add
+
+SAX2.h
+file
+
+
+
+add
+
+xmlsave.h
+file
+
+
+
+add
+
+HTMLparser.h
+file
+
+
+
+add
+
+dict.h
+file
+
+
+
+add
+
+hash.h
+file
+
+
+
+add
+
+xmlexports.h
+file
+
+
+
+add
+
+encoding.h
+file
+
+
+
+add
+
+xmlmemory.h
+file
+
+
+
+add
+
+threads.h
+file
+
+
+
+add
+
+SAX.h
+file
+
+
+
+add
+
+xmlautomata.h
+file
+
+
+
+add
+
+valid.h
+file
+
+
+
+add
+
+uri.h
+file
+
+
+
+add
+
+tree.h
+file
+
+
+
+add
+
+schematron.h
+file
+
+
+
+add
+
+schemasInternals.h
+file
+
+
+
+add
+
+xmlschemas.h
+file
+
+
+
+add
+
+xpathInternals.h
+file
+
+
+
+add
+
+c14n.h
+file
+
+
+
+add
+
+xmlmodule.h
+file
+
+
+
+add
+
+xmlunicode.h
+file
+
+
+
+add
+
+xmlerror.h
+file
+
+
+
+add
+
+chvalid.h
+file
+
+
+
+add
+
+xinclude.h
+file
+
+
+
+add
+
+list.h
+file
+
+
+
+add
+
+xmlregexp.h
+file
+
+
+
+add
+
+parserInternals.h
+file
+
+
+
+add
+
+pattern.h
+file
+
+
+
+add
+
+globals.h
+file
+
+
+
+add
+
+xmlreader.h
+file
+
+
+
+add
+
+DOCBparser.h
+file
+
+
+
+add
+
+entities.h
+file
+
+
+
+add
+
+HTMLtree.h
+file
+
+
+
+add
+
+xpath.h
+file
+
+
+
+add
+
+xlink.h
+file
+
+
+
+add
+
+xmlstring.h
+file
+
+
+
+add
+
+xmlIO.h
+file
+
+
+
+add
+
