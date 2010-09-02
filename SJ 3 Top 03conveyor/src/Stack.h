@@ -64,9 +64,9 @@ public:
 			//ofTranslate(0, buildings[0]->getWidth(), 0);
 			ofTranslate(0.0, -width, 0.0);
 			for (int i=0; i<buildings.size(); i++){
-				//ofPushMatrix();{ //LARS//
+				ofPushMatrix();{ //LARS//
 					buildings[i]->draw();
-				//} ofPopMatrix(); //LARS//
+				} ofPopMatrix(); //LARS//
 			};
 		} ofPopMatrix();
 	};

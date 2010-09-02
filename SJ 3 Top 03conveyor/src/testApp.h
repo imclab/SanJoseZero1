@@ -44,6 +44,7 @@ class testApp : public ofBaseApp{
 	void drawConveyorMesh();
 	void moveConveyorY(float dist);
 	void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
+	void moveCurveX(int crvIndex, float xPos);
 
 	
 		Emitter * particleManager;

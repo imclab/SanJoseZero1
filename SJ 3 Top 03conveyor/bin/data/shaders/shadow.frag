@@ -21,7 +21,7 @@ float remap(float value, float oldMin, float oldMax, float newMin, float newMax)
 void main()
 {	
 	vec4 color = texture2D(intex, gl_TexCoord[0].st);  vec4(1.0,1.0,1.0, 1.0);
-	float shadowColor = 0.40;		
+	float shadowColor = 0.150;		
 	
 	//shadow			
 	vec4 sCoord = ShadowCoord / ShadowCoord.w ;	
@@ -44,6 +44,7 @@ void main()
 	color.xyz *= min(max(0.25,facRat), shadowVal);	
 	
 				
+	//gl_FragColor = vec4(normal*.5+.5, 1.0); // color;
 	gl_FragColor = color;
 }
 
