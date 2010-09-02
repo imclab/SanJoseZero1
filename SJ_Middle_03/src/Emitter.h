@@ -151,9 +151,10 @@ public:
 			part->setModel(type->getModel(index));
 			part->setType(type);
 			part->setEndPoint(columns->getClosestColumn(type->getPosition().x).x, columns->getClosestColumn(type->getPosition().x).y);
-			part->setMessageString(types[whichType]->getMessageString(index));
+			part->setMessageString(type->getMessageString(index));
 			part->setData(data);
 			part->drawType = (int) ofRandom(0, NUM_DRAW_TYPES);
+			part->setColor(type->getColor(index));
 			
 			particles.push_back(part);
 			currentParticles.push_back(part);
@@ -245,6 +246,10 @@ public:
 		for (int i=0; i<particles.size(); i++){
 			particles[i]->setMaxScale(maxScale);
 		};		
+	};
+	
+	void setGroupingTolerance( int _grouping ){
+		particleGroupTolerance = _grouping;
 	};
 
 /***************************************************************

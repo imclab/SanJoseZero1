@@ -605,6 +605,7 @@ void ofxLabGui::setValueB(string xmlName, bool value,  int whichParam){
         if( guiObjects[i]->xmlName == xmlName){
             if( whichParam >= 0  ){
                 guiObjects[i]->value.setValue(value, whichParam);
+				guiObjects[i]->update();
                 return;
             }
         }
@@ -617,6 +618,7 @@ void ofxLabGui::setValueI(string xmlName, int value,  int whichParam){
         if( guiObjects[i]->xmlName == xmlName){
             if( whichParam >= 0  ){
                 guiObjects[i]->value.setValue(value, whichParam);
+				guiObjects[i]->update();
                 return;
             }
         }
@@ -629,6 +631,7 @@ void ofxLabGui::setValueF(string xmlName, float value,  int whichParam){
         if( guiObjects[i]->xmlName == xmlName){
             if( whichParam >= 0  ){
                 guiObjects[i]->value.setValue(value, whichParam);
+				guiObjects[i]->update();
                 return;
             }
         }
@@ -641,6 +644,7 @@ void ofxLabGui::setValueS(string xmlName, string value,  int whichParam){
         if( guiObjects[i]->xmlName == xmlName){
             if( whichParam >= 0  ){
                 guiObjects[i]->value.setValueS(value, whichParam);
+				guiObjects[i]->update();
                 return;
             }
         }

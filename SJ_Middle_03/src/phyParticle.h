@@ -6,15 +6,16 @@
 class phyParticle
 {
     public:
-        ofxVec2f pos;
-        ofxVec2f vel;
-        ofxVec2f frc;  
+        ofxVec3f pos;
+        ofxVec3f vel;
+        ofxVec3f frc;  
 			
         phyParticle();
 		virtual ~phyParticle(){};
 
         void resetForce();
 		void addForce(float x, float y);
+		void addForce(float x, float y, float z);
 		void addRepulsionForce(float x, float y, float radius, float scale);
 		void addAttractionForce(float x, float y, float radius, float scale);
 		
@@ -26,7 +27,7 @@ class phyParticle
 		
 		void addDampingForce();
         
-		void setInitialCondition(float px, float py, float vx, float vy);
+		void setInitialCondition(float px, float py, float pz, float vx, float vy, float vz=0);
         void update();
         void draw();
 	
@@ -37,6 +38,7 @@ class phyParticle
 	
 		float damping;
 		float rot;
+		bool bAlive;
 		
 	vector<ofPoint>trail;
 	

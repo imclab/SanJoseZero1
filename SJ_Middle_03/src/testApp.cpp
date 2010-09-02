@@ -63,6 +63,7 @@ void testApp::setup(){
 			for (int j=0; j<settings.getNumTags("message"); j++){
 				settings.pushTag("message", j);
 					type->addMessageString(settings.getValue("messageString", ""));
+					type->addColor(settings.getValue("color:r",150), settings.getValue("color:g",150), settings.getValue("color:b",150));
 					type->loadModel(ofToDataPath(settings.getValue("image", "")), 4.0f);
 				settings.popTag();
 			}
@@ -86,7 +87,7 @@ void testApp::setup(){
 	
 	//particle effects
 	trails.setup(&particleManager);
-	//system = new phyParticleSystem( &particleManager );
+	system = new phyParticleSystem( &particleManager );
 	
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.setup(&particleManager);
@@ -101,7 +102,44 @@ void testApp::setup(){
 	setupGui();
 	
 	//setup lights
-	//light1.pointLight(255,255,255,lightPos.x, lightPos.y, lightPos.z);
+	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
+	ofxMaterialShininess(30); //how concentrated the reflexion will be (between 0 and 128
+	
+	//each light will emit white reflexions
+	//light1.ambient(50,50,50);
+	//light1.diffuse(255, 255, 255);
+	//light2.specular(255, 255, 255);
+	//light3.specular(255, 255, 255);
+	
+	float L1DirectionX = .5;
+	float L1DirectionY = 1;
+	float L1DirectionZ = 0;
+	
+	light1.directionalLight(255, 255, 255, L1DirectionX, L1DirectionY, L1DirectionZ);
+	
+	//light2
+	float L2ConeAngle = 90;
+	float L2Concentration = 60;
+	float L2PosX = ofGetWidth()/2.0f;
+	float L2PosY = 0;
+	float L2PosZ = 500;
+	float L2DirectionX = 0;
+	float L2DirectionY = 0;
+	float L2DirectionZ = 1;
+	
+	
+	light2.spotLight(255, 255, 255, 
+					 L2PosX, L2PosY, L2PosZ, 
+					 L2DirectionX, L2DirectionY, L2DirectionZ,
+					 L2ConeAngle,
+					 L2Concentration);
+	
+	//light3
+	float L3PosX = ofGetWidth()/2.0;
+	float L3PosY = 0;
+	float L3PosZ = 500;
+	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
+	ofHideCursor();
 }
 
 //--------------------------------------------------------------
@@ -132,7 +170,7 @@ void testApp::update(){
 		effectsSystem.update();
 #endif
 		trails.update();
-		//system->update();
+		system->update();
 	} 
 	
 	
@@ -184,18 +222,22 @@ void testApp::draw(){
 	
 	ofxLightsOff();
 #ifdef FLUID_EFFECT_SYSTEM
-	glDisable(GL_DEPTH_TEST);
 	effectsSystem.draw();
 #endif
 	projection.pushView(0);
 	//draw particles
-	//ofxLightsOn();
 //	glEnable(GL_CULL_FACE);
 	
 	//draw particle effects
+	glDisable(GL_DEPTH_TEST);
+	ofSetColor(0xffffff);	
 	trails.draw();
-	//system->draw();
-	
+	ofxLightsOn();
+	glEnable(GL_DEPTH_TEST);
+	ofSetColor(0xffffff);	
+	system->draw();
+	ofSetColor(0xffffff);
+	ofxLightsOff();
 	glEnable(GL_DEPTH_TEST);
 	
 	particleManager.draw();
@@ -258,25 +300,33 @@ void testApp::keyPressed  (int key){
 		} else if (key == '2'){		
 			int ran = ofRandom(0, particleManager.getNumTypes()-1);
 			particleManager.emitRandom(ran);
-			particleManager.emitRandom(ran+1);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
 		} else if (key == '3'){		
-			int ran = ofRandom(0, particleManager.getNumTypes()-2);
+			int ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);ran = ofRandom(0, particleManager.getNumTypes());
 			particleManager.emitRandom(ran);
-			particleManager.emitRandom(ran+1);
-			particleManager.emitRandom(ran+2);
 		}else if (key == '4'){		
-			int ran = ofRandom(0, particleManager.getNumTypes()-3);
+			int ran = ofRandom(0, particleManager.getNumTypes());
 			particleManager.emitRandom(ran);
-			particleManager.emitRandom(ran+1);
-			particleManager.emitRandom(ran+2);
-			particleManager.emitRandom(ran+3);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
 		}else if (key == '5'){		
-			int ran = ofRandom(0, particleManager.getNumTypes()-4);
+			int ran = ofRandom(0, particleManager.getNumTypes());
 			particleManager.emitRandom(ran);
-			particleManager.emitRandom(ran+1);
-			particleManager.emitRandom(ran+2);
-			particleManager.emitRandom(ran+3);
-			particleManager.emitRandom(ran+4);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
+			ran = ofRandom(0, particleManager.getNumTypes());
+			particleManager.emitRandom(ran);
 		}
 	} else {
 		projection.drawGui(true);
@@ -360,6 +410,7 @@ void testApp::setupGui(){
 	projection.addDefaultGroup("settings", true);
 	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
 	gui->addSlider("maximumScale", "SCALE_MAX", 10.0f, 1.0f, 30.0f, false);
+	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 2000, false);
 	projection.loadGuiSettings();
 	
 	gui->setPanelIndex("particles", 0);

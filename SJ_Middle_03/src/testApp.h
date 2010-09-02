@@ -59,14 +59,17 @@ public:
 	int drawMode;
 	
 	ofxLabProjectionTools	projection;
-	//phyParticleSystem * system;
+	phyParticleSystem * system;
 		
 #ifdef FLUID_EFFECT_SYSTEM
 	EffectsSystem			effectsSystem;
 #endif
 	
 	//lighting
-	ofxLight light1, light2;
+	ofxLight light1; //this will be a directional light
+	ofxLight light2; //this one a spot light
+	ofxLight light3; //and this one a point light
+	
 	ofxVec3f lightPos;
 	
 	//particle effects

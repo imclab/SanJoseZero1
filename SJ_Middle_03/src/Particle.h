@@ -24,10 +24,11 @@ public:
 ***************************************************************/
 	
 	ofColor color;
+	bool bExploded;
 	
 	Particle(){
 		bAlive = true;
-		bSend = bSent = false;
+		bSend = bSent = bExploded = false;
 		
 		setMinSpeed(5.);
 		
@@ -96,6 +97,10 @@ public:
 		endPoint.x = endPos.x = x;
 	};
 	
+	ofxVec3f dampenVelocity ( float amt ){
+		vel *= amt;
+	}
+	
 	ofxVec3f getVelocity(){
 		return vel;
 	}
@@ -120,6 +125,11 @@ public:
 		if (bMaxScale == mScale) return;
 		bMaxScale = maxScale = mScale;
 		maxScale = mScale + ofRandomf()*5.;
+		if (neighbors.size() > 8){
+			maxScale /= 2.0f;
+		} else if (neighbors.size() > 4){
+			maxScale *= 1.5f;
+		}
 	}
 	
 	//frame
@@ -148,6 +158,17 @@ public:
 		return data;
 	}
 	
+	//color 
+	void setColor(ofColor _color){
+		color = _color;
+	}
+	
+	void setColor ( float r, float g, float b ){
+		color.r = r;
+		color.g = g;
+		color.b = b;
+	}
+	
 	//dimensions
 	
 	float getHeight(){
@@ -168,6 +189,7 @@ public:
 		
 	void setTransformStart( float _startPos){
 		startPos = _startPos;
+		startPos.y += ofRandom(-50.f, 200.f);
 	}
 	
 	void setTransformEnd( float _endPos ){
@@ -225,7 +247,7 @@ public:
 		nAcc = acc;
 		nVel = vel;
 		
-		// seek home particle if not particle #0
+		// seek home particle if not particle (index=0)
 		
 		if ( (bTransforming || bLeaving) && index != 0){
 			
@@ -256,6 +278,9 @@ public:
 				destPt.x -= neighbors[index-1]->getWidth();
 			}
 			
+			if (destPt.x < getWidth()) destPt.x = getWidth();
+			else if (destPt.x > ofGetWidth()) destPt.x = ofGetWidth() - getWidth();
+			
 			ofxVec3f steer;  // The steering vector
 			ofxVec3f desired;  // A vector pointing from the location to the target
 			float d;			
@@ -277,7 +302,7 @@ public:
 			
 			nAcc += steer;
 			
-			//fly around all crazy if home particle + have children
+		//fly around all crazy if home particle + have children
 			
 		} else if ( (bTransforming || bLeaving) && index == 0){
 			
@@ -317,11 +342,11 @@ public:
 					targetPoint.y = endPoint.y;
 					targetPoint.z = 0;
 				} else {
-					targetPoint.x = ofRandom(0,ofGetWidth());
+					targetPoint.x = ofRandom(getWidth(),ofGetWidth()-getWidth());
 					targetPoint.y = nPos.y - ofRandom(50,250);
 					//targetPoint.z = ofRandom(-500,0);
 					
-					if (targetPoint.y < endPos.y){
+					if (targetPoint.y <= endPos.y){
 						targetPoint.x = endPoint.x;
 						targetPoint.y = endPoint.y;
 						targetPoint.z = 0;
@@ -344,7 +369,7 @@ public:
 		if (bTransforming){
 			if (nPos.y >startPos.y){
 				nPos.y = startPos.y;
-				nAcc.y *= .75;
+				//nVel.y *= -ofRandom(1.,2.75f);
 			}
 		}
 		//cheater variable
@@ -394,8 +419,8 @@ public:
 		if (pos.y < startPos.y && !bTransforming && !bLeaving){
 			bTransforming = true;
 			
-			targetPoint.x = ofRandom(0, ofGetWidth());
-			targetPoint.y = pos.y - 50;
+			targetPoint.x = pos.x + ofRandom(-200, 200);
+			targetPoint.y = pos.y - ofRandom(50, 200);
 		}		
 		
 	//alter scale and rotation
@@ -418,11 +443,13 @@ public:
 				scale.z = ofLerp(.01, maxScale, extrudeTimer/10.);
 				scale.x = ofLerp(minScale, maxScale, extrudeTimer/10.);
 				scale.y = ofLerp(minScale, maxScale, extrudeTimer/10.);
+				targetScale = maxScale;
 			} else {
-				scale.x = maxScale;
-				scale.y = maxScale;
-				scale.z = maxScale;
+				scale.x -= (scale.x - targetScale)/10.f;
+				scale.y -= (scale.y - targetScale)/10.f;
+				scale.z -= (scale.z - targetScale)/10.f;
 				//bTransforming = false;
+				targetScale -= (targetScale - maxScale)/10.f;
 			}
 			
 			if (rotation.x >= 360){
@@ -460,6 +487,11 @@ public:
 				
 				//if (bSend){
 				if ( index == 0 ){
+					if (extrudeTimer == 10){
+						pos.x = endPos.x;
+						pos.y = endPos.y;
+						pos.z = endPos.z;
+					}
 					extrudeTimer++;
 					/*
 					pos.x = ofLerp(endPos.x, endPoint.x, (extrudeTimer - 10.0f)/100.0);
@@ -470,7 +502,7 @@ public:
 			};
 		};
 		
-		if (( pos.y < endPos.y /*|| (index != 0 && neighbors[0]->bLeaving)*/ ) && !bLeaving){
+		if (( pos.y <= endPos.y /*|| (index != 0 && neighbors[0]->bLeaving)*/ ) && !bLeaving){
 			bTransforming = false;
 			bLeaving = true;
 			extrudeTimer = 0;
@@ -679,6 +711,8 @@ public:
 	};
 	
 	int drawType;
+	ofPoint scale;
+	float targetScale;
 	
 private:
 	bool bDebugMode;
@@ -693,7 +727,6 @@ private:
 	int duration, subDuration;
 	
 	bool bAlive,bSend;
-	ofPoint scale;
 	float minScale, maxScale, bMaxScale;
 	float minSpeed;
 	

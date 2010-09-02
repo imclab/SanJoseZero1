@@ -2,12 +2,13 @@
 
 //------------------------------------------------------------
 phyParticle::phyParticle(){
-	setInitialCondition(0,0,0,0);
+	setInitialCondition(0,0,0,0,0);
 	damping = 0.01f;
 	rot=0;
 	rotChange=ofRandomf();
 	textures=NULL;
 	type = ofRandomuf()*10;
+	bAlive = true;
 	
 	mass=1;
 }
@@ -15,7 +16,7 @@ phyParticle::phyParticle(){
 //------------------------------------------------------------
 void phyParticle::resetForce(){
     // we reset the forces every frame
-    frc.set(0,0);
+    frc.set(0,0,0);
 }
 
 //------------------------------------------------------------
@@ -25,13 +26,20 @@ void phyParticle::addForce(float x, float y){
     frc.y = frc.y + y;
 }
 
+void phyParticle::addForce(float x, float y, float z){
+    // add in a force in X, Y, and Z for this frame.
+    frc.x += x;
+    frc.y += y;
+    frc.z += z;
+};
+
 //------------------------------------------------------------
 void phyParticle::addRepulsionForce(float x, float y, float radius, float scale){
     
 	// ----------- (1) make a vector of where this position is: 
 	
-	ofxVec2f posOfForce;
-	posOfForce.set(x,y);
+	ofxVec3f posOfForce;
+	posOfForce.set(x,y,0);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -62,8 +70,8 @@ void phyParticle::addAttractionForce(float x, float y, float radius, float scale
     
 	// ----------- (1) make a vector of where this position is: 
 	
-	ofxVec2f posOfForce;
-	posOfForce.set(x,y);
+	ofxVec3f posOfForce;
+	posOfForce.set(x,y,0);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -93,8 +101,8 @@ void phyParticle::addAttractionForce(float x, float y, float radius, float scale
 void phyParticle::addRepulsionForce(phyParticle &p, float radius, float scale){
 	
 	// ----------- (1) make a vector of where this phyParticle p is: 
-	ofxVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	ofxVec3f posOfForce;
+	posOfForce.set(p.pos.x,p.pos.y, p.pos.z);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -126,8 +134,8 @@ void phyParticle::addRepulsionForce(phyParticle &p, float radius, float scale){
 void phyParticle::addAttractionForce(phyParticle & p, float radius, float scale){
 	
 	// ----------- (1) make a vector of where this phyParticle p is: 
-	ofxVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	ofxVec3f posOfForce;
+	posOfForce.set(p.pos.x,p.pos.y, p.pos.z);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -162,8 +170,8 @@ void phyParticle::addClockwiseForce(phyParticle &p, float radius, float scale){
 	rotChange = fabs(rotChange);
 	
 	// ----------- (1) make a vector of where this phyParticle p is: 
-	ofxVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	ofxVec3f posOfForce;
+	posOfForce.set(p.pos.x,p.pos.y, p.pos.z);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -197,8 +205,8 @@ void phyParticle::addCounterClockwiseForce(phyParticle &p, float radius, float s
 	rotChange = fabs(rotChange)*-1;
 	
 	// ----------- (1) make a vector of where this phyParticle p is: 
-	ofxVec2f posOfForce;
-	posOfForce.set(p.pos.x,p.pos.y);
+	ofxVec3f posOfForce;
+	posOfForce.set(p.pos.x,p.pos.y, p.pos.z);
 	
 	// ----------- (2) calculate the difference & length 
 	
@@ -241,9 +249,9 @@ void phyParticle::addDampingForce(){
 }
 
 //------------------------------------------------------------
-void phyParticle::setInitialCondition(float px, float py, float vx, float vy){
-    pos.set(px,py);
-	vel.set(vx,vy);
+void phyParticle::setInitialCondition(float px, float py, float pz, float vx, float vy, float vz){
+    pos.set(px,py,pz);
+	vel.set(vx,vy, vz);
 }
 
 //------------------------------------------------------------
