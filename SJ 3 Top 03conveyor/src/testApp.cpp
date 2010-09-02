@@ -177,11 +177,11 @@ void testApp::setup(){
 		}		
 	}
 	
-	scaleConveyor(1, ofxVec3f(1,1,1.05));
-	scaleConveyor(2, ofxVec3f(1,1,1.185));
-	scaleConveyor(3, ofxVec3f(1,1,1.21));
-	scaleConveyor(4, ofxVec3f(1,1,1.185));
-	scaleConveyor(5, ofxVec3f(1,1,1.05));
+	//scaleConveyor(1, ofxVec3f(1,1,1.05));
+	//scaleConveyor(2, ofxVec3f(1,1,1.185));
+	//scaleConveyor(3, ofxVec3f(1,1,1.21));
+	//scaleConveyor(4, ofxVec3f(1,1,1.185));
+	//scaleConveyor(5, ofxVec3f(1,1,1.05));
 	
 	meshNodes.reserve(numSubdivisions*numCurves);
 	meshNodes.resize(numSubdivisions*numCurves);	
@@ -496,7 +496,7 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 	loggerSender.sendMessage(newRowMessage);
 	
 	//Lars
-	cout << "num stacks: "<<completedRow->stacks.size()<<endl;
+	//cout << "num stacks: "<<completedRow->stacks.size()<<endl;
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		if(completedRow->stacks[i]->buildings.size() >0){
 			stacks.push_back(*completedRow->stacks[i]);
@@ -517,7 +517,7 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 			stackControllers.back().setFindNormal(true);
 		}
 	}	
-	cout << "num stacks out: "<<stacks.size()<<endl;
+	//cout << "num stacks out: "<<stacks.size()<<endl;
 	
 };
 

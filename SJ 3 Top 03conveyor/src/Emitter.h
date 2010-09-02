@@ -94,9 +94,7 @@ public:
 		//2 - rotate
 		if (rotateAmount > 0){
 			*advanceCeiling = true;//LARS this points to a bool in the testApp that moves conveyor
-			for (int i=oldRows.size()-1; i>=0; i--){
-				//LARS//
-				/*
+			for (int i=oldRows.size()-1; i>=0; i--){				
 				if (oldRows[i]->rotation.x < 360){
 					oldRows[i]->rotation.x += ROTATE_INCREMENT;
 					
@@ -109,7 +107,7 @@ public:
 				if (oldRows[i]->pos.y < -100){
 					oldRows.erase(oldRows.begin()+i);
 				}
-				 */
+				
 			}
 			rotateAmount -= ROTATE_INCREMENT;
 		}	
@@ -163,7 +161,7 @@ public:
 	
 	void newRow(){
 		currentRow->setComplete(true);
-		oldRows.push_back( currentRow );
+		//LARS//	oldRows.push_back( currentRow );
 		rowIsComplete(currentRow);
 		currentRow = new BuildingRow(500);
 	};
