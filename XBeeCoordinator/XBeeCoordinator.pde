@@ -30,6 +30,7 @@ import netP5.*;
 
 /**********************************************************
   OSC VARS
+  
 **********************************************************/
 
   OscP5 oscP5;
@@ -105,11 +106,12 @@ import netP5.*;
       XMLElement sensor = sensors.getChild(i);
       String name = sensor.getChild("name").getContent();
       String id   = sensor.getChild("id").getContent();
+      int numValues   = Integer.parseInt(sensor.getChild("values").getContent());
       int sendOsc = Integer.parseInt(sensor.getChild("sendosc").getContent());
       
       println(name+":"+id+":"+sendOsc);
       
-      Input input = new Input (id, font, fontSize);
+      Input input = new Input (id, numValues, font, fontSize);
       input.setName(name);
       input.width = spacingX;
       input.height = spacingY;
