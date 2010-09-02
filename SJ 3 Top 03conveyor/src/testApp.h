@@ -42,6 +42,8 @@ class testApp : public ofBaseApp{
 	ofxVec3f normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c);
 	void calcMeshNormals();
 	void drawConveyorMesh();
+	void moveConveyorY(float dist);
+	void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
 
 	
 		Emitter * particleManager;

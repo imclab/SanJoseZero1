@@ -124,7 +124,7 @@ void testApp::setup(){
 	numCVs = 16;
 	numSubdivisions = 25;
 	//define posiitons used t create curves
-	refPoses.resize(16);	
+	/*refPoses.resize(16);	
 	refPoses[0].set(0.0, 4, -1);
 	refPoses[1].set(0.0, 5, -1);
 	refPoses[2].set(0.0, 6, 0);
@@ -140,7 +140,26 @@ void testApp::setup(){
 	refPoses[12].set(0.0, -5, 1);
 	refPoses[13].set(0.0, -6, 0);
 	refPoses[14].set(0.0, -5, -1);
-	refPoses[15].set(0.0, -4, -1);
+	refPoses[15].set(0.0, -4, -1);*/
+	refPoses.resize(numCVs);
+	//refPoses[16].set(0.0, 0.799770, 0.0128638);
+	refPoses[15].set(0.0, 0.098825, 0.1033528);
+	refPoses[14].set(0.0, 0.210809, 0.4008164);
+	refPoses[13].set(0.0, 0.778285, 0.6097819);
+	refPoses[12].set(0.0, 1.264271, 0.6736802);
+	refPoses[11].set(0.0, 1.801919, 0.7241808);
+	refPoses[10].set(0.0, 2.315767, 0.7909238);
+	refPoses[9].set(0.0, 2.837868, 0.8596685);
+	refPoses[8].set(0.0, 3.357392, 0.9237917);
+	refPoses[7].set(0.0, 3.881330, 0.9673418);
+	refPoses[6].set(0.0, 4.407283, 0.9897997);
+	refPoses[5].set(0.0, 4.933672, 0.9558317);
+	refPoses[4].set(0.0, 5.460887, 0.9070650);
+	refPoses[3].set(0.0, 5.948037, 0.6528142);
+	refPoses[2].set(0.0, 5.771874, 0.0787242);
+	refPoses[1].set(0.0, 5.189120, 0.0);
+	refPoses[0].set(0.0, 4.950000, 0.0);
+	
 	
 	float xStep = ofGetWidth()/float(numCurves-1);
 	float yStep = float (ofGetHeight())/float(numCVs);
@@ -150,13 +169,19 @@ void testApp::setup(){
 	for(int i=0; i<numCurves; i++){
 		for(int j=0; j<numCVs;j++){
 			curves[i].addCV(i*xStep,
-							refPoses[j].y*yStep+ofGetHeight()*.5,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
-							refPoses[j].z*150.0);//cos(float(j)/float(numCVs))*300);
+							refPoses[j].y*ofGetHeight()*.5 *.2+135,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
+							refPoses[j].z*200);//cos(float(j)/float(numCVs))*300);
 			curves[i].setDegree(2);
 			curves[i].setKnots();
 			curves[i].setNumSpans(numSubdivisions);
 		}		
 	}
+	
+	scaleConveyor(1, ofxVec3f(1,1,1.05));
+	scaleConveyor(2, ofxVec3f(1,1,1.185));
+	scaleConveyor(3, ofxVec3f(1,1,1.21));
+	scaleConveyor(4, ofxVec3f(1,1,1.185));
+	scaleConveyor(5, ofxVec3f(1,1,1.05));
 	
 	meshNodes.reserve(numSubdivisions*numCurves);
 	meshNodes.resize(numSubdivisions*numCurves);	
@@ -383,6 +408,8 @@ void testApp::draw(){
 		
 	shadowShader.end();			
 	
+	
+	glEnable(GL_DEPTH_TEST);
 	glUseProgram(0);
 	for(int i=0; i<curves.size();i++){
 		ofSetColor(255, 0, 0);
@@ -393,12 +420,12 @@ void testApp::draw(){
 		ofxSphere(sweetSpotPos[i].x, sweetSpotPos[i].y, sweetSpotPos[i].z, 15);
 	}
 	
-	for(int i=0; i<stackControllers.size();i++){
-		ofSetColor(225, 20, 50);
-		ofxSphere(stackControllers[i].pos.x,
-				  stackControllers[i].pos.y,
-				  stackControllers[i].pos.z, 25);
-	}
+	//for(int i=0; i<stackControllers.size();i++){
+	//	ofSetColor(225, 20, 50);
+	//	ofxSphere(stackControllers[i].pos.x,
+	///			  stackControllers[i].pos.y,
+	//			  stackControllers[i].pos.z, 25);
+	//}
 	
 	
 	shadowShader.begin();
@@ -426,14 +453,12 @@ void testApp::draw(){
 							  -1000, 1000);	
 	glDisable(GL_DEPTH_TEST);
 	
-	glUseProgram(0);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glActiveTexture(GL_TEXTURE0);	
-	fbo.bind();
-	
-	//glBindTexture(GL_TEXTURE_2D, depthTexture);
-	drawTex(20, 20, 200, 200);
+	//glUseProgram(0);
+	//glActiveTexture(GL_TEXTURE1);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glActiveTexture(GL_TEXTURE0);	
+	//fbo.bind();
+	//drawTex(20, 20, 200, 200);
 	
 	ofSetColor(255, 0, 0);
 	string fpsString = "light position  " + ofToString(lightPos.x, 2) + ", " + ofToString(lightPos.y, 2) + ", " + ofToString(lightPos.z, 2);
@@ -499,6 +524,9 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 	if (key =='f') ofToggleFullscreen();
+	if(key =='y')	moveConveyorY(1.);
+	if(key =='u')	moveConveyorY(-1.);
+		
 }
 
 //--------------------------------------------------------------
@@ -645,5 +673,20 @@ void testApp::drawConveyorMesh(){
 				   vertices[faceIndices[i]].pos.z);
 	}
 	glEnd();
+}
+
+void testApp::moveConveyorY(float dist){
+	for(int i=0; i<curves.size();i++){
+		for(int j=0; j<=curves[i].numCVs;j++){
+			curves[i].moveCVrelative(j, ofxVec3f(0,dist,0));
+		}
+	}
+}
+void testApp::scaleConveyor(int curveIndex, ofxVec3f scaleVal){
+	//for(int i=0; i<curves.size();i++){
+		for(int j=0; j<=curves[curveIndex].numCVs;j++){
+			curves[curveIndex].moveCV(j, curves[curveIndex].getCVpos(j)*scaleVal);
+		}
+	//}
 }
 	
