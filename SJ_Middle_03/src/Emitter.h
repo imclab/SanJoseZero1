@@ -117,7 +117,9 @@ public:
 					ofNotifyEvent(particleLeft, particleArgs, this);
 				}
 				if (particles[i]->okToErase()){
+					Particle * p = particles[i];
 					particles.erase(particles.begin()+i);
+					delete p;
 				}
 			}
 		}

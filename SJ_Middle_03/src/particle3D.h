@@ -10,10 +10,8 @@
 #pragma once
 
 #include "phyParticle.h"
-#include "MSAShape3D.h"
 #include "ofx3DUtils.h"
-
-using namespace MSA;
+#include "ofxColor.h"
 
 class particle3D : public phyParticle
 {
@@ -21,17 +19,16 @@ public:
 	
 	ofxVec3f ranRotation;
 	float rotSpeed;
-	float r, g, b, a;
+	ofxColor fillColor;
 	ofPoint scale;
 	ofPoint startScale, targetScale;
 	
 	particle3D(){
 		targetScale.x = ofRandom(5., 40.);
 		targetScale.y = ofRandom(5., 40.);
-		r = ofRandomf()*255.;
-		g = ofRandomf()*255.;
-		b = ofRandomf()*255.;
-		a = 255;
+		
+		fillColor.setColorRange(255.f);
+		fillColor.hue = ofRandomf()*255.;
 		
 		phyParticle::phyParticle();
 		ranRotation.x = ofRandomf()*360.f;
@@ -46,7 +43,7 @@ public:
 		scale = startScale;
 		type = (int) floor(ofRandom(0,5));
 	}
-	
+		
 	ofPoint startPoint;
 	
 	void setInitialCondition(float px, float py, float pz, float vx, float vy, float vz=0){
@@ -70,19 +67,16 @@ public:
 	}
 	
 	void setColor( float _r, float _g, float _b){
-		r = _r;
-		g = _g;
-		b = _b;
+		fillColor.red = _r;
+		fillColor.green = _g;
+		fillColor.blue = _b;
+		fillColor.updateHsv();
 		
-		float ran = ofRandom(-10.0f, 10.0f);
+		fillColor.hue *= ofRandom(.8, 1.2f);
+		fillColor.value *= ofRandom(.8, 1.2f);
+		fillColor.saturation *= ofRandom(.8, 1.2f);
 		
-		cout<<"uhh "<<ran<<endl;
-		
-		r += ran;
-		ran = ofRandom(-10.0f, 10.0f);
-		g += ran;
-		ran = ofRandom(-10.0f, 10.0f);
-		b += ran;
+		fillColor.updateRgb();
 		
 		/*r *= 3.f;
 		g *= 3.f;
@@ -101,13 +95,16 @@ public:
 		ranRotation.x += rotSpeed;
 		ranRotation.y += rotSpeed;
 		ranRotation.z += rotSpeed;
+		
+		if (pos.y < 0) pos.y = 0;
+		else if (pos.y > ofGetHeight()) pos.y = ofGetHeight();
 	};
 	
 	void draw(){
 			
 		rot+=rotChange;
 		
-		ofSetColor(r,g,b,a);
+		ofSetColor(fillColor.red, fillColor.green, fillColor.blue,fillColor.alpha);
 		
 		ofSetRectMode(OF_RECTMODE_CENTER);
 		glPushMatrix();
@@ -128,20 +125,23 @@ public:
 		ofRotateY(ranRotation.y);
 		ofRotateZ(ranRotation.z);
 		
-		if (type == 99){
-			ofxCone(0,0,0,scale.x/2.0f, scale.y, scale.x);
-		} else if (type == 10000){
-			ofxCapsule(0,0,0,scale.x, scale.y, scale.x);
-		} else if (type == 0){
+		//if (type == 99){
+//			ofxCone(0,0,0,scale.x/2.0f, scale.y, scale.x);
+//		} else if (type == 10000){
+//			ofxCapsule(0,0,0,scale.x, scale.y, scale.x);
+//		} else 
+		
+		if (type == 0){
 			ofxBox(0,0,0,scale.x, scale.y, scale.x );
 		}
 		scale.x -= (scale.x - targetScale.x)/20.0f;
 		scale.y -= (scale.y - targetScale.y)/20.0f;
 		scale.z -= (scale.z - targetScale.z)/20.0f;
 		
-		a *= .989;
-		if (a <=30){
+		fillColor.alpha *= .98;
+		if (fillColor.alpha <=50){
 			bAlive = false;
+			fillColor.alpha *= .75;
 		}
 		
 		glLineWidth(1);

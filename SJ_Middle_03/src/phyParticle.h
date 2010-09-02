@@ -11,7 +11,10 @@ class phyParticle
         ofxVec3f frc;  
 			
         phyParticle();
-		virtual ~phyParticle(){};
+		virtual ~phyParticle(){
+			trail.clear();
+			delete textures;
+		};
 
         void resetForce();
 		void addForce(float x, float y);

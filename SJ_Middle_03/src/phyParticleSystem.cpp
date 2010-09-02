@@ -41,8 +41,8 @@ void phyParticleSystem::update()
 					p = new particle3D();
 					
 					ofPoint aVel;
-					aVel.x = fmax(5.0f, fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 10.0f))) * sin(angle);
-					aVel.y = fmax(5.0f, fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 10.0f))) * cos(angle);
+					aVel.x = fmax(ofRandom(3.0, 7.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * sin(angle);
+					aVel.y = fmax(ofRandom(3.0, 7.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * cos(angle);
 						
 					angle += angleAdd;
 					
@@ -80,9 +80,13 @@ void phyParticleSystem::update()
 		if (particles[i]->pos.y > emitter->getTransformStart() || particles[i]->pos.y < emitter->getTransformEnd()){
 			//particles[i]->a *= .85;
 		}		
-		if (!particles[i]->bAlive){
+		if (!particles[i]->bAlive && explosions[i]->a <= .1f){
+			particle3D * p = particles[i];
+			LineExplosion * l = explosions[i];
 			particles.erase(particles.begin()+i);
 			explosions.erase(explosions.begin()+i);
+			delete p;
+			delete l;
 		}
 	}
 	/*trailTex.begin();
@@ -115,6 +119,7 @@ void phyParticleSystem::draw()
 	trailTex.draw(0,0);
 	*/
 	
+	glDisable(GL_DEPTH_TEST);
 	ofxLightsOff();
 	ofSetColor(0xffffff);
 	for (int i=0; i<explosions.size(); i++){

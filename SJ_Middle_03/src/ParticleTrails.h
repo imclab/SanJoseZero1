@@ -28,7 +28,7 @@ public:
 	
 	void update(){
 		trailsFBO.begin();
-		ofSetColor(0,0,0,5);
+		ofSetColor(0,0,0,8);
 		glDisable(GL_DEPTH_TEST);
 		ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
 		trailsFBO.end();

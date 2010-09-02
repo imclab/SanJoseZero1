@@ -34,6 +34,10 @@ public:
 		stippleVal += ofRandom(1, 0xFF);
 	}
 	
+	~LineExplosion(){
+		
+	};
+	
 	ofColor color, color2;
 	
 	void setColor( ofColor c ){
@@ -64,7 +68,6 @@ public:
 			glVertex2f( x+1, y+1);
 			glVertex2f(toPoint.x, toPoint.y);
 			
-			
 			toPoint.x = x + currentRadius * sin(angle);
 			toPoint.y = y + currentRadius * cos(angle);
 						
@@ -83,5 +86,8 @@ public:
 		
 		age++;
 		a *= .989f;
+		if (age > life){
+			a *= .5;
+		}
 	};
 };

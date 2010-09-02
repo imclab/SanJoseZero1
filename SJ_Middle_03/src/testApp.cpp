@@ -169,7 +169,7 @@ void testApp::update(){
 #ifdef FLUID_EFFECT_SYSTEM
 		effectsSystem.update();
 #endif
-		trails.update();
+		//trails.update();
 		system->update();
 	} 
 	
@@ -226,18 +226,18 @@ void testApp::draw(){
 #endif
 	projection.pushView(0);
 	//draw particles
-//	glEnable(GL_CULL_FACE);
 	
 	//draw particle effects
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor(0xffffff);	
-	trails.draw();
+	//trails.draw();
+	
 	ofxLightsOn();
-	glEnable(GL_DEPTH_TEST);
 	ofSetColor(0xffffff);	
 	system->draw();
 	ofSetColor(0xffffff);
 	ofxLightsOff();
+	
 	glEnable(GL_DEPTH_TEST);
 	
 	particleManager.draw();

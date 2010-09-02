@@ -62,7 +62,7 @@ public:
 	}
 	
 	~Particle() {
-		delete particle3D;
+		neighbors.clear();
 	}
 	
 /***************************************************************
