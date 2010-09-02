@@ -7,24 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E0420A1122C42C20008C53E /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E04203E122C42C20008C53E /* Color.cpp */; };
-		2E0420A2122C42C20008C53E /* MSACoreGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042045122C42C20008C53E /* MSACoreGL.cpp */; };
-		2E0420A8122C42C20008C53E /* MSAFluidDrawerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042093122C42C20008C53E /* MSAFluidDrawerBase.cpp */; };
-		2E0420A9122C42C20008C53E /* MSAFluidSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042098122C42C20008C53E /* MSAFluidSolver.cpp */; };
-		2E042108122C42DD0008C53E /* ofxSimpleGuiButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420E5122C42DD0008C53E /* ofxSimpleGuiButton.cpp */; };
-		2E042109122C42DD0008C53E /* ofxSimpleGuiColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420E7122C42DD0008C53E /* ofxSimpleGuiColorPicker.cpp */; };
-		2E04210A122C42DD0008C53E /* ofxSimpleGuiComboBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420E9122C42DD0008C53E /* ofxSimpleGuiComboBox.cpp */; };
-		2E04210B122C42DD0008C53E /* ofxSimpleGuiContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420EB122C42DD0008C53E /* ofxSimpleGuiContent.cpp */; };
-		2E04210C122C42DD0008C53E /* ofxSimpleGuiFPSCounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420ED122C42DD0008C53E /* ofxSimpleGuiFPSCounter.cpp */; };
-		2E04210D122C42DD0008C53E /* ofxSimpleGuiMovieSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420EF122C42DD0008C53E /* ofxSimpleGuiMovieSlider.cpp */; };
-		2E04210E122C42DD0008C53E /* ofxSimpleGuiQuadWarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420F1122C42DD0008C53E /* ofxSimpleGuiQuadWarp.cpp */; };
-		2E04210F122C42DD0008C53E /* ofxSimpleGuiSlider2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420F3122C42DD0008C53E /* ofxSimpleGuiSlider2d.cpp */; };
-		2E042110122C42DD0008C53E /* ofxSimpleGuiTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420F8122C42DD0008C53E /* ofxSimpleGuiTitle.cpp */; };
-		2E042111122C42DD0008C53E /* ofxSimpleGuiToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420FA122C42DD0008C53E /* ofxSimpleGuiToggle.cpp */; };
-		2E042112122C42DD0008C53E /* ofxSimpleGuiConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420FC122C42DD0008C53E /* ofxSimpleGuiConfig.cpp */; };
-		2E042113122C42DD0008C53E /* ofxSimpleGuiControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E0420FE122C42DD0008C53E /* ofxSimpleGuiControl.cpp */; };
-		2E042114122C42DD0008C53E /* ofxSimpleGuiPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042101122C42DD0008C53E /* ofxSimpleGuiPage.cpp */; };
-		2E042115122C42DD0008C53E /* ofxSimpleGuiToo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E042103122C42DD0008C53E /* ofxSimpleGuiToo.cpp */; };
 		2E7E7811123003C900A3FA9A /* model3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E77B8123003C800A3FA9A /* model3DS.cpp */; };
 		2E7E7812123003C900A3FA9A /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E77BA123003C800A3FA9A /* texture3DS.cpp */; };
 		2E7E7813123003C900A3FA9A /* ofx3dModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E77BE123003C800A3FA9A /* ofx3dModelLoader.cpp */; };
@@ -127,59 +109,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2E04203C122C42C20008C53E /* ChanTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanTraits.h; sourceTree = "<group>"; };
-		2E04203D122C42C20008C53E /* CinderMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderMath.h; sourceTree = "<group>"; };
-		2E04203E122C42C20008C53E /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
-		2E04203F122C42C20008C53E /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
-		2E042040122C42C20008C53E /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
-		2E042041122C42C20008C53E /* MSACore-Cinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSACore-Cinder.h"; sourceTree = "<group>"; };
-		2E042042122C42C20008C53E /* MSACore-OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSACore-OF.h"; sourceTree = "<group>"; };
-		2E042043122C42C20008C53E /* MSACore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACore.h; sourceTree = "<group>"; };
-		2E042044122C42C20008C53E /* MSACoreCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreCommon.h; sourceTree = "<group>"; };
-		2E042045122C42C20008C53E /* MSACoreGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSACoreGL.cpp; sourceTree = "<group>"; };
-		2E042046122C42C20008C53E /* MSACoreGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreGL.h; sourceTree = "<group>"; };
-		2E042047122C42C20008C53E /* MSACoreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreMath.h; sourceTree = "<group>"; };
-		2E042092122C42C20008C53E /* MSAFluid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluid.h; sourceTree = "<group>"; };
-		2E042093122C42C20008C53E /* MSAFluidDrawerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAFluidDrawerBase.cpp; sourceTree = "<group>"; };
-		2E042094122C42C20008C53E /* MSAFluidDrawerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidDrawerBase.h; sourceTree = "<group>"; };
-		2E042095122C42C20008C53E /* MSAFluidDrawerGl-Cinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSAFluidDrawerGl-Cinder.h"; sourceTree = "<group>"; };
-		2E042096122C42C20008C53E /* MSAFluidDrawerGl-OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSAFluidDrawerGl-OF.h"; sourceTree = "<group>"; };
-		2E042097122C42C20008C53E /* MSAFluidParticleUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidParticleUpdater.h; sourceTree = "<group>"; };
-		2E042098122C42C20008C53E /* MSAFluidSolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAFluidSolver.cpp; sourceTree = "<group>"; };
-		2E042099122C42C20008C53E /* MSAFluidSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidSolver.h; sourceTree = "<group>"; };
-		2E0420E5122C42DD0008C53E /* ofxSimpleGuiButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiButton.cpp; sourceTree = "<group>"; };
-		2E0420E6122C42DD0008C53E /* ofxSimpleGuiButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiButton.h; sourceTree = "<group>"; };
-		2E0420E7122C42DD0008C53E /* ofxSimpleGuiColorPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiColorPicker.cpp; sourceTree = "<group>"; };
-		2E0420E8122C42DD0008C53E /* ofxSimpleGuiColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiColorPicker.h; sourceTree = "<group>"; };
-		2E0420E9122C42DD0008C53E /* ofxSimpleGuiComboBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiComboBox.cpp; sourceTree = "<group>"; };
-		2E0420EA122C42DD0008C53E /* ofxSimpleGuiComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiComboBox.h; sourceTree = "<group>"; };
-		2E0420EB122C42DD0008C53E /* ofxSimpleGuiContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiContent.cpp; sourceTree = "<group>"; };
-		2E0420EC122C42DD0008C53E /* ofxSimpleGuiContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiContent.h; sourceTree = "<group>"; };
-		2E0420ED122C42DD0008C53E /* ofxSimpleGuiFPSCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiFPSCounter.cpp; sourceTree = "<group>"; };
-		2E0420EE122C42DD0008C53E /* ofxSimpleGuiFPSCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiFPSCounter.h; sourceTree = "<group>"; };
-		2E0420EF122C42DD0008C53E /* ofxSimpleGuiMovieSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiMovieSlider.cpp; sourceTree = "<group>"; };
-		2E0420F0122C42DD0008C53E /* ofxSimpleGuiMovieSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiMovieSlider.h; sourceTree = "<group>"; };
-		2E0420F1122C42DD0008C53E /* ofxSimpleGuiQuadWarp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiQuadWarp.cpp; sourceTree = "<group>"; };
-		2E0420F2122C42DD0008C53E /* ofxSimpleGuiQuadWarp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiQuadWarp.h; sourceTree = "<group>"; };
-		2E0420F3122C42DD0008C53E /* ofxSimpleGuiSlider2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiSlider2d.cpp; sourceTree = "<group>"; };
-		2E0420F4122C42DD0008C53E /* ofxSimpleGuiSlider2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiSlider2d.h; sourceTree = "<group>"; };
-		2E0420F5122C42DD0008C53E /* ofxSimpleGuiSliderBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiSliderBase.h; sourceTree = "<group>"; };
-		2E0420F6122C42DD0008C53E /* ofxSimpleGuiSliderFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiSliderFloat.h; sourceTree = "<group>"; };
-		2E0420F7122C42DD0008C53E /* ofxSimpleGuiSliderInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiSliderInt.h; sourceTree = "<group>"; };
-		2E0420F8122C42DD0008C53E /* ofxSimpleGuiTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiTitle.cpp; sourceTree = "<group>"; };
-		2E0420F9122C42DD0008C53E /* ofxSimpleGuiTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiTitle.h; sourceTree = "<group>"; };
-		2E0420FA122C42DD0008C53E /* ofxSimpleGuiToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiToggle.cpp; sourceTree = "<group>"; };
-		2E0420FB122C42DD0008C53E /* ofxSimpleGuiToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiToggle.h; sourceTree = "<group>"; };
-		2E0420FC122C42DD0008C53E /* ofxSimpleGuiConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiConfig.cpp; sourceTree = "<group>"; };
-		2E0420FD122C42DD0008C53E /* ofxSimpleGuiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiConfig.h; sourceTree = "<group>"; };
-		2E0420FE122C42DD0008C53E /* ofxSimpleGuiControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiControl.cpp; sourceTree = "<group>"; };
-		2E0420FF122C42DD0008C53E /* ofxSimpleGuiControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiControl.h; sourceTree = "<group>"; };
-		2E042100122C42DD0008C53E /* ofxSimpleGuiIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiIncludes.h; sourceTree = "<group>"; };
-		2E042101122C42DD0008C53E /* ofxSimpleGuiPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiPage.cpp; sourceTree = "<group>"; };
-		2E042102122C42DD0008C53E /* ofxSimpleGuiPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiPage.h; sourceTree = "<group>"; };
-		2E042103122C42DD0008C53E /* ofxSimpleGuiToo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleGuiToo.cpp; sourceTree = "<group>"; };
-		2E042104122C42DD0008C53E /* ofxSimpleGuiToo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleGuiToo.h; sourceTree = "<group>"; };
-		2E04211A122C42E20008C53E /* MSATimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSATimer.h; sourceTree = "<group>"; };
 		2E78C359122468B3007663E7 /* Column.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Column.h; sourceTree = "<group>"; };
 		2E78C35A1224693C007663E7 /* Columns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Columns.h; sourceTree = "<group>"; };
 		2E7A4B2411DB96B400914266 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
@@ -252,6 +181,7 @@
 		2E7E780D123003C900A3FA9A /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2E7E780F123003C900A3FA9A /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		2E7E7810123003C900A3FA9A /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		2E7E791D12301A1D00A3FA9A /* ofxLabUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLabUtils.h; sourceTree = "<group>"; };
 		2E8BBF7D122E9FF300625F40 /* particle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle3D.h; sourceTree = "<group>"; };
 		2E8BC276122EE93400625F40 /* LineExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineExplosion.h; sourceTree = "<group>"; };
 		2EC2E6581228593200483E81 /* guiBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiBaseObject.h; sourceTree = "<group>"; };
@@ -380,150 +310,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E042035122C429B0008C53E /* fluid */ = {
-			isa = PBXGroup;
-			children = (
-				2E042116122C42E20008C53E /* MSATimer */,
-				2E0420D8122C42DD0008C53E /* ofxSimpleGuiToo */,
-				2E042039122C42C20008C53E /* MSACore */,
-				2E042048122C42C20008C53E /* MSAFluid */,
-			);
-			name = fluid;
-			sourceTree = "<group>";
-		};
-		2E042039122C42C20008C53E /* MSACore */ = {
-			isa = PBXGroup;
-			children = (
-				2E04203A122C42C20008C53E /* src */,
-			);
-			name = MSACore;
-			path = src/fluids/MSACore;
-			sourceTree = "<group>";
-		};
-		2E04203A122C42C20008C53E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2E04203B122C42C20008C53E /* cinder-lite */,
-				2E042041122C42C20008C53E /* MSACore-Cinder.h */,
-				2E042042122C42C20008C53E /* MSACore-OF.h */,
-				2E042043122C42C20008C53E /* MSACore.h */,
-				2E042044122C42C20008C53E /* MSACoreCommon.h */,
-				2E042045122C42C20008C53E /* MSACoreGL.cpp */,
-				2E042046122C42C20008C53E /* MSACoreGL.h */,
-				2E042047122C42C20008C53E /* MSACoreMath.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		2E04203B122C42C20008C53E /* cinder-lite */ = {
-			isa = PBXGroup;
-			children = (
-				2E04203C122C42C20008C53E /* ChanTraits.h */,
-				2E04203D122C42C20008C53E /* CinderMath.h */,
-				2E04203E122C42C20008C53E /* Color.cpp */,
-				2E04203F122C42C20008C53E /* Color.h */,
-				2E042040122C42C20008C53E /* Vector.h */,
-			);
-			path = "cinder-lite";
-			sourceTree = "<group>";
-		};
-		2E042048122C42C20008C53E /* MSAFluid */ = {
-			isa = PBXGroup;
-			children = (
-				2E042091122C42C20008C53E /* src */,
-			);
-			name = MSAFluid;
-			path = src/fluids/MSAFluid;
-			sourceTree = "<group>";
-		};
-		2E042091122C42C20008C53E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2E042092122C42C20008C53E /* MSAFluid.h */,
-				2E042093122C42C20008C53E /* MSAFluidDrawerBase.cpp */,
-				2E042094122C42C20008C53E /* MSAFluidDrawerBase.h */,
-				2E042095122C42C20008C53E /* MSAFluidDrawerGl-Cinder.h */,
-				2E042096122C42C20008C53E /* MSAFluidDrawerGl-OF.h */,
-				2E042097122C42C20008C53E /* MSAFluidParticleUpdater.h */,
-				2E042098122C42C20008C53E /* MSAFluidSolver.cpp */,
-				2E042099122C42C20008C53E /* MSAFluidSolver.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		2E0420D8122C42DD0008C53E /* ofxSimpleGuiToo */ = {
-			isa = PBXGroup;
-			children = (
-				2E0420E3122C42DD0008C53E /* src */,
-			);
-			name = ofxSimpleGuiToo;
-			path = src/fluids/ofxSimpleGuiToo;
-			sourceTree = "<group>";
-		};
-		2E0420E3122C42DD0008C53E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2E0420E4122C42DD0008C53E /* Controls */,
-				2E0420FC122C42DD0008C53E /* ofxSimpleGuiConfig.cpp */,
-				2E0420FD122C42DD0008C53E /* ofxSimpleGuiConfig.h */,
-				2E0420FE122C42DD0008C53E /* ofxSimpleGuiControl.cpp */,
-				2E0420FF122C42DD0008C53E /* ofxSimpleGuiControl.h */,
-				2E042100122C42DD0008C53E /* ofxSimpleGuiIncludes.h */,
-				2E042101122C42DD0008C53E /* ofxSimpleGuiPage.cpp */,
-				2E042102122C42DD0008C53E /* ofxSimpleGuiPage.h */,
-				2E042103122C42DD0008C53E /* ofxSimpleGuiToo.cpp */,
-				2E042104122C42DD0008C53E /* ofxSimpleGuiToo.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		2E0420E4122C42DD0008C53E /* Controls */ = {
-			isa = PBXGroup;
-			children = (
-				2E0420E5122C42DD0008C53E /* ofxSimpleGuiButton.cpp */,
-				2E0420E6122C42DD0008C53E /* ofxSimpleGuiButton.h */,
-				2E0420E7122C42DD0008C53E /* ofxSimpleGuiColorPicker.cpp */,
-				2E0420E8122C42DD0008C53E /* ofxSimpleGuiColorPicker.h */,
-				2E0420E9122C42DD0008C53E /* ofxSimpleGuiComboBox.cpp */,
-				2E0420EA122C42DD0008C53E /* ofxSimpleGuiComboBox.h */,
-				2E0420EB122C42DD0008C53E /* ofxSimpleGuiContent.cpp */,
-				2E0420EC122C42DD0008C53E /* ofxSimpleGuiContent.h */,
-				2E0420ED122C42DD0008C53E /* ofxSimpleGuiFPSCounter.cpp */,
-				2E0420EE122C42DD0008C53E /* ofxSimpleGuiFPSCounter.h */,
-				2E0420EF122C42DD0008C53E /* ofxSimpleGuiMovieSlider.cpp */,
-				2E0420F0122C42DD0008C53E /* ofxSimpleGuiMovieSlider.h */,
-				2E0420F1122C42DD0008C53E /* ofxSimpleGuiQuadWarp.cpp */,
-				2E0420F2122C42DD0008C53E /* ofxSimpleGuiQuadWarp.h */,
-				2E0420F3122C42DD0008C53E /* ofxSimpleGuiSlider2d.cpp */,
-				2E0420F4122C42DD0008C53E /* ofxSimpleGuiSlider2d.h */,
-				2E0420F5122C42DD0008C53E /* ofxSimpleGuiSliderBase.h */,
-				2E0420F6122C42DD0008C53E /* ofxSimpleGuiSliderFloat.h */,
-				2E0420F7122C42DD0008C53E /* ofxSimpleGuiSliderInt.h */,
-				2E0420F8122C42DD0008C53E /* ofxSimpleGuiTitle.cpp */,
-				2E0420F9122C42DD0008C53E /* ofxSimpleGuiTitle.h */,
-				2E0420FA122C42DD0008C53E /* ofxSimpleGuiToggle.cpp */,
-				2E0420FB122C42DD0008C53E /* ofxSimpleGuiToggle.h */,
-			);
-			path = Controls;
-			sourceTree = "<group>";
-		};
-		2E042116122C42E20008C53E /* MSATimer */ = {
-			isa = PBXGroup;
-			children = (
-				2E042119122C42E20008C53E /* src */,
-			);
-			name = MSATimer;
-			path = src/fluids/MSATimer;
-			sourceTree = "<group>";
-		};
-		2E042119122C42E20008C53E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2E04211A122C42E20008C53E /* MSATimer.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		2E7E77B4123003C800A3FA9A /* ofx3DModelLoader */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +563,7 @@
 				2E7E77CD123003C800A3FA9A /* ofxFboTexture */,
 				2E7E77F7123003C800A3FA9A /* ofxVectorMath */,
 				2E7E7807123003C900A3FA9A /* ofxXmlSettings */,
+				2E7E791D12301A1D00A3FA9A /* ofxLabUtils.h */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -971,7 +758,6 @@
 			children = (
 				2E7E7829123003FB00A3FA9A /* communication */,
 				2E7E7828123003CC00A3FA9A /* utils */,
-				2E042035122C429B0008C53E /* fluid */,
 				2EC2E6901228594F00483E81 /* projection */,
 			);
 			name = addons;
@@ -1349,24 +1135,6 @@
 				2EC2E69F1228597400483E81 /* ofxDirList.cpp in Sources */,
 				2EC2E6AE1228599200483E81 /* ofxFileDialog.cpp in Sources */,
 				2EC2E7B51228659900483E81 /* ofxShader.cpp in Sources */,
-				2E0420A1122C42C20008C53E /* Color.cpp in Sources */,
-				2E0420A2122C42C20008C53E /* MSACoreGL.cpp in Sources */,
-				2E0420A8122C42C20008C53E /* MSAFluidDrawerBase.cpp in Sources */,
-				2E0420A9122C42C20008C53E /* MSAFluidSolver.cpp in Sources */,
-				2E042108122C42DD0008C53E /* ofxSimpleGuiButton.cpp in Sources */,
-				2E042109122C42DD0008C53E /* ofxSimpleGuiColorPicker.cpp in Sources */,
-				2E04210A122C42DD0008C53E /* ofxSimpleGuiComboBox.cpp in Sources */,
-				2E04210B122C42DD0008C53E /* ofxSimpleGuiContent.cpp in Sources */,
-				2E04210C122C42DD0008C53E /* ofxSimpleGuiFPSCounter.cpp in Sources */,
-				2E04210D122C42DD0008C53E /* ofxSimpleGuiMovieSlider.cpp in Sources */,
-				2E04210E122C42DD0008C53E /* ofxSimpleGuiQuadWarp.cpp in Sources */,
-				2E04210F122C42DD0008C53E /* ofxSimpleGuiSlider2d.cpp in Sources */,
-				2E042110122C42DD0008C53E /* ofxSimpleGuiTitle.cpp in Sources */,
-				2E042111122C42DD0008C53E /* ofxSimpleGuiToggle.cpp in Sources */,
-				2E042112122C42DD0008C53E /* ofxSimpleGuiConfig.cpp in Sources */,
-				2E042113122C42DD0008C53E /* ofxSimpleGuiControl.cpp in Sources */,
-				2E042114122C42DD0008C53E /* ofxSimpleGuiPage.cpp in Sources */,
-				2E042115122C42DD0008C53E /* ofxSimpleGuiToo.cpp in Sources */,
 				A97B8579122C9D78006CB83D /* phyParticle.cpp in Sources */,
 				A97B857A122C9D78006CB83D /* phyParticleSystem.cpp in Sources */,
 				2E7E7811123003C900A3FA9A /* model3DS.cpp in Sources */,

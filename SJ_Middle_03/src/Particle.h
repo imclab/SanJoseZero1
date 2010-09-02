@@ -12,6 +12,7 @@
 #include "BuildingType.h"
 #include "ofx3DModelLoader.h"
 #include "ofxVectorMath.h"
+#include "ofxLabUtils.h"
 
 #define MAX_ROTATION_VEC_LENGTH 10
 
@@ -97,7 +98,7 @@ public:
 		endPoint.x = endPos.x = x;
 	};
 	
-	ofxVec3f dampenVelocity ( float amt ){
+	ofxVec3f dampevelocity ( float amt ){
 		vel *= amt;
 	}
 	
@@ -196,7 +197,7 @@ public:
 		endPos.y = _endPos;
 	}
 	
-	void setTargetPoint( float x, float y, float z ){
+	void setTargetPoint( float x, float y, float z=0 ){
 		targetPoint.x = x;
 		targetPoint.y = y;
 		targetPoint.z = z;
@@ -210,10 +211,15 @@ public:
 		targetPoint.y = y;
 	};
 	
+	ofxVec3f dampenVelocity ( float amt ){
+		vel *= amt;
+	}
 	
 /***************************************************************
 	 NEIGHBORS
 ***************************************************************/
+	
+	int numNeighbors(){ return neighbors.size(); };
 	
 	void clearNeighbors(){
 		neighbors.clear();
@@ -230,155 +236,6 @@ public:
 	bool isMasterParticle(){
 		return index == 0 && neighbors.size() > 0;
 	}
-	
-/***************************************************************
-	 GET UPDATED POSITION OR VELOCITY
-***************************************************************/
-	
-	//call getNextPoint(1) to get velocity
-	//getNextPoint() or getNextPoint(0) return position
-	
-	// NOTE: does not update vars, just returns what next ones will be
-	
-	ofxVec3f getNextPoint(int which = 0){
-		//localize variables to function
-		ofxVec3f destPt, nPos, nAcc, nVel;
-		nPos = pos;
-		nAcc = acc;
-		nVel = vel;
-		
-		// seek home particle if not particle (index=0)
-		
-		if ( (bTransforming || bLeaving) && index != 0){
-			
-			//steer
-			float maxspeed = 30.0f; //arbitrary top speed for now...
-			float maxforce = 2.0f;
-			
-			if (bLeaving || (neighbors[0]->bLeaving)){
-				maxforce = 20.0f;
-				if ( neighbors[index-1]->bUpdated){
-					destPt = neighbors[index-1]->getLoc();
-					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
-				} else {
-					destPt = neighbors[index-1]->getNextPoint();
-					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
-				};
-				
-			} else {			
-				//destPt = neighbors[index-1]->getNextPoint();
-				if ( neighbors[index-1]->bUpdated){
-					destPt = neighbors[index-1]->getLoc();
-					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
-				} else {
-					destPt = neighbors[index-1]->getNextPoint();
-					destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
-				};
-				
-				destPt.x -= neighbors[index-1]->getWidth();
-			}
-			
-			if (destPt.x < getWidth()) destPt.x = getWidth();
-			else if (destPt.x > ofGetWidth()) destPt.x = ofGetWidth() - getWidth();
-			
-			ofxVec3f steer;  // The steering vector
-			ofxVec3f desired;  // A vector pointing from the location to the target
-			float d;			
-			
-			desired = destPt - nPos;  // A vector pointing from the location to the target
-			d = ofDist3D(destPt.x, destPt.y, destPt.z, nPos.x, nPos.y, nPos.z);
-			
-			// If the distance is greater than 0, calc steering (otherwise return zero vector)
-			if (d > 0) {				
-				desired /= d; // Normalize desired
-				desired *= maxspeed;
-				if (d < 100) desired *= d/100.0f;
-				// Steering = Desired minus Velocity
-				steer = desired - nVel;
-				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
-				steer.y = ofClamp(steer.y, -maxforce, maxforce);
-				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
-			}
-			
-			nAcc += steer;
-			
-		//fly around all crazy if home particle + have children
-			
-		} else if ( (bTransforming || bLeaving) && index == 0){
-			
-			//steer
-			float maxspeed = 30.0f; //arbitrary top speed for now...
-			float maxforce = 2.0f;
-			
-			// force slowness unless on the way out
-			if (bLeaving){
-				maxspeed = minSpeed;
-			}
-			
-			ofxVec3f steer;  // The steering vector
-			ofxVec3f desired;  // A vector pointing from the location to the target
-			float d;
-			
-			desired = targetPoint - nPos;  // A vector pointing from the location to the 
-			d = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, nPos.x, nPos.y, nPos.z);
-			
-			// If the distance is greater than 0, calc steering (otherwise return zero vector)
-			if (d > 10) {				
-				desired /= d; // Normalize desired
-				desired *= maxspeed;
-				
-				//slow down unless on the way out
-				if (d < 100 && !bLeaving){
-					desired *= d/100.0f;
-				} 
-				// Steering = Desired minus Velocity
-				steer = desired - nVel;
-				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
-				steer.y = ofClamp(steer.y, -maxforce, maxforce); 
-				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
-			} else if (!bLeaving && !bSend) {
-				if (targetPoint.y == endPos.y){
-					targetPoint.x = endPoint.x;
-					targetPoint.y = endPoint.y;
-					targetPoint.z = 0;
-				} else {
-					targetPoint.x = ofRandom(getWidth(),ofGetWidth()-getWidth());
-					targetPoint.y = nPos.y - ofRandom(50,250);
-					//targetPoint.z = ofRandom(-500,0);
-					
-					if (targetPoint.y <= endPos.y){
-						targetPoint.x = endPoint.x;
-						targetPoint.y = endPoint.y;
-						targetPoint.z = 0;
-					}
-				}
-			} /*else {
-			   bAlive = false;
-			   };*/
-						
-			nAcc += steer;
-		}
-		
-		nVel += nAcc;
-		//nPos += nVel;
-		if ((!bLeaving || bSend) || index == 0){
-			nPos += nVel;
-		} else {
-			nPos = destPt;
-		}
-		if (bTransforming){
-			if (nPos.y >startPos.y){
-				nPos.y = startPos.y;
-				//nVel.y *= -ofRandom(1.,2.75f);
-			}
-		}
-		//cheater variable
-		if (which == 0){
-			return nPos;
-		} else {
-			return nVel;
-		}
-	};
 
 /***************************************************************
 	UPDATE
@@ -419,16 +276,117 @@ public:
 		if (pos.y < startPos.y && !bTransforming && !bLeaving){
 			bTransforming = true;
 			
-			targetPoint.x = pos.x + ofRandom(-200, 200);
-			targetPoint.y = pos.y - ofRandom(50, 200);
-		}		
+			setTargetPoint(pos.x + ofRandom(-200, 200), pos.y - ofRandom(50, 200));
+		}	
+		
+		
+		ofxVec3f destPt;
+		
+		// TRANSFORMING OR LEAVING: FOLLOWER PARTICLES
+		
+		if ( (bTransforming || bLeaving) && index != 0){
+			
+			//steer
+			float maxspeed = 30.0f; //arbitrary top speed for now...
+			float maxforce = 2.0f;
+			
+			if (bLeaving || (neighbors[0]->bLeaving)){
+				maxforce = 20.0f;
+				destPt = neighbors[index-1]->getLoc();
+				destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				
+			} else {			
+				//destPt = neighbors[index-1]->getNextPoint();
+				destPt = neighbors[index-1]->getLoc();
+				destPt.y += neighbors[index-1]->getHeight()/2.0 + getHeight()/2.0;
+				
+				destPt.x -= neighbors[index-1]->getWidth();
+			}
+			
+			if (destPt.x < getWidth()) destPt.x = getWidth();
+			else if (destPt.x > ofGetWidth()) destPt.x = ofGetWidth() - getWidth();
+			
+			ofxVec3f steer;  // The steering vector
+			ofxVec3f desired;  // A vector pointing from the location to the target
+			float d;			
+			
+			desired = destPt - pos;  // A vector pointing from the location to the target
+			d = ofDist3D(destPt.x, destPt.y, destPt.z, pos.x, pos.y, pos.z);
+			
+			// If the distance is greater than 0, calc steering (otherwise return zero vector)
+			if (d > 0) {				
+				desired /= d; // Normalize desired
+				desired *= maxspeed;
+				if (d < 100) desired *= d/100.0f;
+				// Steering = Desired minus Velocity
+				steer = desired - vel;
+				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
+				steer.y = ofClamp(steer.y, -maxforce, maxforce);
+				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
+			}
+			
+			acc += steer;
+			
+			// TRANSFORMING OR LEAVING: HOME PARTICLE
+			
+		} else if ( (bTransforming || bLeaving) && index == 0){
+			
+			//steer
+			
+			float maxspeed = 30.0f;
+			float maxforce = 2.0f;
+			
+			// force slowness unless on the way out
+			
+			if (bLeaving){
+				maxspeed = minSpeed;
+			}
+			
+			ofxVec3f steer;  // The steering vector
+			ofxVec3f desired;  // A vector pointing from the location to the target
+			
+			desired = targetPoint - pos;  // A vector pointing from the location to the destination
+			float distance = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, pos.x, pos.y, pos.z);
+			
+			// If the distance is greater than 10
+			if (distance > 10) {				
+				desired /= distance; // Normalize desired
+				desired *= maxspeed;
+				
+				//slow down unless on the way out
+				if (distance < 100 && !bLeaving){
+					desired *= distance/100.0f;
+				} 
+				// Steering = Desired minus Velocity
+				steer = desired - vel;
+				steer.x = ofClamp(steer.x, -maxforce, maxforce); // Limit to maximum steering force
+				steer.y = ofClamp(steer.y, -maxforce, maxforce); 
+				steer.z = ofClamp(steer.z, -maxforce, maxforce); 
+			} else if (!bLeaving && !bSend) {
+				if (targetPoint.y == endPos.y){
+					setTargetPoint(endPoint.x, endPoint.y, 0);
+				} else {
+					setTargetPoint(ofRandom(getWidth(),ofGetWidth()-getWidth()), pos.y - ofRandom(50,ofGetHeight()/4.0f));
+					
+					if (targetPoint.y <= endPos.y){
+						setTargetPoint(endPoint.x, endPoint.y, 0);
+					}
+				}
+			} else {
+				if (bLeaving){
+					setTargetPoint(endPoint.x, endPoint.y, 0);					
+				};
+			}
+			
+			acc += steer;
+		}
 		
 	//alter scale and rotation
 		
 		//rotatiom
 		if (bTransforming){
 			if (index == 0){
-				ofxVec3f heading = getNextPoint(1).getNormalized()*90.0f;
+				ofxVec3f heading = vel.getNormalized()*90.0f;
 				rotation -= (rotation - heading)/5.0f;
 			} else {
 				rotation -= (rotation - neighbors[0]->rotation)/50.0f;
@@ -472,6 +430,7 @@ public:
 				rotation.z = ofLerp(lastRotation.z, targetRotation.z, extrudeTimer/10.);
 				
 				if (index == 0){
+					targetPoint = endPos;
 					pos.x = ofLerp(lastPosition.x, endPos.x, extrudeTimer/10.);
 					pos.y = ofLerp(lastPosition.y, endPos.y, extrudeTimer/10.);
 					pos.z = ofLerp(lastPosition.z, endPos.z, extrudeTimer/10.);
@@ -530,26 +489,33 @@ public:
 			}
 			lastPosition = pos;
 		};
-		
-		//update position
-		
-		//vel += acc;
-		//pos += vel;
 				
-		vel = getNextPoint(1);
-		pos = getNextPoint();
+		// UPDATE VELOCITY + ACCELERATION
 		
-		//if ((!bLeaving || bSend) || index == 0){
-		/*} else {
-			pos = neighbors[index-1]->getLoc();
-			pos.y += neighbors[index-1]->getHeight();
-		}*/
+		vel += acc;
+		
+		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
+		
+		if ((!bLeaving || bSend) || index == 0){
+			pos += vel;
+			
+			// UPDATE POSITION: FOLLOWER PARTICLE THAT IS CLICKED INTO PLACE
+			
+		} else {
+			pos = destPt;
+		}
+		
+		// CHECK MINUMUM Y IF IN TRANSFORM MODE
+		
+		if (bTransforming){
+			if (pos.y >startPos.y){
+				pos.y = startPos.y;
+				//vel.y *= -ofRandom(1.,2.75f);
+			}
+		}
+		
 		acc = 0;	
 		bUpdated = true;
-	}
-		
-	float ofDist3D(float x1, float y1, float z1, float x2, float y2, float z2 ) {
-		return sqrt(double((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2)));
 	}
 
 /***************************************************************

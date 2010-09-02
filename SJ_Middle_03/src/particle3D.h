@@ -22,6 +22,11 @@ public:
 	ofxColor fillColor;
 	ofPoint scale;
 	ofPoint startScale, targetScale;
+	float alphaDamping;
+	
+	int age, life;
+	
+	float scaleSpeed;
 	
 	particle3D(){
 		targetScale.x = ofRandom(5., 40.);
@@ -35,13 +40,18 @@ public:
 		ranRotation.y = ofRandomf()*360.f;
 		ranRotation.z = ofRandomf()*360.f;
 		
-		rotSpeed = ofRandomf()*10.;
+		rotSpeed = ofRandomf()*30.;
 		ofSetColor(0xffffff);
-		damping = .85f;
+		damping = .85f+ofRandom(-.1, .1);
 		startScale.x = 0;
 		startScale.y = 0;
 		scale = startScale;
-		type = (int) floor(ofRandom(0,5));
+		type = (int) floor(ofRandom(0,3));
+		alphaDamping = .989;
+		
+		age = 0;
+		life = ofRandom(30, 140);
+		scaleSpeed = ofRandom( 5, 30);
 	}
 		
 	ofPoint startPoint;
@@ -51,12 +61,18 @@ public:
 		startPoint.y = py;
 		startPoint.z = pz;		
 		
+		if (type == 0){
+			vx *= ofRandom(.2, .75);
+			vy *= ofRandom(.2, .75);
+			vx *= ofRandom(.2, .75);
+		}
+		
 		phyParticle::setInitialCondition(px, py, pz, vx, vy, vz);
 	};
 	
 	void setScale( float x, float y ){
-		targetScale.x = x/(2 + ofRandomuf()*4.);
-		targetScale.y = y/(2 + ofRandomuf()*4.);
+		targetScale.x = x/(1.3 + ofRandomuf()*4.);
+		targetScale.y = y/(1.3 + ofRandomuf()*4.);
 		if (type >= 1){
 			targetScale.x *= ofRandom(1., 2.f);
 		}
@@ -111,11 +127,10 @@ public:
 		
 		ofxLightsOff();
 		if (type >= 1){
-			glBegin(GL_POLYGON);
-			glVertex3f(startPoint.x, startPoint.y, startPoint.z);
+			ofTriangle(startPoint.x, startPoint.y, startPoint.z, pos.x-scale.x, pos.y, pos.z-scale.x, pos.x+scale.x, pos.y, pos.z+scale.x);
+			/*glVertex3f(startPoint.x, startPoint.y, startPoint.z);
 			glVertex3f(pos.x-scale.x, pos.y, pos.z-scale.x);
-			glVertex3f(pos.x+scale.x, pos.y, pos.z+scale.x);
-			glEnd();
+			glVertex3f(pos.x+scale.x, pos.y, pos.z+scale.x);*/
 		}
 		ofxLightsOn();
 		
@@ -134,11 +149,11 @@ public:
 		if (type == 0){
 			ofxBox(0,0,0,scale.x, scale.y, scale.x );
 		}
-		scale.x -= (scale.x - targetScale.x)/20.0f;
-		scale.y -= (scale.y - targetScale.y)/20.0f;
-		scale.z -= (scale.z - targetScale.z)/20.0f;
+		scale.x -= (scale.x - targetScale.x)/scaleSpeed;
+		scale.y -= (scale.y - targetScale.y)/scaleSpeed;
+		scale.z -= (scale.z - targetScale.z)/scaleSpeed;
 		
-		fillColor.alpha *= .98;
+		fillColor.alpha *= alphaDamping;
 		if (fillColor.alpha <=50){
 			bAlive = false;
 			fillColor.alpha *= .75;

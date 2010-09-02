@@ -41,20 +41,24 @@ void phyParticleSystem::update()
 					p = new particle3D();
 					
 					ofPoint aVel;
-					aVel.x = fmax(ofRandom(3.0, 7.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * sin(angle);
-					aVel.y = fmax(ofRandom(3.0, 7.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * cos(angle);
+					aVel.x = fmax(ofRandom(1.0, 5.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * sin(angle);
+					aVel.y = fmax(ofRandom(1.0, 5.0f), fabs(emitter->particles[i]->getVelocity().x / ofRandom(1.0f, 15.0f))) * cos(angle);
 						
 					angle += angleAdd;
 					
 					emitter->particles[i]->targetScale *= 1.03f;
 					
-					p->setInitialCondition(emitter->particles[i]->getLoc().x, emitter->particles[i]->getLoc().y, emitter->particles[i]->getLoc().z, aVel.x, aVel.y, ofRandom(-10.f, 10.f));
+					p->setInitialCondition(emitter->particles[i]->getLoc().x, emitter->particles[i]->getLoc().y, emitter->particles[i]->getLoc().z, aVel.x, aVel.y, ofRandom(-5.0f, 5.0f));
 					p->setColor(emitter->particles[i]->color);
 					
 					p->mass = fabs(emitter->particles[i]->getVelocity().x/3.0f);
 					p->pos.z = emitter->particles[i]->getLoc().z;
 					
-					p->addForce(aVel.x, aVel.y);
+					if (p->type == 0){
+						p->addForce(aVel.x*ofRandom(.2, .8), aVel.y*ofRandom(.2, .8));
+					} else {
+						p->addForce(aVel.x, aVel.y);
+					}
 					p->setScale( emitter->particles[i]->getHeight(), emitter->particles[i]->getHeight() );
 					
 					LineExplosion * explosion = new LineExplosion();
@@ -62,6 +66,15 @@ void phyParticleSystem::update()
 					explosion->y = emitter->particles[i]->getLoc().y;
 					explosion->setColor( emitter->particles[i]->color );
 					explosions.push_back(explosion);
+					
+					//adjust damping alpha based on number of particles
+					if (emitter->particles.size() < 5){
+						explosion->alphaDamping += .005;
+						p->alphaDamping += .005;
+					} else if (emitter->particles[i]->numNeighbors() > 3 || emitter->particles.size() > 20){
+						p->alphaDamping -= .001;
+						explosion->alphaDamping -= .001;
+					}
 					
 					emitter->particles[i]->dampenVelocity(-.5f);
 					
@@ -118,6 +131,7 @@ void phyParticleSystem::draw()
 	ofxLightsOff();
 	trailTex.draw(0,0);
 	*/
+	ofEnableAlphaBlending();
 	
 	glDisable(GL_DEPTH_TEST);
 	ofxLightsOff();
@@ -126,7 +140,7 @@ void phyParticleSystem::draw()
 		explosions[i]->draw();
 	}
 	ofxLightsOn();
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	for (int i=0; i<particles.size(); i++){
 		if (particles[i]->bAlive){
 			particles[i]->draw();

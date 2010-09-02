@@ -7,7 +7,7 @@
 void testApp::setup(){	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
-	ofSetFrameRate(60);	
+	//ofSetFrameRate(60);	
 	
 	//load settings from xml
 	ofxXmlSettings settings;
@@ -88,6 +88,7 @@ void testApp::setup(){
 	//particle effects
 	trails.setup(&particleManager);
 	system = new phyParticleSystem( &particleManager );
+	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);//, 4);
 	
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.setup(&particleManager);
@@ -169,10 +170,17 @@ void testApp::update(){
 #ifdef FLUID_EFFECT_SYSTEM
 		effectsSystem.update();
 #endif
-		//trails.update();
+		trails.update();
+		
 		system->update();
-	} 
-	
+		
+		explosionFBO.clear();
+		explosionFBO.begin();
+		ofxLightsOn();
+		system->draw();
+		ofxLightsOff();
+		explosionFBO.end();
+	}	
 	
 	//get values from gui
 	ofxLabGui * gui = projection.getGui();
@@ -224,32 +232,26 @@ void testApp::draw(){
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.draw();
 #endif
+	
 	projection.pushView(0);
-	//draw particles
 	
 	//draw particle effects
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor(0xffffff);	
-	//trails.draw();
-	
-	ofxLightsOn();
-	ofSetColor(0xffffff);	
-	system->draw();
-	ofSetColor(0xffffff);
-	ofxLightsOff();
-	
+	trails.draw();
+	explosionFBO.draw(0,0);	
 	glEnable(GL_DEPTH_TEST);
 	
+	//draw particles
 	particleManager.draw();
-//	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor( 255, 255, 255 );
-	//ofxLightsOff();
+	ofxLightsOff();
 	projection.popView();
 	ofEnableAlphaBlending();
+	glDisable(GL_DEPTH_TEST);
 	
 	if ( drawMode == LAB_MODE_P_CALIBRATE ){
-		glDisable(GL_DEPTH_TEST);
 		ofEnableAlphaBlending();
 		ofSetColor(0,0,0,200);
 		ofRect(0, 0, ofGetWidth(), ofGetHeight());
@@ -360,6 +362,7 @@ void testApp::windowResized(int w, int h){
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.windowResized(w,h);
 #endif
+	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);//, 4);
 }
 
 //--------------------------------------------------------------

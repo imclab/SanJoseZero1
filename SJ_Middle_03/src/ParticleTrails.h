@@ -49,9 +49,7 @@ public:
 	
 	void draw(){		
 		ofSetColor(255,255,255,200);
-		glDisable(GL_DEPTH_TEST);
 		trailsFBO.draw(0, 0);
-		glEnable(GL_DEPTH_TEST);
 		ofSetColor(255,255,255,255);
 	}
 	

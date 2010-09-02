@@ -59,7 +59,8 @@ public:
 	int drawMode;
 	
 	ofxLabProjectionTools	projection;
-	phyParticleSystem * system;
+	phyParticleSystem *		system;
+	ofxFBOTexture			explosionFBO;
 		
 #ifdef FLUID_EFFECT_SYSTEM
 	EffectsSystem			effectsSystem;
