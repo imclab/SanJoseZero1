@@ -25,8 +25,8 @@ class Input
   SETUP
 **********************************************************/
   
-  Input(String _address, PFont _font, int _fontSize ){
-    values = new int[1];
+  Input(String _address, int numValues, PFont _font, int _fontSize ){
+    values = new int[numValues];
     x = y = 0;
     address = _address;
     font = _font;
@@ -102,8 +102,12 @@ class Input
   }
 
   boolean update( int[] vals ){
-    newFrame = true;
-    if (values[0] == vals[0]) newFrame = false;
+    newFrame = false;
+    for (int i=0; i<vals.length; i++){
+      if (values[i] != vals[i]){
+        newFrame = true;
+      }
+    }
     values = vals;
     deadFrames = 0;
     return newFrame;

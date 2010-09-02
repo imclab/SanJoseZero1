@@ -5,10 +5,22 @@
         <message>
             <image>models/birdfeeder/birdfeeder.3ds</image>
             <messageString>/pluginplay/birdfeeder</messageString>
+            <color>
+                <r>121</r>
+                <g>176</g>
+                <b>93</b>
+            </color>
         </message>
+        <!-- 
+<color>
+	<r>128</r>
+	<r>167</r>
+	<r>117</r>
+</color>
+-->
         <position>
-            <x>21.000000</x>
-            <y>1016.000000</y>
+            <x>18.000000</x>
+            <y>1615.000000</y>
         </position>
     </input>
     <input>
@@ -16,10 +28,15 @@
         <message>
             <image>models/flickr/flickr.3ds</image>
             <messageString>/pluginplay/flickr</messageString>
+            <color>
+                <r>161</r>
+                <g>186</g>
+                <b>203</b>
+            </color>
         </message>
         <position>
-            <x>116.000000</x>
-            <y>1023.000000</y>
+            <x>98.000000</x>
+            <y>1613.000000</y>
         </position>
     </input>
     <input>
@@ -27,14 +44,24 @@
         <message>
             <image>models/foursquare/foursq00.3DS</image>
             <messageString>/pluginplay/foursquare</messageString>
+            <color>
+                <r>161</r>
+                <g>199</g>
+                <b>199</b>
+            </color>
         </message>
         <message>
             <image>models/foursquare/foursq01.3ds</image>
             <messageString>/pluginplay/foursquare/nearby</messageString>
+            <color>
+                <r>138</r>
+                <g>199</g>
+                <b>199</b>
+            </color>
         </message>
         <position>
-            <x>223.000000</x>
-            <y>1019.000000</y>
+            <x>177.000000</x>
+            <y>1613.000000</y>
         </position>
     </input>
     <input>
@@ -42,90 +69,195 @@
         <message>
             <image>models/hopscotch/hopscotch_00.3ds</image>
             <messageString>/pluginplay/hopscotch_00</messageString>
+            <color>
+                <r>252</r>
+                <g>237</g>
+                <b>0</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_00.3ds</image>
             <messageString>/pluginplay/hopscotch_10</messageString>
+            <color>
+                <r>252</r>
+                <g>237</g>
+                <b>0</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_00.3ds</image>
             <messageString>/pluginplay/hopscotch_20</messageString>
+            <color>
+                <r>252</r>
+                <g>237</g>
+                <b>0</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_01.3ds</image>
             <messageString>/pluginplay/hopscotch_01</messageString>
+            <color>
+                <r>0</r>
+                <g>106</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_01.3ds</image>
             <messageString>/pluginplay/hopscotch_11</messageString>
+            <color>
+                <r>0</r>
+                <g>106</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_01.3ds</image>
             <messageString>/pluginplay/hopscotch_21</messageString>
+            <color>
+                <r>0</r>
+                <g>106</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_02.3ds</image>
             <messageString>/pluginplay/hopscotch_02</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_02.3ds</image>
             <messageString>/pluginplay/hopscotch_12</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_02.3ds</image>
             <messageString>/pluginplay/hopscotch_22</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>255</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_03.3ds</image>
             <messageString>/pluginplay/hopscotch_03</messageString>
+            <color>
+                <r>139</r>
+                <g>202</g>
+                <b>184</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_03.3ds</image>
             <messageString>/pluginplay/hopscotch_13</messageString>
+            <color>
+                <r>139</r>
+                <g>202</g>
+                <b>184</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_03.3ds</image>
             <messageString>/pluginplay/hopscotch_23</messageString>
+            <color>
+                <r>139</r>
+                <g>202</g>
+                <b>184</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_04.3ds</image>
             <messageString>/pluginplay/hopscotch_04</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>207</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_04.3ds</image>
             <messageString>/pluginplay/hopscotch_14</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>207</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_04.3ds</image>
             <messageString>/pluginplay/hopscotch_24</messageString>
+            <color>
+                <r>0</r>
+                <g>255</g>
+                <b>207</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_05.3ds</image>
             <messageString>/pluginplay/hopscotch_05</messageString>
+            <color>
+                <r>250</r>
+                <g>210</g>
+                <b>25</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_05.3ds</image>
             <messageString>/pluginplay/hopscotch_15</messageString>
+            <color>
+                <r>250</r>
+                <g>210</g>
+                <b>25</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_05.3ds</image>
             <messageString>/pluginplay/hopscotch_25</messageString>
+            <color>
+                <r>250</r>
+                <g>210</g>
+                <b>25</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_06.3ds</image>
             <messageString>/pluginplay/hopscotch_06</messageString>
+            <color>
+                <r>192</r>
+                <g>255</g>
+                <b>217</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_m_06.3ds</image>
             <messageString>/pluginplay/hopscotch_16</messageString>
+            <color>
+                <r>192</r>
+                <g>255</g>
+                <b>217</b>
+            </color>
         </message>
         <message>
             <image>models/hopscotch/hopscotch_l_06.3ds</image>
             <messageString>/pluginplay/hopscotch_26</messageString>
+            <color>
+                <r>192</r>
+                <g>255</g>
+                <b>217</b>
+            </color>
         </message>
         <position>
-            <x>377.000000</x>
-            <y>1003.000000</y>
+            <x>263.000000</x>
+            <y>1612.000000</y>
         </position>
     </input>
     <input>
@@ -133,10 +265,15 @@
         <message>
             <image>models/megaphone/mega00.3DS</image>
             <messageString>/pluginplay/megaphone</messageString>
+            <color>
+                <r>252</r>
+                <g>253</g>
+                <b>25</b>
+            </color>
         </message>
         <position>
-            <x>512.000000</x>
-            <y>966.000000</y>
+            <x>463.000000</x>
+            <y>1624.000000</y>
         </position>
     </input>
     <input>
@@ -144,10 +281,15 @@
         <message>
             <image>models/picnic/picnic00.3ds</image>
             <messageString>/pluginplay/picnictable</messageString>
+            <color>
+                <r>51</r>
+                <g>255</g>
+                <b>242</b>
+            </color>
         </message>
         <position>
-            <x>651.000000</x>
-            <y>976.000000</y>
+            <x>591.000000</x>
+            <y>1618.000000</y>
         </position>
     </input>
     <input>
@@ -155,29 +297,49 @@
         <message>
             <image>models/playground/play00.3DS</image>
             <messageString>/pluginplay/playground</messageString>
+            <color>
+                <r>210</r>
+                <g>159</g>
+                <b>111</b>
+            </color>
         </message>
         <position>
-            <x>794.000000</x>
-            <y>982.000000</y>
+            <x>743.000000</x>
+            <y>1615.000000</y>
         </position>
     </input>
     <input>
         <name>signal</name>
         <message>
-            <image>models/signal/signal.3ds</image>
+            <image>models/signal/signal_01.3DS</image>
             <messageString>/pluginplay/signal_00</messageString>
+            <color>
+                <r>255</r>
+                <g>255</g>
+                <b>0</b>
+            </color>
         </message>
         <message>
             <image>models/signal/signal_01.3ds</image>
             <messageString>/pluginplay/signal_01</messageString>
+            <color>
+                <r>255</r>
+                <g>176</g>
+                <b>0</b>
+            </color>
         </message>
         <message>
             <image>models/signal/signal_02.3ds</image>
             <messageString>/pluginplay/signal_02</messageString>
+            <color>
+                <r>62</r>
+                <g>255</g>
+                <b>255</b>
+            </color>
         </message>
         <position>
-            <x>925.000000</x>
-            <y>972.000000</y>
+            <x>876.000000</x>
+            <y>1616.000000</y>
         </position>
     </input>
     <input>
@@ -185,10 +347,15 @@
         <message>
             <image>models/twitter/twitter.3ds</image>
             <messageString>/pluginplay/twitter</messageString>
+            <color>
+                <r>0</r>
+                <g>0</g>
+                <b>255</b>
+            </color>
         </message>
         <position>
-            <x>1055.000000</x>
-            <y>975.000000</y>
+            <x>966.000000</x>
+            <y>1610.000000</y>
         </position>
     </input>
     <osc>
@@ -205,8 +372,8 @@
         </sender>
     </osc>
     <transform>
-        <start>737.000000</start>
-        <end>184.000000</end>
+        <start>1338.000000</start>
+        <end>324.000000</end>
     </transform>
     <columns>
         <numColums>5</numColums>

@@ -201,6 +201,9 @@
 		2E78C35A1224693C007663E7 /* Columns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Columns.h; sourceTree = "<group>"; };
 		2E7A4B2411DB96B400914266 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
 		2E7A4B2511DB96EA00914266 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		2E8BBF7A122E9CB900625F40 /* MSAShape3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAShape3D.h; sourceTree = "<group>"; };
+		2E8BBF7D122E9FF300625F40 /* particle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle3D.h; sourceTree = "<group>"; };
+		2E8BC276122EE93400625F40 /* LineExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineExplosion.h; sourceTree = "<group>"; };
 		2EC2E6581228593200483E81 /* guiBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiBaseObject.h; sourceTree = "<group>"; };
 		2EC2E6591228593200483E81 /* guiColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiColor.h; sourceTree = "<group>"; };
 		2EC2E65A1228593200483E81 /* guiCustomImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiCustomImpl.h; sourceTree = "<group>"; };
@@ -566,6 +569,36 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		2E8BBF6E122E9CB900625F40 /* MSAShape3D */ = {
+			isa = PBXGroup;
+			children = (
+				2E8BBF79122E9CB900625F40 /* src */,
+			);
+			name = MSAShape3D;
+			path = src/utils/MSAShape3D;
+			sourceTree = "<group>";
+		};
+		2E8BBF79122E9CB900625F40 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2E8BBF7A122E9CB900625F40 /* MSAShape3D.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		2E8BBFC6122EADEB00625F40 /* medium */ = {
+			isa = PBXGroup;
+			children = (
+				A97B8575122C9D78006CB83D /* phyParticle.cpp */,
+				A97B8576122C9D78006CB83D /* phyParticle.h */,
+				A97B8577122C9D78006CB83D /* phyParticleSystem.cpp */,
+				A97B8578122C9D78006CB83D /* phyParticleSystem.h */,
+				2E8BBF7D122E9FF300625F40 /* particle3D.h */,
+				2E8BC276122EE93400625F40 /* LineExplosion.h */,
+			);
+			name = medium;
+			sourceTree = "<group>";
+		};
 		2EC2E6571228593200483E81 /* ofxLabGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -764,11 +797,8 @@
 		A91605B81225C03000B2B08C /* particleEffects */ = {
 			isa = PBXGroup;
 			children = (
+				2E8BBFC6122EADEB00625F40 /* medium */,
 				A97B85FC122CADCB006CB83D /* ParticleTrails.h */,
-				A97B8575122C9D78006CB83D /* phyParticle.cpp */,
-				A97B8576122C9D78006CB83D /* phyParticle.h */,
-				A97B8577122C9D78006CB83D /* phyParticleSystem.cpp */,
-				A97B8578122C9D78006CB83D /* phyParticleSystem.h */,
 				2E042025122C428A0008C53E /* fluids */,
 			);
 			name = particleEffects;
@@ -778,8 +808,8 @@
 			isa = PBXGroup;
 			children = (
 				2E7A4B2411DB96B400914266 /* Emitter.h */,
-				A91602421225697E00B2B08C /* BuildingType.h */,
 				2E7A4B2511DB96EA00914266 /* Particle.h */,
+				A91602421225697E00B2B08C /* BuildingType.h */,
 				2E78C359122468B3007663E7 /* Column.h */,
 				2E78C35A1224693C007663E7 /* Columns.h */,
 			);
@@ -789,6 +819,7 @@
 		BB4B018C10F6955C006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				2E8BBF6E122E9CB900625F40 /* MSAShape3D */,
 				2E042035122C429B0008C53E /* fluid */,
 				2E041EDE122C31FE0008C53E /* ofx3DUtils */,
 				2EC2E6901228594F00483E81 /* projection */,
@@ -1163,8 +1194,8 @@
 				A91605B91225C03C00B2B08C /* buildingParticles */,
 				A91605B81225C03000B2B08C /* particleEffects */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
