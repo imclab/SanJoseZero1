@@ -60,7 +60,7 @@ public:
 		int increment = 90/ROTATE_AMOUNT;
 		
 		float curY = 0;
-		
+		/*LARS
 		for (int i=1; i<=increment; i++){
 			BuildingRow * dum = new BuildingRow(500);
 			dum->rotation.x = 270 + ROTATE_AMOUNT*i;
@@ -73,7 +73,7 @@ public:
 		dum1->rotation.x = 360;
 		dum1->pos.y -= dum1->getSize().y-20;
 		oldRows.push_back(dum1);
-				
+			*/	
 		//set up first row		
 		currentRow = new BuildingRow(500);
 	};

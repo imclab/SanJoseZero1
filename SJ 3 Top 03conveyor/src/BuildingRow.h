@@ -106,7 +106,6 @@ public:
 	};
 	
 	void draw(){
-		//LARS//
 		ofPushMatrix();{
 			ofTranslate(pos.x, pos.y, 0);
 			ofRotateX( rotation.x );
