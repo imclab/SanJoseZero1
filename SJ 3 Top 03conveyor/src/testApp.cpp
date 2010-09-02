@@ -123,27 +123,10 @@ void testApp::setup(){
 	fCounter = 0.0;
 	//ceiling mesh
 	
-	numCurves = 7;//number of buildings per row+2(border)
+	numCurves = 7;//number of stacks per row + 2(border)
 	numCVs = 18;
 	numSubdivisions = 25;
-	//define posiitons used t create curves
-	/*refPoses.resize(16);	
-	refPoses[0].set(0.0, 4, -1);
-	refPoses[1].set(0.0, 5, -1);
-	refPoses[2].set(0.0, 6, 0);
-	refPoses[3].set(0.0, 5, 1);
-	refPoses[4].set(0.0, 4, 1);
-	refPoses[5].set(0.0, 3, 1);
-	refPoses[6].set(0.0, 2, 1);
-	refPoses[7].set(0.0, 1, 1);
-	refPoses[8].set(0.0, -1, 1);
-	refPoses[9].set(0.0, -2, 1);
-	refPoses[10].set(0.0, -3, 1);
-	refPoses[11].set(0.0, -4, 1);
-	refPoses[12].set(0.0, -5, 1);
-	refPoses[13].set(0.0, -6, 0);
-	refPoses[14].set(0.0, -5, -1);
-	refPoses[15].set(0.0, -4, -1);*/
+	//define posiitons used t0 create curves
 	refPoses.resize(numCVs);
 	refPoses[0].set(0, 0.99, 0);
 	refPoses[1].set(0, 1.03782, 0);
@@ -428,14 +411,14 @@ void testApp::draw(){
 	}*/
 	
 	//draw normals
-	glBegin(GL_LINES);
-	ofSetColor(255, 255, 250);
-	for(int i=0;i<vertices.size();i++){
-		ofxVec3f p2 = vertices[i].pos + vertices[i].norm*30;
-		glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
-		glVertex3f(p2.x, p2.y, p2.z);
-	}
-	glEnd();
+	//glBegin(GL_LINES);
+	//ofSetColor(255, 255, 250);
+	//for(int i=0;i<vertices.size();i++){
+	//	ofxVec3f p2 = vertices[i].pos + vertices[i].norm*30;
+	//	glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
+	//	glVertex3f(p2.x, p2.y, p2.z);
+	//}
+	//glEnd();
 	
 	//for(int i=0; i<stackControllers.size();i++){
 	//	ofSetColor(225, 20, 50);

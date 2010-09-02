@@ -41,7 +41,7 @@ void main()
 	float facRat =  pow( max(0.0, dot(normal, lightDir)), 2.0);	
 	//color.xyz += pow(facRat, 16.0)+.3; 
 	//color.xyz *= min(max(0.2, facRat), shadowVal);
-	color.xyz *= min(max(0.25,facRat), shadowVal);	
+	color.xyz *= min(max(shadowColor,facRat), max(shadowColor,shadowVal));	
 	
 				
 	//gl_FragColor = vec4(normal*.5+.5, 1.0); // color;
