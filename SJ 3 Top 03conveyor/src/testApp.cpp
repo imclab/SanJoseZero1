@@ -123,7 +123,7 @@ void testApp::setup(){
 	fCounter = 0.0;
 	//ceiling mesh
 	
-	numCurves = 7;//number of stacks per row + 2(border)
+	numCurves = NUMBER_OF_ROWS;//number of stacks per row + 2(border)
 	numCVs = 18;
 	numSubdivisions = 25;
 	//define posiitons used t0 create curves
@@ -154,14 +154,17 @@ void testApp::setup(){
 	curves.resize(numCurves);
 	conveyorYoffset = 135;
 	
+	float curX = ROW_BUFFER;
+	
 	for(int i=0; i<numCurves; i++){
 		for(int j=0; j<numCVs;j++){
-			curves[i].addCV(i*xStep+xStep/2,
+			curves[i].addCV(curX,//i*xStep+xStep/2,
 							refPoses[j].y*ofGetHeight()*.5+conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
 							refPoses[j].z*1000);//cos(float(j)/float(numCVs))*300);
 			curves[i].setDegree(2);
 			curves[i].setKnots();
 			curves[i].setNumSpans(numSubdivisions);
+			curX += ROW_SPACING;
 		}		
 	}
 	

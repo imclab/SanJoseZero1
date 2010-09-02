@@ -15,5 +15,6 @@
 #define ROTATE_AMOUNT 8
 #define ROTATE_INCREMENT 1
 
-#define ROW_BUFFER 100.0f
-#define NUMBER_OF_ROWS 5.0f
+#define ROW_BUFFER 10.0f
+#define NUMBER_OF_ROWS 10.0f
+#define ROW_SPACING 50.0f
