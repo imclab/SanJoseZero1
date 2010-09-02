@@ -30,7 +30,7 @@ void main()
 	gl_FrontColor = gl_Color;	
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	normal = normalize(gl_NormalMatrix * gl_Normal);
-		
+	
 	//find world space coord. this is necessary for shadow mapping all the different glTranslates
 	//a batch render would probable make these two steps redundant
 	mat4 modelMatrix = invMat * gl_ModelViewMatrix;

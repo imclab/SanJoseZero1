@@ -14,6 +14,8 @@
 #include "Building.h"
 #include "BuildingRow.h"
 
+#include "LCurve.h"
+
 class BuildingRow
 {
 public:
@@ -82,7 +84,7 @@ public:
 				columnIndex = i;
 			};
 		};
-						
+		
 		return stacks[columnIndex];
 	};
 	
@@ -104,6 +106,7 @@ public:
 	};
 	
 	void draw(){
+		//LARS//
 		ofPushMatrix();{
 			ofTranslate(pos.x, pos.y, 0);
 			ofRotateX( rotation.x );
@@ -139,8 +142,6 @@ public:
 	ofPoint size;
 	ofColor color;
 	vector <Stack *> stacks;
-	
-	ofImage ceilingTexture;
 	
 protected:
 	float ceiling;

@@ -3,8 +3,8 @@
 bool advanceCeiling;
 ofImage randImage;
 
-pointOnCurveNode sweetSpot;
-ofxVec3f sweetSpotPos;
+vector <pointOnCurveNode> sweetSpot;
+vector <ofxVec3f> sweetSpotPos;
 
 
 //--------------------------------------------------------------
@@ -146,10 +146,11 @@ void testApp::setup(){
 	float yStep = float (ofGetHeight())/float(numCVs);
 	curves.reserve(numCurves);
 	curves.resize(numCurves);
+	
 	for(int i=0; i<numCurves; i++){
 		for(int j=0; j<numCVs;j++){
 			curves[i].addCV(i*xStep,
-							refPoses[j].y*120.0+ofGetHeight()*.5-725,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
+							refPoses[j].y*yStep+ofGetHeight()*.5,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
 							refPoses[j].z*150.0);//cos(float(j)/float(numCVs))*300);
 			curves[i].setDegree(2);
 			curves[i].setKnots();
@@ -160,6 +161,8 @@ void testApp::setup(){
 	meshNodes.reserve(numSubdivisions*numCurves);
 	meshNodes.resize(numSubdivisions*numCurves);	
 	vertices.reserve(numSubdivisions*numCurves);
+	sweetSpot.resize(numCurves);	
+	sweetSpotPos.resize(numCurves);	
 	for(int i=0; i<numCurves;i++){
 		for(int j=0; j<numSubdivisions;j++){
 			float uVal = float(j)/float(numSubdivisions-1);
@@ -169,10 +172,11 @@ void testApp::setup(){
 			meshNodes[i*numSubdivisions + j].setup(uVal,
 												   &curves[i],
 												   &vertices[i*numSubdivisions+j].pos);
-			meshNodes[i*numSubdivisions + j].setNorm(&vertices[i].norm);
 		}
+		
+		sweetSpot[i].setup(.175, &curves[i], &sweetSpotPos[i]);
 	}
-	sweetSpot.setup(.0, &curves[3], &sweetSpotPos);
+	
 	for(int i=0; i<numCurves-1;i++){
 		for(int j=0; j<numSubdivisions-1;j++){
 			faceIndices.push_back(i*numSubdivisions+j);
@@ -180,13 +184,6 @@ void testApp::setup(){
 			faceIndices.push_back((i+1)*numSubdivisions+j+1);
 			faceIndices.push_back((i+1)*numSubdivisions+j);
 		}
-		
-		//loop last face		
-		faceIndices.push_back(i*numSubdivisions);
-		faceIndices.push_back(i*numSubdivisions+numSubdivisions-1);
-		faceIndices.push_back((i+1)*numSubdivisions+numSubdivisions-1);
-		faceIndices.push_back((i+1)*numSubdivisions);
-		
 	}
 	faceNorms.resize(faceIndices.size()/4);
 	
@@ -218,32 +215,40 @@ void testApp::update(){
 	
 	//ceiling mesh
 	if(advanceCeiling){
+		float uIncrement = .0125;
+		
 		for(int i=0;i<meshNodes.size();i++){
-			meshNodes[i].uPos += .0035;
+			meshNodes[i].uPos += uIncrement;
 			if(meshNodes[i].uPos >1.0)	meshNodes[i].uPos -= 1.0;
 			if(meshNodes[i].uPos <0.0)	meshNodes[i].uPos += 1.0;
 			meshNodes[i].update();
 		}
-	}
-	sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
-	sweetSpot.update();
-	
-	for(int i=0; i<faceIndices.size(); i+=4){
-		int normIndex = i/4;
-		faceNorms[normIndex] = normCalc(vertices[faceIndices[i]].pos,
-										vertices[faceIndices[i+1]].pos,
-										vertices[faceIndices[i+2]].pos);
-		faceNorms[normIndex] += normCalc(vertices[faceIndices[i]].pos,
-										 vertices[faceIndices[i+2]].pos,
-										 vertices[faceIndices[i+3]].pos);
-		faceNorms[normIndex].normalize();
 		
-		vertices[faceIndices[i]].norm	+= faceNorms[normIndex];
-		vertices[faceIndices[i+1]].norm += faceNorms[normIndex];
-		vertices[faceIndices[i+2]].norm += faceNorms[normIndex];
-		vertices[faceIndices[i+3]].norm += faceNorms[normIndex];
-	}		
+		//for(int i=stackControllers.size()-1; i>=0;i--){
+		//	stackControllers[i].uPos += uIncrement;
+		//	if(stackControllers[i].uPos >= 1.0) stackControllers.erase(stackControllers.begin()+i);
+		//}
+		
+		for(int i=stackControllers.size()-1; i>=0;i--){
+			stackControllers[i].uPos += uIncrement;
+			if(stackControllers[i].uPos >= 1.0){
+				stackControllers.erase(stackControllers.begin()+i);
+				stacks.erase(stacks.begin()+i);
+			}
+			else{
+				stackControllers[i].update();
+				stacks[i].setPosition(stackControllers[i].pos);
+				stacks[i].angle = stackControllers[i].angle;				
+				stacks[i].rotAxis = stackControllers[i].rotAxis;
+			}
+		}
+	}
+	//sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
+	for(int i=0;i<sweetSpot.size();i++){
+		sweetSpot[i].update();
+	}
 	
+	calcMeshNormals();
 };
 
 //--------------------------------------------------------------
@@ -269,8 +274,8 @@ void testApp::draw(){
 	
 	//ofxVec3f lightPos(mouseX, sin(mouseY * 0.001) * -2000.0, cos(mouseY * 0.01)*2000.0-100.0);
 	//ofxVec3f lightPos(1010, -760, 1150);
-	ofxVec3f lightPos(mouseX, -ofGetHeight()*.25, ofGetHeight()*2);
-	ofxVec3f targetPos(eyeX, eyeX, 405);
+	ofxVec3f lightPos(mouseX, -ofGetHeight()*.5, ofGetHeight()*1.5);
+	ofxVec3f targetPos(eyeX, eyeX, 205);
 	
 	//draw shadow map
 	//fbo.clear(1.0, 1.0, 1.0, 1.0);
@@ -298,21 +303,14 @@ void testApp::draw(){
 		if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
 		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
 		
+		//draw conveyor
+		//drawConveyorMesh();
+		
 		//draw particles
-		/*
-		glBegin(GL_QUADS);
-		for(int i=0;i<faceIndices.size();i++){
-			//int normIndex = floor(float(i)/4.f);
-			//glNormal3f(faceNorms[normIndex].x, faceNorms[normIndex].y, faceNorms[normIndex].z);
-			glNormal3f(vertices[faceIndices[i]].norm.x, vertices[faceIndices[i]].norm.y, vertices[faceIndices[i]].norm.z);
-			glTexCoord2f(vertices[faceIndices[i]].u, vertices[faceIndices[i]].v);
-			glVertex3f(vertices[faceIndices[i]].pos.x,
-					   vertices[faceIndices[i]].pos.y,
-					   vertices[faceIndices[i]].pos.z);
-		}
-		glEnd();
-		*/
 		particleManager->draw();
+		for(int i=0; i<stacks.size();i++){
+			stacks[i].draw();
+		}
 		
 		//grab matrices to pass to shadow shader
 		grabMatrices(GL_TEXTURE7);
@@ -338,8 +336,8 @@ void testApp::draw(){
 	gluPerspective(screenFov, aspect, nearDist, farDist);	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eyeX, eyeY-200, 1100,
-			  eyeX, eyeY, 600.0,
+	gluLookAt(eyeX, eyeY, dist,
+			  eyeX, eyeY, 0.0,
 			  0.0, 1.0, 0.0);	
 	glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
 	glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
@@ -376,6 +374,9 @@ void testApp::draw(){
 			
 		//draw particles
 		particleManager->draw();	
+		for(int i=0; i<stacks.size();i++){
+			stacks[i].draw();
+		}
 		
 	} ofPopMatrix();	
 	ofxLightsOff();
@@ -383,13 +384,21 @@ void testApp::draw(){
 	shadowShader.end();			
 	
 	glUseProgram(0);
-	ofSetColor(255, 0, 0);
 	for(int i=0; i<curves.size();i++){
+		ofSetColor(255, 0, 0);
 		curves[i].drawWithGluNurbs();
 		//curves[i].drawCurve();
+		
+		ofSetColor(255, 220, 20);
+		ofxSphere(sweetSpotPos[i].x, sweetSpotPos[i].y, sweetSpotPos[i].z, 15);
 	}
-	ofSetColor(255, 220, 20);
-	ofxSphere(sweetSpotPos.x, sweetSpotPos.y, sweetSpotPos.z, 15);
+	
+	for(int i=0; i<stackControllers.size();i++){
+		ofSetColor(225, 20, 50);
+		ofxSphere(stackControllers[i].pos.x,
+				  stackControllers[i].pos.y,
+				  stackControllers[i].pos.z, 25);
+	}
 	
 	
 	shadowShader.begin();
@@ -404,19 +413,9 @@ void testApp::draw(){
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
+
+	drawConveyorMesh();
 	
-	glBegin(GL_QUADS);
-	for(int i=0;i<faceIndices.size();i++){
-		int normIndex = floor(float(i)/4.f);
-		glNormal3f(faceNorms[normIndex].x, faceNorms[normIndex].y, faceNorms[normIndex].z);
-		//glNormal3f(vertices[faceIndices[i]].norm.x, vertices[faceIndices[i]].norm.y, vertices[faceIndices[i]].norm.z);
-		glTexCoord2f(vertices[faceIndices[i]].u, vertices[faceIndices[i]].v);
-		glVertex3f(vertices[faceIndices[i]].pos.x,
-				   vertices[faceIndices[i]].pos.y,
-				   vertices[faceIndices[i]].pos.z);
-	}
-	glEnd();
-	 
 	shadowShader.end();
 	
 	
@@ -441,8 +440,10 @@ void testApp::draw(){
 	ofDrawBitmapString(fpsString,  20, 20);
 	fpsString = "target position  " + ofToString(targetPos.x,2)+", "+ofToString(targetPos.y,2)+", "+ofToString(targetPos.z,2);
 	ofDrawBitmapString(fpsString,  20, 40);
-	fpsString = "sweet pot  " + ofToString(sweetSpot.uPos);
+	fpsString = "sweet spot  " + ofToString(sweetSpot[0].uPos);
 	ofDrawBitmapString(fpsString,  20, 60);
+	fpsString = "stack count " + ofToString((float)stackControllers.size());
+	ofDrawBitmapString(fpsString,  20, 80);
 	
 }
 
@@ -466,7 +467,32 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 			//form.addFormField("buildings["+ofToString(index)+"][index]", ofToString(j));
 		}
 	}
-	loggerSender.sendMessage(newRowMessage);	
+	
+	loggerSender.sendMessage(newRowMessage);
+	
+	//Lars
+	cout << "num stacks: "<<completedRow->stacks.size()<<endl;
+	for (int i=0; i<completedRow->stacks.size(); i++){
+		if(completedRow->stacks[i]->buildings.size() >0){
+			stacks.push_back(*completedRow->stacks[i]);
+			//stacks.back().pOnC.setup(sweetSpot[i].uPos,
+			//						 &curves[i],
+			//						 (ofxVec3f*) &stacks.back().pos);
+			//pointOnCurveNode newNode;
+			//stackControllers.push_back(newNode);
+			//stackControllers.back().setup(sweetSpot[i+1].uPos,
+			//					  &curves[0],
+			//					  (ofxVec3f*)&stacks.back().pos);
+			//stacks.back().pos = sweetSpotPos[i+1];
+			//stacks[i].setPonC(.5, &curves[i+1]);
+			pointOnCurveNode newNode;
+			stackControllers.push_back(newNode);
+			stackControllers.back().setup(sweetSpot[i+1].uPos,
+										  &curves[i+1]);
+			stackControllers.back().setFindNormal(true);
+		}
+	}	
+	cout << "num stacks out: "<<stacks.size()<<endl;
 	
 };
 
@@ -578,3 +604,46 @@ ofxVec3f testApp::normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c){
 	
 	return norm.normalize();
 }
+
+//------------------------------------------------------------------------------------------------
+void testApp::calcMeshNormals(){
+	
+	//for(int i=0;i<vertices.size();i++){
+	//	vertices[i].norm.set(0,0,0);
+	//}
+	for(int i=0; i<faceIndices.size(); i+=4){
+		int normIndex = i/4;
+		faceNorms[normIndex] = normCalc(vertices[faceIndices[i]].pos,
+										vertices[faceIndices[i+1]].pos,
+										vertices[faceIndices[i+2]].pos);
+		faceNorms[normIndex] += normCalc(vertices[faceIndices[i]].pos,
+										 vertices[faceIndices[i+2]].pos,
+										 vertices[faceIndices[i+3]].pos);
+		faceNorms[normIndex].normalize();
+		
+		//vertices[faceIndices[i]].norm	+= faceNorms[normIndex];
+		//vertices[faceIndices[i+1]].norm += faceNorms[normIndex];
+		//vertices[faceIndices[i+2]].norm += faceNorms[normIndex];
+		//vertices[faceIndices[i+3]].norm += faceNorms[normIndex];
+	}	
+	//for(int i=0;i<vertices.size();i++){
+	//	vertices[i].norm.normalize();
+	//}
+}
+
+//------------------------------------------------------------------------------------------------
+void testApp::drawConveyorMesh(){
+	
+	glBegin(GL_QUADS);
+	for(int i=0;i<faceIndices.size();i++){
+		int normIndex = floor(float(i)/4.f);
+		glNormal3f(faceNorms[normIndex].x, faceNorms[normIndex].y, faceNorms[normIndex].z);
+		//glNormal3f(vertices[faceIndices[i]].norm.x, vertices[faceIndices[i]].norm.y, vertices[faceIndices[i]].norm.z);
+		glTexCoord2f(vertices[faceIndices[i]].u, vertices[faceIndices[i]].v);
+		glVertex3f(vertices[faceIndices[i]].pos.x,
+				   vertices[faceIndices[i]].pos.y,
+				   vertices[faceIndices[i]].pos.z);
+	}
+	glEnd();
+}
+	

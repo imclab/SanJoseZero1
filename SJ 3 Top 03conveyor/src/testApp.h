@@ -40,6 +40,8 @@ class testApp : public ofBaseApp{
 								   float zMin, float zMax);
 	void drawTex(int x, int y, int w, int h);
 	ofxVec3f normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c);
+	void calcMeshNormals();
+	void drawConveyorMesh();
 
 	
 		Emitter * particleManager;
@@ -82,6 +84,11 @@ class testApp : public ofBaseApp{
 	int numCurves;
 	int numCVs;
 	ofImage ceilingImage;
+	
+	//lars biuldings
+	vector <Stack> stacks;
+	vector <pointOnCurveNode> stackControllers;
+	vector <ofxVec3f> stackPos;
 	
 };
 

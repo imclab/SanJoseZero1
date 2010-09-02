@@ -90,16 +90,16 @@ public:
 			lastRotated = ofGetElapsedTimeMillis();
 			newRow();
 		}	
-
-
-		
 		
 		//2 - rotate
 		if (rotateAmount > 0){
-			*advanceCeiling = true;
+			*advanceCeiling = true;//LARS this points to a bool in the testApp that moves conveyor
 			for (int i=oldRows.size()-1; i>=0; i--){
+				//LARS//
+				/*
 				if (oldRows[i]->rotation.x < 360){
 					oldRows[i]->rotation.x += ROTATE_INCREMENT;
+					
 					//oldRows[i].rotate.z += 10.0/90.0f;
 					//oldRows[i].pos.y -= deadBuildings[i][j].getWidth()/50.0f;
 				} else {
@@ -109,10 +109,13 @@ public:
 				if (oldRows[i]->pos.y < -100){
 					oldRows.erase(oldRows.begin()+i);
 				}
+				 */
 			}
 			rotateAmount -= ROTATE_INCREMENT;
 		}	
 		else {
+			//LARS this points to a bool in the testApp that moves conveyor
+			//by advancing U position in the pointOnCurveNodes
 			*advanceCeiling = false;
 		}
 		
@@ -142,7 +145,7 @@ public:
 	};
 	
 	void draw(){
-		ofPushMatrix();{
+		//ofPushMatrix();{	//Lars commented out
 			
 			currentRow->draw();
 			
@@ -150,12 +153,12 @@ public:
 				buildings[i]->draw();
 			}
 			
-			for (int i=0; i<oldRows.size(); i++){
-				oldRows[i]->draw();
-			}
+			//LARS//for (int i=0; i<oldRows.size(); i++){
+			//LARS//	oldRows[i]->draw();
+			//LARS//}
 			
 						
-		} ofPopMatrix();
+		//} ofPopMatrix();	//Lars commented out
 	};	
 	
 	void newRow(){
@@ -233,7 +236,7 @@ private:
 	
 	vector <Building *> buildings;
 	BuildingRow * currentRow;
-	vector<BuildingRow *> oldRows;	
+	//vector<BuildingRow *> oldRows;	
 	
 	vector <BuildingType *> types;	
 	
@@ -242,5 +245,6 @@ private:
 	float rotateAmount;
 	int lastRotated;
 public:
+	vector<BuildingRow *> oldRows;
 	bool *advanceCeiling;
 };
