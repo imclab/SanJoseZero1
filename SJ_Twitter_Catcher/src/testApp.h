@@ -12,6 +12,7 @@
 
 #define SEARCH_TIME_SECONDS 5
 #define FORWARD_TIME_SECONDS 1
+#define UPDATE_HASHTAGS_SECONDS 5
 
 class testApp : public ofBaseApp{
 
@@ -19,10 +20,11 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		void exit();
 		void doSearch();
 		void infoResponse(ofxHttpResponse &response);
-		void sendOSC();
+		void sendOSCSetup();
+		void sendOSC(); // DO NOT CALL THIS METHOD DIRECTLY!  JUST CALL sendOSCSetup()
+		bool getNextResponseSet();
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
@@ -38,10 +40,16 @@ class testApp : public ofBaseApp{
 	ofxOscSender sender;
 	
 	ofxXmlSettings xmlResponse;
+	vector<ofxHttpResponse> responses;
 	int maxNumOfTweets;
+	string lastHashID;
+	string lastReplyID;
 	int curTweet;
-	string curTimestamp;
 	
+	// Stores the hash tags to search for
+	vector<string> hashTags;
+//	int curNumOfTags;
+	time_t lastHashtagsUpdateTime;
 	
 	time_t lastSearchTime;
 	time_t lastForwardTime;
@@ -50,6 +58,8 @@ class testApp : public ofBaseApp{
 	bool bFirstQuery;
 	bool bNewQuery;
 	bool bOKtoSend;
+	
+	
 };
 
 #endif

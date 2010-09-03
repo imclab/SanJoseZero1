@@ -35,28 +35,90 @@ void testApp::setup(){
 	time(&curTime);
 	lastSearchTime = curTime;
 	lastForwardTime = curTime;
-	curTimestamp = "";
+	lastHashtagsUpdateTime = curTime;
+	lastHashID = "";
+	lastReplyID = "";
 
 	
+	// Update the hashtags to search for
+	ofxXmlSettings hTags;
+	bLoaded = hTags.loadFile("hashtags.xml");
+	if (bLoaded) {
+		hTags.pushTag("settings");
+		cout << "detected tags: " << hTags.getNumTags("tag");
+//		curNumOfTags = hTags.getNumTags("tag");
+		for (int i = 0; i < hTags.getNumTags("tag"); i++) {
+			hashTags.push_back(hTags.getValue("tag","void",i));
+		}
+		hTags.popTag();
+	}
+	
+	
+	cout << "num of tags: " << hashTags.size() << endl;
+	for (int i = 0; i < hashTags.size(); i++) {
+		cout << "tag: " << hashTags[i] << endl;
+	}
 	
 }
 
 //----------------------------------------------------------------
 void testApp::doSearch() {
-	ofxHttpForm form;
-	form.action = "http://www.plug-in-play.com/testing5.php";
-	form.method = OFX_HTTP_POST;
+//chrisallick.com/projects/twitter/rl_twitter.php?hash=0
 	
-	cout << "Getting....\n";
+	ofxHttpForm form;
+	form.action = "http://chrisallick.com/projects/twitter/rl_twitter.php";  //"http:www.plug-in-play.com/testing5.php";
+	form.method = OFX_HTTP_POST;
+
+
+	// Get @replies
+	form.addFormField("hash","0");
+	if (lastReplyID != "") {
+		cout << "adding reply id: " << lastReplyID << endl;
+		form.addFormField("ms",lastReplyID);
+	}
+	cout << "Getting @replies....\n";
+	infoGetter.addForm(form);
+
+	
+	// Get hashtags
+	form.clearFormFields();
+	form.addFormField("hash","1");
+	if (lastHashID != "") {
+		cout << "adding hash id: " << lastHashID << endl;		
+		form.addFormField("ms",lastHashID);
+	}
+	// ADD TAGS
+	for (int i = 0; i < hashTags.size(); i++) {
+		form.addFormField("tag[" + ofToString(i) + "]",hashTags[i]);
+	}
+//	form.addFormField("ms","22734030265");
+	cout << "Getting hashtags....\n";
 	infoGetter.addForm(form);
 }
-
 
 
 //--------------------------------------------------------------
 void testApp::update(){	
 	time_t curTime;
 	time(&curTime);
+	
+	
+	// Update the hashtags to search for in case they've changed
+	if (difftime(curTime,lastHashtagsUpdateTime) >= UPDATE_HASHTAGS_SECONDS) {
+		lastHashtagsUpdateTime = curTime;
+		ofxXmlSettings hTags;
+		bool bLoaded = hTags.loadFile("hashtags.xml");
+		if (bLoaded) {
+			hashTags.clear();
+			hTags.pushTag("settings");
+//			curNumOfTags = hTags.getNumTags("tag");
+			for (int i = 0; i < hTags.getNumTags("tag"); i++) {
+				hashTags.push_back(hTags.getValue("tag","void",i));
+			}
+			hTags.popTag();
+		}
+	}
+	
 	
 	// Update the XML file from the PHP script if enough time has elapsed
 	if (difftime(curTime,lastSearchTime) >= SEARCH_TIME_SECONDS && bNewQuery){
@@ -70,68 +132,116 @@ void testApp::update(){
 	// Send the next OSC message if enough time has elapsed
 	if (difftime(curTime,lastForwardTime) >= FORWARD_TIME_SECONDS && bOKtoSend) {
 		lastForwardTime = curTime;
-		sendOSC();
+		sendOSCSetup();
 	}
 		
 		
 }
 
 //--------------------------------------------------------------
+bool testApp::getNextResponseSet() {
+	if (responses.size() > 1) {
+		// Remove oldest entry
+		responses.erase(responses.begin());
+		
+		xmlResponse.loadFromBuffer((responses[0]).responseBody);
+		xmlResponse.pushTag("results");
+		maxNumOfTweets = xmlResponse.getNumTags("tweet");
+		xmlResponse.popTag();
+		
+		curTweet = 0;
+		bOKtoSend = true;
+		return true;
+	} else
+		return false;
+}
+
+
+//--------------------------------------------------------------
 void testApp::infoResponse(ofxHttpResponse &response) {
 	xmlResponse.loadFromBuffer(response.responseBody);
-	
-//	cout << "response:\n " << response.responseBody << endl;
 
-	// ERROR CHECKING: WHAT IF RETURNED NOTHING?  NOTHING NEW.  MUST AVOID THE FIRST if STATEMENT IN sendOSC()
 	
-	xmlResponse.pushTag("settings");
-	maxNumOfTweets = xmlResponse.getNumTags("tweet");
-	curTweet = 0;
-	bOKtoSend = true;
-//	for (int i = 0; i < xmlResponse.getNumTags("tweets"); i++) {
-//		xmlResponse.pushTag("tweets",i);
-//		cout << "tag: " << i << ", contents: " << xmlResponse.getValue("content","nothin'",0) << endl;
-//		xmlResponse.popTag();
-//		
-//	}
-//	xmlResponse.popTag();
-//	newQuery = true;
+	cout << "response:\n " << response.responseBody << endl;
 
+	xmlResponse.pushTag("results");
+	cout << "attribute: " << xmlResponse.getAttribute("tweet","type","void");
+	xmlResponse.popTag();
+	cout << endl << endl << endl;
+	
+	
+	
+	
+	
+	
+	// ERROR CHECKING: WHAT IF RETURNED NOTHING?  NOTHING NEW.
+	
+	
+	if (!responses.empty()) {
+		responses.push_back(response);
+	} else {
+	
+		xmlResponse.pushTag("results");
+		maxNumOfTweets = xmlResponse.getNumTags("tweet");
+		xmlResponse.popTag();
+		
+		curTweet = 0;
+		if (curTweet < maxNumOfTweets) {
+			bOKtoSend = true;
+		} else {
+			bOKtoSend = false;
+			bNewQuery = true;
+		}
+	}
+	
+}
+
+//--------------------------------------------------------------
+void testApp::sendOSCSetup() {
+	if (curTweet == maxNumOfTweets) {
+		// SEE IF WE NEED TO GET ANOTHER RESPONSE SET FROM responses VECTOR
+		if (getNextResponseSet()) {
+			sendOSC();
+		} else {
+			bNewQuery = true;
+			bOKtoSend = false;
+		}
+	} else {
+		sendOSC();
+	}
 
 }
 
 //--------------------------------------------------------------
 void testApp::sendOSC() {
-	if (curTweet == maxNumOfTweets) {
-		xmlResponse.popTag();  // pop the "settings" tag
-		bNewQuery = true;
-		bOKtoSend = false;
-		cout << endl;
-		// Write current timestamp to file
-//		cout << "opening\n";
-//		cout << "current path:\n";
-//		char CurrentPath[100];
-//		getcwd(CurrentPath,100);
-//		cout << CurrentPath << endl;
-//		cout << ofToDataPath("untitled.txt",false);
-//		
-		return;
-	}
-
-	xmlResponse.pushTag("tweet",curTweet++);
-	cout << xmlResponse.getValue("content","void",0) << endl;
-	curTimestamp = xmlResponse.getValue("timestamp","void",0);
-	xmlResponse.popTag();
-
-/*	
-	ofxOxcMessage m;
+	
+	xmlResponse.pushTag("results");
+	string type_of_result = xmlResponse.getAttribute("tweet","type","",curTweet);
+	xmlResponse.pushTag("tweet",curTweet);
+	
+	ofxOscMessage m;
 	m.setAddress("/pluginplay/twitter");
-	m.addStringArg(xmlResponse.getValue("content","void",0));
+	m.addStringArg(xmlResponse.getValue("timestamp","null") + "&*!" + xmlResponse.getValue("user_name","null") + "&*!" + xmlResponse.getValue("content","null"));
 	sender.sendMessage(m);
-	xmlResponse.popTag();
-*/
-}
+	
 
+	// Change the last twitter id stamp
+	cout << type_of_result << endl;
+	if (type_of_result == "hash") {
+		lastHashID = xmlResponse.getValue("tweet_id","");
+		cout << "setting last hash: " << lastHashID << endl;
+	} else if (type_of_result == "reply") {
+		lastReplyID = xmlResponse.getValue("tweet_id","");
+		cout << "setting last reply: " << lastReplyID << endl;		
+	}
+	
+	
+	xmlResponse.popTag();
+	xmlResponse.popTag();
+	
+	curTweet++;
+}
+	
 //--------------------------------------------------------------
 void testApp::draw(){
 	if (true){
@@ -139,18 +249,6 @@ void testApp::draw(){
 	} else {
 		ofBackground(0,0,0);
 	}
-//	cout<<"here?"<<endl;
-//	ofDrawBitmapString("newest tweet from: "+latestSearchEntry.author.name+"\n"+latestSearchEntry.entry+"\nat "+latestSearchEntry.published, 20, 30);
-}
-
-//--------------------------------------------------------------
-void testApp::exit() {
-//	FILE *f;
-//	f = fopen("../../../data/lastTimestamp.txt","w"); // Don't truncate in case the app is closed during file operations --> this way we won't lose any data.
-//	cout << "putting\n";
-//	fputs(curTimestamp.c_str(),f);
-//	cout << "closing\n";
-//	fclose(f);	
 }
 
 //--------------------------------------------------------------
