@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define DEBUG false
+#define DEBUG true
 
 class Quad
 {	

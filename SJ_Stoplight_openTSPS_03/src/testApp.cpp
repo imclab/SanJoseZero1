@@ -435,19 +435,19 @@ void testApp::mousePressed(int x, int y, int button){
 	b = (int)px[2];
 	// Set the color for a quad if we clicked inside that quad
 	if (bSetColor && peopleTracker.inAdjustedView()) {
-		if (testq.name == "red") {
+		if (testq.name == "RED") {
 			redLight.red = r;
 			redLight.green = g;
 			redLight.blue = b;
 			colorSet = 0;
 			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
-		} else if (testq.name == "yellow") {
+		} else if (testq.name == "YELLOW") {
 			yellowLight.red = r;
 			yellowLight.green = g;
 			yellowLight.blue = b;
 			colorSet = 1;
 			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
-		} else {
+		} else if (testq.name == "GREEN") {
 			greenLight.red = r;
 			greenLight.green = g;
 			greenLight.blue = b;
