@@ -37,6 +37,10 @@
 			<image>images/twitter0.png</image>
 			<messageString>/pluginplay/twitter</messageString>
 		</message>
+		<message>
+			<image>images/twitter1.png</image>
+			<messageString>/pluginplay/twitter/search</messageString>
+		</message>
 		<sendsound>1</sendsound>
 	</input>
 	<input>

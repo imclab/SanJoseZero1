@@ -7,12 +7,14 @@
 #include "ofxOsc.h"
 #include "ofxHttpUtils.h"
 
+#include "TwitterSearcher.h"
+
 #include <time.h>
 #include <stdio.h>
 
-#define SEARCH_TIME_SECONDS 5
+#define SEARCH_TIME_SECONDS 3
 #define FORWARD_TIME_SECONDS 1
-#define UPDATE_HASHTAGS_SECONDS 5
+#define UPDATE_HASHTAGS_SECONDS 4
 
 class testApp : public ofBaseApp{
 
@@ -20,11 +22,10 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		void doSearch();
-		void infoResponse(ofxHttpResponse &response);
-		void sendOSCSetup();
-		void sendOSC(); // DO NOT CALL THIS METHOD DIRECTLY!  JUST CALL sendOSCSetup()
-		bool getNextResponseSet();
+		
+		TwitterSearcher * tagSearcher;
+		TwitterSearcher * atSearcher;
+	
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
@@ -33,32 +34,19 @@ class testApp : public ofBaseApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
+	
+		void saveSettings();
+				
+		string searchUrl;
 		
+		ofxOscSender sender;
+
+		//message strings to send
+		vector <string> messageStrings;
 	
-	ofxHttpUtils infoGetter;
-	
-	ofxOscSender sender;
-	
-	ofxXmlSettings xmlResponse;
-	vector<ofxHttpResponse> responses;
-	int maxNumOfTweets;
-	string lastHashID;
-	string lastReplyID;
-	int curTweet;
-	
-	// Stores the hash tags to search for
-	vector<string> hashTags;
-//	int curNumOfTags;
-	time_t lastHashtagsUpdateTime;
-	
-	time_t lastSearchTime;
-	time_t lastForwardTime;
-	
-	
-	bool bFirstQuery;
-	bool bNewQuery;
-	bool bOKtoSend;
-	
+		time_t lastHashtagsUpdateTime;	
+		time_t lastSearchTime;
+		time_t lastForwardTime;
 	
 };
 

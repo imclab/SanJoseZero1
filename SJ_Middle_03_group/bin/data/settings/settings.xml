@@ -352,6 +352,15 @@
                 <g>0</g>
                 <b>255</b>
             </color>
+        </message>		
+        <message>
+            <image>models/twitter/twitter_01.3DS</image>
+            <messageString>/pluginplay/twitter/search</messageString>
+            <color>
+                <r>0</r>
+                <g>0</g>
+                <b>255</b>
+            </color>
         </message>
         <position>
             <x>966.000000</x>
