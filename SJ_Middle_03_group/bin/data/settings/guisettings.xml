@@ -1,0 +1,449 @@
+<TOP_MASK_X_0>
+    <val_0>0.000000</val_0>
+</TOP_MASK_X_0>
+<TOP_MASK_Y_0>
+    <val_0>0.000000</val_0>
+</TOP_MASK_Y_0>
+<TOP_MASK_WIDTH_0>
+    <val_0>1024.000000</val_0>
+</TOP_MASK_WIDTH_0>
+<TOP_MASK_HEIGHT_0>
+    <val_0>0.000000</val_0>
+</TOP_MASK_HEIGHT_0>
+<RIGHT_MASK_X_0>
+    <val_0>1024.000000</val_0>
+</RIGHT_MASK_X_0>
+<RIGHT_MASK_Y_0>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_Y_0>
+<RIGHT_MASK_WIDTH_0>
+    <val_0>1024.000000</val_0>
+</RIGHT_MASK_WIDTH_0>
+<RIGHT_MASK_HEIGHT_0>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_HEIGHT_0>
+<BOTTOM_MASK_X_0>
+    <val_0>0.000000</val_0>
+</BOTTOM_MASK_X_0>
+<BOTTOM_MASK_Y_0>
+    <val_0>-59.733337</val_0>
+</BOTTOM_MASK_Y_0>
+<BOTTOM_MASK_WIDTH_0>
+    <val_0>1024.000000</val_0>
+</BOTTOM_MASK_WIDTH_0>
+<BOTTOM_MASK_HEIGHT_0>
+    <val_0>179.199997</val_0>
+</BOTTOM_MASK_HEIGHT_0>
+<LEFT_MASK_X_0>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_X_0>
+<LEFT_MASK_Y_0>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_Y_0>
+<LEFT_MASK_WIDTH_0>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_WIDTH_0>
+<LEFT_MASK_HEIGHT_0>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_HEIGHT_0>
+<TOP_MASK_X_1>
+    <val_0>0.000000</val_0>
+</TOP_MASK_X_1>
+<TOP_MASK_Y_1>
+    <val_0>0.000000</val_0>
+</TOP_MASK_Y_1>
+<TOP_MASK_WIDTH_1>
+    <val_0>1024.000000</val_0>
+</TOP_MASK_WIDTH_1>
+<TOP_MASK_HEIGHT_1>
+    <val_0>0.000000</val_0>
+</TOP_MASK_HEIGHT_1>
+<RIGHT_MASK_X_1>
+    <val_0>1024.000000</val_0>
+</RIGHT_MASK_X_1>
+<RIGHT_MASK_Y_1>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_Y_1>
+<RIGHT_MASK_WIDTH_1>
+    <val_0>768.000000</val_0>
+</RIGHT_MASK_WIDTH_1>
+<RIGHT_MASK_HEIGHT_1>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_HEIGHT_1>
+<BOTTOM_MASK_X_1>
+    <val_0>0.000000</val_0>
+</BOTTOM_MASK_X_1>
+<BOTTOM_MASK_Y_1>
+    <val_0>-51.200012</val_0>
+</BOTTOM_MASK_Y_1>
+<BOTTOM_MASK_WIDTH_1>
+    <val_0>1024.000000</val_0>
+</BOTTOM_MASK_WIDTH_1>
+<BOTTOM_MASK_HEIGHT_1>
+    <val_0>149.333344</val_0>
+</BOTTOM_MASK_HEIGHT_1>
+<LEFT_MASK_X_1>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_X_1>
+<LEFT_MASK_Y_1>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_Y_1>
+<LEFT_MASK_WIDTH_1>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_WIDTH_1>
+<LEFT_MASK_HEIGHT_1>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_HEIGHT_1>
+<TOP_MASK_X_2>
+    <val_0>0.000000</val_0>
+</TOP_MASK_X_2>
+<TOP_MASK_Y_2>
+    <val_0>0.000000</val_0>
+</TOP_MASK_Y_2>
+<TOP_MASK_WIDTH_2>
+    <val_0>1024.000000</val_0>
+</TOP_MASK_WIDTH_2>
+<TOP_MASK_HEIGHT_2>
+    <val_0>0.000000</val_0>
+</TOP_MASK_HEIGHT_2>
+<RIGHT_MASK_X_2>
+    <val_0>1024.000000</val_0>
+</RIGHT_MASK_X_2>
+<RIGHT_MASK_Y_2>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_Y_2>
+<RIGHT_MASK_WIDTH_2>
+    <val_0>768.000000</val_0>
+</RIGHT_MASK_WIDTH_2>
+<RIGHT_MASK_HEIGHT_2>
+    <val_0>0.000000</val_0>
+</RIGHT_MASK_HEIGHT_2>
+<BOTTOM_MASK_X_2>
+    <val_0>0.000000</val_0>
+</BOTTOM_MASK_X_2>
+<BOTTOM_MASK_Y_2>
+    <val_0>-68.266663</val_0>
+</BOTTOM_MASK_Y_2>
+<BOTTOM_MASK_WIDTH_2>
+    <val_0>1024.000000</val_0>
+</BOTTOM_MASK_WIDTH_2>
+<BOTTOM_MASK_HEIGHT_2>
+    <val_0>209.066666</val_0>
+</BOTTOM_MASK_HEIGHT_2>
+<LEFT_MASK_X_2>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_X_2>
+<LEFT_MASK_Y_2>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_Y_2>
+<LEFT_MASK_WIDTH_2>
+    <val_0>768.000000</val_0>
+</LEFT_MASK_WIDTH_2>
+<LEFT_MASK_HEIGHT_2>
+    <val_0>0.000000</val_0>
+</LEFT_MASK_HEIGHT_2>
+<VIDEO_POS_X>
+    <val_0>720.000000</val_0>
+</VIDEO_POS_X>
+<VIDEO_POS_Y>
+    <val_0>525.000000</val_0>
+</VIDEO_POS_Y>
+<VIDEO_SCALE>
+    <val_0>1.507000</val_0>
+</VIDEO_SCALE>
+<VIDEO_ALPHA>
+    <val_0>255.000000</val_0>
+</VIDEO_ALPHA>
+<VIDEO_SPEED>
+    <val_0>1.012370</val_0>
+</VIDEO_SPEED>
+<VIDEO_WAIT>
+    <val_0>0.000000</val_0>
+</VIDEO_WAIT>
+<settings>
+    <TOP_MASK_X_0>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_X_0>
+    <TOP_MASK_Y_0>
+        <val_0>768.000000</val_0>
+    </TOP_MASK_Y_0>
+    <TOP_MASK_WIDTH_0>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_WIDTH_0>
+    <TOP_MASK_HEIGHT_0>
+        <val_0>0.000000</val_0>
+    </TOP_MASK_HEIGHT_0>
+    <RIGHT_MASK_X_0>
+        <val_0>21.333374</val_0>
+    </RIGHT_MASK_X_0>
+    <RIGHT_MASK_Y_0>
+        <val_0>768.000000</val_0>
+    </RIGHT_MASK_Y_0>
+    <RIGHT_MASK_WIDTH_0>
+        <val_0>768.000000</val_0>
+    </RIGHT_MASK_WIDTH_0>
+    <RIGHT_MASK_HEIGHT_0>
+        <val_0>0.000000</val_0>
+    </RIGHT_MASK_HEIGHT_0>
+    <BOTTOM_MASK_X_0>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_X_0>
+    <BOTTOM_MASK_Y_0>
+        <val_0>-93.333313</val_0>
+    </BOTTOM_MASK_Y_0>
+    <BOTTOM_MASK_WIDTH_0>
+        <val_0>1024.000000</val_0>
+    </BOTTOM_MASK_WIDTH_0>
+    <BOTTOM_MASK_HEIGHT_0>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_HEIGHT_0>
+    <LEFT_MASK_X_0>
+        <val_0>-394.666626</val_0>
+    </LEFT_MASK_X_0>
+    <LEFT_MASK_Y_0>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_Y_0>
+    <LEFT_MASK_WIDTH_0>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_WIDTH_0>
+    <LEFT_MASK_HEIGHT_0>
+        <val_0>0.000000</val_0>
+    </LEFT_MASK_HEIGHT_0>
+    <VIDEO_POS_X>
+        <val_0>595.636353</val_0>
+    </VIDEO_POS_X>
+    <VIDEO_POS_Y>
+        <val_0>-324.545471</val_0>
+    </VIDEO_POS_Y>
+    <VIDEO_SCALE>
+        <val_0>4.183455</val_0>
+    </VIDEO_SCALE>
+    <VIDEO_ALPHA>
+        <val_0>255.000000</val_0>
+    </VIDEO_ALPHA>
+    <VIDEO_ROTATE>
+        <val_0>0.000000</val_0>
+    </VIDEO_ROTATE>
+    <VIDEO_SPEED>
+        <val_0>1.012370</val_0>
+    </VIDEO_SPEED>
+    <VIDEO_WAIT>
+        <val_0>0.000000</val_0>
+    </VIDEO_WAIT>
+    <TOP_MASK_ROTATE_0>
+        <val_0>180.000000</val_0>
+    </TOP_MASK_ROTATE_0>
+    <RIGHT_MASK_ROTATE_0>
+        <val_0>105.333344</val_0>
+    </RIGHT_MASK_ROTATE_0>
+    <BOTTOM_MASK_ROTATE_0>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_ROTATE_0>
+    <LEFT_MASK_ROTATE_0>
+        <val_0>-92.000000</val_0>
+    </LEFT_MASK_ROTATE_0>
+    <GUI_AMP>
+        <val_0>0.907500</val_0>
+    </GUI_AMP>
+    <TOP_MASK_X_1>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_X_1>
+    <TOP_MASK_Y_1>
+        <val_0>768.000000</val_0>
+    </TOP_MASK_Y_1>
+    <TOP_MASK_WIDTH_1>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_WIDTH_1>
+    <TOP_MASK_HEIGHT_1>
+        <val_0>0.000000</val_0>
+    </TOP_MASK_HEIGHT_1>
+    <TOP_MASK_ROTATE_1>
+        <val_0>180.000000</val_0>
+    </TOP_MASK_ROTATE_1>
+    <BOTTOM_MASK_X_1>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_X_1>
+    <BOTTOM_MASK_Y_1>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_Y_1>
+    <BOTTOM_MASK_WIDTH_1>
+        <val_0>1024.000000</val_0>
+    </BOTTOM_MASK_WIDTH_1>
+    <BOTTOM_MASK_HEIGHT_1>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_HEIGHT_1>
+    <BOTTOM_MASK_ROTATE_1>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_ROTATE_1>
+    <LEFT_MASK_X_1>
+        <val_0>0.000000</val_0>
+    </LEFT_MASK_X_1>
+    <LEFT_MASK_Y_1>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_Y_1>
+    <LEFT_MASK_WIDTH_1>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_WIDTH_1>
+    <LEFT_MASK_HEIGHT_1>
+        <val_0>0.000000</val_0>
+    </LEFT_MASK_HEIGHT_1>
+    <LEFT_MASK_ROTATE_1>
+        <val_0>180.000000</val_0>
+    </LEFT_MASK_ROTATE_1>
+    <RIGHT_MASK_X_1>
+        <val_0>1024.000000</val_0>
+    </RIGHT_MASK_X_1>
+    <RIGHT_MASK_Y_1>
+        <val_0>0.000000</val_0>
+    </RIGHT_MASK_Y_1>
+    <RIGHT_MASK_WIDTH_1>
+        <val_0>768.000000</val_0>
+    </RIGHT_MASK_WIDTH_1>
+    <RIGHT_MASK_HEIGHT_1>
+        <val_0>0.000000</val_0>
+    </RIGHT_MASK_HEIGHT_1>
+    <RIGHT_MASK_ROTATE_1>
+        <val_0>90.000000</val_0>
+    </RIGHT_MASK_ROTATE_1>
+    <VIDEO_0_POS_X>
+        <val_0>-485.000000</val_0>
+    </VIDEO_0_POS_X>
+    <VIDEO_0_POS_Y>
+        <val_0>-901.000000</val_0>
+    </VIDEO_0_POS_Y>
+    <VIDEO_0_SCALE>
+        <val_0>2.824672</val_0>
+    </VIDEO_0_SCALE>
+    <VIDEO_0_ALPHA>
+        <val_0>255.000000</val_0>
+    </VIDEO_0_ALPHA>
+    <VIDEO_0_ROTATE>
+        <val_0>0.000000</val_0>
+    </VIDEO_0_ROTATE>
+    <VIDEO_0_SPEED>
+        <val_0>1.000000</val_0>
+    </VIDEO_0_SPEED>
+    <VIDEO_0_WAIT>
+        <val_0>0.000000</val_0>
+    </VIDEO_0_WAIT>
+    <VIDEO_1_POS_X>
+        <val_0>0.000000</val_0>
+    </VIDEO_1_POS_X>
+    <VIDEO_1_POS_Y>
+        <val_0>0.000000</val_0>
+    </VIDEO_1_POS_Y>
+    <VIDEO_1_SCALE>
+        <val_0>1.008000</val_0>
+    </VIDEO_1_SCALE>
+    <VIDEO_1_ALPHA>
+        <val_0>255.000000</val_0>
+    </VIDEO_1_ALPHA>
+    <VIDEO_1_ROTATE>
+        <val_0>0.000000</val_0>
+    </VIDEO_1_ROTATE>
+    <VIDEO_1_SPEED>
+        <val_0>1.000000</val_0>
+    </VIDEO_1_SPEED>
+    <VIDEO_1_WAIT>
+        <val_0>0.000000</val_0>
+    </VIDEO_1_WAIT>
+    <TOP_MASK_X_2>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_X_2>
+    <TOP_MASK_Y_2>
+        <val_0>768.000000</val_0>
+    </TOP_MASK_Y_2>
+    <TOP_MASK_WIDTH_2>
+        <val_0>1024.000000</val_0>
+    </TOP_MASK_WIDTH_2>
+    <TOP_MASK_HEIGHT_2>
+        <val_0>0.000000</val_0>
+    </TOP_MASK_HEIGHT_2>
+    <TOP_MASK_ROTATE_2>
+        <val_0>180.000000</val_0>
+    </TOP_MASK_ROTATE_2>
+    <BOTTOM_MASK_X_2>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_X_2>
+    <BOTTOM_MASK_Y_2>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_Y_2>
+    <BOTTOM_MASK_WIDTH_2>
+        <val_0>1024.000000</val_0>
+    </BOTTOM_MASK_WIDTH_2>
+    <BOTTOM_MASK_HEIGHT_2>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_HEIGHT_2>
+    <BOTTOM_MASK_ROTATE_2>
+        <val_0>0.000000</val_0>
+    </BOTTOM_MASK_ROTATE_2>
+    <LEFT_MASK_X_2>
+        <val_0>0.000000</val_0>
+    </LEFT_MASK_X_2>
+    <LEFT_MASK_Y_2>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_Y_2>
+    <LEFT_MASK_WIDTH_2>
+        <val_0>768.000000</val_0>
+    </LEFT_MASK_WIDTH_2>
+    <LEFT_MASK_HEIGHT_2>
+        <val_0>0.000000</val_0>
+    </LEFT_MASK_HEIGHT_2>
+    <LEFT_MASK_ROTATE_2>
+        <val_0>180.000000</val_0>
+    </LEFT_MASK_ROTATE_2>
+    <RIGHT_MASK_X_2>
+        <val_0>1024.000000</val_0>
+    </RIGHT_MASK_X_2>
+    <RIGHT_MASK_Y_2>
+        <val_0>0.000000</val_0>
+    </RIGHT_MASK_Y_2>
+    <RIGHT_MASK_WIDTH_2>
+        <val_0>768.000000</val_0>
+    </RIGHT_MASK_WIDTH_2>
+    <RIGHT_MASK_HEIGHT_2>
+        <val_0>0.000000</val_0>
+    </RIGHT_MASK_HEIGHT_2>
+    <RIGHT_MASK_ROTATE_2>
+        <val_0>90.000000</val_0>
+    </RIGHT_MASK_ROTATE_2>
+    <VIDEO_2_POS_X>
+        <val_0>-2874.375000</val_0>
+    </VIDEO_2_POS_X>
+    <VIDEO_2_POS_Y>
+        <val_0>-335.765625</val_0>
+    </VIDEO_2_POS_Y>
+    <VIDEO_2_SCALE>
+        <val_0>1.008000</val_0>
+    </VIDEO_2_SCALE>
+    <VIDEO_2_ALPHA>
+        <val_0>255.000000</val_0>
+    </VIDEO_2_ALPHA>
+    <VIDEO_2_ROTATE>
+        <val_0>0.562485</val_0>
+    </VIDEO_2_ROTATE>
+    <VIDEO_2_SPEED>
+        <val_0>1.000000</val_0>
+    </VIDEO_2_SPEED>
+    <VIDEO_2_WAIT>
+        <val_0>0.000000</val_0>
+    </VIDEO_2_WAIT>
+    <VIDEO_0_RESET>
+        <val_0>0.000000</val_0>
+    </VIDEO_0_RESET>
+    <VIDEO_1_RESET>
+        <val_0>0.000000</val_0>
+    </VIDEO_1_RESET>
+    <VIDEO_2_RESET>
+        <val_0>0.000000</val_0>
+    </VIDEO_2_RESET>
+    <SCALE_MIN>
+        <val_0>4.000000</val_0>
+    </SCALE_MIN>
+    <SCALE_MAX>
+        <val_0>14.577272</val_0>
+    </SCALE_MAX>
+    <GROUP_TIME>
+        <val_0>300.000000</val_0>
+    </GROUP_TIME>
+</settings>
