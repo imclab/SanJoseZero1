@@ -179,7 +179,7 @@ public:
 					Building * part = new Building();
 					Stack * stack = currentRow->getClosestStack(position);
 					part->setStackIndex(stack->index);
-					part->setPos( stack->getPosition().x , types[i]->getPosition().y, 0 );
+					part->setPos( stack->getPosition().x , ofGetHeight()-200, 0);//types[i]->getPosition().y, 0 );
 					part->setCeiling( currentRow->getCeiling(stack->index) );					
 					part->setImage( types[i]->getModel(messageIndex) );				
 					part->setType( types[i]->getMessage(messageIndex) );
@@ -203,7 +203,7 @@ public:
 		currentRow->windowResized();
 		
 		for (int i=0; i<types.size(); i++){			
-			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() + 25 );
+			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() );
 		}
 	}
 	

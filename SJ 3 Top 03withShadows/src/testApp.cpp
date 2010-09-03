@@ -24,7 +24,7 @@ void testApp::setup(){
 		string cHost = "localhost";
 		cPort = settings.getValue("osc:calibrationSender:port",sPort);
 		cHost = settings.getValue("osc:calibrationSender:host",sHost);
-		calibrationSender.setup(sHost, sPort);
+		calibrationSender.setup(cHost, cPort);
 		
 	} settings.popTag();
 	
@@ -82,10 +82,15 @@ void testApp::setup(){
 	rowMessage.addIntArg((int) NUMBER_OF_ROWS);
 	calibrationSender.sendMessage(rowMessage);	
 	
+	ofxOscMessage buffermessage;
+	buffermessage.setAddress("/pluginplay/calibration/buffers");
+	buffermessage.addFloatArg( ROW_BUFFER);
+	calibrationSender.sendMessage(buffermessage);
+	
 	ofxOscMessage spacerMessage;
-	rowMessage.setAddress("/pluginplay/calibration/buffers");
-	rowMessage.addFloatArg( ROW_BUFFER);
-	calibrationSender.sendMessage(rowMessage);
+	spacerMessage.setAddress("/pluginplay/calibration/spacing");
+	spacerMessage.addFloatArg( ROW_SPACING );
+	calibrationSender.sendMessage(spacerMessage);
 	
 	//shaders
 	depthShader.setup("shaders/depthShader");
@@ -104,7 +109,6 @@ void testApp::setup(){
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
     glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-	
 	
 	fCounter = 0.0;
 	ceilingImage.loadImage("hop_3.png");
@@ -167,6 +171,14 @@ void testApp::draw(){
 	//ofxVec3f lightPos(1010, -760, 1150);
 	ofxVec3f lightPos(eyeX + sin(ofGetElapsedTimef()*0.05)*800.0, -960, 1300);
 	ofxVec3f targetPos(eyeX, eyeX, 405);
+	
+	
+	ofxOscMessage lightpos;
+	lightpos.setAddress("/pluginplay/calibration/lightpos");
+	lightpos.addFloatArg( lightPos.x );
+	lightpos.addFloatArg( lightPos.y );
+	lightpos.addFloatArg( lightPos.z );
+	calibrationSender.sendMessage(lightpos);
 	
 	//draw shadow map
 	//fbo.clear(1.0, 1.0, 1.0, 1.0);

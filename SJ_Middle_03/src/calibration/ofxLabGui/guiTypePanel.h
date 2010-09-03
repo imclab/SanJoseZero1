@@ -163,7 +163,9 @@ class guiTypePanel : public guiBaseObject{
 		}
 
         //-----------------------------------------------.
-        void updateGui(float x, float y, bool firstHit, bool isRelative){
+        bool updateGui(float x, float y, bool firstHit, bool isRelative){
+			lastUpdated.clear();
+			bool updated = false;
             if( state == SG_STATE_SELECTED){
 
                 float offsetX = 0;
@@ -178,13 +180,23 @@ class guiTypePanel : public guiBaseObject{
                 }
 
                 if( !locked ){
-
                     for(int i = 0; i < children.size(); i++){
-                        children[i]->updateGui(offsetX, offsetY, firstHit, isRelative);
+						bool cUpdated = children[i]->updateGui(offsetX, offsetY, firstHit, isRelative);
+						if (cUpdated){
+							lastUpdated.push_back(children[i]);
+						}
+						
+						if(cUpdated && !updated){
+							updated = true;
+						} else {
+							updated = false;
+						}
                     }
 
                 }
+				return updated;
             }
+			return updated;
         }
 
         //we should actually be checking our child heights

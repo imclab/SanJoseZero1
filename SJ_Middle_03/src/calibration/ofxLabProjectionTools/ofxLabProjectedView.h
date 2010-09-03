@@ -34,12 +34,17 @@ public:
 	
 	int index;
 	ofPoint skewCorners[4];
+	float skewCornerVertices[8];
 	bool selected[4];
 	int selectedPoint;
 	
 	ofPoint cropCorners[4];
+	float cropCornerVertices[8];
 	bool bCropSelected[4];
 	int selectedCropPoint;
+	
+	float texCoords[8];
+	float cropTexCoords[8];
 	
 	//int selected;
 	bool bDrawSkew;
@@ -80,6 +85,15 @@ public:
 		skewCorners[2].y = cropCorners[2].y = y + height;
 		skewCorners[3].x = cropCorners[3].x = x;
 		skewCorners[3].y = cropCorners[3].y = y + height;
+		
+		skewCornerVertices[0] = cropCornerVertices[0] =skewCorners[0].x;
+		skewCornerVertices[1] = cropCornerVertices[1] =skewCorners[0].y;
+		skewCornerVertices[2] = cropCornerVertices[2] =skewCorners[1].x;
+		skewCornerVertices[3] = cropCornerVertices[3] =skewCorners[1].y;
+		skewCornerVertices[4] = cropCornerVertices[4] =skewCorners[2].x;
+		skewCornerVertices[5] = cropCornerVertices[5] =skewCorners[2].y;
+		skewCornerVertices[6] = cropCornerVertices[6] =skewCorners[3].x;
+		skewCornerVertices[7] = cropCornerVertices[7] =skewCorners[3].y;
 		
 		texture.allocate(width, height, GL_RGBA, 4);
 		texture.clear();
@@ -141,32 +155,49 @@ public:
 		skewCorners[2].y = cropCorners[2].y = y + height;
 		skewCorners[3].x = cropCorners[3].x = x;
 		skewCorners[3].y = cropCorners[3].y = y + height;
+		
+		skewCornerVertices[0] = cropCornerVertices[0] =skewCorners[0].x;
+		skewCornerVertices[1] = cropCornerVertices[1] =skewCorners[0].y;
+		skewCornerVertices[2] = cropCornerVertices[2] =skewCorners[1].x;
+		skewCornerVertices[3] = cropCornerVertices[3] =skewCorners[1].y;
+		skewCornerVertices[4] = cropCornerVertices[4] =skewCorners[2].x;
+		skewCornerVertices[5] = cropCornerVertices[5] =skewCorners[2].y;
+		skewCornerVertices[6] = cropCornerVertices[6] =skewCorners[3].x;
+		skewCornerVertices[7] = cropCornerVertices[7] =skewCorners[3].y;
 	}
 	
 //----------------------------------------------------------------------------
 	
 	void draw(){
+		
 		ofEnableAlphaBlending();
 		if (!bDrawCrop){
 			if (!bMoving) texture.bind();
 			else ofSetColor(255,255,0);
+			
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_FLOAT, 0, &cropTexCoords[0]);
+			
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glVertexPointer(2, GL_FLOAT, 0, &skewCornerVertices[0]);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			
+			/*
 			glBegin(GL_QUADS);{		
-				//glTexCoord2f(0,0);
 				glTexCoord2f(fmax(0,cropCorners[0].x-x),fmax(0,cropCorners[0].y-y));
 				glVertex2f(skewCorners[0].x, skewCorners[0].y);		
 				
-				//glTexCoord2f(width,0);
 				glTexCoord2f(fmin(width,cropCorners[1].x-x),fmax(0,cropCorners[1].y-y));
 				glVertex2f(skewCorners[1].x, skewCorners[1].y);			
 				
-				//glTexCoord2f(width,height);
 				glTexCoord2f(fmin(width,cropCorners[2].x-x),fmin(height,cropCorners[2].y-y));
 				glVertex2f(skewCorners[2].x, skewCorners[2].y);			
 				
-				//glTexCoord2f(0,height);
 				glTexCoord2f(fmax(0,cropCorners[3].x-x),fmin(height,cropCorners[3].y-y));
 				glVertex2f(skewCorners[3].x, skewCorners[3].y);	
 			}glEnd(); 
+			 */
+			
 			texture.unbind();
 			ofSetColor(0xffffff);
 			
@@ -178,6 +209,13 @@ public:
 			
 			for (int i=0; i<4; i++){		
 				edges[i].bind();
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0]);
+				
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glVertexPointer(2, GL_FLOAT, 0, &skewCornerVertices[0]);
+				glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+				/*
 				glBegin(GL_QUADS);{
 					glTexCoord2f(0,0);
 					glVertex2f(skewCorners[0].x, skewCorners[0].y);		
@@ -188,8 +226,13 @@ public:
 					glTexCoord2f(0,height);
 					glVertex2f(skewCorners[3].x, skewCorners[3].y);
 				}glEnd(); 
+				 */
 				edges[i].unbind();
 			}		
+			
+			
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			glDisableClientState(GL_VERTEX_ARRAY);
 			
 			for (int i=0; i<overlays.size(); i++){
 				overlays[i]->render();
@@ -238,7 +281,7 @@ public:
 //----------------------------------------------------------------------------
 	
 	void beginDraw(){
-		texture.swapIn();
+		texture.begin();
 		texture.clear();
 		
 		ofPushMatrix();
@@ -251,7 +294,7 @@ public:
 	
 	void endDraw(){
 		ofPopMatrix();
-		texture.swapOut();
+		texture.end();
 		
 		for (int i=0; i<4; i++){
 			edges[i].render();			
@@ -303,6 +346,42 @@ public:
 			if (skewCorners[i].y < minY) minY = skewCorners[i].y;
 			else if (skewCorners[i].y > maxY) maxY = skewCorners[i].y;					
 		}
+		
+		cropTexCoords[0] = fmax(0,cropCorners[0].x-x);
+		cropTexCoords[1] = fmax(0,cropCorners[0].y-y);
+		cropTexCoords[2] = fmin(width,cropCorners[1].x-x);
+		cropTexCoords[3] = fmax(0,cropCorners[1].y-y);
+		cropTexCoords[4] = fmin(width,cropCorners[2].x-x);
+		cropTexCoords[5] = fmin(height,cropCorners[2].y-y);
+		cropTexCoords[6] = fmax(0,cropCorners[3].x-x);
+		cropTexCoords[7] = fmin(height,cropCorners[3].y-y);
+		
+		texCoords[0] = 0;
+		texCoords[1] = 0;
+		texCoords[2] = width;
+		texCoords[3] = 0;
+		texCoords[4] = width;
+		texCoords[5] = height;
+		texCoords[6] = 0;
+		texCoords[7] = height;
+				
+		skewCornerVertices[0] = skewCorners[0].x;
+		skewCornerVertices[1] = skewCorners[0].y;
+		skewCornerVertices[2] = skewCorners[1].x;
+		skewCornerVertices[3] = skewCorners[1].y;
+		skewCornerVertices[4] = skewCorners[2].x;
+		skewCornerVertices[5] = skewCorners[2].y;
+		skewCornerVertices[6] = skewCorners[3].x;
+		skewCornerVertices[7] = skewCorners[3].y;
+		
+		cropCornerVertices[0] = cropCorners[0].x;
+		cropCornerVertices[1] = cropCorners[0].y;
+		cropCornerVertices[2] = cropCorners[1].x;
+		cropCornerVertices[3] = cropCorners[1].y;
+		cropCornerVertices[4] = cropCorners[2].x;
+		cropCornerVertices[5] = cropCorners[2].y;
+		cropCornerVertices[6] = cropCorners[3].x;
+		cropCornerVertices[7] = cropCorners[3].y;
 	}
 	
 //----------------------------------------------------------------------------
@@ -323,8 +402,9 @@ public:
 	void setCropPoint( ofPoint cropValue, int which ){
 		cropCorners[which].x = cropValue.x;
 		cropCorners[which].y= cropValue.y;
-	}
-	
+		
+		resetPoints();
+	}	
 	
 //----------------------------------------------------------------------------
 	
@@ -521,6 +601,7 @@ public:
 					skewCorners[i].y = fmax(y,fmin(my, y+height));
 				}
 			}
+			resetPoints();
 		} else if (bDrawOverlay){
 			if (bOverlaySelected){				
 				currentOverlay->setPosition(mx,my);				

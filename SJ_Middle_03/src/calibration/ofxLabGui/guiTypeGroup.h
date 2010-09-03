@@ -107,7 +107,8 @@ public:
 	}
 	
 	//-----------------------------------------------.
-	void updateGui(float x, float y, bool firstHit, bool isRelative){
+	bool updateGui(float x, float y, bool firstHit, bool isRelative){
+		lastUpdated.clear();
 		//if( state == SG_STATE_SELECTED){
 			
 			float offsetX = 0;
@@ -122,11 +123,22 @@ public:
 			}
 			
 			if( !locked ){
-				
+				bool updated = false;
 				for(int i = 0; i < children.size(); i++){
-					children[i]->updateGui(offsetX, offsetY, firstHit, isRelative);
-				}				
-			}
+					bool cUpdated = children[i]->updateGui(offsetX, offsetY, firstHit, isRelative);
+					if (cUpdated){
+						lastUpdated.push_back(children[i]);
+					}
+					
+					if(cUpdated && !updated){
+						updated = true;
+					} else {
+						updated = false;
+					}
+				}	
+				return updated;
+            }
+		return false;
 		//}
 	}
 	

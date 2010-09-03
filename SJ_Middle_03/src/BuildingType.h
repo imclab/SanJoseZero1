@@ -58,6 +58,21 @@ public:
 		return name;
 	}
 	
+	//color
+	vector<ofColor> colors;
+	
+	void addColor( int r, int g, int b ){
+		ofColor color;
+		color.r = r;
+		color.g = g;
+		color.b = b;
+		colors.push_back(color);
+	}
+	
+	ofColor getColor( int which ){
+		return colors[which];
+	}
+	
 	//position
 	
 	void setPosition( float x, float y){

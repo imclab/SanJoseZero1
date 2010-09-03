@@ -17,3 +17,4 @@
 
 #define ROW_BUFFER 100.0f
 #define NUMBER_OF_ROWS 5.0f
+#define ROW_SPACING 150.0f

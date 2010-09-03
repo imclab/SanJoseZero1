@@ -10,8 +10,9 @@
 #pragma once
 #include "ofMain.h"
 #include "Emitter.h"
-#include "phyParticle.h"
-#include "ShapeBatchRenderer.h"
+#include "particle3D.h"
+#include "ofxFBOTexture.h"
+#include "LineExplosion.h"
 
 class phyParticleSystem
 {
@@ -21,13 +22,10 @@ public:
 	void update();
 	void draw();
 	
-	
 	Emitter * emitter;
-	vector<phyParticle *> particles;
-	
-	ShapeBatchRenderer * renderer;
+	vector<particle3D *> particles;
+	vector<LineExplosion *> explosions;
 	
 protected:
-	void drawParticles();
-	void cleanUpParticles();
+	//ofxFBOTexture trailTex;
 };
