@@ -163,6 +163,7 @@ void testApp::update(){
 			// unrecognized message ;(
 			if (!bFound)
 			{
+				cout<<"not found "<<m.getAddress()<<endl;
 			}
 		}
 		

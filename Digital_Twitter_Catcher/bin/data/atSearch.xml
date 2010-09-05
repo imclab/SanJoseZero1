@@ -1,9 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<results>
-    <tweet type="reply">
-        <user_name>Chocobot</user_name>
-        <content>@pluginplay testing</content>
-        <tweet_id>22292513154</tweet_id>
-        <timestamp>1282937568</timestamp>
-    </tweet>
-</results>
+<results />

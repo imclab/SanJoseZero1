@@ -19,8 +19,8 @@
 </color>
 -->
         <position>
-            <x>59.000000</x>
-            <y>1630.000000</y>
+            <x>124.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -34,9 +34,18 @@
                 <b>203</b>
             </color>
         </message>
+        <message>
+            <image>models/flickr/flickr_02.3DS</image>
+            <messageString>/pluginplay/flickr/nearby</messageString>
+            <color>
+                <r>161</r>
+                <g>186</g>
+                <b>203</b>
+            </color>
+        </message>
         <position>
-            <x>161.000000</x>
-            <y>1628.000000</y>
+            <x>263.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -60,8 +69,8 @@
             </color>
         </message>
         <position>
-            <x>235.000000</x>
-            <y>1620.000000</y>
+            <x>395.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -256,8 +265,8 @@
             </color>
         </message>
         <position>
-            <x>355.000000</x>
-            <y>1625.000000</y>
+            <x>502.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -272,8 +281,8 @@
             </color>
         </message>
         <position>
-            <x>463.000000</x>
-            <y>1624.000000</y>
+            <x>596.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -288,8 +297,8 @@
             </color>
         </message>
         <position>
-            <x>591.000000</x>
-            <y>1618.000000</y>
+            <x>685.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -304,8 +313,8 @@
             </color>
         </message>
         <position>
-            <x>743.000000</x>
-            <y>1615.000000</y>
+            <x>780.000000</x>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -339,7 +348,7 @@
         </message>
         <position>
             <x>876.000000</x>
-            <y>1616.000000</y>
+            <y>1679.000000</y>
         </position>
     </input>
     <input>
@@ -353,9 +362,34 @@
                 <b>255</b>
             </color>
         </message>
+        <message>
+            <image>models/twitter/twitter_01.3DS</image>
+            <messageString>/pluginplay/twitter/search</messageString>
+            <color>
+                <r>0</r>
+                <g>0</g>
+                <b>255</b>
+            </color>
+        </message>
         <position>
-            <x>966.000000</x>
-            <y>1610.000000</y>
+            <x>968.000000</x>
+            <y>1679.000000</y>
+        </position>
+    </input>
+    <input>
+        <name>open</name>
+        <message>
+            <image>models/open/open.3DS</image>
+            <messageString>/pluginplay/openplug</messageString>
+            <color>
+                <r>0</r>
+                <g>180</g>
+                <b>0</b>
+            </color>
+        </message>
+        <position>
+            <x>51.000000</x>
+            <y>1676.000000</y>
         </position>
     </input>
     <osc>

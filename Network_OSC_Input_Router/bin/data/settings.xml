@@ -48,6 +48,10 @@
 		<message>
 			<image>images/flickr00.png</image>
 			<messageString>/pluginplay/flickr</messageString>
+		</message>		
+		<message>
+			<image>images/flickr01.png</image>
+			<messageString>/pluginplay/flickr/nearby</messageString>
 		</message>
 		<sendsound>1</sendsound>
 	</input>

@@ -1,9 +1,26 @@
 <settings>
-	<host>localhost</host>
-	<!-- <host>10.1.2.161</host> -->
-	<port>12345</port>
-	<lat>40.735844095042395</lat>
-	<long>-73.9904522895813</long>
-	<radius>15</radius>
-	<tags>newyork</tags>
+    <host>localhost</host>
+    <port>12345</port>
+    <searchUrl>http://plug-in-play.com/services/flickr/rl_flickr.php</searchUrl>
+    <messages>
+        <!-- NOTE: THESE MUST BE IN  ORDER  -->
+        <message>/pluginplay/flickr</message>
+        <message>/pluginplay/flickr/nearby</message>
+    </messages>
+    <search>
+        <lastTagId>1283723374</lastTagId>
+        <lastNearbyId>1283723862</lastNearbyId>
+    </search>
+    <tags>
+        <tag>play</tag>
+        <tag>rockwell group</tag>
+    </tags>
+    <geo>
+        <lat>40.735844095042395</lat>
+        <long>-73.9904522895813</long>
+        <radius>15</radius>
+    </geo>
+    <logLevel>2</logLevel>
+    <searchTime>4000.000000</searchTime>
+    <sendTime>50.000000</sendTime>
 </settings>

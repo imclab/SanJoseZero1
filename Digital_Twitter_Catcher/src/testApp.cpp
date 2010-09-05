@@ -2,10 +2,12 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	
+	ofBackground(0,0,0);
 	ofSetLogLevel(OF_LOG_WARNING);
-	
 	string searchUrl = "http://plug-in-play.com/services/twitter/rl_twitter.php";
+	
+	string lastHashID = "";
+	string lastReplyID = "";
 	
 	// SETUP OSC SENDER
 	ofxXmlSettings settings;
@@ -28,10 +30,26 @@ void testApp::setup(){
 				}
 			} settings.popTag();
 			
+			//get last IDs sent
+			settings.pushTag("search");{
+				lastHashID = settings.getValue("lastHashID", "");
+				lastReplyID = settings.getValue("lastReplyID", "");
+			} settings.popTag();
+			
+			//console logging
+			logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
+			
+			//how often we search
+			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+			sendTime = settings.getValue("sendTime", 2000 );
+			cout<<"send time is "<<sendTime<<endl;
+			
 		}settings.popTag();
 	} else {
 		ofLog(OF_LOG_WARNING, "did not find xml");
 	}
+	
+	ofSetLogLevel(logLevel);
 	
 	//setup OSC
 	sender.setup(host, port);
@@ -40,25 +58,24 @@ void testApp::setup(){
 	string tagMessage = "/pluginplay/twitter";
 	if (messageStrings.size() > 0) atMessage = messageStrings[0];
 	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
+		
+	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender, searchTime );
+	atSearcher->lastID = lastReplyID;
 	
-	cout<<messageStrings.size()<<":"<<atMessage<<":"<<tagMessage<<endl;
-	
-	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender );
-	tagSearcher = new TwitterSearcher( "tagSearch", tagMessage, searchUrl, &sender );
+	tagSearcher = new TwitterSearcher( "tagSearch", tagMessage, searchUrl, &sender, searchTime );
+	tagSearcher->lastID = lastHashID;
 	
 	
 	// Initialize the time variables
-	time_t curTime;
-	time(&curTime);
-	lastForwardTime = curTime;
-	lastHashtagsUpdateTime = curTime;
+	lastForwardTime = ofGetElapsedTimeMillis();
+	lastHashtagsUpdateTime = ofGetElapsedTimeMillis();
 	
 	// Update the hashtags to search for
 	ofxXmlSettings hTags;
 	bLoaded = hTags.loadFile("hashtags.xml");
 	if (bLoaded) {
 		hTags.pushTag("settings");
-		cout << "detected tags: " << hTags.getNumTags("tag");
+		
 //		curNumOfTags = hTags.getNumTags("tag");
 		for (int i = 0; i < hTags.getNumTags("tag"); i++) {
 			tagSearcher->addTag(hTags.getValue("tag","void",i));
@@ -68,65 +85,75 @@ void testApp::setup(){
 	}
 	
 	ofLog(OF_LOG_VERBOSE,  "num of tags: "+ofToString(tagSearcher->getNumTags()));
+	ofSetFrameRate(60);
+	
+	//load display font
+	font.loadFont("fonts/futura_bold.ttf", 40);
 }
 
 //--------------------------------------------------------------
-void testApp::update(){	
-	time_t curTime;
-	time(&curTime);
+void testApp::update(){		
+	int curTime = ofGetElapsedTimeMillis();
+	ofSetWindowTitle(ofToString(ofGetElapsedTimeMillis(), 4)+" fps");
 	
 	// Update the hashtags to search for in case they've changed
-	if (difftime(curTime,lastHashtagsUpdateTime) >= UPDATE_HASHTAGS_SECONDS) {
+	if (lastHashtagsUpdateTime - curTime >= UPDATE_HASHTAGS_SECONDS) {
 		lastHashtagsUpdateTime = curTime;
 		ofxXmlSettings hTags;
 		bool bLoaded = hTags.loadFile("hashtags.xml");
 		if (bLoaded) {
 			tagSearcher->clearTags(); 
-			hTags.pushTag("settings");
-//			curNumOfTags = hTags.getNumTags("tag");
-			for (int i = 0; i < hTags.getNumTags("tag"); i++) {
-				tagSearcher->addTag(hTags.getValue("tag","void",i));
-				//hashTags.push_back(hTags.getValue("tag","void",i));
-			}
-			hTags.popTag();
+			hTags.pushTag("settings");{
+				
+				for (int i = 0; i < hTags.getNumTags("tag"); i++) {
+					tagSearcher->addTag(hTags.getValue("tag","void",i));
+				}
+				
+				//console logging
+				logLevel = hTags.getValue("logLevel", OF_LOG_WARNING );
+			} hTags.popTag();
 		}
+		
+		ofxXmlSettings settings;
+		bLoaded = settings.loadFile("settings.xml");
+		if (bLoaded){
+			settings.pushTag("settings");
+			//how often we search
+			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+			sendTime = settings.getValue("sendTime", 2000 );
+			
+			atSearcher->setSearchTime(searchTime);
+			tagSearcher->setSearchTime(searchTime);
+			settings.popTag();
+		}		
 	}
 	
 	
 	// Update the XML file from the PHP script if enough time has elapsed
-	if (difftime(curTime,lastSearchTime) >= SEARCH_TIME_SECONDS && 
-		(tagSearcher->bNewQuery || atSearcher->bNewQuery ) ){
-		lastSearchTime = curTime;
-		
-		// Get more XML from the .php script
-		
-//FIX! THESE SHOULD BE IN SEPARATE TIMERS
-		
-		tagSearcher->doSearch();
-		atSearcher->doSearch();
-	}
-
-
-	// Send the next OSC message if enough time has elapsed
 	
-	if (difftime(curTime,lastForwardTime) >= FORWARD_TIME_SECONDS) {
-		lastForwardTime = curTime;
+	if ( tagSearcher->bReadyToSearch() ) 
+		tagSearcher->doSearch();
+
+	if ( atSearcher->bReadyToSearch() ) 
+		atSearcher->doSearch();
+	
+	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
+		lastForwardTime = ofGetElapsedTimeMillis();
 		tagSearcher->sendOSCSetup();
 		atSearcher->sendOSCSetup();
 	}
 		
 	saveSettings();
 }
-
 	
 //--------------------------------------------------------------
 void testApp::draw(){
+	ofSetColor(50,204,255);
+	font.drawString("TWITTER", 20, 60);
+	ofSetColor(0xffffff);
+	atSearcher->draw(20,100);
+	tagSearcher->draw(400,100);
 	
-	if (true){
-		ofBackground(0,150,150);
-	} else {
-		ofBackground(0,0,0);
-	}
 	//ofDrawBitmapString(newestTweet, 10, 10);
 }
 
@@ -137,13 +164,16 @@ void testApp::saveSettings(){
 	ofxXmlSettings settings;
 	
 	//load up old settings so you don't write over osc, etc
+	// + save things like log level + timing to make sure we see them
+	// in the xml
+	
 	settings.loadFile("settings.xml");
 	settings.setValue("settings:search:lastHashID", tagSearcher->lastID);
 	settings.setValue("settings:search:lastReplyID", atSearcher->lastID);
+	settings.setValue("settings:logLevel", logLevel);
+	settings.setValue("settings:searchTime", searchTime );
+	settings.setValue("settings:sendTime", sendTime );
 	settings.saveFile("settings.xml");
-	
-	tagSearcher->saveSettings();
-	atSearcher->saveSettings();
 };
 
 //--------------------------------------------------------------

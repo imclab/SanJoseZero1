@@ -132,7 +132,7 @@ void testApp::update(){
 					bool bHasData = false;
 					if ( m.getNumArgs() > 0){
 						bHasData = true;
-						forwardedMessage.setAddress( m.getArgAsString(0) );
+						forwardedMessage.addStringArg( m.getArgAsString(0) );
 					}
 					
 					sender.sendMessage(forwardedMessage);					

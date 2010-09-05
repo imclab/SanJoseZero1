@@ -2,23 +2,22 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	geoSearcher.start();
-	tagSearcher.start();
-		
-	ofAddListener(geoSearcher.newResponseEvent,this,&testApp::geoResponse);
-	ofAddListener(tagSearcher.newResponseEvent,this,&testApp::tagResponse);
+	ofBackground(0,0,0);
+	ofSetLogLevel(OF_LOG_WARNING);
+	string searchUrl = "http://plug-in-play.com/services/flickr/rl_flickr.php";
 	
-	lat = "40.735844095042395";
-	lon = "-73.9904522895813";
-	radius = "15";
-	printGeoString = "waiting!";
-	printTagString = "waiting!";
+	string lastTagId = "";
+	string lastNearbyId = "";
+
+	//geo params
+	string radius = "10";
+	string lat = "40.735844095042395";
+	string longitude = "-73.9904522895813";
 	
-	bGeoSearching = false;
-	bTagSearching = false;
-	bGeoNew = false;
-	bTagNew = false;
+	//tags
+	vector<string>tags;
 	
+	// SETUP OSC SENDER
 	ofxXmlSettings settings;
 	bool bLoaded = settings.loadFile("settings.xml");
 	string host = "localhost";
@@ -27,156 +26,172 @@ void testApp::setup(){
 		settings.pushTag("settings");{
 			host = settings.getValue("host","localhost");
 			port = settings.getValue("port",12345);
-			lat = settings.getValue("lat","40.735844095042395");
-			lon = settings.getValue("lon","-73.9904522895813");
-			radius = settings.getValue("radius","15");
-			tags = settings.getValue("tags", "new york");
+			
+			//php settings
+			searchUrl = settings.getValue("searchUrl", searchUrl);
+			
+			//in case we need to reset message names 
+			settings.pushTag("messages");{
+				for (int i=0; i<settings.getNumTags("message"); i++){
+					string message = settings.getValue("message", "/pluginplay/twitter", i);
+					messageStrings.push_back(message);
+				}
+			} settings.popTag();
+			
+			//get last IDs sent
+			settings.pushTag("search");{
+				lastNearbyId = settings.getValue("lastNearbyId", "");
+				lastTagId = settings.getValue("lastTagId", "");
+			} settings.popTag();
+			
+			//console logging
+			logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
+			
+			//how often we search
+			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+			sendTime = settings.getValue("sendTime", 2000 );
+			cout<<"send time is "<<sendTime<<endl;
+			
+			//get geo params
+			radius = settings.getValue("geo:radius", radius);
+			lat = settings.getValue("geo:lat", lat);
+			longitude = settings.getValue("geo:long", longitude);
+			
+			//get tags to search
+			settings.pushTag("tags");{
+				for (int i=0; i<settings.getNumTags("tag"); i++){
+					string tag = settings.getValue("tag", "",i);
+					tags.push_back(tag);
+				}
+			} settings.popTag();
+			
 		}settings.popTag();
-	};
+	} else {
+		ofLog(OF_LOG_WARNING, "did not find xml");
+	}
 	
-	cout << "setting up sender at "<<host<<","<<port<<endl;
+	ofSetLogLevel(logLevel);
 	
 	//setup OSC
 	sender.setup(host, port);
 	
-	doGeoSearch();
-	doTagSearch();
-}
-
-//--------------------------------------------------------------
-void testApp::doGeoSearch(){
-	ofxHttpForm form;
-	form.action = "http://api.flickr.com/services/rest/?method=flickr.photos.search";
-	form.method = OFX_HTTP_POST;
-	form.addFormField("api_key", API_KEY);
-	form.addFormField("lat", lat);
-	form.addFormField("lon", lon);
-	form.addFormField("radius", radius);
-	form.addFormField("extras", "date_taken");
-	form.addFormField("sort", "date-taken-desc");
+	string atMessage = "/pluginplay/twitter";
+	string tagMessage = "/pluginplay/twitter";
+	if (messageStrings.size() > 0) atMessage = messageStrings[0];
+	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
+		
+	nearbySearcher = new FlickrSearcher( "atSearch", atMessage, searchUrl, &sender, searchTime );
+	nearbySearcher->lastID = lastNearbyId;
+	nearbySearcher->setGeoParams(radius, lat, longitude);
 	
-	cout << form.name<<endl;
+	tagSearcher = new FlickrSearcher( "tagSearch", tagMessage, searchUrl, &sender, searchTime );
+	tagSearcher->lastID = lastTagId;
 	
-	geoSearcher.addForm(form);
-	printGeoString = "searching...";
-	bGeoSearching = true;
-}
-
-//--------------------------------------------------------------
-void testApp::doTagSearch(){
-	ofxHttpForm form;
-	form.action = "http://api.flickr.com/services/rest/?method=flickr.photos.search";
-	form.method = OFX_HTTP_POST;
-	form.addFormField("api_key", API_KEY);
-	form.addFormField("tags", tags);
-	//form.addFormField("extras", "date_taken");
-	//form.addFormField("sort", "date-taken-desc");
-	
-	tagSearcher.addForm(form);
-	printTagString = "searching tags "+tags;
-	bTagSearching = true;
-}
-
-//--------------------------------------------------------------
-void testApp::tagResponse(ofxHttpResponse & response){
-	lastSearch = latestSearch;
-	
-	lastTagSearch = ofGetElapsedTimeMillis();
-	bTagSearching = false;
-	
-	ofxXmlSettings xmlResponse;
-	xmlResponse.loadFromBuffer(response.responseBody);
-	
-	cout<< response.responseBody<< endl;
-	
-	xmlResponse.pushTag("rsp");
-	xmlResponse.pushTag("photos");
-	
-	if (xmlResponse.getNumTags("photo") <= 0) return;
-	
-	latestSearch.id = xmlResponse.getAttribute("photo", "id", "");
-	//latestSearch.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
-	latestSearch.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
-	
-	if (latestSearch.id != lastSearch.id){
-		cout<<"NEW PHOTO! "<<latestSearch.url<<endl;
-		ofxOscMessage m;
-		m.setAddress("/pluginplay/flickr/tags");
-		m.addStringArg(latestSearch.url);
-		sender.sendMessage(m);
-		bGeoNew = true;
-	} else {
-		bGeoNew = false;
+	//loop through tags vector and add to searcher
+	for (int i=0; i<tags.size(); i++){
+		tagSearcher->addTag(tags[i]);
 	}
 	
-	printTagString = "Got "+ofToString(xmlResponse.getNumTags("photo"))+" photos.\nThe latest id is "+latestSearch.id+"\nwhich was taken at "+latestSearch.dateString;
+	// Initialize the time variables
+	lastForwardTime = ofGetElapsedTimeMillis();
+	lastHashtagsUpdateTime = ofGetElapsedTimeMillis();
 	
-	xmlResponse.popTag();
-	xmlResponse.popTag();
+	ofLog(OF_LOG_VERBOSE,  "num of tags: "+ofToString(tagSearcher->getNumTags()));
+	ofSetFrameRate(60);
+	
+	//load display font
+	font.loadFont("fonts/futura_bold.ttf", 40);
 }
 
 //--------------------------------------------------------------
-void testApp::geoResponse(ofxHttpResponse & response){
-	lastGeo = latestGeo;
+void testApp::update(){		
+	int curTime = ofGetElapsedTimeMillis();
+	ofSetWindowTitle(ofToString(ofGetElapsedTimeMillis(), 4)+" fps");
 	
-	lastGeoSearch = ofGetElapsedTimeMillis();
-	bGeoSearching = false;
-	
-	ofxXmlSettings xmlResponse;
-	xmlResponse.loadFromBuffer(response.responseBody);
-	
-	cout<< response.responseBody<< endl;
-	
-	xmlResponse.pushTag("rsp");
-	xmlResponse.pushTag("photos");
-	if (xmlResponse.getNumTags("photo")  <= 0) return;
-	latestGeo.id = xmlResponse.getAttribute("photo", "id", "");
-	latestGeo.setDate(xmlResponse.getAttribute("photo", "datetaken", ""));
-	latestGeo.setUrl( xmlResponse.getAttribute("photo", "farm", ""),xmlResponse.getAttribute("photo", "server", ""), xmlResponse.getAttribute("id", "datetaken", ""), xmlResponse.getAttribute("secret", "datetaken", ""));
-	
-	if (latestGeo.id != lastGeo.id){
-		cout<<"NEW PHOTO! "<<latestGeo.url<<endl;
-		ofxOscMessage m;
-		m.setAddress("/pluginplay/flickr");
-		m.addStringArg(latestGeo.url);
-		sender.sendMessage(m);
-		bTagNew = true;
-	} else {
-		bTagNew = false;
+	// Update the hashtags to search for in case they've changed
+	if (lastHashtagsUpdateTime - curTime >= UPDATE_HASHTAGS_SECONDS) {
+		lastHashtagsUpdateTime = curTime;
+		ofxXmlSettings settings;
+		bool bLoaded = settings.loadFile("settings.xml");
+		
+		if (bLoaded) {
+			tagSearcher->clearTags(); 
+			settings.pushTag("settings");{
+				
+				settings.pushTag("tags");{
+					for (int i = 0; i < settings.getNumTags("tag"); i++) {
+						tagSearcher->addTag(settings.getValue("tag","void",i));
+					}
+				} settings.popTag();
+				
+				//console logging
+				logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
+								
+				//search + send time
+				searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+				sendTime = settings.getValue("sendTime", 2000 );
+				
+				nearbySearcher->setSearchTime(searchTime);
+				tagSearcher->setSearchTime(searchTime);
+				
+				//geo params
+				string radius = settings.getValue("geo:radius", radius);
+				string lat = settings.getValue("geo:lat", lat);
+				string longitude = settings.getValue("geo:long", longitude);
+				
+				nearbySearcher->setGeoParams(radius, lat, longitude);
+				
+			} settings.popTag();
+		}		
 	}
 	
-	printGeoString = "Got "+ofToString(xmlResponse.getNumTags("photo"))+" photos.\nThe latest id is "+latestGeo.id+"\nwhich was taken at "+latestGeo.dateString;
 	
-	xmlResponse.popTag();
-	xmlResponse.popTag();
-}
+	// Update the XML file from the PHP script if enough time has elapsed
+	
+	if ( tagSearcher->bReadyToSearch() ) 
+		tagSearcher->doSearch();
 
-//--------------------------------------------------------------
-void testApp::update(){
-	if (ofGetElapsedTimeMillis() - lastGeoSearch > SEARCH_TIME && !bGeoSearching){
-		doGeoSearch();
+	if ( nearbySearcher->bReadyToSearch() ) 
+		nearbySearcher->doSearch();
+	
+	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
+		lastForwardTime = ofGetElapsedTimeMillis();
+		tagSearcher->sendOSCSetup();
+		nearbySearcher->sendOSCSetup();
 	}
-	if (ofGetElapsedTimeMillis() - lastTagSearch > SEARCH_TIME && !bTagSearching){
-		doTagSearch();
-	}
+		
+	saveSettings();
 }
-
+	
 //--------------------------------------------------------------
 void testApp::draw(){
-	if (bGeoNew){
-		ofSetColor(255,0,0);
-	} else {
-		ofSetColor(255,255,255);
-	}
-	ofDrawBitmapString(printGeoString, 20, 20);
+	ofSetColor(255,0,132);
+	font.drawString("FLICKR", 20, 60);
+	ofSetColor(0xffffff);
+	nearbySearcher->draw(20,100);
+	tagSearcher->draw(400,100);
 	
-	if (bTagNew){
-		ofSetColor(255,0,0);
-	} else {
-		ofSetColor(255,255,255);
-	}
-	ofDrawBitmapString(printTagString, 20, 100);
+	//ofDrawBitmapString(newestTweet, 10, 10);
 }
+
+//--------------------------------------------------------------
+// SAVE OUT NEWEST ID IN CASE OF CRASH / RESTART 
+void testApp::saveSettings(){
+	
+	ofxXmlSettings settings;
+	
+	//load up old settings so you don't write over osc, etc
+	// + save things like log level + timing to make sure we see them
+	// in the xml
+	
+	settings.loadFile("settings.xml");
+	settings.setValue("settings:search:lastTagId", tagSearcher->lastID);
+	settings.setValue("settings:search:lastNearbyId", nearbySearcher->lastID);
+	settings.setValue("settings:logLevel", logLevel);
+	settings.setValue("settings:searchTime", searchTime );
+	settings.setValue("settings:sendTime", sendTime );
+	settings.saveFile("settings.xml");
+};
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
@@ -200,11 +215,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	ofxOscMessage m;
-	m.setAddress("/pluginplay/flickr");
-	m.addStringArg(latestSearch.url);
-	sender.sendMessage(m);
-	
+
 }
 
 //--------------------------------------------------------------

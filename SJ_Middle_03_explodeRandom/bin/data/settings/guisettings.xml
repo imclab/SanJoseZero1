@@ -438,12 +438,12 @@
         <val_0>0.000000</val_0>
     </VIDEO_2_RESET>
     <SCALE_MIN>
-        <val_0>4.000000</val_0>
+        <val_0>4.002000</val_0>
     </SCALE_MIN>
     <SCALE_MAX>
         <val_0>14.577272</val_0>
     </SCALE_MAX>
     <GROUP_TIME>
-        <val_0>300.000000</val_0>
+        <val_0>654.545410</val_0>
     </GROUP_TIME>
 </settings>

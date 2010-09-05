@@ -38,16 +38,20 @@ class testApp : public ofBaseApp{
 		void saveSettings();
 				
 		string searchUrl;
-		
+		int logLevel;
+		float searchTime;
+		float sendTime;
+	
 		ofxOscSender sender;
 
 		//message strings to send
 		vector <string> messageStrings;
 	
-		time_t lastHashtagsUpdateTime;	
-		time_t lastSearchTime;
-		time_t lastForwardTime;
-	
+		int lastHashtagsUpdateTime;	
+		int lastSearchTime;
+		int lastForwardTime;
+		
+		ofTrueTypeFont font;
 };
 
 #endif
