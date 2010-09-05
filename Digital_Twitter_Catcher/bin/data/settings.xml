@@ -1,0 +1,14 @@
+<settings>
+    <host>localhost</host>
+    <port>12345</port>
+    <searchUrl>http://plug-in-play.com/services/twitter/rl_twitter.php</searchUrl>
+    <messages>
+        <!-- NOTE: THESE MUST BE IN  ORDER  -->
+        <message>/pluginplay/twitter</message>
+        <message>/pluginplay/twitter/search</message>
+    </messages>
+    <search>
+        <lastHashID>23073810687</lastHashID>
+        <lastReplyID>22292513154</lastReplyID>
+    </search>
+</settings>
