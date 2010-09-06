@@ -42,7 +42,6 @@ void testApp::setup(){
 			//how often we search
 			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
 			sendTime = settings.getValue("sendTime", 2000 );
-			cout<<"send time is "<<sendTime<<endl;
 			
 		}settings.popTag();
 	} else {
@@ -58,7 +57,7 @@ void testApp::setup(){
 	string tagMessage = "/pluginplay/twitter";
 	if (messageStrings.size() > 0) atMessage = messageStrings[0];
 	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
-		
+	
 	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender, searchTime );
 	atSearcher->lastID = lastReplyID;
 	
@@ -89,15 +88,16 @@ void testApp::setup(){
 	
 	//load display font
 	font.loadFont("fonts/futura_bold.ttf", 40);
+	bSendAtReplies = true;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){		
 	int curTime = ofGetElapsedTimeMillis();
-	ofSetWindowTitle(ofToString(ofGetElapsedTimeMillis(), 4)+" fps");
+	ofSetWindowTitle(ofToString(ofGetFrameRate(), 4)+" fps");
 	
 	// Update the hashtags to search for in case they've changed
-	if (lastHashtagsUpdateTime - curTime >= UPDATE_HASHTAGS_SECONDS) {
+	if (curTime - lastHashtagsUpdateTime >= UPDATE_HASHTAGS_MILLIS) {
 		lastHashtagsUpdateTime = curTime;
 		ofxXmlSettings hTags;
 		bool bLoaded = hTags.loadFile("hashtags.xml");
@@ -112,20 +112,22 @@ void testApp::update(){
 				//console logging
 				logLevel = hTags.getValue("logLevel", OF_LOG_WARNING );
 			} hTags.popTag();
+		} else {
 		}
 		
 		ofxXmlSettings settings;
 		bLoaded = settings.loadFile("settings.xml");
 		if (bLoaded){
-			settings.pushTag("settings");
-			//how often we search
-			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
-			sendTime = settings.getValue("sendTime", 2000 );
-			
-			atSearcher->setSearchTime(searchTime);
-			tagSearcher->setSearchTime(searchTime);
-			settings.popTag();
-		}		
+			settings.pushTag("settings");{
+				//how often we search
+				searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+				sendTime = settings.getValue("sendTime", 2000 );
+				
+				atSearcher->setSearchTime(searchTime);
+				tagSearcher->setSearchTime(searchTime);
+			} settings.popTag();
+		}	
+		saveSettings();	
 	}
 	
 	
@@ -139,11 +141,13 @@ void testApp::update(){
 	
 	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
 		lastForwardTime = ofGetElapsedTimeMillis();
-		tagSearcher->sendOSCSetup();
-		atSearcher->sendOSCSetup();
-	}
+		if (bSendAtReplies && atSearcher->hasWaitingResults())
+			atSearcher->sendOSCSetup();
+		else			
+			tagSearcher->sendOSCSetup();
 		
-	saveSettings();
+		bSendAtReplies = !bSendAtReplies;
+	}
 }
 	
 //--------------------------------------------------------------

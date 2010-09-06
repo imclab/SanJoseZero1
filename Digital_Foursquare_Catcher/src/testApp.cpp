@@ -7,6 +7,7 @@ void testApp::setup(){
 	string searchUrl = "http://www.plug-in-play.com/services/foursquare/rl_foursquare.php";
 	
 	string lastTimeStamp = "";
+	string lastNearbyTimestamp = "";
 	
 	// SETUP OSC SENDER
 	ofxXmlSettings settings;
@@ -35,6 +36,7 @@ void testApp::setup(){
 			//get last IDs sent
 			settings.pushTag("search");{
 				lastTimeStamp = settings.getValue("lastTimeStamp", "");
+				lastNearbyTimestamp = settings.getValue("lastNearbyTimestamp", "");
 			} settings.popTag();
 			
 			//get venue Id: just one right now, but leave in framework to get
@@ -50,6 +52,7 @@ void testApp::setup(){
 			
 			//how often we search
 			searchTime = settings.getValue("searchTime", 6000 );
+			nearbySearchTime = settings.getValue("nearbySearchTime", 20000 );
 			sendTime = settings.getValue("sendTime", 2000 );
 			
 		}settings.popTag();
@@ -69,6 +72,10 @@ void testApp::setup(){
 	checkinSearcher->venueId = venueId;
 	checkinSearcher->lastID = lastTimeStamp;
 	
+	nearbySearcher = new FoursquareSearcher( "nearby_"+venueId, message, searchUrl, &sender, nearbySearchTime );
+	nearbySearcher->venueId = venueId;
+	nearbySearcher->lastID = lastNearbyTimestamp; 
+	
 	// Initialize the time variables
 	lastForwardTime = ofGetElapsedTimeMillis();
 	lastHashtagsUpdateTime = ofGetElapsedTimeMillis();
@@ -76,15 +83,16 @@ void testApp::setup(){
 	ofSetFrameRate(60);
 	//load display font
 	font.loadFont("fonts/futura_bold.ttf", 40);
+	bSendNearbyResults = false;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){		
 	int curTime = ofGetElapsedTimeMillis();
-	ofSetWindowTitle(ofToString(ofGetElapsedTimeMillis(), 4)+" fps");
+	ofSetWindowTitle(ofToString(ofGetFrameRate(), 4)+" fps");
 	
 	// Update the hashtags to search for in case they've changed
-	if (lastHashtagsUpdateTime - curTime >= UPDATE_HASHTAGS_SECONDS) {
+	if (curTime - lastHashtagsUpdateTime >= UPDATE_HASHTAGS_SECONDS) {
 		lastHashtagsUpdateTime = curTime;
 		
 		ofxXmlSettings settings;
@@ -106,21 +114,28 @@ void testApp::update(){
 			checkinSearcher->setSearchTime(searchTime);
 			settings.popTag();
 		}		
+		saveSettings();
 	}
-	
-	
+		
 	// Update the XML file from the PHP script if enough time has elapsed
 	
 	if ( checkinSearcher->bReadyToSearch() ) 
 		checkinSearcher->doSearch();
+	
+	if ( nearbySearcher->bReadyToSearch() ) 
+		nearbySearcher->doSearch();
 
 	
 	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
 		lastForwardTime = ofGetElapsedTimeMillis();
-		checkinSearcher->sendOSCSetup();
+		if (bSendNearbyResults && nearbySearcher->hasResults())
+			nearbySearcher->sendOSCSetup();
+		else 
+			checkinSearcher->sendOSCSetup();
+		
+		bSendNearbyResults = !bSendNearbyResults;
 	}
 		
-	saveSettings();
 }
 	
 //--------------------------------------------------------------
@@ -130,6 +145,7 @@ void testApp::draw(){
 	font.drawString("FOURSQUARE", 20, 60);
 	ofSetColor(0xffffff);	
 	checkinSearcher->draw(20,100);
+	nearbySearcher->draw(300, 100);
 }
 
 //--------------------------------------------------------------
@@ -144,8 +160,10 @@ void testApp::saveSettings(){
 	
 	settings.loadFile("settings.xml");
 	settings.setValue("settings:search:lastTimeStamp", checkinSearcher->lastID);
+	settings.setValue("settings:search:lastNearbyTimestamp", nearbySearcher->lastID);
 	settings.setValue("settings:logLevel", logLevel);
 	settings.setValue("settings:searchTime", searchTime );
+	settings.setValue("settings:nearbySearchTime", nearbySearchTime );
 	settings.setValue("settings:sendTime", sendTime );
 	settings.saveFile("settings.xml");
 };

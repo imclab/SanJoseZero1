@@ -62,8 +62,12 @@ public:
 		string debugString = name;
 		if (bSearching) debugString += ": searching... \n";
 		else debugString += ": waiting \n";
-		debugString += ofToString(maxNumOfResults)+" photo queued\n\n";
-		debugString += "ready to send photo "+ofToString(curResult)+"\n";
+		if (curResult < maxNumOfResults){
+			debugString += ofToString(maxNumOfResults)+" photo queued\n\n";
+			debugString += "ready to send photo "+ofToString(curResult)+"\n";
+		} else {
+			debugString += "sent all available data\n";
+		}
 		debugString += "last id sent = "+lastID+"\n";
 		debugString += "last id received = "+lastIDReceived+"\n";
 		if (tags.size() > 0) debugString += "\nsearching tags:\n";

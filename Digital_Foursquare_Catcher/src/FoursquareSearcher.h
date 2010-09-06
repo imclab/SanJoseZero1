@@ -65,8 +65,14 @@ public:
 		string debugString = name;
 		if (bSearching) debugString += ": searching ... \n";
 		else debugString += ": waiting \n";
-		debugString += ofToString(maxNumResults)+" checkins queued\n\n";
-		debugString += "ready to send checkin "+ofToString(curResult)+"\n";
+		
+		if (curResult < maxNumResults){
+			debugString += ofToString(maxNumResults)+" checkins queued\n\n";
+			debugString += "ready to send checkin "+ofToString(curResult)+"\n";
+		} else {
+			debugString += "sent all available data\n";
+		}
+		
 		debugString += "last id sent = "+lastID+"\n";
 		debugString += "last id received = "+lastIDReceived+"\n";
 		if (hashTags.size() > 0) debugString += "\nsearching tags:\n";
@@ -158,12 +164,19 @@ public:
 			if (bcurResultExists){				
 				//only get the last ID once! first tweet = most recent
 				lastID = dummyRespose.getValue("timestamp","");
-				dummyRespose.popTag();
-				
+				dummyRespose.popTag();				
 				responses.push_back(response);
+				
+				//get next set of responses! (mostly for the first time this loads up)
+				if (curResult == maxNumResults)
+					getNextResponseSet();
 			}
 			
 		}
+	};
+	
+	bool hasResults(){
+		return curResult < maxNumResults;
 	};
 	
 /***********************************************************

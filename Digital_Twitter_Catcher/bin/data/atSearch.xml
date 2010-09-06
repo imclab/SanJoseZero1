@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<results />
+<results>
+    <tweet type="reply">
+        <user_name>brett renfer</user_name>
+        <content>@pluginplay testing. sorry for all the debug tweets everyone else....</content>
+        <tweet_id>23170246819</tweet_id>
+        <timestamp>1283800328</timestamp>
+    </tweet>
+</results>

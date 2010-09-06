@@ -5,14 +5,17 @@
     <messages>
         <!-- NOTE: THESE MUST BE IN  ORDER  -->
         <message>/pluginplay/foursquare</message>
+        <message>/pluginplay/foursquare/nearby</message>
     </messages>
     <venues>
         <venue>19462</venue>
     </venues>
     <logLevel>2</logLevel>
-    <searchTime>6000.000000</searchTime>
+    <searchTime>10000.000000</searchTime>
+    <nearbySearchTime>20000.000000</nearbySearchTime>
     <sendTime>2000.000000</sendTime>
     <search>
-        <lastTimeStamp>1283723921</lastTimeStamp>
+        <lastTimeStamp>1283802036</lastTimeStamp>
+        <lastNearbyTimestamp>1283802036</lastNearbyTimestamp>
     </search>
 </settings>

@@ -13,7 +13,7 @@
 
 #define SEARCH_TIME_SECONDS 4
 #define FORWARD_TIME_SECONDS 1
-#define UPDATE_HASHTAGS_SECONDS 4
+#define UPDATE_HASHTAGS_SECONDS 10000
 
 class testApp : public ofBaseApp{
 
@@ -23,6 +23,7 @@ class testApp : public ofBaseApp{
 		void draw();
 		
 		FoursquareSearcher * checkinSearcher;	
+		FoursquareSearcher * nearbySearcher;	
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
@@ -36,7 +37,7 @@ class testApp : public ofBaseApp{
 				
 		string searchUrl;
 		int logLevel;
-		float searchTime;
+		float searchTime, nearbySearchTime;
 		float sendTime;
 	
 		ofxOscSender sender;
@@ -45,10 +46,10 @@ class testApp : public ofBaseApp{
 		vector <string> messageStrings;
 	
 		int lastHashtagsUpdateTime;	
-		int lastSearchTime;
 		int lastForwardTime;
 	
 		string venueId;
+		bool bSendNearbyResults;
 	
 		ofTrueTypeFont font;
 };
