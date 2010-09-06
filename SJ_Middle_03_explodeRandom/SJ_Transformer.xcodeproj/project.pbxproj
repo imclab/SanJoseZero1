@@ -109,6 +109,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E05A80E12353E9D00EA7EE5 /* ofxLabUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLabUtils.h; sourceTree = "<group>"; };
 		2E78C359122468B3007663E7 /* Column.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Column.h; sourceTree = "<group>"; };
 		2E78C35A1224693C007663E7 /* Columns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Columns.h; sourceTree = "<group>"; };
 		2E7A4B2411DB96B400914266 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
@@ -181,7 +182,6 @@
 		2E7E780D123003C900A3FA9A /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2E7E780F123003C900A3FA9A /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		2E7E7810123003C900A3FA9A /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
-		2E7E791D12301A1D00A3FA9A /* ofxLabUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLabUtils.h; sourceTree = "<group>"; };
 		2E8BBF7D122E9FF300625F40 /* particle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle3D.h; sourceTree = "<group>"; };
 		2E8BC276122EE93400625F40 /* LineExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineExplosion.h; sourceTree = "<group>"; };
 		2EC2E6581228593200483E81 /* guiBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiBaseObject.h; sourceTree = "<group>"; };
@@ -310,6 +310,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E05A80D12353E9D00EA7EE5 /* ofxLabUtils */ = {
+			isa = PBXGroup;
+			children = (
+				2E05A80E12353E9D00EA7EE5 /* ofxLabUtils.h */,
+			);
+			name = ofxLabUtils;
+			path = src/utils/ofxLabUtils;
+			sourceTree = "<group>";
+		};
 		2E7E77B4123003C800A3FA9A /* ofx3DModelLoader */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,13 +566,13 @@
 		2E7E7828123003CC00A3FA9A /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				2E05A80D12353E9D00EA7EE5 /* ofxLabUtils */,
 				2E7E77B4123003C800A3FA9A /* ofx3DModelLoader */,
 				2E7E77C0123003C800A3FA9A /* ofx3DUtils */,
 				2E7E77CA123003C800A3FA9A /* ofxColor */,
 				2E7E77CD123003C800A3FA9A /* ofxFboTexture */,
 				2E7E77F7123003C800A3FA9A /* ofxVectorMath */,
 				2E7E7807123003C900A3FA9A /* ofxXmlSettings */,
-				2E7E791D12301A1D00A3FA9A /* ofxLabUtils.h */,
 			);
 			name = utils;
 			sourceTree = "<group>";

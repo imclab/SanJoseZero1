@@ -3,6 +3,8 @@
 
 
 #include "ofMain.h"
+#include "ofxLabUtils.h"
+
 #include "ofx3DUtils.h"
 #include "ofxOsc.h"
 #include "ofxXmlSettings.h"

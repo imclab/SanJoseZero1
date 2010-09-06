@@ -66,6 +66,32 @@ static void ofTriangle(float x1,float y1, float z1, float x2,float y2, float z2,
 	if (ofGetStyle().smoothing && !ofGetStyle().bFill) labEndSmoothing();
 }
 
+static void ofTriangle(float x1,float y1, float z1, float x2,float y2, float z2, float x3, float y3, float z3, float * colorArray){
+	
+	// use smoothness, if requested:
+	if (ofGetStyle().smoothing && !ofGetStyle().bFill) labStartSmoothing();
+	
+	// draw:
+	triangle3DPoints[0] = x1;
+	triangle3DPoints[1] = y1;
+	triangle3DPoints[2] = z1;
+	triangle3DPoints[3] = x2;
+	triangle3DPoints[4] = y2;
+	triangle3DPoints[5] = z2;
+	triangle3DPoints[6] = x3;
+	triangle3DPoints[7] = y3;
+	triangle3DPoints[8] = z3;
+	
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glColorPointer(4, GL_FLOAT, 0, &colorArray[0]);
+	glVertexPointer(3, GL_FLOAT, 0, &triangle3DPoints[0]);
+	glDrawArrays((ofGetStyle().bFill) ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3);
+	
+	// back to normal, if smoothness is on
+	if (ofGetStyle().smoothing && !ofGetStyle().bFill) labEndSmoothing();
+}
+
 static float quadPoints[12];
 
 static void ofQuad2D( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
