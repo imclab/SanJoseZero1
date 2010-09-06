@@ -1,0 +1,18 @@
+<settings>
+    <host>localhost</host>
+    <port>12345</port>
+    <searchUrl>http://www.plug-in-play.com/services/foursquare/rl_foursquare.php</searchUrl>
+    <messages>
+        <!-- NOTE: THESE MUST BE IN  ORDER  -->
+        <message>/pluginplay/foursquare</message>
+    </messages>
+    <venues>
+        <venue>19462</venue>
+    </venues>
+    <logLevel>2</logLevel>
+    <searchTime>6000.000000</searchTime>
+    <sendTime>2000.000000</sendTime>
+    <search>
+        <lastTimeStamp>1283723921</lastTimeStamp>
+    </search>
+</settings>

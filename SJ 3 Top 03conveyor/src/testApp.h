@@ -45,6 +45,9 @@ class testApp : public ofBaseApp{
 	void moveConveyorY(float dist);
 	void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
 	void moveCurveX(int crvIndex, float xPos);
+	void setupConveyorMesh();
+	void scaleConveyorY(float scale);
+	int getVertPointer(int curveIndex, float uPos);
 
 	
 		Emitter * particleManager;
@@ -85,13 +88,13 @@ class testApp : public ofBaseApp{
 	vector <ofxVec3f> refPoses;	//used for creating each curve
 	int numSubdivisions;
 	int numCurves;
-	int numCVs;
+	int numCVs;	
+	float uIncrement;
 	ofImage ceilingImage;
 	
 	//lars biuldings
 	vector <Stack> stacks;
-	vector <pointOnCurveNode> stackControllers;
-	vector <ofxVec3f> stackPos;
+	vector <int> refVerts;
 	
 };
 

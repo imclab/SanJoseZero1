@@ -57,11 +57,6 @@ public:
 	//void moveCV(int index, ofxVec3f newPos);
 	
 	void testSetup(float _cv[][3]);
-	bool ON_EvaluateNurbsDeBoor(int cv_dim, int order, int cv_stride, double *cv,
-								const double *knots, int side, double mult_k, 
-								double t);
-	
-	void CALLBACK vertexCallback(GLfloat *vertex);
 	
 	//new
 	int getCVcount(){return (CVs.size()-1)/3;}
@@ -203,14 +198,12 @@ public:
 	pointOnCurveNode(){
 		uPos = 0.5;
 		usePositionPointer = false;
-		findNormal = false;
 	};	
 	pointOnCurveNode(float _uPos, LCurve *_curve, ofxVec3f * _target){
 		uPos = _uPos;
 		curve = _curve;
 		target = _target;
 		usePositionPointer = true;
-		findNormal = false;
 		
 		update();
 	};
@@ -219,41 +212,21 @@ public:
 		uPos = _uPos;
 		curve = _curve;
 		target = _target;
-		usePositionPointer = true;
-		findNormal = false;
-		
+		usePositionPointer = true;		
 		update();
 	};	
 	
 	void setup(float _uPos, LCurve *_curve){
 		usePositionPointer = false;
-		findNormal = true;//false;
 		uPos = _uPos;
 		curve = _curve;
 		
 		update();
 	};	
 	
-	void setFindNormal(bool val){		
-		findNormal = val;
-	}
-	
 	void update(){
 		pos = curve->pOnCurve(uPos);
 		if(usePositionPointer)	*target = pos;
-		if(findNormal) setRotation();
-	}
-	
-	void setNorm(ofxVec3f newNormal){norm = newNormal;}
-	void setRotation(){
-		ofxVec3f upVec(0,0,1);
-		ofxVec3f dir = curve->pOnCurve(uPos + 0.05);
-		dir -= pos;
-		
-		angle = upVec.angle(dir)-90;
-		//if(angle > 0.01){
-			upVec.cross(dir);
-		//}
 	}
 	
 	//variables	
@@ -261,15 +234,9 @@ public:
 	LCurve *curve;
 	ofxVec3f * target;
 	ofxVec3f norm;
-	ofxVec3f pos;
-	ofxVec3f rotAxis;
-	float angle;
-	
+	ofxVec3f pos;	
 	
 	bool usePositionPointer;
-	bool findNormal;
-	
-
 };
 
 #endif

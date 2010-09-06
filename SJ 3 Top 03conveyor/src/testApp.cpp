@@ -7,9 +7,11 @@ ofImage randImage;
 vector <pointOnCurveNode> sweetSpot;
 vector <ofxVec3f> sweetSpotPos;
 
-float conveyorYoffset;
-int nextAnchorIndex;
 bool isCeilingAdvenced;
+
+ofxVec3f conveyorScale;
+float conveyorYoffset;
+
 //--------------------------------------------------------------
 void testApp::setup(){
 	
@@ -120,89 +122,15 @@ void testApp::setup(){
 	
 	ceilingImage.loadImage("hop_3.png");
 	
-	fCounter = 0.0;
-	//ceiling mesh
-	
+	//ceiling mesh	
 	numCurves = NUMBER_OF_ROWS;//number of stacks per row + 2(border)
 	numCVs = 18;
 	numSubdivisions = 25;
-	//define posiitons used t0 create curves
-	refPoses.resize(numCVs);
-	refPoses[0].set(0, 0.99, 0);
-	refPoses[1].set(0, 1.03782, 0);
-	refPoses[2].set(0, 1.15437, 0.0157448);
-	refPoses[3].set(0, 1.18961, 0.130563);
-	refPoses[4].set(0, 1.09218, 0.181413);
-	refPoses[5].set(0, 0.986734, 0.191166);
-	refPoses[6].set(0, 0.881457, 0.19796);
-	refPoses[7].set(0, 0.776266, 0.193468);
-	refPoses[8].set(0, 0.671478, 0.184758);
-	refPoses[9].set(0, 0.567574, 0.171934);
-	refPoses[10].set(0, 0.463153, 0.158185);
-	refPoses[11].set(0, 0.360384, 0.144836);
-	refPoses[12].set(0, 0.252854, 0.134736);
-	refPoses[13].set(0, 0.155657, 0.121956);
-	refPoses[14].set(0, 0.0421618, 0.0801633);
-	refPoses[15].set(0, 0, 0.0206706);
-	refPoses[16].set(0, 0.155657, 0.00257276);
-	refPoses[17].set(0, 0.955657, 0);
 	
+	uIncrement = .02; //this gets added to advance mesh verts and stack positions. added to uVal per frame
+	setupConveyorMesh();
 	
-	float xStep = ofGetWidth()/float(numCurves);
-	float yStep = float (ofGetHeight())/float(numCVs);
-	curves.reserve(numCurves);
-	curves.resize(numCurves);
-	conveyorYoffset = 135;
-	
-	float curX = ROW_BUFFER;
-	
-	for(int i=0; i<numCurves; i++){
-		for(int j=0; j<numCVs;j++){
-			curves[i].addCV(curX,//i*xStep+xStep/2,
-							refPoses[j].y*ofGetHeight()*.5+conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
-							refPoses[j].z*1000);//cos(float(j)/float(numCVs))*300);
-			curves[i].setDegree(2);
-			curves[i].setKnots();
-			curves[i].setNumSpans(numSubdivisions);
-			curX += ROW_SPACING;
-		}		
-	}
-	
-	//scaleConveyor(1, ofxVec3f(1,1,1.05));
-	//scaleConveyor(2, ofxVec3f(1,1,1.185));
-	//scaleConveyor(3, ofxVec3f(1,1,1.21));
-	//scaleConveyor(4, ofxVec3f(1,1,1.185));
-	//scaleConveyor(5, ofxVec3f(1,1,1.05));
-	
-	meshNodes.reserve(numSubdivisions*numCurves);
-	meshNodes.resize(numSubdivisions*numCurves);	
-	vertices.reserve(numSubdivisions*numCurves);	
-	vertices.resize(numSubdivisions*numCurves);
-	sweetSpot.resize(numCurves);	
-	sweetSpotPos.resize(numCurves);	
-	for(int i=0; i<numCurves;i++){
-		for(int j=0; j<numSubdivisions;j++){
-			float uVal = float(j)/float(numSubdivisions-1);
-			vertices[i*numSubdivisions + j].u = uVal;
-			vertices[i*numSubdivisions + j].v = float(i)/float(numCurves-1);
-			
-			meshNodes[i*numSubdivisions + j].setup(uVal,
-												   &curves[i],
-												   &vertices[i*numSubdivisions+j].pos);
-		}
-		
-		sweetSpot[i].setup(.125, &curves[i], &sweetSpotPos[i]);
-	}
-	
-	for(int i=0; i<numCurves-1;i++){
-		for(int j=0; j<numSubdivisions-1;j++){
-			faceIndices.push_back(i*numSubdivisions+j);
-			faceIndices.push_back(i*numSubdivisions+j+1);
-			faceIndices.push_back((i+1)*numSubdivisions+j+1);
-			faceIndices.push_back((i+1)*numSubdivisions+j);
-		}
-	}
-	faceNorms.resize(faceIndices.size()/4);
+	fCounter = 0.0;
 	wireFrame = false;
 }
 
@@ -232,32 +160,32 @@ void testApp::update(){
 	
 	//ceiling mesh
 	if(advanceCeiling){
-		float uIncrement = .0125;
-		
+		//advance all the mesh nodes
 		for(int i=0;i<meshNodes.size();i++){
 			meshNodes[i].uPos += uIncrement;
+		}
+		//delete any stacks that have a uPos > 1.0
+		for(int i=refVerts.size()-1; i>=0;i--){
+			if (meshNodes[refVerts[i]].uPos >= 1.0) {
+				refVerts.erase(refVerts.begin()+i);
+				stacks.erase(stacks.begin()+i);
+			}
+		}
+		//wrap meshnodes that have grown bigger then 1.0 
+		for(int i=0;i<meshNodes.size();i++){
 			if(meshNodes[i].uPos >1.0)	meshNodes[i].uPos -= 1.0;
 			if(meshNodes[i].uPos <0.0)	meshNodes[i].uPos += 1.0;
 			meshNodes[i].update();
 		}
 		
-		//for(int i=stackControllers.size()-1; i>=0;i--){
-		//	stackControllers[i].uPos += uIncrement;
-		//	if(stackControllers[i].uPos >= 1.0) stackControllers.erase(stackControllers.begin()+i);
-		//}
-		
-		for(int i=stackControllers.size()-1; i>=0;i--){
-			stackControllers[i].uPos += uIncrement;
-			if(stackControllers[i].uPos >= 1.0){
-				stackControllers.erase(stackControllers.begin()+i);
-				stacks.erase(stacks.begin()+i);
-			}
-			else{
-				stackControllers[i].update();
-				stacks[i].setPosition(stackControllers[i].pos);
-				stacks[i].angle = stackControllers[i].angle;				
-				stacks[i].rotAxis = stackControllers[i].rotAxis;
-			}
+		//set stack position and rotation
+		for(int i=refVerts.size()-1; i>=0;i--){
+			stacks[i].setPosition(vertices[refVerts[i]].pos);
+			//find rotation degree
+			ofxVec3f upVec(0,1,0);
+			stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
+			stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
+												//set axis perpendicular to normal
 		}
 	}
 	//sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
@@ -294,7 +222,7 @@ void testApp::draw(){
 	ofxVec3f lightPos(mouseX, -ofGetHeight()*.5, ofGetHeight()*1.5);
 	ofxVec3f targetPos(eyeX, eyeX, 205);
 	
-	//draw shadow map
+//draw shadow map
 	//fbo.clear(1.0, 1.0, 1.0, 1.0);
 	fbo.begin();
 		glMatrixMode(GL_PROJECTION);
@@ -311,18 +239,14 @@ void testApp::draw(){
 		glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
 	
 	//draw things
-	
 	glEnable(GL_DEPTH_TEST);
-	
-	//depthShader.begin();
 	ofPushMatrix();{
 		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
 		if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
 		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
 		
-		//draw conveyor
-		//drawConveyorMesh();
-		
+		//drawConveyorMesh();//don't need to draw conveyor
+
 		//draw particles
 		particleManager->draw();
 		for(int i=0; i<stacks.size();i++){
@@ -333,7 +257,6 @@ void testApp::draw(){
 		grabMatrices(GL_TEXTURE7);
 		
 	} ofPopMatrix();
-	//depthShader.end();
 	
 	
 	//copy depth buffer data to depthTexture.
@@ -346,7 +269,7 @@ void testApp::draw(){
 	
 	fbo.end();
 	
-	//draw geometry
+//draw geometry
 	//set camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -396,41 +319,13 @@ void testApp::draw(){
 		}
 		
 	} ofPopMatrix();	
-	ofxLightsOff();
 		
+	ofxLightsOff();		
 	shadowShader.end();			
 	
-	//draw curves
-	/*
-	glEnable(GL_DEPTH_TEST);
-	glUseProgram(0);
-	ofSetColor(0, 255, 0);
-	for(int i=0; i<curves.size();i++){
-		//curves[i].drawCurve();
-		curves[i].drawWithGluNurbs();
-		
-		//ofSetColor(255, 220, 20);
-		///ofxSphere(sweetSpotPos[i].x, sweetSpotPos[i].y, sweetSpotPos[i].z, 15);
-	}*/
 	
-	//draw normals
-	//glBegin(GL_LINES);
-	//ofSetColor(255, 255, 250);
-	//for(int i=0;i<vertices.size();i++){
-	//	ofxVec3f p2 = vertices[i].pos + vertices[i].norm*30;
-	//	glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
-	//	glVertex3f(p2.x, p2.y, p2.z);
-	//}
-	//glEnd();
-	
-	//for(int i=0; i<stackControllers.size();i++){
-	//	ofSetColor(225, 20, 50);
-	//	ofxSphere(stackControllers[i].pos.x,
-	///			  stackControllers[i].pos.y,
-	//			  stackControllers[i].pos.z, 25);
-	//}
-	
-	
+	//draw conveyor
+		//the texture uniforms need to be set for the shader
 	shadowShader.begin();
 	shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
 	shadowShader.setUniform("lPos", lightPos.x, lightPos.y, lightPos.z);	
@@ -447,7 +342,21 @@ void testApp::draw(){
 	
 	shadowShader.end();
 	
+	//draw curves
+	glEnable(GL_DEPTH_TEST);
+	glUseProgram(0);
+	ofSetColor(0, 255, 0);
+	for(int i=0; i<curves.size();i++)	curves[i].drawWithGluNurbs();
 	
+	//draw normals on mesh verts
+	//glBegin(GL_LINES);
+	//ofSetColor(255, 255, 250);
+	//for(int i=0;i<vertices.size();i++){
+	//	ofxVec3f p2 = vertices[i].pos + vertices[i].norm*30;
+	//	glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
+	//	glVertex3f(p2.x, p2.y, p2.z);
+	//}
+	//glEnd();	
 	
 	//draw and write diagnostics
 	setOrthographicProjection(0, ofGetWidth(),
@@ -455,6 +364,7 @@ void testApp::draw(){
 							  -1000, 1000);	
 	glDisable(GL_DEPTH_TEST);
 	
+	//shadow map
 	//glUseProgram(0);
 	//glActiveTexture(GL_TEXTURE1);
 	//glBindTexture(GL_TEXTURE_2D, 0);
@@ -469,7 +379,7 @@ void testApp::draw(){
 	ofDrawBitmapString(fpsString,  20, 40);
 	fpsString = "sweet spot  " + ofToString(sweetSpot[0].uPos);
 	ofDrawBitmapString(fpsString,  20, 60);
-	fpsString = "stack count " + ofToString((float)stackControllers.size());
+	fpsString = "stack count " + ofToString((float)stacks.size());
 	ofDrawBitmapString(fpsString,  20, 80);
 	
 }
@@ -498,19 +408,12 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 	loggerSender.sendMessage(newRowMessage);
 	
 	//Lars
-	//cout << "num stacks: "<<completedRow->stacks.size()<<endl;
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		if(completedRow->stacks[i]->buildings.size() >0){
 			stacks.push_back(*completedRow->stacks[i]);
-			pointOnCurveNode newNode;
-			stackControllers.push_back(newNode);
-			stackControllers.back().setup(sweetSpot[i+1].uPos,
-										  &curves[i+1]);
-			stackControllers.back().setFindNormal(true);
+			refVerts.push_back(getVertPointer(i, sweetSpot[i+1].uPos));
 		}
-	}	
-	//cout << "num stacks out: "<<stacks.size()<<endl;
-	
+	}		
 };
 
 //--------------------------------------------------------------
@@ -526,6 +429,9 @@ void testApp::keyPressed(int key){
 		else	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 		
+	if(key = 's'){
+		scaleConveyorY(.95);
+	}
 }
 
 //--------------------------------------------------------------
@@ -711,9 +617,10 @@ void testApp::drawConveyorMesh(){
 }
 
 void testApp::moveConveyorY(float dist){
+	conveyorYoffset += dist;
 	for(int i=0; i<curves.size();i++){
 		for(int j=0; j<=curves[i].numCVs;j++){
-			curves[i].moveCVrelative(j, ofxVec3f(0,dist,0));
+			curves[i].moveCVrelative(j, ofxVec3f(0,conveyorYoffset,0));
 		}
 	}
 }
@@ -731,4 +638,114 @@ void testApp::moveCurveX(int crvIndex, float xPos){
 		curves[crvIndex].moveCV(j, cvPos);
 	}
 }
+
+void testApp::setupConveyorMesh(){
 	
+	//define posiitons used t0 create curves
+	refPoses.resize(numCVs);
+	refPoses[0].set(0, 0.99, 0);
+	refPoses[1].set(0, 1.03782, 0);
+	refPoses[2].set(0, 1.15437, 0.0157448);
+	refPoses[3].set(0, 1.18961, 0.130563);
+	refPoses[4].set(0, 1.09218, 0.181413);
+	refPoses[5].set(0, 0.986734, 0.191166);
+	refPoses[6].set(0, 0.881457, 0.19796);
+	refPoses[7].set(0, 0.776266, 0.193468);
+	refPoses[8].set(0, 0.671478, 0.184758);
+	refPoses[9].set(0, 0.567574, 0.171934);
+	refPoses[10].set(0, 0.463153, 0.158185);
+	refPoses[11].set(0, 0.360384, 0.144836);
+	refPoses[12].set(0, 0.252854, 0.134736);
+	refPoses[13].set(0, 0.155657, 0.121956);
+	refPoses[14].set(0, 0.0421618, 0.0801633);
+	refPoses[15].set(0, 0, 0.0206706);
+	refPoses[16].set(0, 0.155657, 0.00257276);
+	refPoses[17].set(0, 0.955657, 0);
+	
+	
+	float xStep = ofGetWidth()/float(numCurves);
+	float yStep = float (ofGetHeight())/float(numCVs);
+	curves.reserve(numCurves);
+	curves.resize(numCurves);
+	conveyorYoffset = 135;
+	
+	float curX = ROW_BUFFER;
+	conveyorScale.set(1.0, ofGetHeight()*.5, 1000.0);
+	
+	for(int i=0; i<numCurves; i++){
+		for(int j=0; j<numCVs;j++){
+			curves[i].addCV(curX,//i*xStep+xStep/2,
+							refPoses[j].y * conveyorScale.y + conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
+							refPoses[j].z * conveyorScale.z);//cos(float(j)/float(numCVs))*300);
+			curves[i].setDegree(2);
+			curves[i].setKnots();
+			curves[i].setNumSpans(numSubdivisions);
+			curX += ROW_SPACING;
+		}		
+	}
+	conveyorScale.set(1.0, 1.0, 1.0);//freezes currnt scale at 1.0
+	
+	//scaleConveyor(1, ofxVec3f(1,1,1.05));
+	//scaleConveyor(2, ofxVec3f(1,1,1.185));
+	//scaleConveyor(3, ofxVec3f(1,1,1.21));
+	//scaleConveyor(4, ofxVec3f(1,1,1.185));
+	//scaleConveyor(5, ofxVec3f(1,1,1.05));
+	
+	meshNodes.reserve(numSubdivisions*numCurves);
+	meshNodes.resize(numSubdivisions*numCurves);	
+	vertices.reserve(numSubdivisions*numCurves);	
+	vertices.resize(numSubdivisions*numCurves);
+	sweetSpot.resize(numCurves);	
+	sweetSpotPos.resize(numCurves);	
+	for(int i=0; i<numCurves;i++){
+		for(int j=0; j<numSubdivisions;j++){
+			float uVal = float(j)/float(numSubdivisions-1);
+			vertices[i*numSubdivisions + j].u = uVal;
+			vertices[i*numSubdivisions + j].v = float(i)/float(numCurves-1);
+			
+			meshNodes[i*numSubdivisions + j].setup(uVal,
+												   &curves[i],
+												   &vertices[i*numSubdivisions+j].pos);
+		}
+		
+		sweetSpot[i].setup(.125, &curves[i], &sweetSpotPos[i]);
+	}
+	
+	for(int i=0; i<numCurves-1;i++){
+		for(int j=0; j<numSubdivisions-1;j++){
+			faceIndices.push_back(i*numSubdivisions+j);
+			faceIndices.push_back(i*numSubdivisions+j+1);
+			faceIndices.push_back((i+1)*numSubdivisions+j+1);
+			faceIndices.push_back((i+1)*numSubdivisions+j);
+		}
+	}
+	faceNorms.resize(faceIndices.size()/4);
+}
+
+void testApp::scaleConveyorY(float scale){
+	scale = fmax(.01, scale);
+	for(int i=0; i<numCurves; i++){
+		for(int j=0; j<numCVs;j++){
+			ofxVec3f cvPos = curves[i].getCVpos(j);
+			cvPos.y -= conveyorYoffset;
+			cvPos.y /= conveyorScale.y;
+			cvPos.y *= scale;
+			cvPos.y += conveyorYoffset;
+			
+			curves[i].moveCV(j, cvPos );
+			//curves[i].addCV(curX,//i*xStep+xStep/2,
+			//				refPoses[j].y * conveyorScale.y + conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
+			//				refPoses[j].z * conveyorScale.z);//cos(float(j)/float(numCVs))*300);
+//
+//			curX += ROW_SPACING;
+		}		
+	}
+	conveyorScale.y = scale;
+}
+
+int testApp::getVertPointer(int curveIndex, float uPos){
+	float u = uPos - meshNodes[curveIndex*numSubdivisions].uPos;
+	if(u > 1.0) u -= 1.0;
+	if(u < 0.0) u += 1.0;
+	return MIN(curveIndex*numSubdivisions + MIN(int(u*numSubdivisions), numSubdivisions-1), vertices.size()-1);
+}
