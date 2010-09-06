@@ -104,7 +104,7 @@ class Input
   boolean update( int[] vals ){
     newFrame = false;
     for (int i=0; i<vals.length; i++){
-      if (values[i] != vals[i]){
+      if (values[i] != vals[i] && vals[i] > 0){
         newFrame = true;
       }
     }
