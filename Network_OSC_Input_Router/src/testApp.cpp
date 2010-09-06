@@ -134,7 +134,7 @@ void testApp::update(){
 						bHasData = true;
 						forwardedMessage.addStringArg( m.getArgAsString(0) );
 					}
-					
+										
 					sender.sendMessage(forwardedMessage);					
 					
 					bool bSendSound = emitters[i]->sendSound();

@@ -430,7 +430,7 @@ void testApp::keyPressed(int key){
 	}
 		
 	if(key = 's'){
-		scaleConveyorY(.95);
+		scaleConveyorY(float(mouseY)/float(ofGetHeight()));
 	}
 }
 

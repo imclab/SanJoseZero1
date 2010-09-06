@@ -14,7 +14,7 @@
 
 #define SEARCH_TIME_SECONDS 4
 #define FORWARD_TIME_SECONDS 1
-#define UPDATE_HASHTAGS_SECONDS 4
+#define UPDATE_HASHTAGS_MILLIS 4000
 
 class testApp : public ofBaseApp{
 
@@ -22,6 +22,10 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		
+		void exit(){
+			saveSettings();
+		}
 		
 		TwitterSearcher * tagSearcher;
 		TwitterSearcher * atSearcher;
@@ -52,6 +56,7 @@ class testApp : public ofBaseApp{
 		int lastForwardTime;
 		
 		ofTrueTypeFont font;
+		bool bSendAtReplies;
 };
 
 #endif

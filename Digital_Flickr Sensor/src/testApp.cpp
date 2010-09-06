@@ -106,10 +106,10 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){		
 	int curTime = ofGetElapsedTimeMillis();
-	ofSetWindowTitle(ofToString(ofGetElapsedTimeMillis(), 4)+" fps");
+	ofSetWindowTitle(ofToString(ofGetFrameRate(), 4)+" fps");
 	
 	// Update the hashtags to search for in case they've changed
-	if (lastHashtagsUpdateTime - curTime >= UPDATE_HASHTAGS_SECONDS) {
+	if (curTime - lastHashtagsUpdateTime >= UPDATE_HASHTAGS_SECONDS) {
 		lastHashtagsUpdateTime = curTime;
 		ofxXmlSettings settings;
 		bool bLoaded = settings.loadFile("settings.xml");
@@ -143,6 +143,7 @@ void testApp::update(){
 				
 			} settings.popTag();
 		}		
+		saveSettings();
 	}
 	
 	
@@ -160,7 +161,6 @@ void testApp::update(){
 		nearbySearcher->sendOSCSetup();
 	}
 		
-	saveSettings();
 }
 	
 //--------------------------------------------------------------

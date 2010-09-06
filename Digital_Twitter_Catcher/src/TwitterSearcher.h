@@ -18,7 +18,7 @@ class TwitterSearcher
 public:
 	
 	string name, messageString;	
-	string searchUrl;
+	string searchUrl, latestTweet;
 	
 /***********************************************************
 	CONSTRUCTOR + SETUP
@@ -62,10 +62,17 @@ public:
 		string debugString = name;
 		if (bSearching) debugString += ": searching... \n";
 		else debugString += ": waiting \n";
-		debugString += ofToString(maxNumOfTweets)+" tweets queued\n\n";
-		debugString += "ready to send tweet "+ofToString(curTweet)+"\n";
+		
+		if (curTweet < maxNumOfTweets){
+			debugString += ofToString(maxNumOfTweets)+" tweets queued\n\n";
+			debugString += "ready to send tweet "+ofToString(curTweet)+"\n";
+		} else {
+			debugString += "sent all available data\n";
+		}
+		
 		debugString += "last id sent = "+lastID+"\n";
 		debugString += "last id received = "+lastIDReceived+"\n";
+		debugString += latestTweet+"\n";
 		if (hashTags.size() > 0) debugString += "\nsearching tags:\n";
 			
 		for (int i=0; i<hashTags.size(); i++){
@@ -163,11 +170,11 @@ public:
 	
 	void replyResponse(ofxHttpResponse &response){
 		bSearching = false;
-		
+				
 		//to prevent our response getting overwritten if there's bad data
 		ofxXmlSettings dummyRespose;
 		dummyRespose.loadFromBuffer(response.responseBody);
-		
+				
 		ofLog(OF_LOG_VERBOSE, "response:\n " + response.responseBody );
 		
 		bool bCorrectFormatting = dummyRespose.pushTag("results");
@@ -175,7 +182,8 @@ public:
 			cout<<"got blank response"<<endl;
 			return;
 		}else{ 
-			//xmlResponse.loadFromBuffer(response.responseBody);			
+			//xmlResponse.loadFromBuffer(response.responseBody);
+			
 			bool bCurTweetExists = dummyRespose.pushTag("tweet",0);
 			
 			//are there tweets in this result?
@@ -185,7 +193,15 @@ public:
 				dummyRespose.popTag();
 				
 				responses.push_back(response);
+				
+				//get next set of responses! (mostly for the first time this loads up)
+				if (curTweet == maxNumOfTweets)
+					getNextResponseSet();
+			} else {
+				cout<<"no tweets!"<<endl;
 			}
+			
+			dummyRespose.popTag();
 			
 		}
 	};
@@ -193,6 +209,10 @@ public:
 /***********************************************************
 	 SEND OSC
 ***********************************************************/
+	
+	bool hasWaitingResults(){
+		return curTweet < maxNumOfTweets;
+	};
 	
 	void sendOSCSetup(){
 		ofLog(OF_LOG_VERBOSE, "TRYING TO SEND "+ofToString(curTweet)+ ":"+ofToString(maxNumOfTweets));
@@ -212,7 +232,7 @@ public:
 	};
 	
 	void sendOSC(){		
-		cout<<"sending "<<name<<" osc "<<lastID<<endl;
+		ofLog(OF_LOG_VERBOSE, "sending "+name+" osc "+lastID);
 		
 		bool bHasResults = xmlResponse.pushTag("results");{
 			if (!bHasResults) return;
@@ -226,6 +246,8 @@ public:
 				m.setAddress(messageString);
 				m.addStringArg(xmlResponse.getValue("timestamp","null") + "&*!" + xmlResponse.getValue("user_name","null") + "&*!" + xmlResponse.getValue("content","null"));
 				sender->sendMessage(m);	
+			
+			latestTweet = xmlResponse.getValue("user_name","null") +" : "+xmlResponse.getValue("content","null");
 								
 			xmlResponse.popTag();
 		} xmlResponse.popTag();

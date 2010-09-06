@@ -21,9 +21,6 @@
   XBEE CODE
 **********************************************************/
 
-
-
-
 #include <XBee.h>
 
 /*
@@ -53,7 +50,6 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
   INPUTS
 **********************************************************/
 
-  int pin0 = 0;
   boolean verbose = false;
   long read1 = 0;
   long read2 = 0;
@@ -62,12 +58,12 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
   long read5 = 0;
   long read6 = 0;
   
-  int pin1 = 2;
-  int pin2 = 4;
-  int pin3 = 6;
-  int pin4 = 8;
-  int pin5 = 10;
-  int pin6 = 12;
+  int pin1 = 14;//2;
+  int pin2 = 15;//4;
+  int pin3 = 16;//6;
+  int pin4 = 17;//8;
+  int pin5 = 18;//10;
+  int pin6 = 19;//12;
 
 /**********************************************************
   SETUP
@@ -82,7 +78,6 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
     pinMode(pin5, INPUT);
     pinMode(pin6, INPUT);
     
-    startTimer();
     if (verbose) Serial.begin(9600);
   }
 
@@ -156,54 +151,6 @@ void loop()
     flashLed(errorLed, 2, 50);
   }
   */
-  //delay(30);
+  delay(30);
 }
-
-/**********************************************************
-  CAPACITIVE FUNS
-**********************************************************/
-
-long timeBack(int pin, byte mask) {
-  unsigned long count = 0, total = 0;
-  while(checkTimer() < refresh) {
-    // pinMode is about 6 times slower than assigning
-    // DDRB directly, but that pause is important
-    pinMode(pin, OUTPUT);
-    PORTB = 0;
-    pinMode(pin, INPUT);
-    while((PINB & mask) == 0)
-      count ++;
-    total ++;
-  }
-  startTimer();
-  return (count << resolution) / total;
-}
-
-long timeFront(int pin, byte mask) {
-  unsigned long count = 0, total = 0;
-  while(checkTimer() < refresh) {
-    // pinMode is about 6 times slower than assigning
-    // DDRB directly, but that pause is important
-    pinMode(pin, OUTPUT);
-    PORTD = 0;
-    pinMode(pin, INPUT);
-    while((PIND & mask) == 0)
-      count ++;
-    total ++;
-  }
-  startTimer();
-  return (count << resolution) / total;
-}
-
-extern volatile unsigned long timer0_overflow_count;
-
-void startTimer() {
-  timer0_overflow_count = 0;
-  TCNT0 = 0;
-}
-
-unsigned long checkTimer() {
-  return ((timer0_overflow_count << 8) + TCNT0) << 2;
-}
-
 
