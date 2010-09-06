@@ -201,6 +201,10 @@ class ofxTSPSPeopleTracker : public ofxCvBlobListener {
 //		float particleEmitThresholdSeconds;
 //		float* getParticleEmitThresholdSeconds();
 	
+		// ZACK: for accessing color sensing
+		float colorSensingVarianceThreshold;
+		float* getColorSensingVarianceThreshold();
+	
 	
 	protected:
 	

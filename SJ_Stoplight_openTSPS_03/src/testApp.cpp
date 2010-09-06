@@ -78,6 +78,7 @@ void testApp::setup(){
 	stoplight.sender = peopleTracker.getOSCsender();
 
 	opticalFlowDetectionThreshold = peopleTracker.getOpticalFlowThreshold();
+	colorSensingVarianceThreshold = peopleTracker.getColorSensingVarianceThreshold();
 //	particleEmitThresholdSeconds = peopleTracker.getParticleEmitThresholdSeconds();
 	
 	/*
@@ -192,7 +193,7 @@ void testApp::update(){
 		}
 		
 		// See if the current pixel matches the set color for this quad
-		if (colorDist < 0.1) {
+		if (colorDist < *colorSensingVarianceThreshold) {
 			bMatchedColor = true;
 			break;
 		}

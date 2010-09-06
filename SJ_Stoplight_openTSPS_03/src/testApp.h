@@ -58,6 +58,7 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 		ofxCvColorImage		colorImg;	
 
 		float* opticalFlowDetectionThreshold;
+		float* colorSensingVarianceThreshold;
 //		float* particleEmitThresholdSeconds;
 	
 	//stoplight
