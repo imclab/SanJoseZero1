@@ -9,6 +9,9 @@
         <y>156.000000</y>
         <x>287.000000</x>
         <y>154.000000</y>
+        <red>255.000000</red>
+        <green>255.000000</green>
+        <blue>255.000000</blue>
     </rect>
     <rect>
         <address>/pluginplay/signal</address>
@@ -20,6 +23,9 @@
         <y>271.000000</y>
         <x>282.000000</x>
         <y>272.000000</y>
+        <red>36.000000</red>
+        <green>15.000000</green>
+        <blue>4.000000</blue>
     </rect>
     <rect>
         <address>/pluginplay/signal</address>
@@ -31,6 +37,9 @@
         <y>397.000000</y>
         <x>271.000000</x>
         <y>399.000000</y>
+        <red>104.000000</red>
+        <green>100.000000</green>
+        <blue>131.000000</blue>
     </rect>
     <!--
     <rect>
