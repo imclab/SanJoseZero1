@@ -15,6 +15,7 @@
   ZBRxResponse rx = ZBRxResponse();
   
   boolean LED_on = true;
+  boolean verbose = false;
   
 /*********************************************************************
   WAVE SHIELD VARS
