@@ -19,8 +19,8 @@
 </color>
 -->
         <position>
-            <x>124.000000</x>
-            <y>1679.000000</y>
+            <x>186.000000</x>
+            <y>1336.000000</y>
         </position>
     </input>
     <input>
@@ -45,7 +45,7 @@
         </message>
         <position>
             <x>263.000000</x>
-            <y>1679.000000</y>
+            <y>1341.000000</y>
         </position>
     </input>
     <input>
@@ -69,8 +69,8 @@
             </color>
         </message>
         <position>
-            <x>395.000000</x>
-            <y>1679.000000</y>
+            <x>374.000000</x>
+            <y>1354.000000</y>
         </position>
     </input>
     <input>
@@ -265,8 +265,8 @@
             </color>
         </message>
         <position>
-            <x>502.000000</x>
-            <y>1679.000000</y>
+            <x>484.000000</x>
+            <y>1345.000000</y>
         </position>
     </input>
     <input>
@@ -281,8 +281,8 @@
             </color>
         </message>
         <position>
-            <x>596.000000</x>
-            <y>1679.000000</y>
+            <x>578.000000</x>
+            <y>1341.000000</y>
         </position>
     </input>
     <input>
@@ -297,8 +297,8 @@
             </color>
         </message>
         <position>
-            <x>685.000000</x>
-            <y>1679.000000</y>
+            <x>672.000000</x>
+            <y>1338.000000</y>
         </position>
     </input>
     <input>
@@ -313,8 +313,8 @@
             </color>
         </message>
         <position>
-            <x>780.000000</x>
-            <y>1679.000000</y>
+            <x>778.000000</x>
+            <y>1333.000000</y>
         </position>
     </input>
     <input>
@@ -347,8 +347,8 @@
             </color>
         </message>
         <position>
-            <x>876.000000</x>
-            <y>1679.000000</y>
+            <x>886.000000</x>
+            <y>1339.000000</y>
         </position>
     </input>
     <input>
@@ -372,8 +372,8 @@
             </color>
         </message>
         <position>
-            <x>968.000000</x>
-            <y>1679.000000</y>
+            <x>979.000000</x>
+            <y>1331.000000</y>
         </position>
     </input>
     <input>
