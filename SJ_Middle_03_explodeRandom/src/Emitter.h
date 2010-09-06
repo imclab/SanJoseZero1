@@ -20,6 +20,7 @@
 class ParticleEventArgs : public ofEventArgs {
 	public:
 		ofPoint loc;
+		ofPoint vel;
 		//string name;
 		string address;
 		string data;
@@ -113,6 +114,7 @@ public:
 				particleArgs.loc.y = particles[i]->getLoc().y;
 				particleArgs.address = particles[i]->getMessageString();
 				particleArgs.data = particles[i]->getData();
+				particleArgs.vel = particles[i]->getVelocity();
 				ofNotifyEvent(particleLeft, particleArgs, this);
 				particles[i]->bSent = true;
 				
@@ -158,6 +160,8 @@ public:
 			part->setMinScale(minScale);
 			part->setMaxScale(maxScale);
 			
+			cout<<"getting model "<<index<<endl;
+			
 			part->setModel(type->getModel(index));
 			part->setType(type);
 			//part->setEndPoint(columns->getClosestColumn(type->getPosition().x)->x, columns->getClosestColumn(type->getPosition().x)->y);
@@ -181,9 +185,11 @@ public:
 	}
 	
 	bool checkAndEmit(string msg, string data=""){		
+				
 		for (int i=0; i<types.size(); i++){
 			int index = types[i]->checkMessageString(msg);
 			if (index >= 0){
+				cout<<"emitting "<<msg<<", "<<types[i]->getName()<<":"<<index<<endl;
 				emit(i, index, data);
 				return true;
 			}

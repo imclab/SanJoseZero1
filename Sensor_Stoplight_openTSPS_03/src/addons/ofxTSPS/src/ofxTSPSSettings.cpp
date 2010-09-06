@@ -23,6 +23,7 @@ ofxTSPSSettings* ofxTSPSSettings::getInstance()
 		
 		//ZACK BOKA
 		single->thresholdOpticalFlow = 2000;
+		single->colorSensingVarianceThreshold = 0.1;
 //		single->emithThresholdSeconds = 1;
 		
 		single->bLearnBackgroundProgressive = true;

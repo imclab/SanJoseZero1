@@ -3,7 +3,7 @@
 
 class TSPSPersonAttributes {
 public:
-	TSPSPersonAttributes(){
+	TSPSPersonAttributes(){			
 		height = 0;
 		hasBeard = false;
 	}
@@ -31,18 +31,25 @@ void testApp::setup(){
 	r = 255;
 	g = 0;
 	b = 0;
-	redLight.red = 255;
-	redLight.green = 0;
-	redLight.blue = 0;
-	yellowLight.red = 255;
-	yellowLight.green = 255;
-	yellowLight.blue = 0;
-	greenLight.red = 0;
-	greenLight.green = 255;
-	greenLight.blue = 0;
+	
+	// Get the quad colors from the XML settings
+	
+//	redLight.red = 255;
+//	redLight.green = 0;
+//	redLight.blue = 0;
+//	yellowLight.red = 255;
+//	yellowLight.green = 255;
+//	yellowLight.blue = 0;
+//	greenLight.red = 0;
+//	greenLight.green = 255;
+//	greenLight.blue = 0;
+
+	
+	
+	
 	lightIndex = 0;
 	colorSet = -1;
-	colorSetCtr = 0;
+	colorDisplayCtr = 0;
 	
 	
 	
@@ -78,6 +85,7 @@ void testApp::setup(){
 	stoplight.sender = peopleTracker.getOSCsender();
 
 	opticalFlowDetectionThreshold = peopleTracker.getOpticalFlowThreshold();
+	colorSensingVarianceThreshold = peopleTracker.getColorSensingVarianceThreshold();
 //	particleEmitThresholdSeconds = peopleTracker.getParticleEmitThresholdSeconds();
 	
 	/*
@@ -184,15 +192,18 @@ void testApp::update(){
 		curPixel.blue = (int)px[j * 3 + 2];
 		
 		if (lightIndex == 0) {
-			colorDist = redLight.distance(curPixel,OF_COLOR_RGB);
+			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
+			//			colorDist = redLight.distance(curPixel,OF_COLOR_RGB);
 		} else if (lightIndex == 1) {
-			colorDist = yellowLight.distance(curPixel,OF_COLOR_RGB);
+			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
+			//colorDist = yellowLight.distance(curPixel,OF_COLOR_RGB);
 		} else {
-			colorDist = greenLight.distance(curPixel,OF_COLOR_RGB);
+			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
+			//colorDist = greenLight.distance(curPixel,OF_COLOR_RGB);
 		}
 		
 		// See if the current pixel matches the set color for this quad
-		if (colorDist < 0.1) {
+		if (colorDist < *colorSensingVarianceThreshold) {
 			bMatchedColor = true;
 			break;
 		}
@@ -361,7 +372,7 @@ void testApp::draw(){
 	ofRect(theX,theY,100,100);
 	
 	ofSetColor(100,255,255);
-	if (colorSetCtr) {
+	if (colorDisplayCtr) {
 		if (colorSet == 0) {
 			string rString = "RED LIGHT: setting sensing color";
 			ofDrawBitmapString(rString, 362, 24);
@@ -373,7 +384,7 @@ void testApp::draw(){
 			ofDrawBitmapString(gString,362,24);
 		}
 		
-		colorSetCtr--;
+		colorDisplayCtr--;
 	}
 
 }
@@ -436,26 +447,44 @@ void testApp::mousePressed(int x, int y, int button){
 	// Set the color for a quad if we clicked inside that quad
 	if (bSetColor && peopleTracker.inAdjustedView()) {
 		if (testq.name == "RED") {
-			redLight.red = r;
-			redLight.green = g;
-			redLight.blue = b;
+			stoplight.quads[0].quadColor.red = r;
+			stoplight.quads[0].quadColor.green = g;
+			stoplight.quads[0].quadColor.blue = b;
+//			stoplight.quadColors[0].red = r;
+//			stoplight.quadColors[0].green = g;
+//			stoplight.quadColors[0].blue = b;			
+//			redLight.red = r;
+//			redLight.green = g;
+//			redLight.blue = b;
 			colorSet = 0;
 			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		} else if (testq.name == "YELLOW") {
-			yellowLight.red = r;
-			yellowLight.green = g;
-			yellowLight.blue = b;
+			stoplight.quads[1].quadColor.red = r;
+			stoplight.quads[1].quadColor.green = g;
+			stoplight.quads[1].quadColor.blue = b;
+//			stoplight.quadColors[1].red = r;
+//			stoplight.quadColors[1].green = g;
+//			stoplight.quadColors[1].blue = b;			
+//			yellowLight.red = r;
+//			yellowLight.green = g;
+//			yellowLight.blue = b;
 			colorSet = 1;
 			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		} else if (testq.name == "GREEN") {
-			greenLight.red = r;
-			greenLight.green = g;
-			greenLight.blue = b;
+			stoplight.quads[2].quadColor.red = r;
+			stoplight.quads[2].quadColor.green = g;
+			stoplight.quads[2].quadColor.blue = b;
+//			stoplight.quadColors[2].red = r;
+//			stoplight.quadColors[2].green = g;
+//			stoplight.quadColors[2].blue = b;			
+//			greenLight.red = r;
+//			greenLight.green = g;
+//			greenLight.blue = b;
 			colorSet = 2;
 			if (DEBUG) cout << "set color: " << r << ":" << g << ":" << b << endl;
 		}
-		
-		colorSetCtr = 30;
+		stoplight.saveSettings();
+		colorDisplayCtr = 30;
 	}
 	
 

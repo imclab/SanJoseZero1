@@ -13,7 +13,7 @@
 #include "Quad.h"
 #include "ofxOsc.h"
 
-#define NUM_OF_QUADS 7
+#define NUM_OF_QUADS 3
 
 class Stoplight : public ofRectangle{
 public:
@@ -29,25 +29,12 @@ public:
 	
 	ofPoint testPoint;
 	
+	
 	Stoplight(){
 		
 		names[0] = "RED";
 		names[1] = "YELLOW";
 		names[2] = "GREEN";
-//		names[3] = "four";
-//		names[4] = "five";
-//		names[5] = "six";
-//		names[6] = "seven";
-//		names[7] = "eight";
-//		names[8] = "nine";
-//		names[9] = "ten";
-//		names[10] = "eleven";
-//		names[11] = "twelve";
-//		names[12] = "thirteen";
-//		names[13] = "fourteen";
-//		names[14] = "fifteen";
-//		names[15] = "sixteen";
-//		names[16] = "seventeen";
 		
 		loadSettings();
 		
@@ -295,6 +282,14 @@ public:
 			q.p3.y = settings.getValue("y", 0, 2);
 			q.p4.x = settings.getValue("x", 0, 3);
 			q.p4.y = settings.getValue("y", 0, 3);
+
+			// Get the quad's color
+			q.quadColor.red = settings.getValue("red",255,0);
+			q.quadColor.green = settings.getValue("green",255,0);
+			q.quadColor.blue = settings.getValue("blue",255,0);
+			
+			cout << "LOADING QUAD COLOR --- quad: " << i << ", " << q.quadColor.red << ":" << q.quadColor.green << ":" << q.quadColor.blue << endl;
+
 			settings.popTag();
 			quads.push_back(q);
 		}		
@@ -330,6 +325,11 @@ public:
 			
 			settings.setValue("x", q.p4.x,3);
 			settings.setValue("y", q.p4.y,3);
+			
+			// Save quad color values
+			settings.setValue("red", q.quadColor.red, 0);
+			settings.setValue("green", q.quadColor.green, 0);
+			settings.setValue("blue", q.quadColor.blue, 0);
 			
 			settings.popTag();
 		}	

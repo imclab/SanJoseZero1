@@ -6,8 +6,8 @@
 //--------------------------------------------------------------
 void testApp::setup(){	
 	ofBackground( 0, 0, 0 );
-	ofSetVerticalSync(true);
-	//ofSetFrameRate(60);	
+	ofSetVerticalSync(false);
+	ofSetFrameRate(60);	
 	
 	//load settings from xml
 	ofxXmlSettings settings;
@@ -158,7 +158,8 @@ void testApp::update(){
 			receiver.getNextMessage( &m );
 			
 			bool bFound = false;
-			bFound = particleManager.checkAndEmit(m.getAddress());
+			if ( m.getNumArgs() == 0 ) bFound = particleManager.checkAndEmit( m.getAddress() );
+			else bFound = particleManager.checkAndEmit( m.getAddress(), m.getArgAsString(0) );
 				
 			// unrecognized message ;(
 			if (!bFound)
@@ -370,8 +371,8 @@ void testApp::windowResized(int w, int h){
 void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	ofxOscMessage m;
 	m.setAddress(args.address);
-	//normalize x coord
 	m.addFloatArg( (float) args.loc.x );
+	m.addFloatArg( (float) args.vel.x );
 	m.addStringArg( args.data );
 	sender.sendMessage(m);	
 };

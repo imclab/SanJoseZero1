@@ -255,7 +255,7 @@ void oscEvent(OscMessage theOscMessage) {
       String[] values = split(buff, ":");
       Boolean found = false;
       
-      println("got "+values[0]);
+      //println("got "+values[0]);
             
       for (int i=0; i<inputs.size(); i++){
         Input input = (Input) inputs.get(i);
@@ -281,7 +281,14 @@ void oscEvent(OscMessage theOscMessage) {
               newFrame = input.update( vals );
             }
           } else if (input.name.equals("megaphone")){
-            if (values.length > 1){
+            println(values.length);
+            if (values.length > 2){
+              vals = new int[1];
+              String hexVal = values[1]+""+values[2];
+              println(values[1]+":"+values[2]+"::"+unhex(hexVal));
+              vals[0] = unhex(hexVal);
+              newFrame = input.update( vals );
+            } else if (values.length > 1){
               vals = new int[1];
               String hexVal = values[1];
               vals[0] = unhex(hexVal);

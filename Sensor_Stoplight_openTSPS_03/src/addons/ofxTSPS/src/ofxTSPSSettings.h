@@ -72,6 +72,7 @@ public:
 	
 	//sensing vars
 //	float emithThresholdSeconds;
+	float colorSensingVarianceThreshold;
 	bool bColorSensing;
 	bool bTrackOpticalFlow;
 	float thresholdOpticalFlow;

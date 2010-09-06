@@ -197,6 +197,8 @@ void ofxTSPSGuiManager::setup(){
 	optionsGroup->setShowText(false);
 	panel.addToggle("track and send contours", "SEND_OSC_CONTOURS", false);
 	panel.addToggle("enable color sensing", "COLOR_SENSING", true);
+	panel.addTextField("color detection variance threshold:", "THRESHOLD_COLOR_VARIANCE", "0.1", 200, 20);
+	
 
 	// ZACK BOKA: Control particle emit frequency
 //	guiTypeGroup* emitGroup = panel.addGroup("particle emission");
@@ -404,6 +406,7 @@ void ofxTSPSGuiManager::update(ofEventArgs &e)
 	p_Settings->bTrackOpticalFlow = panel.getValueB("SENSE_OPTICAL_FLOW");
 	p_Settings->thresholdOpticalFlow = (float) atof(panel.getValueS("THRESHOLD_OPTICAL_FLOW",0,"2000").c_str());
 	p_Settings->bColorSensing = panel.getValueB("COLOR_SENSING");
+	p_Settings->colorSensingVarianceThreshold = (float) atof(panel.getValueS("THRESHOLD_COLOR_VARIANCE",0,"0.1").c_str());
 	panel.setGroupActive("sensing", "optical flow", p_Settings->bTrackOpticalFlow);
 	
 	//JG 12/8/09 GUI-REDUX:

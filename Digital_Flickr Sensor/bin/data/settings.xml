@@ -8,12 +8,11 @@
         <message>/pluginplay/flickr/nearby</message>
     </messages>
     <search>
-        <lastTagId>1283723374</lastTagId>
-        <lastNearbyId>1283723862</lastNearbyId>
+        <lastTagId>1283802053</lastTagId>
+        <lastNearbyId>1283801611</lastNearbyId>
     </search>
     <tags>
-        <tag>play</tag>
-        <tag>rockwell group</tag>
+        <tag>new york</tag>
     </tags>
     <geo>
         <lat>40.735844095042395</lat>
@@ -22,5 +21,5 @@
     </geo>
     <logLevel>2</logLevel>
     <searchTime>4000.000000</searchTime>
-    <sendTime>50.000000</sendTime>
+    <sendTime>500.000000</sendTime>
 </settings>

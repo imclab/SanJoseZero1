@@ -11,16 +11,10 @@
 
 #include "Stoplight.h"
 #include "Quad.h"
-#include "ofxColor.h"
 
 #include <time.h>
 
 
-//#define OPTICAL_FLOW_DETECTION_THRESHOLD 5000
-//#define EMIT_THRESHOLD_SECONDS 1.0
-
-
-// DRAW_MODE_CYA -- Shouldn't be here?
 enum {
 	DRAW_MODE_CYA, DRAW_MODE_STOPLIGHT
 };
@@ -58,7 +52,7 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 		ofxCvColorImage		colorImg;	
 
 		float* opticalFlowDetectionThreshold;
-//		float* particleEmitThresholdSeconds;
+
 	
 	//stoplight
 		int drawMode;
@@ -93,7 +87,9 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 	ofxColor redLight,yellowLight,greenLight;			// the pixel color representing each light
 	int lightIndex;										// the light we are currently examining to trigger an OSC send signal event
 	int colorSet;										// indicates the last color that was set by clicking inside its quad
-	int colorSetCtr;									// Counter for how long to display the color that was just set
+	int colorDisplayCtr;								// Counter for how long to display the color that was just set
+	float* colorSensingVarianceThreshold;				// Threshold for detecting color variance from the prespecified quad color (this variable set in GUI)
+	
 	
 	
 };

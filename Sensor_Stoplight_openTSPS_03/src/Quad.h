@@ -9,7 +9,11 @@
 
 #pragma once
 
+#include "ofxColor.h"
+
+
 #define DEBUG true
+
 
 class Quad
 {	
@@ -23,12 +27,17 @@ public:
 	int index;
 	string address; // OSC address for the quad
 
+	ofxColor quadColor;
+	
 	Quad()
 	: name(""){
 		p1 = ofPoint(0,0);
 		p2 = ofPoint(0,0);
 		p3 = ofPoint(0,0);
 		p4 = ofPoint(0,0);
+		quadColor.red = 255;
+		quadColor.green = 255;
+		quadColor.blue = 255;
 		for (int i=0; i<4; i++){
 			selected[i] = false; 
 		}
@@ -44,6 +53,9 @@ public:
 		p2 = ofPoint(0,0);
 		p3 = ofPoint(0,0);
 		p4 = ofPoint(0,0);
+		quadColor.red = 255;
+		quadColor.green = 255;
+		quadColor.blue = 255;
 		for (int i=0; i<4; i++){
 			selected[i] = false; 
 		}

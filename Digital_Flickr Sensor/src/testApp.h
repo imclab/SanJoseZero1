@@ -14,7 +14,7 @@
 
 #define SEARCH_TIME_SECONDS 4
 #define FORWARD_TIME_SECONDS 1
-#define UPDATE_HASHTAGS_SECONDS 4
+#define UPDATE_HASHTAGS_SECONDS 4000
 
 class testApp : public ofBaseApp{
 

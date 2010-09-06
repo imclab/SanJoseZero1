@@ -8,10 +8,10 @@
         <message>/pluginplay/twitter/search</message>
     </messages>
     <search>
-        <lastHashID>23092179527</lastHashID>
-        <lastReplyID>23079536433</lastReplyID>
+        <lastHashID>23172024109</lastHashID>
+        <lastReplyID>23170246819</lastReplyID>
     </search>
     <logLevel>2</logLevel>
-    <searchTime>4000.000000</searchTime>
-    <sendTime>50.000000</sendTime>
+    <searchTime>10000.000000</searchTime>
+    <sendTime>500.000000</sendTime>
 </settings>

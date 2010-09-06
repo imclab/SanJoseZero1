@@ -168,10 +168,11 @@ void ofxTSPSPeopleTracker::updateSettings()
 		gui.changeGuiCameraView(false);
 	}
 	
-	// ZACK BOKA: Update Optical Flow Threshold in case it changed, and update color sensing bool
+	// ZACK BOKA: Update Optical Flow Threshold and Color Sensing Variance Threshold in case it changed, and update color sensing bool
 	opticalFlowDetectionThreshold = p_Settings->thresholdOpticalFlow;
 	bColorSensingEnabled = p_Settings->bColorSensing;
 	bOpticalFlowEnabled = p_Settings->bTrackOpticalFlow;
+	colorSensingVarianceThreshold = p_Settings->colorSensingVarianceThreshold;
 //	particleEmitThresholdSeconds = p_Settings->emithThresholdSeconds;
 	
 }
@@ -1046,6 +1047,10 @@ ofxTSPSOscSender* ofxTSPSPeopleTracker::getOSCsender() {
 
 float* ofxTSPSPeopleTracker::getOpticalFlowThreshold() {
 	return &opticalFlowDetectionThreshold;
+}
+
+float* ofxTSPSPeopleTracker::getColorSensingVarianceThreshold() {
+	return &colorSensingVarianceThreshold;
 }
 
 //float* ofxTSPSPeopleTracker::getParticleEmitThresholdSeconds() {

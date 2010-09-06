@@ -14,7 +14,6 @@
 
 #include "phyParticle.h"
 #include "ofx3DUtils.h"
-#include "ofxLabUtils.h"
 #include "ofxColor.h"
 
 class particle3D : public phyParticle
@@ -137,8 +136,28 @@ public:
 		
 		if (type >= 3){
 			//lastAdded = 10;
-						
-			float dist = ofDist(pos.x-scale.x, pos.y, lastPoint[1].x, lastPoint[1].y);
+			
+			float dirX = (float) (pos.x - startPoint.x)/ofGetWidth();
+			float dirY = (float) (pos.y - startPoint.y)/ofGetHeight();
+			
+			ofxVec2f dumPos = pos;
+			dumPos.x += dirX * scale.x;
+			dumPos.y += dirY * scale.x;
+			
+			ofxVec2f p1 = dumPos;				
+			ofxVec2f p2 = dumPos;
+			
+			float angle = atan((pos.y - startPoint.y)/(pos.x - startPoint.x))*(180.f/PI);
+			
+			ofxVec2f dum1, dum2;
+			
+			dum1 = p1;
+			dum2 = p2;
+			
+			p1.rotate(angle-90, pos);
+			p2.rotate(-(angle-90), pos);
+			
+			float dist = ofDist(pos.x, pos.y, lastPoint[1].x, lastPoint[1].y);
 			
 			//if (dist > 50.0f){
 				float increment = dist/lineWidth;
@@ -148,29 +167,30 @@ public:
 				for (int i=0; i<increment; i+=4){	
 					if (i + 2 <increment){
 						ofQuad newQuad;
-						newQuad.points[0].x = ofLerp(lastPoint[0].x, pos.x+scale.x, i/increment); //lastPoint[1].x;
-						newQuad.points[0].y = ofLerp(lastPoint[0].y, pos.y, i/increment); //lastPoint[1].y;
-						newQuad.points[0].z = ofLerp(lastPoint[0].z, pos.z+scale.x, i/increment); //lastPoint[1].z;
-						newQuad.points[1].x = ofLerp(lastPoint[1].x, pos.x-scale.x, i/increment); //lastPoint[0].x;
-						newQuad.points[1].y = ofLerp(lastPoint[1].y, pos.y, i/increment); //lastPoint[0].y;
-						newQuad.points[1].z = ofLerp(lastPoint[1].z, pos.z-scale.x, i/increment); //lastPoint[0].z;
+						newQuad.points[0].x = ofLerp(lastPoint[0].x, p2.x, i/increment); //lastPoint[1].x;
+						newQuad.points[0].y = ofLerp(lastPoint[0].y, p2.y, i/increment); //lastPoint[1].y;
+						//newQuad.points[0].z = ofLerp(lastPoint[0].z, pos.z+scale.x, i/increment); //lastPoint[1].z;
+						newQuad.points[1].x = ofLerp(lastPoint[1].x, p1.x, i/increment); //lastPoint[0].x;
+						newQuad.points[1].y = ofLerp(lastPoint[1].y, p1.y, i/increment); //lastPoint[0].y;
+						//newQuad.points[1].z = ofLerp(lastPoint[1].z, pos.z-scale.x, i/increment); //lastPoint[0].z;
 						
-						newQuad.points[3].x = ofLerp(lastPoint[0].x, pos.x+scale.x, (i+2)/increment); //lastPoint[1].x;
-						newQuad.points[3].y = ofLerp(lastPoint[0].y, pos.y, (i+2)/increment); //lastPoint[1].y;
-						newQuad.points[3].z = ofLerp(lastPoint[0].z, pos.z+scale.x, (i+2)/increment); //lastPoint[1].z;
-						newQuad.points[2].x = ofLerp(lastPoint[1].x, pos.x-scale.x, (i+2)/increment); //lastPoint[0].x;
-						newQuad.points[2].y = ofLerp(lastPoint[1].y, pos.y, (i+2)/increment); //lastPoint[0].y;
-						newQuad.points[2].z = ofLerp(lastPoint[1].z, pos.z-scale.x, (i+2)/increment); //lastPoint[0].z;
+						newQuad.points[3].x = ofLerp(lastPoint[0].x, p1.x, (i+2)/increment); //lastPoint[1].x;
+						newQuad.points[3].y = ofLerp(lastPoint[0].y, p1.y, (i+2)/increment); //lastPoint[1].y;
+						//newQuad.points[3].z = ofLerp(lastPoint[0].z, pos.z+scale.x, (i+2)/increment); //lastPoint[1].z;
+						newQuad.points[2].x = ofLerp(lastPoint[1].x, p2.x, (i+2)/increment); //lastPoint[0].x;
+						newQuad.points[2].y = ofLerp(lastPoint[1].y, p2.y, (i+2)/increment); //lastPoint[0].y;
+						//newQuad.points[2].z = ofLerp(lastPoint[1].z, pos.z-scale.x, (i+2)/increment); //lastPoint[0].z;
 						quads.push_back(newQuad);
 					}					
 				}
 			//}
 			if (increment > 2){
-				lastPoint[1].x = pos.x-scale.x;
-				lastPoint[0].x = pos.x+scale.x;
-				lastPoint[0].y = lastPoint[1].y = pos.y;
-				lastPoint[1].z = pos.z - scale.x;
-				lastPoint[0].z = pos.z + scale.x;
+				lastPoint[0].x = p1.x;
+				lastPoint[0].y = p1.y;
+				lastPoint[1].x = p2.x;
+				lastPoint[1].y = p2.y;
+				//lastPoint[1].z = pos.z - scale.x;
+				//lastPoint[0].z = pos.z + scale.x;
 			}			
 		};
 	};
@@ -189,10 +209,29 @@ public:
 					quads[i].draw();
 				};
 			} else {
-				ofTriangle(startPoint.x, startPoint.y, startPoint.z, pos.x-scale.x, pos.y, pos.z-scale.x, pos.x+scale.x, pos.y, pos.z+scale.x);
-				/*glVertex3f(startPoint.x, startPoint.y, startPoint.z);
-				glVertex3f(pos.x-scale.x, pos.y, pos.z-scale.x);
-				glVertex3f(pos.x+scale.x, pos.y, pos.z+scale.x);*/
+				pos.z = 0;
+				
+				float dirX = (float) (pos.x - startPoint.x)/ofGetWidth();
+				float dirY = (float) (pos.y - startPoint.y)/ofGetHeight();
+				
+				ofxVec2f dumPos = pos;
+				dumPos.x += dirX * scale.x;
+				dumPos.y += dirY * scale.x;
+								
+				ofxVec2f p1 = dumPos;				
+				ofxVec2f p2 = dumPos;
+				
+				float angle = atan((pos.y - startPoint.y)/(pos.x - startPoint.x))*(180.f/PI);
+								
+				ofxVec2f dum1, dum2;
+				
+				dum1 = p1;
+				dum2 = p2;
+				
+				p1.rotate(angle-90, pos);
+				p2.rotate(-(angle-90), pos);
+				
+				ofTriangle(startPoint.x, startPoint.y, startPoint.z, p1.x, p1.y, 0, p2.x, p2.y, 0);
 			} 
 			ofxLightsOn();
 			
