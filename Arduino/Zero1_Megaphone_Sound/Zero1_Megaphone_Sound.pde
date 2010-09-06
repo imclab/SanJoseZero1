@@ -34,7 +34,7 @@
   WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
   
   // time to play each tone in milliseconds
-  #define PLAY_TIME 500
+  #define PLAY_TIME 1000
   int t = 0;
   
   #define error(msg) error_P(PSTR(msg)) //Define macro to put error messages in flash memory
