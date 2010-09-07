@@ -107,9 +107,9 @@ public:
 		fillColor.blue = _b;
 		fillColor.updateHsv();
 		
-		fillColor.hue *= ofRandom(.8, 1.2f);
-		fillColor.value *= ofRandom(.8, 1.2f);
-		fillColor.saturation *= ofRandom(.8, 1.2f);
+		fillColor.hue *= ofRandom(.99f, 1.05f);
+		fillColor.value = 400;//ofRandom(1.01f, 1.1f);
+		fillColor.saturation = 400;//;ofRandom(.99, 1.2f);
 		
 		fillColor.updateRgb();
 		
@@ -141,8 +141,8 @@ public:
 			float dirY = (float) (pos.y - startPoint.y)/ofGetHeight();
 			
 			ofxVec2f dumPos = pos;
-			dumPos.x += dirX * scale.x;
-			dumPos.y += dirY * scale.x;
+			dumPos.x += dirX * scale.x*2.f;
+			dumPos.y += dirY * scale.x*2.f;
 			
 			ofxVec2f p1 = dumPos;				
 			ofxVec2f p2 = dumPos;
@@ -215,8 +215,8 @@ public:
 				float dirY = (float) (pos.y - startPoint.y)/ofGetHeight();
 				
 				ofxVec2f dumPos = pos;
-				dumPos.x += dirX * scale.x;
-				dumPos.y += dirY * scale.x;
+				dumPos.x += dirX * scale.x *2.f;
+				dumPos.y += dirY * scale.x *2.f;
 								
 				ofxVec2f p1 = dumPos;				
 				ofxVec2f p2 = dumPos;

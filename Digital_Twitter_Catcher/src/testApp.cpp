@@ -40,6 +40,7 @@ void testApp::setup(){
 			logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
 			
 			//how often we search
+			replySearchTime = settings.getValue("replySearchTime", (float) SEARCH_TIME_SECONDS );
 			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
 			sendTime = settings.getValue("sendTime", 2000 );
 			
@@ -58,7 +59,7 @@ void testApp::setup(){
 	if (messageStrings.size() > 0) atMessage = messageStrings[0];
 	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
 	
-	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender, searchTime );
+	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender, replySearchTime );
 	atSearcher->lastID = lastReplyID;
 	
 	tagSearcher = new TwitterSearcher( "tagSearch", tagMessage, searchUrl, &sender, searchTime );
@@ -176,6 +177,7 @@ void testApp::saveSettings(){
 	settings.setValue("settings:search:lastReplyID", atSearcher->lastID);
 	settings.setValue("settings:logLevel", logLevel);
 	settings.setValue("settings:searchTime", searchTime );
+	settings.setValue("settings:replySearchTime", replySearchTime );
 	settings.setValue("settings:sendTime", sendTime );
 	settings.saveFile("settings.xml");
 };

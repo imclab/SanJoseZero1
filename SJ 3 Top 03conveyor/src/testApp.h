@@ -11,6 +11,8 @@
 #include "ofxShader.h"
 #include "LCurve.h"
 
+#include "ofxLabProjectionTools.h"
+
 #define PORT 12000
 
 struct vert{
@@ -34,27 +36,28 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 	
+	//calibration
+		ofxLabProjectionTools projection;
+		bool bDrawCurves;
+	
 	//LIGHTING
 		ofxVec3f lightPosition;
+		bool bLightSourceChanged;
 	
 	//LARS FUNCTIONS
 	
-	void grabMatrices(GLenum gl_textureTarget);
-	void setOrthographicProjection(float xMin, float xMax,
-								   float yMin, float yMax,
-								   float zMin, float zMax);
-	void drawTex(int x, int y, int w, int h);
-	ofxVec3f normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c);
-	void calcMeshNormals();
-	void drawConveyorMesh();
-	
-	//ADJUST CONVEYOR
-	void moveConveyorY(float dist);
-	void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
-	void moveCurveX(int crvIndex, float xPos);
-	void setupConveyorMesh();
-	void scaleConveyorY(float scale);
-	int getVertPointer(int curveIndex, float uPos);
+		void grabMatrices(GLenum gl_textureTarget); 
+		ofxVec3f normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c);
+		void calcMeshNormals();
+		void drawConveyorMesh();
+		
+		//ADJUST CONVEYOR
+		void moveConveyorY(float dist);
+		void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
+		void moveCurveX(int crvIndex, float xPos);
+		void setupConveyorMesh();
+		void scaleConveyorY(float scale);
+		int getVertPointer(int curveIndex, float uPos);
 
 		Emitter * particleManager;
 		
@@ -73,34 +76,35 @@ class testApp : public ofBaseApp{
 	
 		int numRows;
 	
-	//shaders
-	ofxShader depthShader;
-	ofxShader shadowShader;
-	ofxShader simpleTex;
-	
-	//fbo
-	ofxFBOTexture fbo;
-	GLuint depthTexture;
-	
-	//misc
-	int fCounter;
-	
-	//ceiling mesh
-	vector <vert> vertices;
-	vector <int> faceIndices;
-	vector <ofxVec3f> faceNorms;
-	vector <LCurve> curves;
-	vector <pointOnCurveNode> meshNodes;
-	vector <ofxVec3f> refPoses;	//used for creating each curve
-	int numSubdivisions;
-	int numCurves;
-	int numCVs;	
-	float uIncrement;
-	ofImage ceilingImage;
-	
-	//lars biuldings
-	vector <Stack> stacks;
-	vector <int> refVerts;
+		//shaders
+		ofxShader depthShader;
+		ofxShader shadowShader;
+		ofxShader simpleTex;
+		
+		//fbo
+		ofxFBOTexture fbo;
+		GLuint depthTexture;
+		
+		//misc
+		int fCounter;
+		
+		//ceiling mesh
+		vector <vert> vertices;
+		vector <int> faceIndices;
+		vector <ofxVec3f> faceNorms;
+		vector <LCurve> curves;
+		vector <pointOnCurveNode> meshNodes;
+		vector <ofPoint> emitPoints;
+		vector <ofxVec3f> refPoses;	//used for creating each curve
+		int numSubdivisions;
+		int numCurves;
+		int numCVs;	
+		float uIncrement;
+		ofImage ceilingImage;
+		
+		//lars biuldings
+		vector <Stack> stacks;
+		vector <int> refVerts;
 	
 };
 

@@ -38,6 +38,7 @@ import netP5.*;
   String host = "localhost";
   int listenPort = 12002;
   int sendPort = 12345;
+  boolean bSerial;
 
 /**********************************************************
   LAYOUT VARS
@@ -67,7 +68,12 @@ import netP5.*;
     
     println("Available serial ports:");
     println(Serial.list());   
-    port = new Serial(this, Serial.list()[0], 9600); 
+    if (Serial.list().length > 4){
+      port = new Serial(this, Serial.list()[0], 9600);
+     bSerial = true; 
+    } else {
+      bSerial = false;
+    }
    
     String nHost = oscSettings.getChild("host").getContent();
     if (nHost == null){
@@ -134,7 +140,7 @@ import netP5.*;
     int curY = 10;
     
     //read serial
-    while (port.available() > 0) serialEvent(port.read());
+    if (bSerial) while (port.available() > 0) serialEvent(port.read());
 
     //draw text labels
     pushMatrix();
@@ -178,7 +184,7 @@ import netP5.*;
             port.write('r');
             println("play sound: s");
           } else {
-            port.write(input.name.charAt(0));
+            if (bSerial) port.write(input.name.charAt(0));
             println("play sound: "+input.name.charAt(0));
           }
         

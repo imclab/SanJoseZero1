@@ -366,9 +366,9 @@
             <image>models/twitter/twitter_01.3DS</image>
             <messageString>/pluginplay/twitter/search</messageString>
             <color>
-                <r>0</r>
-                <g>0</g>
-                <b>255</b>
+                <r>49</r>
+                <g>144</g>
+                <b>210</b>
             </color>
         </message>
         <position>
@@ -400,8 +400,8 @@
             <port>12010</port>
         </calibrationReceiver>
         <sender>
-            <host>localhost</host>
-            <!-- <host>10.1.2.110</host> -->
+            <!-- <host>localhost</host> -->
+            <host>10.1.2.143</host>
             <port>12001</port>
         </sender>
     </osc>

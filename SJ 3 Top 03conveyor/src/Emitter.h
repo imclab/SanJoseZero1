@@ -68,8 +68,6 @@ public:
 	void setCeiling( float _ceiling){
 		ceiling = _ceiling;
 		currentRow->setBasePosition(ceiling);
-		
-		cout<<"ceiling is "<<ceiling;
 	};
 	
 /***********************************************************
@@ -122,7 +120,13 @@ public:
 	};
 	
 	void draw(){
+		glDisable(GL_DEPTH_TEST);
+		ofSetColor(255,0,0);
+		ofLine(0, ceiling, ofGetWidth(), ceiling);
+		
 		currentRow->draw();
+		
+		glEnable(GL_DEPTH_TEST);
 		
 		for (int i=0; i<buildings.size(); i++){
 			buildings[i]->draw();
