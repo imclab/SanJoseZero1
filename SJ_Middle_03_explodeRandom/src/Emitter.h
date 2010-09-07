@@ -159,9 +159,6 @@ public:
 			part->setTransformEnd(transformEnd);
 			part->setMinScale(minScale);
 			part->setMaxScale(maxScale);
-			
-			cout<<"getting model "<<index<<endl;
-			
 			part->setModel(type->getModel(index));
 			part->setType(type);
 			//part->setEndPoint(columns->getClosestColumn(type->getPosition().x)->x, columns->getClosestColumn(type->getPosition().x)->y);
@@ -169,6 +166,7 @@ public:
 			part->setData(data);
 			part->drawType = (int) ofRandom(0, NUM_DRAW_TYPES);
 			part->setColor(type->getColor(index));
+			part->setEndPointY(-part->getHeight());
 			
 			particles.push_back(part);
 			currentParticles.push_back(part);
@@ -189,7 +187,6 @@ public:
 		for (int i=0; i<types.size(); i++){
 			int index = types[i]->checkMessageString(msg);
 			if (index >= 0){
-				cout<<"emitting "<<msg<<", "<<types[i]->getName()<<":"<<index<<endl;
 				emit(i, index, data);
 				return true;
 			}

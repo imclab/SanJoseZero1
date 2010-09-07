@@ -262,7 +262,7 @@ public:
 			if (!bLoaded){
 				return false;
 			}
-			saveSettings();
+			//saveSettings();
 			xmlResponse.pushTag("results");
 			maxNumOfTweets = xmlResponse.getNumTags("tweet");
 			xmlResponse.popTag();

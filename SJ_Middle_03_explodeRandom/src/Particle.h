@@ -101,7 +101,7 @@ public:
 	};
 	
 	void setEndPointY( float y ){
-		endPoint.y = endPos.y = y;
+		endPoint.y = y;
 	};
 	
 	ofxVec3f dampevelocity ( float amt ){
@@ -285,16 +285,16 @@ public:
 		prevPos = pos;
 		
 		// Check to see if we are still alive
-		if (pos.y <= 0 && !bSend){
+		if (pos.y <= getHeight() && !bSend && !bTransformed){
 			bSend = true;
 		}
 		
 		if (!bAlive) return;
-		
+				
 		if (pos.y <= endPoint.y){
 			bAlive = false;
 						
-			//return;
+			return;
 		} else if (index == 0){
 			bool nAlive = false;
 			
@@ -305,7 +305,7 @@ public:
 			};
 			if (!nAlive && neighbors.size() > 0){
 				bAlive = false;
-				//return;
+				return;
 			}
 		}	
 		
@@ -546,7 +546,10 @@ public:
 		else if (index == 0 && bLeaving){
 			vel.y = -minSpeed;
 			vel.x = 0;
-		};
+		} else if (bLeaving){
+			
+			vel.y = -minSpeed;
+		}
 		
 		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
 		

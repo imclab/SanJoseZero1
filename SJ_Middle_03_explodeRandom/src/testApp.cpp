@@ -37,9 +37,7 @@ void testApp::setup(){
 		//load transform start + end
 		float transformStart	= settings.getValue("transform:start", particleManager.getTransformStart());
 		float transformEnd		= settings.getValue("transform:end", 0);//particleManager.getTransformEnd());
-		
-		cout<<"transformerz "<<particleManager.getTransformEnd()<<":"<<transformEnd<<endl;
-		
+				
 		particleManager.setTransformStart(transformStart);
 		particleManager.setTransformEnd(transformEnd);
 				
@@ -372,7 +370,7 @@ void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	ofxOscMessage m;
 	m.setAddress(args.address);
 	m.addFloatArg( (float) args.loc.x );
-	m.addFloatArg( (float) args.vel.x );
+	m.addFloatArg( (float) args.vel.y );
 	m.addStringArg( args.data );
 	sender.sendMessage(m);	
 };
