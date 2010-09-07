@@ -62,12 +62,12 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 **********************************************************/
 
   boolean verbose = false;
-  long read1 = 0;
-  long read2 = 0;
-  long read3 = 0;
-  long read4 = 0;
-  long read5 = 0;
-  long read6 = 0;
+  long read1[2];
+  long read2[2];
+  long read3[2];
+  long read4[2];
+  long read5[2];
+  long read6[2];
   
   int pin1 = 14;//2;
   int pin2 = 15;//4;
@@ -88,6 +88,17 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
     pinMode(pin4, INPUT);
     pinMode(pin5, INPUT);
     pinMode(pin6, INPUT);
+    
+    //initialize reads to 0
+    
+    for (int i=0; i<2; i++){
+      read1[i] = 0;
+      read2[i] = 0;
+      read3[i] = 0;
+      read4[i] = 0;
+      read5[i] = 0;
+      read6[i] = 0;
+    }
     
     if (verbose) Serial.begin(9600);
     
@@ -125,16 +136,31 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
 void loop()
 {   
+  //shift over reads to last value
+  read1[1] = read1[0];
+  read2[1] = read2[0];
+  read3[1] = read3[0];
+  read4[1] = read4[0];
+  read5[1] = read5[0];
+  read6[1] = read6[0];
+  
   // get capactitive reads
-  read1 = digitalRead(pin1);
-  read2 = digitalRead(pin2);
-  read3 = digitalRead(pin3);
-  read4 = digitalRead(pin4);
-  read5 = digitalRead(pin5);
-  read6 = digitalRead(pin6);
+  read1[0] = digitalRead(pin1);
+  read2[0] = digitalRead(pin2);
+  read3[0] = digitalRead(pin3);
+  read4[0] = digitalRead(pin4);
+  read5[0] = digitalRead(pin5);
+  read6[0] = digitalRead(pin6);
 
    // Play the sound?
-   if (read1 > 0 || read2 > 0 || read3 > 0 || read4 > 0 || read5 > 0 || read6 > 0){
+   // check for a new value && see if that value is != 0
+   if (   (read1[0] != read1[1] && read1 > 0) 
+       || (read2[0] != read2[1] && read2 > 0) 
+       || (read3[0] != read3[1] && read3 > 0)
+       || (read4[0] != read4[1] && read4 > 0)
+       || (read5[0] != read5[1] && read5 > 0) 
+       || (read6[0] != read6[1] && read6 > 0))
+   {
    
      if(millis()-t > PLAY_TIME){
        t = millis();
@@ -145,59 +171,32 @@ void loop()
    }
 
   if (verbose){
-    Serial.print(read1);
+    Serial.print(read1[0]);
     Serial.print(":");
-    Serial.print(read2);
+    Serial.print(read2[0]);
     Serial.print(":");
-    Serial.print(read3);
+    Serial.print(read3[0]);
     Serial.print(":");
-    Serial.print(read4);
+    Serial.print(read4[0]);
     Serial.print(":");
-    Serial.print(read5);
+    Serial.print(read5[0]);
     Serial.print(":");
-    Serial.println(read6);
+    Serial.println(read6[0]);
   } else {
     
-    payload[0] = read1 & 0xff;
+    payload[0] = read1[0] & 0xff;
     
-    payload[1] = read2 & 0xff;
+    payload[1] = read2[0] & 0xff;
     
-    payload[2] = read3 & 0xff;
+    payload[2] = read3[0] & 0xff;
     
-    payload[3] = read4 & 0xff;
+    payload[3] = read4[0] & 0xff;
     
-    payload[4] = read5 & 0xff;
+    payload[4] = read5[0] & 0xff;
     
-    payload[5] = read6 & 0xff;    
+    payload[5] = read6[0] & 0xff;    
     xbee.send(zbTx);
   }
-
-  // flash TX indicator
-  //flashLed(statusLed, 1, 100);
-  /*
-  // after sending a tx request, we expect a status response
-  // wait up to half second for the status response
-  if (xbee.readPacket(500)) {
-      // got a response!
-
-      // should be a znet tx status            	
-  	if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
-  	   xbee.getResponse().getZBTxStatusResponse(txStatus);
-  		
-  	   // get the delivery status, the fifth byte
-         if (txStatus.getDeliveryStatus() == SUCCESS) {
-          	// success.  time to celebrate
-           	flashLed(statusLed, 5, 50);
-         } else {
-          	// the remote XBee did not receive our packet. is it powered on?
-           	flashLed(errorLed, 3, 500);
-         }
-      }      
-  } else {
-    // local XBee did not provide a timely TX Status Response -- should not happen
-    flashLed(errorLed, 2, 50);
-  }
-  */
   delay(30);
 }
 
@@ -214,7 +213,7 @@ void loop()
     PgmPrint("Error: ");
     SerialPrint_P(str);
     sdErrorCheck();
-    while(1);
+    //while(1);
   }
   /*
    * print error message and halt if SD I/O error, great for debugging!
@@ -226,7 +225,7 @@ void loop()
     Serial.print(card.errorCode(), HEX);
     PgmPrint(", ");
     Serial.println(card.errorData(), HEX);
-    while(1);
+    //while(1);
   }
   
   // Number of files.
