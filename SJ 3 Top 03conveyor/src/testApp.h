@@ -34,6 +34,11 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 	
+	//LIGHTING
+		ofxVec3f lightPosition;
+	
+	//LARS FUNCTIONS
+	
 	void grabMatrices(GLenum gl_textureTarget);
 	void setOrthographicProjection(float xMin, float xMax,
 								   float yMin, float yMax,
@@ -42,6 +47,8 @@ class testApp : public ofBaseApp{
 	ofxVec3f normCalc( ofxVec3f a, ofxVec3f b, ofxVec3f c);
 	void calcMeshNormals();
 	void drawConveyorMesh();
+	
+	//ADJUST CONVEYOR
 	void moveConveyorY(float dist);
 	void scaleConveyor(int curveIndex, ofxVec3f scaleVal);
 	void moveCurveX(int crvIndex, float xPos);
@@ -49,7 +56,6 @@ class testApp : public ofBaseApp{
 	void scaleConveyorY(float scale);
 	int getVertPointer(int curveIndex, float uPos);
 
-	
 		Emitter * particleManager;
 		
 		ofxLight light1; //this will be a directional light

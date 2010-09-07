@@ -19,7 +19,8 @@ class Emitter
 {
 public:
 	
-	Emitter(){
+	Emitter( float _ceiling ){
+		ceiling = _ceiling;
 		rotateAmount = 0;
 		lastRotated = 0;//ofGetElapsedTimeMillis();
 		
@@ -44,7 +45,6 @@ public:
 						for (int k=0; k<settings.getNumTags("image"); k++){
 							b->loadModel(ofToDataPath(settings.getValue("image", "", k)), 5.0);
 						}
-						//cout << "loading "<<settings.getValue("image", "")<<":"<<settings.getValue("messageString", "")<<endl;
 					settings.popTag();
 				}
 				settings.popTag();
@@ -54,30 +54,24 @@ public:
 		}
 		settings.popTag();
 		
-	//THIS PART BARELY WORKS...
-		
-		//set up old rows
-		int increment = 90/ROTATE_AMOUNT;
-		
-		float curY = 0;
-		/*LARS
-		for (int i=1; i<=increment; i++){
-			BuildingRow * dum = new BuildingRow(500);
-			dum->rotation.x = 270 + ROTATE_AMOUNT*i;
-			oldRows.push_back(dum);
-			
-			curY = dum->getSize().y;
-		};
-		
-		BuildingRow * dum1 = new BuildingRow(500);
-		dum1->rotation.x = 360;
-		dum1->pos.y -= dum1->getSize().y-20;
-		oldRows.push_back(dum1);
-			*/	
 		//set up first row		
-		currentRow = new BuildingRow(500);
+		currentRow = new BuildingRow(ceiling);
 	};
 
+	
+/***********************************************************
+	CEILING!
+***********************************************************/
+	
+	float ceiling;
+	
+	void setCeiling( float _ceiling){
+		ceiling = _ceiling;
+		currentRow->setBasePosition(ceiling);
+		
+		cout<<"ceiling is "<<ceiling;
+	};
+	
 /***********************************************************
 	UPDATE + DRAW
 ***********************************************************/
@@ -93,22 +87,7 @@ public:
 		
 		//2 - rotate
 		if (rotateAmount > 0){
-			*advanceCeiling = true;//LARS this points to a bool in the testApp that moves conveyor
-			for (int i=oldRows.size()-1; i>=0; i--){				
-				if (oldRows[i]->rotation.x < 360){
-					oldRows[i]->rotation.x += ROTATE_INCREMENT;
-					
-					//oldRows[i].rotate.z += 10.0/90.0f;
-					//oldRows[i].pos.y -= deadBuildings[i][j].getWidth()/50.0f;
-				} else {
-					oldRows[i]->pos.y -= oldRows[i]->getSize().y/(ROTATE_AMOUNT/ROTATE_INCREMENT);
-				}
-				//off screen
-				if (oldRows[i]->pos.y < -100){
-					oldRows.erase(oldRows.begin()+i);
-				}
-				
-			}
+			*advanceCeiling = true;
 			rotateAmount -= ROTATE_INCREMENT;
 		}	
 		else {
@@ -143,27 +122,18 @@ public:
 	};
 	
 	void draw(){
-		//ofPushMatrix();{	//Lars commented out
-			
-			currentRow->draw();
-			
-			for (int i=0; i<buildings.size(); i++){
-				buildings[i]->draw();
-			}
-			
-			//LARS//for (int i=0; i<oldRows.size(); i++){
-			//LARS//	oldRows[i]->draw();
-			//LARS//}
-			
-						
-		//} ofPopMatrix();	//Lars commented out
+		currentRow->draw();
+		
+		for (int i=0; i<buildings.size(); i++){
+			buildings[i]->draw();
+		}
 	};	
-	
+		
 	void newRow(){
 		currentRow->setComplete(true);
-		//LARS//	oldRows.push_back( currentRow );
 		rowIsComplete(currentRow);
-		currentRow = new BuildingRow(500);
+		delete currentRow;
+		currentRow = new BuildingRow(ceiling);
 	};
 	
 	void emitRandom( ){
@@ -179,7 +149,7 @@ public:
 	MANAGE ASSETS
 ***********************************************************/
 		
-	bool checkMessageString(string msg, float position){
+	bool checkMessageString(string msg, float position, float speed=-5.0f, string data=""){
 		for (int i=0; i<types.size(); i++){
 			int messageIndex = types[i]->checkMessageString(msg);
 			if (messageIndex >= 0){		
@@ -189,10 +159,12 @@ public:
 					Building * part = new Building();
 					Stack * stack = currentRow->getClosestStack(position);
 					part->setStackIndex(stack->index);
-					part->setPos( stack->getPosition().x , types[i]->getPosition().y, 0 );
 					part->setCeiling( currentRow->getCeiling(stack->index) );					
-					part->setImage( types[i]->getModel(messageIndex) );				
+					part->setImage( types[i]->getModel(messageIndex) );		
+					part->setPos( stack->getPosition().x, types[i]->getPosition().y + part->getHeight(), 0 );		
 					part->setType( types[i]->getMessage(messageIndex) );
+					part->speed = speed;
+					part->setData( data);
 					buildings.push_back(part);
 				}				
 				lastFoundString = i;
@@ -206,14 +178,11 @@ public:
 	float originalCeiling;
 	
 	void windowResized(){
-		for (int i=0; i<oldRows.size(); i++){
-			oldRows[i]->windowResized();
-		}
 		
 		currentRow->windowResized();
 		
 		for (int i=0; i<types.size(); i++){			
-			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() + 25 );
+			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() );
 		}
 	}
 	
@@ -227,22 +196,13 @@ public:
     	ofNotifyEvent(rowComplete, completedRow, this);			
 	};
 	
-private:
-	//vector <Building> particles;
-	//vector <Building> currentStack;
-	//vector <vector <Building> > deadBuildings;
-	
+private:	
 	vector <Building *> buildings;
 	BuildingRow * currentRow;
-	//vector<BuildingRow *> oldRows;	
 	
 	vector <BuildingType *> types;	
-	
-	float basepos;
-	
 	float rotateAmount;
 	int lastRotated;
 public:
-	vector<BuildingRow *> oldRows;
 	bool *advanceCeiling;
 };

@@ -15,6 +15,9 @@ class Building
 {
 public:
 	
+	
+	float speed;
+	
 	Building(){
 		bAlive = true;
 		ceiling = 0;
@@ -22,7 +25,14 @@ public:
 		rotateAround = 0;
 		rotate.x = 0;
 		//rotate = ofRandom(0, 360);
+		scale.x = scale.y = 1.0f;
+		scale.z = .01f;
+		speed = -5.0f;
 	}
+	
+	void setData( string _data ){
+		data = _data;
+	};
 	
 	string getData(){
 		return data;
@@ -67,6 +77,22 @@ public:
 		position.y = _pos.y;
 	}
 	
+	void setScale( float x, float y, float z){
+		setScaleX(x);
+		setScaleY(y);
+		setScaleZ(z);
+	}
+	
+	void setScaleX(float x){
+		scale.x = x;
+	}
+	void setScaleY(float y){
+		scale.y = y;
+	}
+	void setScaleZ(float z){
+		scale.z = z;
+	}
+	
 	ofPoint getPosition(){
 		return position;
 	}
@@ -84,7 +110,7 @@ public:
 	}
 	
 	void update(){
-		position.y -= SPEED;
+		position.y += speed;
 		//rotate.x += SPEED * .5;
 		//rotate.y += SPEED * .5;
 		if (position.y - getHeight()/2 <= ceiling){
@@ -94,17 +120,11 @@ public:
 	}
 	void draw(){ 
 		ofPushMatrix();{
-			ofTranslate(position.x, position.y, position.z);
-			//ofTranslate(getHeight()/2.0, getHeight()/2.0, getHeight()/2.0);
-			
+			ofTranslate(position.x, position.y, position.z);	
 			ofRotateX(rotate.x);
 			ofRotateY(rotate.y);
 			ofRotateZ(rotate.z);
-			
-			//ofTranslate(-getHeight()/2.0,  -getHeight()/2.0, -getHeight()/2.0);
-			//ofRotateX(5);
-			//ofRotateZ(5);
-			//ofRotateY(15);
+			ofScale(scale.x, scale.y, scale.z);
 			img->draw();			
 			
 		} ofPopMatrix();
@@ -115,6 +135,8 @@ public:
 	ofPoint rotate;
 	float rotateAround;
 	int index;
+	
+	ofPoint scale;	
 private:
 	ofPoint position;
 	string type;

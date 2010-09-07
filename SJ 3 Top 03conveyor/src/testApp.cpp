@@ -11,6 +11,7 @@ bool isCeilingAdvenced;
 
 ofxVec3f conveyorScale;
 float conveyorYoffset;
+float ceiling;
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -33,9 +34,9 @@ void testApp::setup(){
 		
 		int cPort = 12010;
 		string cHost = "localhost";
-		cPort = settings.getValue("osc:calibrationSender:port",sPort);
-		cHost = settings.getValue("osc:calibrationSender:host",sHost);
-		calibrationSender.setup(sHost, sPort);
+		cPort = settings.getValue("osc:calibrationSender:port",cPort);
+		cHost = settings.getValue("osc:calibrationSender:host",cHost);
+		calibrationSender.setup(cHost, cPort);
 		
 	} settings.popTag();
 	
@@ -43,10 +44,7 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(120);
 	ofDisableArbTex();
-	
-	particleManager = new Emitter();
-	particleManager->setAdvanceCeilingBool(&advanceCeiling);
-	
+		
 	//lights
 	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
 	ofxMaterialShininess(128); //how concentrated the reflexion will be (between 0 and 128
@@ -86,9 +84,7 @@ void testApp::setup(){
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
 	
-	// add listener to send to the logger app
-	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);	
-	
+		
 	// PLACEHOLDER: send calibration: # of rows
 	ofxOscMessage rowMessage;
 	rowMessage.setAddress("/pluginplay/calibration/numrows");
@@ -96,9 +92,14 @@ void testApp::setup(){
 	calibrationSender.sendMessage(rowMessage);	
 	
 	ofxOscMessage spacerMessage;
-	rowMessage.setAddress("/pluginplay/calibration/buffers");
-	rowMessage.addFloatArg( ROW_BUFFER);
-	calibrationSender.sendMessage(rowMessage);
+	spacerMessage.setAddress("/pluginplay/calibration/buffers");
+	spacerMessage.addFloatArg( ROW_BUFFER);
+	calibrationSender.sendMessage(spacerMessage);
+	
+	ofxOscMessage spaceMessage;
+	spaceMessage.setAddress("/pluginplay/calibration/spacing");
+	spaceMessage.addFloatArg( ROW_SPACING);
+	calibrationSender.sendMessage(spaceMessage);
 	
 	//shaders
 	depthShader.setup("shaders/depthShader");
@@ -132,6 +133,13 @@ void testApp::setup(){
 	
 	fCounter = 0.0;
 	wireFrame = false;
+	
+	//setup particle manager
+	particleManager = new Emitter(ceiling);
+	particleManager->setAdvanceCeilingBool(&advanceCeiling);
+	
+	// add listener to send to the logger app
+	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
 }
 
 //--------------------------------------------------------------
@@ -145,15 +153,14 @@ void testApp::update(){
 				
 		bool bFound = false;
 		
-		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsFloat(0));
+		bFound = particleManager->checkMessageString(m.getAddress(), m.getArgAsFloat(0), m.getArgAsFloat(1), m.getArgAsString(2));
 		
 		if (!bFound)
 		{
 			cout << "did not recognize: "<<m.getAddress()<<endl;
 			// unrecognized message
 		}
-	};
-	
+	};	
 	
 	particleManager->update();
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));
@@ -201,30 +208,29 @@ void testApp::draw(){
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//set up screen
-		int w, h;		
-		float halfFov, theTan, screenFov, aspect;
+	int w, h;		
+	float halfFov, theTan, screenFov, aspect;
+
+	w = ofGetWidth();
+	h = ofGetHeight();		
+	screenFov 		= 60.0f; //adjust this to alter the perspective
+	float eyeX 		= (float)w / 2.0;
+	float eyeY 		= (float)h / 2.0;
+	halfFov 		= PI * screenFov / 360.0;
+	theTan 			= tanf(halfFov);
+	float dist 		= eyeY / theTan;
+float nearDist		= 150; //dist / 50.0;	// near / far clip plane
+float farDist		= dist * 50.0;
+	aspect 			= (float)w/(float)h;
 	
-		w = ofGetWidth();
-		h = ofGetHeight();		
-		screenFov 		= 60.0f; //adjust this to alter the perspective
-		float eyeX 		= (float)w / 2.0;
-		float eyeY 		= (float)h / 2.0;
-		halfFov 		= PI * screenFov / 360.0;
-		theTan 			= tanf(halfFov);
-		float dist 		= eyeY / theTan;
-	float nearDist		= 150; //dist / 50.0;	// near / far clip plane
-	float farDist		= dist * 50.0;
-		aspect 			= (float)w/(float)h;
-	
-	
-	//ofxVec3f lightPos(mouseX, sin(mouseY * 0.001) * -2000.0, cos(mouseY * 0.01)*2000.0-100.0);
-	//ofxVec3f lightPos(1010, -760, 1150);
-	ofxVec3f lightPos(mouseX, -ofGetHeight()*.5, ofGetHeight()*1.5);
+	ofxVec3f lightPos(lightPosition.x, -ofGetHeight()*.5, ofGetHeight()*1.5);
 	ofxVec3f targetPos(eyeX, eyeX, 205);
 	
 //draw shadow map
 	//fbo.clear(1.0, 1.0, 1.0, 1.0);
-	fbo.begin();
+	
+	fbo.begin();{
+		/*
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(screenFov, aspect, nearDist, farDist);
@@ -237,37 +243,37 @@ void testApp::draw(){
 		
 		glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
 		glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
-	
-	//draw things
-	glEnable(GL_DEPTH_TEST);
-	ofPushMatrix();{
-		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-		if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
-		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
-		
-		//drawConveyorMesh();//don't need to draw conveyor
+		*/
+		//draw things
+		glEnable(GL_DEPTH_TEST);
+		ofPushMatrix();{
+			ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
+			if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
+			ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
+			
+			//drawConveyorMesh();//don't need to draw conveyor
 
-		//draw particles
-		particleManager->draw();
-		for(int i=0; i<stacks.size();i++){
-			stacks[i].draw();
-		}
+			//draw particles
+			particleManager->draw();
+			for(int i=0; i<stacks.size();i++){
+				stacks[i].draw();
+			}
+			
+			//grab matrices to pass to shadow shader
+			grabMatrices(GL_TEXTURE7);
+			
+		} ofPopMatrix();
 		
-		//grab matrices to pass to shadow shader
-		grabMatrices(GL_TEXTURE7);
 		
-	} ofPopMatrix();
-	
-	
-	//copy depth buffer data to depthTexture.
-	//was acting weird with the recent ofxFBO, so I switched to an older ofxFBO
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-					 0, 0, fbo.getWidth(), fbo.getHeight(),0);
-	
-	ofDisableAlphaBlending();
-	
-	fbo.end();
+		//copy depth buffer data to depthTexture.
+		//was acting weird with the recent ofxFBO, so I switched to an older ofxFBO
+		glBindTexture(GL_TEXTURE_2D, depthTexture);
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+						 0, 0, fbo.getWidth(), fbo.getHeight(),0);
+		
+		ofDisableAlphaBlending();
+		
+	} fbo.end();
 	
 //draw geometry
 	//set camera
@@ -282,96 +288,80 @@ void testApp::draw(){
 	glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
 	glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
 	
-	
-	shadowShader.begin();	
-	shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
-	shadowShader.setUniform("lPos", lightPos.x, lightPos.y, lightPos.z);	
-	shadowShader.setUniform("ShadowMap", 1);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);	
-	shadowShader.setUniform("inTex", 0);
-	glActiveTexture(GL_TEXTURE0);	
-	
-	glEnable(GL_DEPTH_TEST);
-	ofSetColor(0xffffff);
-	//ofEnableAlphaBlending();
-	
-	ofxLightsOn();	
-	ofPushMatrix();{
+	shadowShader.begin();{	
+		shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
+		shadowShader.setUniform("lPos", lightPos.x, lightPos.y, lightPos.z);	
+		shadowShader.setUniform("ShadowMap", 1);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthTexture);	
+		shadowShader.setUniform("inTex", 0);
+		glActiveTexture(GL_TEXTURE0);	
+		
+		glEnable(GL_DEPTH_TEST);
+		ofSetColor(0xffffff);
+		//ofEnableAlphaBlending();
+		
+		ofxLightsOn();	
+		ofPushMatrix();{
 
-		ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-		if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
-		ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
+			ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
+			if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
+			ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
+				
+			//get modelViewMatrix and invert it
+			float modelView[16];
+			glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
+			ofxMatrix4x4 invModelView(modelView);
+			invModelView.makeInvertOf(invModelView);		
+			//pass the inverse of modelViewMatrix to the shader
+			glUniformMatrix4fv(glGetUniformLocationARB(shadowShader.shader, "invMat"),
+							   1, GL_FALSE, invModelView.getPtr());
+				
+			//draw particles
+			particleManager->draw();	
+			for(int i=0; i<stacks.size();i++){
+				stacks[i].draw();
+			}			
+		} ofPopMatrix();	
 			
-		//get modelViewMatrix and invert it
-		float modelView[16];
-		glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
-		ofxMatrix4x4 invModelView(modelView);
-		invModelView.makeInvertOf(invModelView);		
-		//pass the inverse of modelViewMatrix to the shader
-		glUniformMatrix4fv(glGetUniformLocationARB(shadowShader.shader, "invMat"),
-						   1, GL_FALSE, invModelView.getPtr());
-			
-		//draw particles
-		particleManager->draw();	
-		for(int i=0; i<stacks.size();i++){
-			stacks[i].draw();
-		}
+		ofxLightsOff();		
+	} shadowShader.end();			
 		
-	} ofPopMatrix();	
-		
-	ofxLightsOff();		
-	shadowShader.end();			
-	
-	
 	//draw conveyor
-		//the texture uniforms need to be set for the shader
-	shadowShader.begin();
-	shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
-	shadowShader.setUniform("lPos", lightPos.x, lightPos.y, lightPos.z);	
-	shadowShader.setUniform("ShadowMap", 1);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);	
-	shadowShader.setUniform("inTex", 0);
-	glActiveTexture(GL_TEXTURE0);
-	ceilingImage.getTextureReference().bind();
-	
-	glEnable(GL_DEPTH_TEST);
+	//the texture uniforms need to be set for the shader
+	shadowShader.begin();{
+		shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
+		shadowShader.setUniform("lPos", lightPos.x, lightPos.y, lightPos.z);	
+		shadowShader.setUniform("ShadowMap", 1);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthTexture);	
+		shadowShader.setUniform("inTex", 0);
+		glActiveTexture(GL_TEXTURE0);
+		ceilingImage.getTextureReference().bind();
+		
+		glEnable(GL_DEPTH_TEST);
 
-	drawConveyorMesh();
+		drawConveyorMesh();
+		
+	} shadowShader.end();
 	
-	shadowShader.end();
-	
+	/*
 	//draw curves
+	 
 	glEnable(GL_DEPTH_TEST);
 	glUseProgram(0);
 	ofSetColor(0, 255, 0);
-	for(int i=0; i<curves.size();i++)	curves[i].drawWithGluNurbs();
+	for(int i=0; i<curves.size();i++)
+		curves[i].drawWithGluNurbs();
+	*/
 	
-	//draw normals on mesh verts
-	//glBegin(GL_LINES);
-	//ofSetColor(255, 255, 250);
-	//for(int i=0;i<vertices.size();i++){
-	//	ofxVec3f p2 = vertices[i].pos + vertices[i].norm*30;
-	//	glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
-	//	glVertex3f(p2.x, p2.y, p2.z);
-	//}
-	//glEnd();	
 	
 	//draw and write diagnostics
-	setOrthographicProjection(0, ofGetWidth(),
+	/*setOrthographicProjection(0, ofGetWidth(),
 							  0, ofGetHeight(),
 							  -1000, 1000);	
 	glDisable(GL_DEPTH_TEST);
-	
-	//shadow map
-	//glUseProgram(0);
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//glActiveTexture(GL_TEXTURE0);	
-	//fbo.bind();
-	//drawTex(20, 20, 200, 200);
-	
+		
 	ofSetColor(255, 0, 0);
 	string fpsString = "light position  " + ofToString(lightPos.x, 2) + ", " + ofToString(lightPos.y, 2) + ", " + ofToString(lightPos.z, 2);
 	ofDrawBitmapString(fpsString,  20, 20);
@@ -380,7 +370,7 @@ void testApp::draw(){
 	fpsString = "sweet spot  " + ofToString(sweetSpot[0].uPos);
 	ofDrawBitmapString(fpsString,  20, 60);
 	fpsString = "stack count " + ofToString((float)stacks.size());
-	ofDrawBitmapString(fpsString,  20, 80);
+	ofDrawBitmapString(fpsString,  20, 80);*/
 	
 }
 
@@ -398,10 +388,6 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 			newRowMessage.addStringArg(b->getData());
 			newRowMessage.addStringArg(ofToString(i));
 			newRowMessage.addStringArg(ofToString(j));
-			//form.addFormField("buildings["+ofToString(index)+"][type]", b->getType());
-			//form.addFormField("buildings["+ofToString(index)+"][data]", "");//b->getData());
-			//form.addFormField("buildings["+ofToString(index)+"][row]", ofToString(i));
-			//form.addFormField("buildings["+ofToString(index)+"][index]", ofToString(j));
 		}
 	}
 	
@@ -429,7 +415,7 @@ void testApp::keyPressed(int key){
 		else	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 		
-	if(key = 's'){
+	if(key == 's'){
 		scaleConveyorY(float(mouseY)/float(ofGetHeight()));
 	}
 }
@@ -447,6 +433,7 @@ void testApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
 	//bDragging = true;
+	lightPosition.x = x;
 }
 
 //--------------------------------------------------------------
@@ -462,8 +449,6 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 	particleManager->windowResized();
-	
-	
 	
 	float xStep = w/float(numCurves);
 	//float yStep = h/float(numCVs);
@@ -620,9 +605,10 @@ void testApp::moveConveyorY(float dist){
 	conveyorYoffset += dist;
 	for(int i=0; i<curves.size();i++){
 		for(int j=0; j<=curves[i].numCVs;j++){
-			curves[i].moveCVrelative(j, ofxVec3f(0,conveyorYoffset,0));
+			curves[i].moveCVrelative(j, ofxVec3f(0,dist,0));
 		}
 	}
+	ceiling = conveyorYoffset + conveyorScale.y;
 }
 void testApp::scaleConveyor(int curveIndex, ofxVec3f scaleVal){
 	//for(int i=0; i<curves.size();i++){
@@ -660,8 +646,7 @@ void testApp::setupConveyorMesh(){
 	refPoses[14].set(0, 0.0421618, 0.0801633);
 	refPoses[15].set(0, 0, 0.0206706);
 	refPoses[16].set(0, 0.155657, 0.00257276);
-	refPoses[17].set(0, 0.955657, 0);
-	
+	refPoses[17].set(0, 0.955657, 0);	
 	
 	float xStep = ofGetWidth()/float(numCurves);
 	float yStep = float (ofGetHeight())/float(numCVs);
@@ -671,6 +656,8 @@ void testApp::setupConveyorMesh(){
 	
 	float curX = ROW_BUFFER;
 	conveyorScale.set(1.0, ofGetHeight()*.5, 1000.0);
+	
+	ceiling = conveyorYoffset + conveyorScale.y;
 	
 	for(int i=0; i<numCurves; i++){
 		for(int j=0; j<numCVs;j++){
@@ -724,6 +711,9 @@ void testApp::setupConveyorMesh(){
 
 void testApp::scaleConveyorY(float scale){
 	scale = fmax(.01, scale);
+	
+	float maxY = -1;
+	
 	for(int i=0; i<numCurves; i++){
 		for(int j=0; j<numCVs;j++){
 			ofxVec3f cvPos = curves[i].getCVpos(j);
@@ -733,6 +723,7 @@ void testApp::scaleConveyorY(float scale){
 			cvPos.y += conveyorYoffset;
 			
 			curves[i].moveCV(j, cvPos );
+			if (cvPos.y > maxY) maxY = cvPos.y;
 			//curves[i].addCV(curX,//i*xStep+xStep/2,
 			//				refPoses[j].y * conveyorScale.y + conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
 			//				refPoses[j].z * conveyorScale.z);//cos(float(j)/float(numCVs))*300);
@@ -741,6 +732,36 @@ void testApp::scaleConveyorY(float scale){
 		}		
 	}
 	conveyorScale.y = scale;
+	ceiling = conveyorYoffset + conveyorScale.y;
+	particleManager->setCeiling(maxY);
+	
+	//advance all the mesh nodes
+	for(int i=0;i<meshNodes.size();i++){
+		meshNodes[i].uPos += uIncrement;
+	}
+	//delete any stacks that have a uPos > 1.0
+	for(int i=refVerts.size()-1; i>=0;i--){
+		if (meshNodes[refVerts[i]].uPos >= 1.0) {
+			refVerts.erase(refVerts.begin()+i);
+			stacks.erase(stacks.begin()+i);
+		}
+	}
+	//wrap meshnodes that have grown bigger then 1.0 
+	for(int i=0;i<meshNodes.size();i++){
+		if(meshNodes[i].uPos >1.0)	meshNodes[i].uPos -= 1.0;
+		if(meshNodes[i].uPos <0.0)	meshNodes[i].uPos += 1.0;
+		meshNodes[i].update();
+	}
+	
+	//set stack position and rotation
+	for(int i=refVerts.size()-1; i>=0;i--){
+		stacks[i].setPosition(vertices[refVerts[i]].pos);
+		//find rotation degree
+		ofxVec3f upVec(0,1,0);
+		stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
+		stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
+		//set axis perpendicular to normal
+	}
 }
 
 int testApp::getVertPointer(int curveIndex, float uPos){

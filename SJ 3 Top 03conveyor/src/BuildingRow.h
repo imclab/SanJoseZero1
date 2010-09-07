@@ -25,8 +25,8 @@ public:
 	};
 	
 	BuildingRow(float _pos){
-		setup();
 		setBasePosition( _pos );
+		setup();
 	};
 	
 	void setup(){
@@ -35,23 +35,28 @@ public:
 		color.g = 50;//ofRandom(0, 255);
 		color.b = 50;//ofRandom(0, 255);
 		pos.x = 0;//ofGetWidth()/2.0;
-		pos.y = 100;//ofGetHeight()/2.0;
+		pos.y = 0;//ofGetHeight()/2.0;
 		rotation.x = 270;
 		size.x = ofGetWidth();
 		size.y = 70;
 		
 		//build base columns
-		float increment = (float)(ofGetWidth()-ROW_BUFFER*2)/NUMBER_OF_ROWS;
-		
+		float increment = ROW_SPACING;
+			
 		for (int i=0; i<NUMBER_OF_ROWS; i++){
 			Stack * s = new Stack(i);
-			s->setPosition(ROW_BUFFER + i*increment, 0);
+			s->setPosition(ROW_BUFFER + i*increment, pos.z);
 			stacks.push_back(s);
 		};
 	}
 	
 	void setBasePosition( float _pos ){
 		pos.z = _pos;
+		
+		for (int i=0; i<stacks.size(); i++){
+			stacks[i]->setPosition(stacks[i]->getPosition().x, pos.z);
+		}
+		
 	};
 	
 	float getPosition(){
@@ -108,19 +113,6 @@ public:
 	void draw(){
 		ofPushMatrix();{
 			ofTranslate(pos.x, pos.y, 0);
-			ofRotateX( rotation.x );
-			ofRotateY( rotation.y );
-			ofRotateZ( rotation.z );
-			ofTranslate(0, -size.y/2.0, pos.z);
-			
-			//draw floor
-			ofSetColor(color.r, color.g, color.b);
-			//ofSetColor(0x33333);
-			
-			//ofRect(0,0,size.x, size.y);
-			if (bComplete)
-				ofSetColor(255,255,255,255);
-			else ofSetColor(0xffffff);
 			for (int i=0; i<stacks.size(); i++){
 				stacks[i]->draw();
 			};
@@ -134,6 +126,11 @@ public:
 	
 	void setComplete( bool _bComplete ){
 		bComplete = _bComplete;
+		
+		//reset all building scales to 1:1:1
+		for (int i=0; i<stacks.size(); i++){
+			stacks[i]->setComplete();
+		}		
 	}
 	
 	ofPoint rotation;

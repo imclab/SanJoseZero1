@@ -73,7 +73,7 @@ public:
 		if (index < 0) index = 0;
 		if (models.size() < 1) return new ofx3DModelLoader();
 		//return models[index];
-		return models[(int) ofRandom(0, models.size())];
+		return models[index];
 
 	};
 	

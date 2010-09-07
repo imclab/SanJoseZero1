@@ -20,11 +20,14 @@ public:
 		index = 0;
 		height = 0;
 		rotAxis.set(1,0,0);
+		angle = 0;
 	};
 	
 	Stack( int _index ){
 		index = _index;
 		height = 0;
+		rotAxis.set(1,0,0);
+		angle = 270;
 	};
 	
 	
@@ -62,7 +65,7 @@ public:
 			ofTranslate(pos.x, pos.y, pos.z);
 			ofRotate(angle, rotAxis.x, rotAxis.y, rotAxis.z);
 			//ofTranslate(0, buildings[0]->getWidth(), 0);
-			ofTranslate(0.0, -width, 0.0);
+			//ofTranslate(0.0, -width, 0.0);
 			for (int i=0; i<buildings.size(); i++){
 				ofPushMatrix();{ //LARS//
 					buildings[i]->draw();
@@ -71,14 +74,26 @@ public:
 		} ofPopMatrix();
 	};
 	
+	void debugDraw(){
+		ofSetColor(0xffffff);
+		ofCircle(pos.x, pos.y, 15);
+	};
+	
 	void addBuilding( Building * b ){
-		
+				
 		//update position
 		b->rotate.x += -270;
-		b->rotate.y += 0;
-		b->setPos(0,b->getWidth(),height + b->getHeight()/2.0);
+		b->setPos(0,0, height + b->getHeight()/2.0);
+		//buildings[i]->setScaleZ(1.0f);
 		buildings.push_back(b);
 		update();
+	};
+	
+	void setComplete(){
+		for (int i=0; i<buildings.size(); i++){
+			buildings[i]->setScaleZ(1.0f);
+			//buildings[i]->rotate.x += -270;
+		};
 	};
 	
 	int index;
