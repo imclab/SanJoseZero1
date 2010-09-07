@@ -43,7 +43,7 @@ class testApp : public ofBaseApp{
 				
 		string searchUrl;
 		int logLevel;
-		float searchTime;
+		float searchTime, replySearchTime;
 		float sendTime;
 	
 		ofxOscSender sender;

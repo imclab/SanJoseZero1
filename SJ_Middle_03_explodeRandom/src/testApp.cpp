@@ -18,18 +18,17 @@ void testApp::setup(){
 				
 		//get host + port for sender
 		string host = "localhost";
+		host = settings.getValue("osc:sender:host",host);
 		int port = 12001;
 		port = settings.getValue("osc:sender:port",port);
 		sender.setup(host,port);
 				
 		//get port for receiver
-		host = "localhost";
 		port = 12345;
 		port = settings.getValue("osc:receiver:port",port);
 		receiver.setup( port );
 		
 		//get port for calibration receiver
-		host = "localhost";
 		port = 12010;
 		port = settings.getValue("osc:calibrationReceiver:port",port);
 		calibrationReceiver.setup( port );
@@ -86,7 +85,7 @@ void testApp::setup(){
 	//particle effects
 	trails.setup(&particleManager);
 	system = new phyParticleSystem( &particleManager );
-	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);//, 4);
+	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
 	
 #ifdef FLUID_EFFECT_SYSTEM
 	effectsSystem.setup(&particleManager);
@@ -371,6 +370,7 @@ void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	m.setAddress(args.address);
 	m.addFloatArg( (float) args.loc.x );
 	m.addFloatArg( (float) args.vel.y );
+	cout<<args.vel.y<<endl;
 	m.addStringArg( args.data );
 	sender.sendMessage(m);	
 };

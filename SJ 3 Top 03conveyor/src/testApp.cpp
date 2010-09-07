@@ -13,6 +13,12 @@ ofxVec3f conveyorScale;
 float conveyorYoffset;
 float ceiling;
 
+//cached matrices
+
+static double shadowModelView[16];
+static float shadowModelViewFloat[16];
+static double shadowProjection[16];
+
 //--------------------------------------------------------------
 void testApp::setup(){
 	
@@ -51,9 +57,9 @@ void testApp::setup(){
 	
 	//each light will emit white reflexions
 	//light1.ambient(50,50,50);
-	//light1.diffuse(255, 255, 255);
-	//light2.specular(255, 255, 255);
-	//light3.specular(255, 255, 255);
+	light1.diffuse(255, 255, 255);
+	light2.diffuse(255, 255, 255);
+	light3.diffuse(255, 255, 255);
 	
 	float L1DirectionX = .5;
 	float L1DirectionY = 1;
@@ -84,7 +90,6 @@ void testApp::setup(){
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
 	
-		
 	// PLACEHOLDER: send calibration: # of rows
 	ofxOscMessage rowMessage;
 	rowMessage.setAddress("/pluginplay/calibration/numrows");
@@ -121,7 +126,9 @@ void testApp::setup(){
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
     glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
 	
-	ceilingImage.loadImage("hop_3.png");
+	string ceilingImagePath = "ceiling.jpg";
+	
+	ceilingImage.loadImage(ceilingImagePath);
 	
 	//ceiling mesh	
 	numCurves = NUMBER_OF_ROWS;//number of stacks per row + 2(border)
@@ -130,9 +137,11 @@ void testApp::setup(){
 	
 	uIncrement = .02; //this gets added to advance mesh verts and stack positions. added to uVal per frame
 	setupConveyorMesh();
-	
+		
 	fCounter = 0.0;
 	wireFrame = false;
+	bDrawCurves = false;
+	bDragging = false;
 	
 	//setup particle manager
 	particleManager = new Emitter(ceiling);
@@ -140,6 +149,7 @@ void testApp::setup(){
 	
 	// add listener to send to the logger app
 	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
+	scaleConveyorY(.5f);
 }
 
 //--------------------------------------------------------------
@@ -165,7 +175,8 @@ void testApp::update(){
 	particleManager->update();
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));
 	
-	//ceiling mesh
+	// ROTATING!
+	
 	if(advanceCeiling){
 		//advance all the mesh nodes
 		for(int i=0;i<meshNodes.size();i++){
@@ -185,6 +196,7 @@ void testApp::update(){
 			meshNodes[i].update();
 		}
 		
+		
 		//set stack position and rotation
 		for(int i=refVerts.size()-1; i>=0;i--){
 			stacks[i].setPosition(vertices[refVerts[i]].pos);
@@ -198,6 +210,30 @@ void testApp::update(){
 	//sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
 	for(int i=0;i<sweetSpot.size();i++){
 		sweetSpot[i].update();
+	}
+	
+	float oldRowBuffer = ROW_BUFFER;
+	float oldRowSpacing = ROW_SPACING;	
+	
+	ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
+	ROW_SPACING = vertices[getVertPointer(1, sweetSpot[2].uPos)].pos.x - vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x ;
+	
+	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
+	
+	//send calibration if new values exist
+	
+	if (oldRowBuffer != ROW_BUFFER){
+		ofxOscMessage spacerMessage;
+		spacerMessage.setAddress("/pluginplay/calibration/buffers");
+		spacerMessage.addFloatArg( ROW_BUFFER);
+		calibrationSender.sendMessage(spacerMessage);
+	}
+	
+	if (oldRowSpacing != ROW_SPACING){
+		ofxOscMessage spaceMessage;
+		spaceMessage.setAddress("/pluginplay/calibration/spacing");
+		spaceMessage.addFloatArg( ROW_SPACING);
+		calibrationSender.sendMessage(spaceMessage);
 	}
 	
 	calcMeshNormals();
@@ -230,27 +266,27 @@ float farDist		= dist * 50.0;
 	//fbo.clear(1.0, 1.0, 1.0, 1.0);
 	
 	fbo.begin();{
-		/*
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(screenFov, aspect, nearDist, farDist);
+		//if light source is moved, set up correct matrix to calc
+		//if (bLightSourceChanged){
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(screenFov, aspect, nearDist, farDist);
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			gluLookAt(lightPos.x, lightPos.y, lightPos.z,
+					  targetPos.x, targetPos.y, targetPos.z,
+					  0.0, 1.0, 0.0);
+			
+			glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+			glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
+		//}
 		
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(lightPos.x, lightPos.y, lightPos.z,
-				  targetPos.x, targetPos.y, targetPos.z,
-				  0.0, 1.0, 0.0);
-		
-		glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-		glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
-		*/
 		//draw things
 		glEnable(GL_DEPTH_TEST);
 		ofPushMatrix();{
 			ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-			if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
-			ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
-			
+			ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);			
 			//drawConveyorMesh();//don't need to draw conveyor
 
 			//draw particles
@@ -261,6 +297,7 @@ float farDist		= dist * 50.0;
 			
 			//grab matrices to pass to shadow shader
 			grabMatrices(GL_TEXTURE7);
+			bLightSourceChanged = false;
 			
 		} ofPopMatrix();
 		
@@ -282,6 +319,7 @@ float farDist		= dist * 50.0;
 	gluPerspective(screenFov, aspect, nearDist, farDist);	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	
 	gluLookAt(eyeX, eyeY, dist,
 			  eyeX, eyeY, 0.0,
 			  0.0, 1.0, 0.0);	
@@ -305,7 +343,6 @@ float farDist		= dist * 50.0;
 		ofPushMatrix();{
 
 			ofTranslate(ofGetWidth()/2.0, ofGetHeight()/2.0);
-			if(bDragging) ofRotateY(mouseX - ofGetWidth()/2.0);
 			ofTranslate(-ofGetWidth()/2.0, -ofGetHeight()/2.0);
 				
 			//get modelViewMatrix and invert it
@@ -316,7 +353,12 @@ float farDist		= dist * 50.0;
 			//pass the inverse of modelViewMatrix to the shader
 			glUniformMatrix4fv(glGetUniformLocationARB(shadowShader.shader, "invMat"),
 							   1, GL_FALSE, invModelView.getPtr());
-				
+			
+			if (bDragging){
+				ofTranslate(ofGetWidth()/2.0f, ofGetHeight()/2.0f);
+				ofRotate(mouseX, 0,1,0);
+				ofTranslate(-ofGetWidth()/2.0f, -ofGetHeight()/2.0f);
+			}
 			//draw particles
 			particleManager->draw();	
 			for(int i=0; i<stacks.size();i++){
@@ -340,38 +382,32 @@ float farDist		= dist * 50.0;
 		ceilingImage.getTextureReference().bind();
 		
 		glEnable(GL_DEPTH_TEST);
-
+		if (bDragging){
+			ofTranslate(ofGetWidth()/2.0f, ofGetHeight()/2.0f);
+			ofRotate(mouseX, 0,1,0);
+			ofTranslate(-ofGetWidth()/2.0f, -ofGetHeight()/2.0f);
+		}
 		drawConveyorMesh();
 		
 	} shadowShader.end();
 	
-	/*
+	
 	//draw curves
-	 
-	glEnable(GL_DEPTH_TEST);
-	glUseProgram(0);
-	ofSetColor(0, 255, 0);
-	for(int i=0; i<curves.size();i++)
-		curves[i].drawWithGluNurbs();
-	*/
 	
+	if (bDrawCurves){
+		glDisable(GL_DEPTH_TEST);
+		glUseProgram(0);
+		ofSetColor(0, 255, 0);
+		for(int i=0; i<curves.size();i++)
+			curves[i].drawWithGluNurbs();
 	
-	//draw and write diagnostics
-	/*setOrthographicProjection(0, ofGetWidth(),
-							  0, ofGetHeight(),
-							  -1000, 1000);	
-	glDisable(GL_DEPTH_TEST);
+		float increment = ROW_SPACING;
 		
-	ofSetColor(255, 0, 0);
-	string fpsString = "light position  " + ofToString(lightPos.x, 2) + ", " + ofToString(lightPos.y, 2) + ", " + ofToString(lightPos.z, 2);
-	ofDrawBitmapString(fpsString,  20, 20);
-	fpsString = "target position  " + ofToString(targetPos.x,2)+", "+ofToString(targetPos.y,2)+", "+ofToString(targetPos.z,2);
-	ofDrawBitmapString(fpsString,  20, 40);
-	fpsString = "sweet spot  " + ofToString(sweetSpot[0].uPos);
-	ofDrawBitmapString(fpsString,  20, 60);
-	fpsString = "stack count " + ofToString((float)stacks.size());
-	ofDrawBitmapString(fpsString,  20, 80);*/
-	
+		for (int i=0; i<NUMBER_OF_ROWS; i++){
+			ofLine(ROW_BUFFER + i*increment, 0, ROW_BUFFER + i*increment, ofGetHeight());
+			ofCircle(ROW_BUFFER + i*increment, ofGetHeight()-20, 20);
+		};
+	}	
 }
 
 //--------------------------------------------------------------
@@ -383,7 +419,6 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		for (int j=0; j<completedRow->stacks[i]->buildings.size(); j++){
 			Building * b = completedRow->stacks[i]->buildings[j];
-			
 			newRowMessage.addStringArg(b->getType());
 			newRowMessage.addStringArg(b->getData());
 			newRowMessage.addStringArg(ofToString(i));
@@ -416,7 +451,13 @@ void testApp::keyPressed(int key){
 	}
 		
 	if(key == 's'){
-		scaleConveyorY(float(mouseY)/float(ofGetHeight()));
+		scaleConveyorY(float(mouseY)/float(1440.0f));
+	}
+	
+	if ( key == '+' ) NUMBER_OF_ROWS++;
+	else if (key == '-'){
+		NUMBER_OF_ROWS--;
+		if (NUMBER_OF_ROWS < 0 )NUMBER_OF_ROWS = 0;
 	}
 }
 
@@ -432,8 +473,9 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	//bDragging = true;
+	bDragging = true;
 	lightPosition.x = x;
+	bLightSourceChanged = true;
 }
 
 //--------------------------------------------------------------
@@ -458,10 +500,9 @@ void testApp::windowResized(int w, int h){
 	}
 	
 }
+
 //--------------------------------------------------------------
 void testApp::grabMatrices(GLenum gl_textureTarget){
-	static double modelView[16];
-	static double projection[16];
 	
 	// Moving from unit cube [-1,1] to [0,1]
 	const GLdouble bias[16] = { 
@@ -471,8 +512,11 @@ void testApp::grabMatrices(GLenum gl_textureTarget){
 		0.5, 0.5, 0.5, 1.0};
 	
 	// Grab modelview and transformation matrices
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelView); 
-	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	if (bLightSourceChanged){
+		glGetDoublev(GL_MODELVIEW_MATRIX, shadowModelView); 
+		glGetFloatv(GL_MODELVIEW_MATRIX, shadowModelViewFloat); 
+		glGetDoublev(GL_PROJECTION_MATRIX, shadowProjection);
+	}
 	
 	glMatrixMode(GL_TEXTURE);
 	glActiveTextureARB(gl_textureTarget);
@@ -480,49 +524,11 @@ void testApp::grabMatrices(GLenum gl_textureTarget){
 	glLoadMatrixd(bias);
 	
 	// concatating all matrices into one. 
-	glMultMatrixd (projection);
-	glMultMatrixd (modelView);	
+	glMultMatrixd (shadowProjection);
+	glMultMatrixd (shadowModelView);	
 	
 	// Go back to normal matrix mode 
 	glMatrixMode(GL_MODELVIEW);
-}
-
-//--------------------------------------------------------------
-void testApp::setOrthographicProjection(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
-	
-	glMatrixMode(GL_PROJECTION);// switch to projection mode	
-	glPushMatrix();// save previous matrix which contains the settings for the perspective projection	
-	glLoadIdentity();// reset matrix	
-	glOrtho( xMin, xMax, yMin, yMax, zMin, zMax);// set a 2D orthographic projection//gluOrtho2D(0, w, 0, h);	
-	glScalef(1, -1, 1);	// invert the y axis, down is positive
-	glTranslatef(0, -yMax, 0);// mover the origin from the bottom left corner to the upper left corner
-	glMatrixMode(GL_MODELVIEW);	
-	glLoadIdentity();
-	glPopMatrix();
-}
-//--------------------------------------------------------------
-void testApp::drawTex(int x, int y, int w, int h){
-	glNormal3f(0.0, 0.0, 1.0);
-	ofSetColor(255,255,255);
-	glBegin(GL_QUADS);	
-	
-	//glTexCoord2f(0.0, 1.0);
-	glTexCoord2f(0.0, 1.0);
-	glVertex2f(x, y);	
-	
-	//glTexCoord2f(1.0, 1.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex2f(x+w, y);	
-	
-	//glTexCoord2f(1.0, 0.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex2f(x+w, y+h);	
-	
-	//glTexCoord2f(0.0, 0.0);
-	glTexCoord2f(0.0, 0.0);
-	glVertex2f(x, y+h);	
-	
-	glEnd();		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -631,8 +637,8 @@ void testApp::setupConveyorMesh(){
 	refPoses.resize(numCVs);
 	refPoses[0].set(0, 0.99, 0);
 	refPoses[1].set(0, 1.03782, 0);
-	refPoses[2].set(0, 1.15437, 0.0157448);
-	refPoses[3].set(0, 1.18961, 0.130563);
+	refPoses[2].set(0, 1.15437, 0);//0.0157448);
+	refPoses[3].set(0, 1.18961, 0);//0.130563);
 	refPoses[4].set(0, 1.09218, 0.181413);
 	refPoses[5].set(0, 0.986734, 0.191166);
 	refPoses[6].set(0, 0.881457, 0.19796);
@@ -646,9 +652,10 @@ void testApp::setupConveyorMesh(){
 	refPoses[14].set(0, 0.0421618, 0.0801633);
 	refPoses[15].set(0, 0, 0.0206706);
 	refPoses[16].set(0, 0.155657, 0.00257276);
-	refPoses[17].set(0, 0.955657, 0);	
+	refPoses[17].set(0, 0.955657, 0);
 	
 	float xStep = ofGetWidth()/float(numCurves);
+	
 	float yStep = float (ofGetHeight())/float(numCVs);
 	curves.reserve(numCurves);
 	curves.resize(numCurves);
@@ -672,18 +679,17 @@ void testApp::setupConveyorMesh(){
 	}
 	conveyorScale.set(1.0, 1.0, 1.0);//freezes currnt scale at 1.0
 	
-	//scaleConveyor(1, ofxVec3f(1,1,1.05));
-	//scaleConveyor(2, ofxVec3f(1,1,1.185));
-	//scaleConveyor(3, ofxVec3f(1,1,1.21));
-	//scaleConveyor(4, ofxVec3f(1,1,1.185));
-	//scaleConveyor(5, ofxVec3f(1,1,1.05));
-	
 	meshNodes.reserve(numSubdivisions*numCurves);
 	meshNodes.resize(numSubdivisions*numCurves);	
 	vertices.reserve(numSubdivisions*numCurves);	
 	vertices.resize(numSubdivisions*numCurves);
 	sweetSpot.resize(numCurves);	
 	sweetSpotPos.resize(numCurves);	
+	
+	for (int i=0; i<numSubdivisions*numCurves; i++){
+		emitPoints.push_back(ofPoint(0,0));
+	};
+	
 	for(int i=0; i<numCurves;i++){
 		for(int j=0; j<numSubdivisions;j++){
 			float uVal = float(j)/float(numSubdivisions-1);
@@ -693,6 +699,7 @@ void testApp::setupConveyorMesh(){
 			meshNodes[i*numSubdivisions + j].setup(uVal,
 												   &curves[i],
 												   &vertices[i*numSubdivisions+j].pos);
+			emitPoints[i].x = meshNodes[i*numSubdivisions + j].pos.x;
 		}
 		
 		sweetSpot[i].setup(.125, &curves[i], &sweetSpotPos[i]);
@@ -724,16 +731,30 @@ void testApp::scaleConveyorY(float scale){
 			
 			curves[i].moveCV(j, cvPos );
 			if (cvPos.y > maxY) maxY = cvPos.y;
-			//curves[i].addCV(curX,//i*xStep+xStep/2,
-			//				refPoses[j].y * conveyorScale.y + conveyorYoffset,//sin(float(j)/float(numCVs))*300+ofGetHeight()*.5,
-			//				refPoses[j].z * conveyorScale.z);//cos(float(j)/float(numCVs))*300);
-//
-//			curX += ROW_SPACING;
 		}		
 	}
+	
+	//reset ceiling
+	
 	conveyorScale.y = scale;
 	ceiling = conveyorYoffset + conveyorScale.y;
 	particleManager->setCeiling(maxY);
+	
+	
+	//reset texture coords of image
+	
+	float yImgScale = numCurves+numCurves*scale;	
+	float xImgScale = numSubdivisions+numSubdivisions*scale;
+	
+	for(int i=0; i<numCurves;i++){
+		for(int j=0; j<numSubdivisions;j++){
+			float uVal = float(j)/float(xImgScale-1);
+			vertices[i*numSubdivisions + j].u = uVal;
+			vertices[i*numSubdivisions + j].v = float(i)/float(yImgScale-1);
+		}
+	}
+	
+	uIncrement = fmax(0.01, scale/500.0f);
 	
 	//advance all the mesh nodes
 	for(int i=0;i<meshNodes.size();i++){
@@ -751,9 +772,12 @@ void testApp::scaleConveyorY(float scale){
 		if(meshNodes[i].uPos >1.0)	meshNodes[i].uPos -= 1.0;
 		if(meshNodes[i].uPos <0.0)	meshNodes[i].uPos += 1.0;
 		meshNodes[i].update();
+		emitPoints[i].x = meshNodes[i].pos.x;
+		
 	}
 	
 	//set stack position and rotation
+	cout<<refVerts.size()<<endl;
 	for(int i=refVerts.size()-1; i>=0;i--){
 		stacks[i].setPosition(vertices[refVerts[i]].pos);
 		//find rotation degree
@@ -762,6 +786,7 @@ void testApp::scaleConveyorY(float scale){
 		stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
 		//set axis perpendicular to normal
 	}
+	
 }
 
 int testApp::getVertPointer(int curveIndex, float uPos){

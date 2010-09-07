@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <results>
     <checkin>
-        <person_name>Michael B.</person_name>
+        <person_name>Kyle</person_name>
         <venue_name>New York Penn Station</venue_name>
-        <timestamp>1283820402</timestamp>
+        <timestamp>1283898930</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Nicole T.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283897395</timestamp>
     </checkin>
 </results>

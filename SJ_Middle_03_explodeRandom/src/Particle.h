@@ -541,7 +541,7 @@ public:
 				
 		// UPDATE VELOCITY + ACCELERATION
 		
-		if (index != 0 || !bLeaving)
+		if (index != 0 && !bLeaving || !bLeaving)
 			vel += acc;
 		else if (index == 0 && bLeaving){
 			vel.y = -minSpeed;
@@ -553,7 +553,7 @@ public:
 		
 		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
 		
-		if ((!bLeaving || bSend) || index == 0){
+		if ((!bLeaving) || index == 0){
 			pos += vel;
 			
 			// UPDATE POSITION: FOLLOWER PARTICLE THAT IS CLICKED INTO PLACE

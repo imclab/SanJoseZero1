@@ -19,6 +19,7 @@ public:
 	
 	string name, messageString;	
 	string searchUrl, latestTweet;
+	string lastTime;
 	
 /***********************************************************
 	CONSTRUCTOR + SETUP
@@ -72,6 +73,7 @@ public:
 		
 		debugString += "last id sent = "+lastID+"\n";
 		debugString += "last id received = "+lastIDReceived+"\n";
+		debugString += "last sent at "+lastTime+"\n";
 		debugString += latestTweet+"\n";
 		if (hashTags.size() > 0) debugString += "\nsearching tags:\n";
 			
@@ -142,8 +144,6 @@ public:
 			
 		//get at replies
 		} else {
-			
-			ofxHttpForm form;
 			form.action = searchUrl;  //"http:www.plug-in-play.com/testing5.php";
 			form.method = OFX_HTTP_POST;
 			
@@ -201,7 +201,7 @@ public:
 				cout<<"no tweets!"<<endl;
 			}
 			
-			dummyRespose.popTag();
+			//dummyRespose.popTag();
 			
 		}
 	};
@@ -236,8 +236,7 @@ public:
 		
 		bool bHasResults = xmlResponse.pushTag("results");{
 			if (!bHasResults) return;
-					
-			string type_of_result = xmlResponse.getAttribute("tweet","type","",curTweet);
+			
 			bool bCurTweetExists = xmlResponse.pushTag("tweet",curTweet);
 			
 				if (!bCurTweetExists) return;
@@ -248,6 +247,7 @@ public:
 				sender->sendMessage(m);	
 			
 			latestTweet = xmlResponse.getValue("user_name","null") +" : "+xmlResponse.getValue("content","null");
+			lastTime = ofToString(ofGetMonth())+"/"+ofToString(ofGetDay())+" "+ofToString(ofGetHours())+":"+ofToString(ofGetMinutes());
 								
 			xmlResponse.popTag();
 		} xmlResponse.popTag();

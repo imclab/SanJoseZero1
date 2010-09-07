@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <results>
     <photo>
-        <user_id>trumpeterny</user_id>
+        <user_id>luka_bracki</user_id>
         <title>
-            <![CDATA[198]]>
+            <![CDATA[gET mORE nY by crooleek]]>
 </title>
         <link>
-            <![CDATA[http://farm5.static.flickr.com/4083/4965622547_d17f5d876f.jpg]]>
+            <![CDATA[http://farm5.static.flickr.com/4150/4968702857_45eab53974.jpg]]>
 </link>
-        <timestamp>1283822729</timestamp>
+        <timestamp>1283899710</timestamp>
+    </photo>
+    <photo>
+        <user_id>TW Collins</user_id>
+        <title>
+            <![CDATA[somebody's nobody]]>
+</title>
+        <link>
+            <![CDATA[http://farm5.static.flickr.com/4131/4968697813_9c0a90d172.jpg]]>
+</link>
+        <timestamp>1283899588</timestamp>
+    </photo>
+    <photo>
+        <user_id>staticsilence</user_id>
+        <title>
+            <![CDATA[T-Model Ford]]>
+</title>
+        <link>
+            <![CDATA[http://farm5.static.flickr.com/4151/4968694283_eda0b0d669.jpg]]>
+</link>
+        <timestamp>1283899504</timestamp>
+    </photo>
+    <photo>
+        <user_id>Hugo Lafitte</user_id>
+        <title>
+            <![CDATA[Trapped in NYC]]>
+</title>
+        <link>
+            <![CDATA[http://farm5.static.flickr.com/4088/4968693385_f49c55ca29.jpg]]>
+</link>
+        <timestamp>1283899482</timestamp>
     </photo>
 </results>
