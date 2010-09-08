@@ -172,7 +172,7 @@ public:
 	void draw(){
 		
 		ofEnableAlphaBlending();
-		if (!bDrawCrop){
+		//if (!bDrawCrop){
 			if (!bMoving) texture.bind();
 			else ofSetColor(255,255,0);
 			
@@ -239,7 +239,7 @@ public:
 				overlays[i]->render();
 				overlays[i]->draw();
 			};
-		}
+		//}
 			
 		float squareWidth = 10;
 		

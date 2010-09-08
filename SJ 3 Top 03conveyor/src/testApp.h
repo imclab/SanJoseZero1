@@ -21,6 +21,8 @@ struct vert{
 	float u,v;
 };
 
+#define NUM_DRAW_MODES 6
+
 class testApp : public ofBaseApp{
 
 	public:
@@ -38,9 +40,17 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 	
 	//calibration
+		int drawMode;
 		ofxLabProjectionTools projection;
 		bool bDrawCurves;
 		bool bInited;
+		void setupGui();
+		bool bWindowResized;
+	
+	//  settings
+		void loadSettings();
+		bool bSaveSettings;
+		void saveSettings();
 	
 	//LIGHTING
 		ofxVec3f lightPosition;

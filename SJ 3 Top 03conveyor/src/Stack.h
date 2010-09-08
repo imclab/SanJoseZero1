@@ -54,6 +54,7 @@ public:
 	
 	void update(){
 		height = 0;
+		
 		for (int i=0; i<buildings.size(); i++){
 			height += buildings[i]->getHeight();
 			width = fmax(width, buildings[i]->getWidth());

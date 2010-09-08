@@ -27,7 +27,7 @@ public:
 		//setup different building types
 		
 		ofxXmlSettings settings;
-		settings.loadFile("settings.xml");
+		settings.loadFile("settings/settings.xml");
 		settings.pushTag("settings");
 		
 		int numReceivers = settings.getNumTags("input");

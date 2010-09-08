@@ -300,45 +300,6 @@
             <x>672.000000</x>
             <y>1338.000000</y>
         </position>
-		<message>
-            <image>models/picnic/picnic01.3ds</image>
-            <messageString>/pluginplay/picnictable/1</messageString>
-            <color>
-                <r>51</r>
-                <g>255</g>
-                <b>242</b>
-            </color>
-        </message>
-        <position>
-            <x>672.000000</x>
-            <y>1338.000000</y>
-        </position>
-		<message>
-            <image>models/picnic/picnic02.3ds</image>
-            <messageString>/pluginplay/picnictable/2</messageString>
-            <color>
-                <r>51</r>
-                <g>255</g>
-                <b>242</b>
-            </color>
-        </message>
-        <position>
-            <x>672.000000</x>
-            <y>1338.000000</y>
-        </position>		
-		<message>
-            <image>models/picnic/picnic03.3ds</image>
-            <messageString>/pluginplay/picnictable/3</messageString>
-            <color>
-                <r>51</r>
-                <g>255</g>
-                <b>242</b>
-            </color>
-        </message>
-        <position>
-            <x>672.000000</x>
-            <y>1338.000000</y>
-        </position>
     </input>
     <input>
         <name>playground</name>
@@ -368,7 +329,7 @@
             </color>
         </message>
         <message>
-            <image>models/signal/signal_02.3ds</image>
+            <image>models/signal/signal_01.3ds</image>
             <messageString>/pluginplay/signal_01</messageString>
             <color>
                 <r>255</r>
@@ -377,7 +338,7 @@
             </color>
         </message>
         <message>
-            <image>models/signal/signal_03.3ds</image>
+            <image>models/signal/signal_02.3ds</image>
             <messageString>/pluginplay/signal_02</messageString>
             <color>
                 <r>62</r>
@@ -405,9 +366,9 @@
             <image>models/twitter/twitter_01.3DS</image>
             <messageString>/pluginplay/twitter/search</messageString>
             <color>
-                <r>49</r>
-                <g>144</g>
-                <b>210</b>
+                <r>0</r>
+                <g>0</g>
+                <b>255</b>
             </color>
         </message>
         <position>
@@ -433,23 +394,28 @@
     </input>
     <osc>
         <receiver>
-            <port>12000</port>
-        </receiver>
-        <calibrationReceiver>
-            <port>12010</port>
-        </calibrationReceiver>
-        <sender>
-            <host>localhost</host>
             <port>12001</port>
-        </sender>
+        </receiver>
+        <loggerSender>
+            <host>localhost</host>
+            <port>12005</port>
+        </loggerSender>
+        <calibrationSender>
+            <host>localhost</host>
+            <port>12010</port>
+        </calibrationSender>
     </osc>
-    <transform>
-        <start>1123.000000</start>
-        <end>372.000000</end>
-    </transform>
-    <columns>
-        <numColums>10</numColums>
-        <spacing>105.000305</spacing>
-        <border>52.500153</border>
-    </columns>
+    <conveyor>
+        <conveyorScaleY>2.000000</conveyorScaleY>
+        <rowCount>18</rowCount>
+        <rowBuffer>10.000000</rowBuffer>
+        <uIncrement>0.005000</uIncrement>
+    </conveyor>
+    <light>
+        <position>
+            <x>204.000000</x>
+            <y>840.000000</y>
+            <z>2520.000000</z>
+        </position>
+    </light>
 </settings>

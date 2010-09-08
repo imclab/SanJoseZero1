@@ -1,53 +1,28 @@
 #include "testApp.h"
 
-//--------------------------------------------------------------
+// settings vars
+
+float conveyorScaleY;
+
+/*********************************************************************************
+	SETUP
+*********************************************************************************/
+
 void testApp::setup(){
 	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
 	ofSetFrameRate(120);
+	ofHideCursor();
 	ofDisableArbTex();
 	
-	//lights
+	//*** LIGHTS ************************************************
+	
 	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
-	ofxMaterialShininess(128); //how concentrated the reflexion will be (between 0 and 128
+	ofxMaterialShininess(30); //how concentrated the reflexion will be (between 0 and 128
 	
-	//each light will emit white reflexions
-	//light1.ambient(50,50,50);
-	light1.diffuse(255, 255, 255);
-	light2.diffuse(255, 255, 255);
-	light3.diffuse(255, 255, 255);
+	//*** SCREEN MATRIX ************************************************
 	
-	float L1DirectionX = .5;
-	float L1DirectionY = 1;
-	float L1DirectionZ = 0;
-	
-	light1.directionalLight(255, 255, 255, L1DirectionX, L1DirectionY, L1DirectionZ);
-	
-	//light2
-	float L2ConeAngle = 90;
-	float L2Concentration = 60;
-	float L2PosX = ofGetWidth()/2.0f;
-	float L2PosY = 0;
-	float L2PosZ = 500;
-	float L2DirectionX = 0;
-	float L2DirectionY = 0;
-	float L2DirectionZ = 1;
-	
-	
-	light2.spotLight(255, 255, 255, 
-					 L2PosX, L2PosY, L2PosZ, 
-					 L2DirectionX, L2DirectionY, L2DirectionZ,
-					 L2ConeAngle,
-					 L2Concentration);
-	
-	//light3
-	float L3PosX = ofGetWidth()/2.0;
-	float L3PosY = 0;
-	float L3PosZ = 500;
-	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
-	
-	//set screen vars
 	screenWidth = ofGetWidth();
 	screenHeight = ofGetHeight();		
 	screenFov 		= 60.0f; //adjust this to alter the perspective
@@ -61,13 +36,15 @@ void testApp::setup(){
 	farDist		= dist * 50.0;
 	aspect 			= (float)screenWidth/(float)screenHeight;
 	
-	//shaders
+	//*** SHADERS ************************************************
+	
 	depthShader.setup("shaders/depthShader");
 	shadowShader.setup("shaders/shadow");	
 	simpleTex.setup("shaders/facingRatio");	
 	simpleTex.setUniform("inTex", 0);
 	
-	//fbo
+	//*** FBO + DEPTH ************************************************
+	
 	//fbo.allocate(2048, 2048, GL_RGBA, 4);
 	fbo.allocate(2048, 2048, true);//using older FBO version for the time being
 	//fbo.allocate(1024, 1024, true);//using older FBO version for the time being
@@ -81,56 +58,48 @@ void testApp::setup(){
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
     glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
 	
-	//ceiling mesh	
+	//*** BASE VARS ************************************************
+	
 	numCurves = NUMBER_OF_ROWS;//number of stacks per row + 2(border)
 	numCVs = 18;
 	numSubdivisions = 25;
-	
 	uIncrement = .02; //this gets added to advance mesh verts and stack positions. added to uVal per frame
-		
+	
+	lightPosition.x = projection.getView(0)->width;
+	lightPosition.y = projection.getView(0)->height*.5;
+	lightPosition.z = projection.getView(0)->height*1.5;
+	bLightSourceChanged = true;
+	
 	fCounter = 0.0;
 	wireFrame = false;
 	bDrawCurves = false;
 	bDragging = false;
 	fullScreenStarted = ofGetElapsedTimeMillis();
 	fullScreenWaitTime = 5000;
+		
+	//*** CALIBRATION ************************************************ 
 	
-	//setup particle manager
+	//setup view if not loaded via xml
+	if (!projection.bSettingsLoaded){
+		projection.addView(0,0,ofGetWidth(), ofGetHeight());
+	}
+	lightPosition.x = projection.getView(0)->width;
+	lightPosition.y = projection.getView(0)->height*.5;
+	lightPosition.z = projection.getView(0)->height*1.5;
+	
+	//setup gui
+	drawMode = 0;
+	setupGui();
+	
+	//load settings from xml
+	loadSettings();
+	
+	//*** BUILD EMITTER ************************************************
+	
 	particleManager = new Emitter(ceiling);
 	particleManager->setAdvanceCeilingBool(&advanceCeiling);
 	
-	//initial settings
-	lightPosition.x = 796;
-	lightPosition.y = ofGetHeight()*.5;
-	lightPosition.z = ofGetHeight()*1.5;
-	bLightSourceChanged = true;
-	string ceilingImagePath = "ceiling.jpg";
-	
-	//load settings from xml
-	ofxXmlSettings settings;
-	settings.loadFile("settings.xml");
-	settings.pushTag("settings");{
-		
-		//get port for receiver
-		int rPort = 12345;
-		rPort = settings.getValue("osc:receiver:port",12001);
-		receiver.setup( rPort );
-		
-		int sPort = 12005;
-		string sHost = "localhost";
-		sPort = settings.getValue("osc:loggerSender:port",sPort);
-		sHost = settings.getValue("osc:loggerSender:host",sHost);		
-		loggerSender.setup(sHost, sPort);
-		
-		int cPort = 12010;
-		string cHost = "localhost";
-		cPort = settings.getValue("osc:calibrationSender:port",cPort);
-		cHost = settings.getValue("osc:calibrationSender:host",cHost);
-		calibrationSender.setup(cHost, cPort);
-		
-	} settings.popTag();
-	
-	// send calibration: # of rows
+	//*** ROW CALIBRATION ************************************************ 
 	ofxOscMessage rowMessage;
 	rowMessage.setAddress("/pluginplay/calibration/numrows");
 	rowMessage.addIntArg((int) NUMBER_OF_ROWS);
@@ -148,20 +117,26 @@ void testApp::setup(){
 	
 	// add listener to send to the logger app
 	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
+		
+	//*** SETUP + SCALE CONVEYOR ************************************************ 
 	
-	ceilingImage.loadImage(ceilingImagePath);
 	setupConveyorMesh();
-	//scaleConveyorY(.5f);
-	cout<<"all set up"<<endl;
+	scaleConveyorY(conveyorScaleY);
 	bInited = true;
+	bWindowResized = true;
+	bSaveSettings = false;
 }
 
-//--------------------------------------------------------------
+/*********************************************************************************
+	UPDATE
+*********************************************************************************/
+
 void testApp::update(){
+
 	//yikes, gross hack
-	if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
+	//if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
 	
-	// check for waiting messages
+	//*** GET EMITTER MESSAGES ************************************************ 
 	while( receiver.hasWaitingMessages() )
 	{
 		// get the next message
@@ -179,10 +154,14 @@ void testApp::update(){
 		}
 	};	
 	
+	//*** NEW VALUES FROM GUI ************************************************ 
+	
+	ofxLabGui * gui = projection.getGui();
+	
 	particleManager->update();
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));
 	
-	// ROTATING!
+	//*** ADVANCE CONVEYOR ************************************************ 
 	
 	if(advanceCeiling){
 		//advance all the mesh nodes
@@ -193,7 +172,7 @@ void testApp::update(){
 		for(int i=refVerts.size()-1; i>=0;i--){
 			if (meshNodes[refVerts[i]].uPos >= 1.0) {
 				refVerts.erase(refVerts.begin()+i);
-				stacks.erase(stacks.begin()+i);
+				if (stacks.size() > i) stacks.erase(stacks.begin()+i);
 			}
 		}
 		//wrap meshnodes that have grown bigger then 1.0 
@@ -206,28 +185,30 @@ void testApp::update(){
 		
 		//set stack position and rotation
 		for(int i=refVerts.size()-1; i>=0;i--){
-			stacks[i].setPosition(vertices[refVerts[i]].pos);
+			if (stacks.size() > i){
+				stacks[i].setPosition(vertices[refVerts[i]].pos);
 			//find rotation degree
-			ofxVec3f upVec(0,1,0);
-			stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
-			stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
+				ofxVec3f upVec(0,1,0);
+				stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;		
+				stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
 												//set axis perpendicular to normal
+			}
 		}
 	}
 	//sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
 	for(int i=0;i<sweetSpot.size();i++){
 		sweetSpot[i].update();
 	}
+		
+	//*** UPDATE ROW SPACING ************************************************ 
 	
 	float oldRowBuffer = ROW_BUFFER;
 	float oldRowSpacing = ROW_SPACING;	
 	
-	ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
+	//ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
 	ROW_SPACING = vertices[getVertPointer(1, sweetSpot[2].uPos)].pos.x - vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x ;
 	
 	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
-	
-	//send calibration if new values exist
 	
 	if (oldRowBuffer != ROW_BUFFER){
 		ofxOscMessage spacerMessage;
@@ -243,25 +224,24 @@ void testApp::update(){
 		calibrationSender.sendMessage(spaceMessage);
 	}
 	
+	//*** LIGHT AND SHADOW SETUP ************************************************ 
+	// RENDER HERE SO WE CAN RENDER OUR WHOLE SCENE TO AN FBO
+	// WITHOUT EFFING UP THE MATRICES
+	
 	calcMeshNormals();
+		
+	if (bSaveSettings) saveSettings();
+};
+
+/*********************************************************************************
+	DRAW
+*********************************************************************************/
+
+void testApp::draw(){	
+	//if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
 	
 	//draw shadow map
-	int w, h;		
-	float halfFov, theTan, screenFov, aspect;
-	
-	w = ofGetWidth();
-	h = ofGetHeight();		
-	screenFov 		= 60.0f; //adjust this to alter the perspective
-	float eyeX 		= (float)w / 2.0;
-	float eyeY 		= (float)h / 2.0;
-	ofxVec3f targetPos(eyeX, eyeX, 205);
-	halfFov 		= PI * screenFov / 360.0;
-	theTan 			= tanf(halfFov);
-	float dist 		= eyeY / theTan;
-	float nearDist		= 150; //dist / 50.0;	// near / far clip plane
-	float farDist		= dist * 50.0;
-	aspect 			= (float)w/(float)h;
-	
+	glPushMatrix();
 	fbo.begin();{
 		//if light source is moved, set up correct matrix to calc
 		//if (bLightSourceChanged){
@@ -276,7 +256,7 @@ void testApp::update(){
 				  0.0, 1.0, 0.0);
 		
 		glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-		glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
+		glTranslatef(0, -screenHeight, 0);       // shift origin up to upper-left corner.
 		//}
 		
 		//draw things
@@ -306,27 +286,9 @@ void testApp::update(){
 		ofDisableAlphaBlending();
 		
 	} fbo.end();
-};
-
-//--------------------------------------------------------------
-void testApp::draw(){	
-	if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
+	glPopMatrix();
 	
-	//set up screen
-	int w, h;		
-	float halfFov, theTan, screenFov, aspect;
-
-	w = ofGetWidth();
-	h = ofGetHeight();		
-	screenFov 		= 60.0f; //adjust this to alter the perspective
-	float eyeX 		= (float)w / 2.0;
-	float eyeY 		= (float)h / 2.0;
-	halfFov 		= PI * screenFov / 360.0;
-	theTan 			= tanf(halfFov);
-	float dist 		= eyeY / theTan;
-	float nearDist		= 150; //dist / 50.0;	// near / far clip plane
-	float farDist		= dist * 50.0;
-	aspect 			= (float)w/(float)h;
+	projection.pushView(0);
 	
 //draw geometry
 	//set camera
@@ -339,8 +301,8 @@ void testApp::draw(){
 	gluLookAt(eyeX, eyeY, dist,
 			  eyeX, eyeY, 0.0,
 			  0.0, 1.0, 0.0);	
-	glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-	glTranslatef(0, -h, 0);       // shift origin up to upper-left corner.
+	//glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+	//glTranslatef(0, -screenHeight, 0);       // shift origin up to upper-left corner.
 	
 	shadowShader.begin();{	
 		shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
@@ -409,22 +371,34 @@ void testApp::draw(){
 	
 	
 	//draw curves
-	
 	if (bDrawCurves){
 		glDisable(GL_DEPTH_TEST);
 		glUseProgram(0);
 		ofSetColor(0, 255, 0);
-		for(int i=0; i<curves.size();i++)
+		for(int i=0; i<curves.size();i++){
 			curves[i].drawWithGluNurbs();
-	
-		float increment = ROW_SPACING;
+		}
+		
+		float curX = ROW_BUFFER + ROW_SPACING;
 		
 		for (int i=0; i<NUMBER_OF_ROWS; i++){
-			ofLine(ROW_BUFFER + i*increment, 0, ROW_BUFFER + i*increment, ofGetHeight());
-			ofCircle(ROW_BUFFER + i*increment, ofGetHeight()-20, 20);
+			ofLine(curX, 0, curX, ofGetHeight());
+			ofCircle(curX, ofGetHeight()-20, 20);
+			curX += ROW_SPACING;
 		};
 	}	
+	projection.popView();
+	ofxLightsOff();
+	ofSetColor(0xffffff);
+	projection.draw();
 }
+
+/*********************************************************************************
+	ROW COMPLETE EVENT
+*********************************************************************************/
+
+// this is where things get forwared to the database 
+// + items get added to stacks
 
 //--------------------------------------------------------------
 void testApp::rowIsComplete( BuildingRow * &completedRow ){
@@ -448,10 +422,14 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		if(completedRow->stacks[i]->buildings.size() >0){
 			stacks.push_back(*completedRow->stacks[i]);
-			refVerts.push_back(getVertPointer(i, sweetSpot[i+1].uPos));
+			refVerts.push_back(getVertPointer(i+1, sweetSpot[i+1].uPos));
 		}
 	}		
 };
+
+/*********************************************************************************
+	 KEY
+*********************************************************************************/
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
@@ -459,25 +437,32 @@ void testApp::keyPressed(int key){
 		//fullScreenStarted = ofGetElapsedTimeMillis();
 		//fullScreenWaitTime = 5000;
 		ofToggleFullscreen();
-	}
-	if(key =='y')	moveConveyorY(1.);
-	if(key =='u')	moveConveyorY(-1.);
-	if (key == 'w'){
+	} else if(key =='y'){
+		moveConveyorY(1.);
+	} else if(key =='u'){
+		moveConveyorY(-1.);
+	} else if (key == 'w'){
 		wireFrame = !wireFrame;
 		
 		//draw wireFrame?
 		if(wireFrame)	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		else	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
+	} /*else if(key == 's'){
+		scaleConveyorY(float(mouseY)/float(projection.getView(0)->width));
+	} */else if (key == 'm'){
+		drawMode++;
+		if (drawMode > NUM_DRAW_MODES-1){
+			drawMode = 0;
+			projection.setMode(0);
+		}
 		
-	if(key == 's'){
-		scaleConveyorY(float(mouseY)/float(1440.0f));
-	}
-	
-	if ( key == '+' ) NUMBER_OF_ROWS++;
-	else if (key == '-'){
-		NUMBER_OF_ROWS--;
-		if (NUMBER_OF_ROWS < 0 )NUMBER_OF_ROWS = 0;
+		projection.setMode(drawMode);
+		cout<<"set draw mode "<<drawMode<<endl;
+		
+	} else if (key == 'e'){
+		particleManager->emitRandom();
+	} else if (key == 's'){
+		saveSettings();
 	}
 }
 
@@ -485,6 +470,10 @@ void testApp::keyPressed(int key){
 void testApp::keyReleased(int key){
 
 }
+
+/*********************************************************************************
+	MOUSE
+*********************************************************************************/
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
@@ -496,12 +485,10 @@ void testApp::mouseDragged(int x, int y, int button){
 	//bDragging = true;
 	lightPosition.x = x;
 	bLightSourceChanged = true;
-	cout<<lightPosition.x<<endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	particleManager->emitRandom();
 }
 
 //--------------------------------------------------------------
@@ -509,9 +496,11 @@ void testApp::mouseReleased(int x, int y, int button){
 	bDragging = false;
 }
 
-//--------------------------------------------------------------
+/*********************************************************************************
+	WINDOW
+*********************************************************************************/
+
 void testApp::windowResized(int w, int h){
-	cout<<"window resized"<<endl;
 	if (!bInited){
 		return;
 	}
@@ -519,30 +508,107 @@ void testApp::windowResized(int w, int h){
 	if (particleManager != NULL){
 		particleManager->windowResized();
 	}	
-	float xStep = w/float(numCurves);
+	float xStep = (h + ROW_SPACING)/float(numCurves);
 	//float yStep = h/float(numCVs);
 	
 	for(int i=0; i<numCurves; i++){
-		moveCurveX(i, i*xStep+xStep/2);
+		moveCurveX(i, i*xStep+ROW_BUFFER);//+xStep/2);
 	}
 	
-	lightPosition.y = ofGetHeight()*.5;
-	lightPosition.z = ofGetHeight()*1.5;
-	
 	//update screen vars
-	screenWidth = ofGetWidth();
-	screenHeight = ofGetHeight();		
+	screenWidth		= w;
+	screenHeight	= h;		
 	screenFov 		= 60.0f; //adjust this to alter the perspective
-	eyeX 		= (float)screenWidth / 2.0;
-	eyeY 		= (float)screenHeight / 2.0;
+	eyeX			= (float)screenWidth / 2.0;
+	eyeY			= (float)screenHeight / 2.0;
 	targetPos.set(eyeX, eyeX, 205);
 	halfFov 		= PI * screenFov / 360.0;
 	theTan 			= tanf(halfFov);
-	dist 		= eyeY / theTan;
+	dist			= eyeY / theTan;
 	nearDist		= 150; //dist / 50.0;	// near / far clip plane
-	farDist		= dist * 50.0;
+	farDist			= dist * 50.0;
 	aspect 			= (float)screenWidth/(float)screenHeight;
+	bLightSourceChanged = true;
+	
 }
+
+
+/*********************************************************************************
+	CALIBRATION
+*********************************************************************************/
+
+//--------------------------------------------------------------
+void testApp::setupGui(){
+	ofxLabGui * gui = projection.getGui();
+	//guiTypePanel * panel = projection.addDefaultPanel("particles");
+	//projection.addDefaultGroup("settings", true);
+	//projection.loadGuiSettings();
+	
+	//gui->setPanelIndex("particles", 0);
+	gui->update();
+	gui->setupOscReceiving(3001);
+};
+
+//--------------------------------------------------------------
+void testApp::loadSettings(){
+	string ceilingImagePath = "_ceiling_huge.jpg";	
+	conveyorScaleY = 1.5f;
+	
+	ofxXmlSettings settings;
+	settings.loadFile("settings/settings.xml");
+	settings.pushTag("settings");{
+		
+		//get port for receiver
+		int rPort = 12001;
+		rPort = settings.getValue("osc:receiver:port",rPort);
+		receiver.setup( rPort );
+		
+		int sPort = 12005;
+		string sHost = "localhost";
+		sPort = settings.getValue("osc:loggerSender:port",sPort);
+		sHost = settings.getValue("osc:loggerSender:host",sHost);		
+		loggerSender.setup(sHost, sPort);
+		
+		int cPort = 12010;
+		string cHost = "localhost";
+		cPort = settings.getValue("osc:calibrationSender:port",cPort);
+		cHost = settings.getValue("osc:calibrationSender:host",cHost);
+		calibrationSender.setup(cHost, cPort);
+		
+		ceilingImagePath = settings.getValue("conveyor:backgroundimage",ceilingImagePath);
+		conveyorScaleY = settings.getValue("conveyor:conveyorScaleY",conveyorScaleY);
+		ROW_BUFFER = settings.getValue("conveyor:rowBuffer",ROW_BUFFER);
+		NUMBER_OF_ROWS = settings.getValue("conveyor:rowCount",NUMBER_OF_ROWS);
+		uIncrement = settings.getValue("conveyor:uIncrement", uIncrement);
+		
+		lightPosition.x = settings.getValue("light:position:x",lightPosition.x);
+		lightPosition.y = settings.getValue("light:position:y",lightPosition.y);
+		lightPosition.z = settings.getValue("light:position:z",lightPosition.z);
+		
+	} settings.popTag();
+
+	ceilingImage.loadImage(ceilingImagePath);
+};
+
+//--------------------------------------------------------------
+
+void testApp::saveSettings(){
+	ofxXmlSettings settings;
+	settings.loadFile("settings/settings.xml");
+	settings.setValue("settings:conveyor:conveyorScaleY",conveyorScaleY);
+	settings.setValue("settings:conveyor:rowBuffer",ROW_BUFFER);
+	settings.setValue("settings:conveyor:rowCount",NUMBER_OF_ROWS);
+	settings.setValue("settings:light:position:x",lightPosition.x);
+	settings.setValue("settings:light:position:y",lightPosition.y);
+	settings.setValue("settings:light:position:z",lightPosition.z);
+	settings.setValue("settings:conveyor:uIncrement", uIncrement);
+	
+	settings.saveFile("settings/settings.xml");
+};
+
+/*********************************************************************************
+	 LARS' 3D UTILS
+*********************************************************************************/
 
 //--------------------------------------------------------------
 void testApp::grabMatrices(GLenum gl_textureTarget){
@@ -555,7 +621,7 @@ void testApp::grabMatrices(GLenum gl_textureTarget){
 		0.5, 0.5, 0.5, 1.0};
 	
 	// Grab modelview and transformation matrices
-	if (bLightSourceChanged || ofGetFrameNum() < 60){
+	if (bLightSourceChanged || ofGetFrameNum() < 120){
 		glGetDoublev(GL_MODELVIEW_MATRIX, shadowModelView); 
 		glGetFloatv(GL_MODELVIEW_MATRIX, shadowModelViewFloat); 
 		glGetDoublev(GL_PROJECTION_MATRIX, shadowProjection);
@@ -615,6 +681,10 @@ void testApp::calcMeshNormals(){
 	}
 }
 
+/*********************************************************************************
+	CONVEYOR RENDERING + UTILS
+*********************************************************************************/
+
 //------------------------------------------------------------------------------------------------
 void testApp::drawConveyorMesh(){
 	//draw faceted
@@ -650,6 +720,7 @@ void testApp::drawConveyorMesh(){
 		
 }
 
+//------------------------------------------------------------------------------------------------
 void testApp::moveConveyorY(float dist){
 	conveyorYoffset += dist;
 	for(int i=0; i<curves.size();i++){
@@ -659,6 +730,9 @@ void testApp::moveConveyorY(float dist){
 	}
 	ceiling = conveyorYoffset + conveyorScale.y;
 }
+
+
+//------------------------------------------------------------------------------------------------
 void testApp::scaleConveyor(int curveIndex, ofxVec3f scaleVal){
 	//for(int i=0; i<curves.size();i++){
 		for(int j=0; j<=curves[curveIndex].numCVs;j++){
@@ -666,6 +740,8 @@ void testApp::scaleConveyor(int curveIndex, ofxVec3f scaleVal){
 		}
 	//}
 }
+
+//------------------------------------------------------------------------------------------------
 void testApp::moveCurveX(int crvIndex, float xPos){
 	if (crvIndex > curves.size()) return;
 	for(int j=0; j<=curves[crvIndex].numCVs;j++){
@@ -675,6 +751,7 @@ void testApp::moveCurveX(int crvIndex, float xPos){
 	}
 }
 
+//------------------------------------------------------------------------------------------------
 void testApp::setupConveyorMesh(){
 	
 	//define posiitons used t0 create curves
@@ -752,6 +829,7 @@ void testApp::setupConveyorMesh(){
 	faceNorms.resize(faceIndices.size()/4);
 }
 
+//------------------------------------------------------------------------------------------------
 void testApp::scaleConveyorY(float scale){
 	scale = fmax(.01, scale);
 	
@@ -789,9 +867,7 @@ void testApp::scaleConveyorY(float scale){
 			vertices[i*numSubdivisions + j].v = float(i)/float(yImgScale-1);
 		}
 	}
-	
-	uIncrement = fmax(0.01, scale/500.0f);
-	
+		
 	//advance all the mesh nodes
 	for(int i=0;i<meshNodes.size();i++){
 		meshNodes[i].uPos += uIncrement;
@@ -800,7 +876,7 @@ void testApp::scaleConveyorY(float scale){
 	for(int i=refVerts.size()-1; i>=0;i--){
 		if (meshNodes[refVerts[i]].uPos >= 1.0) {
 			refVerts.erase(refVerts.begin()+i);
-			stacks.erase(stacks.begin()+i);
+			if (stacks.size() > i) stacks.erase(stacks.begin()+i);
 		}
 	}
 	//wrap meshnodes that have grown bigger then 1.0 
@@ -812,12 +888,14 @@ void testApp::scaleConveyorY(float scale){
 	
 	//set stack position and rotation
 	for(int i=refVerts.size()-1; i>=0;i--){
-		stacks[i].setPosition(vertices[refVerts[i]].pos);
-		//find rotation degree
-		ofxVec3f upVec(0,1,0);
-		stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
-		stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
-		//set axis perpendicular to normal
+		if (stacks.size() > i){
+			stacks[i].setPosition(vertices[refVerts[i]].pos);
+			//find rotation degree
+			ofxVec3f upVec(0,1,0);
+			stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
+			stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
+			//set axis perpendicular to normal
+		}
 	}
 		
 	//sweetSpot.uPos = float(mouseY)/float(ofGetHeight());
@@ -828,12 +906,32 @@ void testApp::scaleConveyorY(float scale){
 	float oldRowBuffer = ROW_BUFFER;
 	float oldRowSpacing = ROW_SPACING;	
 	
-	ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
+	//ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
 	ROW_SPACING = vertices[getVertPointer(1, sweetSpot[2].uPos)].pos.x - vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x ;
 	
 	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
+	
+	//send calibration?
+	
+	if (oldRowBuffer != ROW_BUFFER){
+		ofxOscMessage spacerMessage;
+		spacerMessage.setAddress("/pluginplay/calibration/buffers");
+		spacerMessage.addFloatArg( ROW_BUFFER);
+		calibrationSender.sendMessage(spacerMessage);
+	}
+	
+	if (oldRowSpacing != ROW_SPACING){
+		ofxOscMessage spaceMessage;
+		spaceMessage.setAddress("/pluginplay/calibration/spacing");
+		spaceMessage.addFloatArg( ROW_SPACING);
+		calibrationSender.sendMessage(spaceMessage);
+	}
+	
+	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
+	bSaveSettings = true;
 }
 
+//------------------------------------------------------------------------------------------------
 int testApp::getVertPointer(int curveIndex, float uPos){
 	float u = uPos - meshNodes[curveIndex*numSubdivisions].uPos;
 	if(u > 1.0) u -= 1.0;
@@ -841,6 +939,7 @@ int testApp::getVertPointer(int curveIndex, float uPos){
 	return MIN(curveIndex*numSubdivisions + MIN(int(u*numSubdivisions), numSubdivisions-1), vertices.size()-1);
 }
 
+//------------------------------------------------------------------------------------------------
 void testApp::exit(){
 	delete particleManager;
 	vertices.clear();

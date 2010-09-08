@@ -18,8 +18,8 @@ void testApp::setup(){
 				
 		//get host + port for sender
 		string host = "localhost";
-		host = settings.getValue("osc:sender:host",host);
 		int port = 12001;
+		host = settings.getValue("osc:sender:host",host);
 		port = settings.getValue("osc:sender:port",port);
 		sender.setup(host,port);
 				
