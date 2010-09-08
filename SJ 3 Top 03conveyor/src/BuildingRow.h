@@ -48,6 +48,7 @@ public:
 			s->setPosition(ROW_BUFFER + i*increment, pos.z);
 			stacks.push_back(s);
 		};
+		cout<<"row set up"<<endl;
 	}
 	
 	void setBasePosition( float _pos ){

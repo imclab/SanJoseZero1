@@ -64,8 +64,7 @@ public:
 		ofPushMatrix();{
 			ofTranslate(pos.x, pos.y, pos.z);
 			ofRotate(angle, rotAxis.x, rotAxis.y, rotAxis.z);
-			//ofTranslate(0, buildings[0]->getWidth(), 0);
-			//ofTranslate(0.0, -width, 0.0);
+			
 			for (int i=0; i<buildings.size(); i++){
 				ofPushMatrix();{ //LARS//
 					buildings[i]->draw();

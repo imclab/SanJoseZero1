@@ -27,6 +27,7 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void exit();
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
@@ -39,6 +40,7 @@ class testApp : public ofBaseApp{
 	//calibration
 		ofxLabProjectionTools projection;
 		bool bDrawCurves;
+		bool bInited;
 	
 	//LIGHTING
 		ofxVec3f lightPosition;
@@ -67,8 +69,31 @@ class testApp : public ofBaseApp{
 		
 		//logging stuff
 		void rowIsComplete( BuildingRow * &completedRow);
+		
+		
+		bool advanceCeiling;
+		bool wireFrame;
+		ofImage randImage;
+		
+		vector <pointOnCurveNode> sweetSpot;
+		vector <ofxVec3f> sweetSpotPos;
+		
+		bool isCeilingAdvenced;
+		
+		ofxVec3f conveyorScale;
+		float conveyorYoffset;
+		float ceiling;
+		
+		//cached matrices
+		
+		double shadowModelView[16];
+		float shadowModelViewFloat[16];
+		double shadowProjection[16];
 	
 	private:
+		//band-aid vars
+		int fullScreenWaitTime, fullScreenStarted;
+	
 		ofxOscReceiver	receiver;
 		ofxOscSender	loggerSender;
 		ofxOscSender	calibrationSender;
@@ -105,6 +130,17 @@ class testApp : public ofBaseApp{
 		//lars biuldings
 		vector <Stack> stacks;
 		vector <int> refVerts;
+	
+		//screen vars
+		int screenWidth, screenHeight;		
+		float halfFov, theTan, screenFov, aspect;
+	
+		float eyeX;
+		float eyeY;
+		float dist;
+		float nearDist; //dist / 50.0;	// near / far clip plane
+		float farDist;
+		ofxVec3f targetPos;
 	
 };
 
