@@ -10,7 +10,7 @@
 #pragma once
 
 #define EMITTER_TIME 0
-#define ROTATE_TIME 2000
+#define ROTATE_TIME 500
 #define ROTATE_AMOUNT 10
 #define ROTATE_INCREMENT 1
 

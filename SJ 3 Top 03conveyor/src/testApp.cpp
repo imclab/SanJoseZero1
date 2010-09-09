@@ -125,6 +125,7 @@ void testApp::setup(){
 	bInited = true;
 	bWindowResized = true;
 	bSaveSettings = false;
+	lastEmitted = 0;
 }
 
 /*********************************************************************************
@@ -132,7 +133,11 @@ void testApp::setup(){
 *********************************************************************************/
 
 void testApp::update(){
-
+	if ( ofGetElapsedTimeMillis() - lastEmitted > 200){
+		lastEmitted = ofGetElapsedTimeMillis();
+		//particleManager->emitRandom();
+	}
+	
 	//yikes, gross hack
 	//if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
 	
@@ -177,8 +182,12 @@ void testApp::update(){
 		}
 		//wrap meshnodes that have grown bigger then 1.0 
 		for(int i=0;i<meshNodes.size();i++){
-			if(meshNodes[i].uPos >1.0)	meshNodes[i].uPos -= 1.0;
-			if(meshNodes[i].uPos <0.0)	meshNodes[i].uPos += 1.0;
+			if(meshNodes[i].uPos >1.0){
+				meshNodes[i].uPos -= 1.0;
+			}
+			if(meshNodes[i].uPos <0.0){
+				meshNodes[i].uPos += 1.0;
+			}
 			meshNodes[i].update();
 		}
 		
@@ -189,9 +198,17 @@ void testApp::update(){
 				stacks[i].setPosition(vertices[refVerts[i]].pos);
 			//find rotation degree
 				ofxVec3f upVec(0,1,0);
-				stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;		
-				stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
-												//set axis perpendicular to normal
+				float angle = upVec.angle(vertices[refVerts[i]].norm) - 90;
+				
+				if (vertices[refVerts[i]].norm.z < 0){
+					angle += 180;
+					angle *= -1;
+				}
+				
+				stacks[i].lastAngle = angle;
+				stacks[i].angle = angle;
+								
+				stacks[i].rotAxis = ofxVec3f(1/*vertices[refVerts[i]].norm.y*/,0,0);
 			}
 		}
 	}
@@ -421,6 +438,7 @@ void testApp::rowIsComplete( BuildingRow * &completedRow ){
 	//Lars
 	for (int i=0; i<completedRow->stacks.size(); i++){
 		if(completedRow->stacks[i]->buildings.size() >0){
+			completedRow->stacks[i]->angle = -270;
 			stacks.push_back(*completedRow->stacks[i]);
 			refVerts.push_back(getVertPointer(i+1, sweetSpot[i+1].uPos));
 		}
@@ -482,7 +500,7 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	//bDragging = true;
+	bDragging = true;
 	lightPosition.x = x;
 	bLightSourceChanged = true;
 }
@@ -553,6 +571,7 @@ void testApp::setupGui(){
 void testApp::loadSettings(){
 	string ceilingImagePath = "_ceiling_huge.jpg";	
 	conveyorScaleY = 1.5f;
+	conveyorY = 135;
 	
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
@@ -580,6 +599,7 @@ void testApp::loadSettings(){
 		ROW_BUFFER = settings.getValue("conveyor:rowBuffer",ROW_BUFFER);
 		NUMBER_OF_ROWS = settings.getValue("conveyor:rowCount",NUMBER_OF_ROWS);
 		uIncrement = settings.getValue("conveyor:uIncrement", uIncrement);
+		conveyorY = settings.getValue("conveyor:conveyorY", conveyorY);
 		
 		lightPosition.x = settings.getValue("light:position:x",lightPosition.x);
 		lightPosition.y = settings.getValue("light:position:y",lightPosition.y);
@@ -598,6 +618,7 @@ void testApp::saveSettings(){
 	settings.setValue("settings:conveyor:conveyorScaleY",conveyorScaleY);
 	settings.setValue("settings:conveyor:rowBuffer",ROW_BUFFER);
 	settings.setValue("settings:conveyor:rowCount",NUMBER_OF_ROWS);
+	settings.setValue("settings:conveyor:conveyorY", conveyorY);
 	settings.setValue("settings:light:position:x",lightPosition.x);
 	settings.setValue("settings:light:position:y",lightPosition.y);
 	settings.setValue("settings:light:position:z",lightPosition.z);
@@ -709,7 +730,7 @@ void testApp::drawConveyorMesh(){
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
 	glVertexPointer( 3, GL_FLOAT, sizeof(vertices[0]), &vertices[0].pos.x );
-	glNormalPointer(GL_FLOAT, sizeof(vertices[0]), &vertices[0].norm.x );
+	glNormalPointer( GL_FLOAT, sizeof(vertices[0]), &vertices[0].norm.x );
 	glTexCoordPointer( 2, GL_FLOAT, sizeof(vertices[0]), &vertices[0].u );
 	
 	glDrawElements(GL_QUADS, faceIndices.size(), GL_UNSIGNED_INT, &faceIndices[0]);
@@ -717,7 +738,16 @@ void testApp::drawConveyorMesh(){
 	glDisableClientState( GL_VERTEX_ARRAY );
 	glDisableClientState( GL_NORMAL_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-		
+	
+	bool bDebugNormals = false;
+	if (bDebugNormals){		
+		glBegin(GL_LINES);
+		for (int i=0; i<vertices.size(); i++){
+			glVertex3f(vertices[i].pos.x, vertices[i].pos.y, vertices[i].pos.z);
+			glVertex3f(vertices[i].pos.x+vertices[i].norm.x*100.0f, vertices[i].pos.y+vertices[i].norm.y*100.0f, vertices[i].pos.z+vertices[i].norm.z*100.0f);
+		};
+		glEnd();
+	}		
 }
 
 //------------------------------------------------------------------------------------------------
@@ -759,7 +789,8 @@ void testApp::setupConveyorMesh(){
 	refPoses[0].set(0, 0.99, 0);
 	refPoses[1].set(0, 1.03782, 0);
 	refPoses[2].set(0, 1.15437, 0);//0.0157448);
-	refPoses[3].set(0, 1.18961, 0);//0.130563);
+	refPoses[3].set(0, 1.09218, 0.130563);
+	//refPoses[3].set(0, 1.18961, 0.130563);
 	refPoses[4].set(0, 1.09218, 0.181413);
 	refPoses[5].set(0, 0.986734, 0.191166);
 	refPoses[6].set(0, 0.881457, 0.19796);
@@ -779,7 +810,7 @@ void testApp::setupConveyorMesh(){
 	float yStep = float (ofGetHeight())/float(numCVs);
 	curves.reserve(numCurves);
 	curves.resize(numCurves);
-	conveyorYoffset = 135;
+	conveyorYoffset = conveyorY;
 	
 	float curX = ROW_BUFFER;
 	conveyorScale.set(1.0, ofGetHeight()*.5, 1000.0);
@@ -893,7 +924,7 @@ void testApp::scaleConveyorY(float scale){
 			//find rotation degree
 			ofxVec3f upVec(0,1,0);
 			stacks[i].angle = upVec.angle(vertices[refVerts[i]].norm) - 90;				
-			stacks[i].rotAxis = ofxVec3f(1,0,0);//if we deform the surface more we need to 
+			stacks[i].rotAxis = ofxVec3f(1/*vertices[refVerts[i]].norm.y*/,0,0);//if we deform the surface more we need to 
 			//set axis perpendicular to normal
 		}
 	}

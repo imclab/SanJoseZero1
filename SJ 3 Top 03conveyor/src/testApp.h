@@ -40,12 +40,15 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 	
 	//calibration
+		int lastEmitted;
+	
 		int drawMode;
 		ofxLabProjectionTools projection;
 		bool bDrawCurves;
 		bool bInited;
 		void setupGui();
 		bool bWindowResized;
+		float conveyorY;
 	
 	//  settings
 		void loadSettings();

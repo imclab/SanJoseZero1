@@ -410,10 +410,11 @@
         <rowCount>18</rowCount>
         <rowBuffer>10.000000</rowBuffer>
         <uIncrement>0.005000</uIncrement>
+        <conveyorY>135.000000</conveyorY>
     </conveyor>
     <light>
         <position>
-            <x>204.000000</x>
+            <x>841.000000</x>
             <y>840.000000</y>
             <z>2520.000000</z>
         </position>
