@@ -159,6 +159,10 @@ public:
 			part->setTransformEnd(transformEnd);
 			part->setMinScale(minScale);
 			part->setMaxScale(maxScale);
+			
+			part->setMinSpeed(minSpeed);
+			part->setMaxSpeed(maxSpeed);
+			
 			part->setModel(type->getModel(index));
 			part->setType(type);
 			//part->setEndPoint(columns->getClosestColumn(type->getPosition().x)->x, columns->getClosestColumn(type->getPosition().x)->y);
@@ -245,7 +249,32 @@ public:
 		}
 	};	
 		
+	void setMinSpeed( float _minspeed ){
+		bool bNew = ( minSpeed != _minspeed );
+		if (!bNew) return;
+		
+		minSpeed = _minspeed;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMinSpeed(minSpeed);
+		};		
+	};
+	
+	void setMaxSpeed( float _maxspeed ){
+		bool bNew = ( maxSpeed != _maxspeed );
+		if (!bNew) return;
+		
+		maxSpeed = _maxspeed;
+		
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setMaxSpeed(maxSpeed);
+		};		
+	};
+		
 	void setMinScale( float _minscale ){
+		bool bNew = minScale != _minscale;
+		if (!bNew) return;
+		
 		minScale = _minscale;
 		
 		for (int i=0; i<particles.size(); i++){
@@ -384,5 +413,6 @@ private:
 	float transformStart;
 	float transformEnd;
 	float minScale, maxScale;
+	float minSpeed, maxSpeed;
 	
 };

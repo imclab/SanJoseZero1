@@ -12,7 +12,6 @@
 phyParticleSystem::phyParticleSystem(Emitter * _emitter)
 {
 	emitter = _emitter;
-	//trailTex.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 }
 
 
@@ -46,35 +45,11 @@ void phyParticleSystem::update()
 			delete l;
 		}
 	}
-	/*trailTex.begin();
-	ofSetColor(0,0,0,5);
-	ofRect(0,0,trailTex.getWidth(), trailTex.getHeight());
-	ofSetColor(0xffffff);
-	for (int i=0; i<explosions.size(); i++){
-		explosions[i]->draw();
-	}
-	ofxLightsOn();
-	glEnable(GL_DEPTH_TEST);
-	for (int i=0; i<particles.size(); i++){
-		if (particles[i]->bAlive){
-			particles[i]->draw();
-		}
-	};
-	glDisable(GL_DEPTH_TEST);
-	trailTex.end();	
-	ofxLightsOff();
-	 */
 }
 
 
 void phyParticleSystem::draw()
 {
-	/*
-	glDisable(GL_DEPTH_TEST);
-	ofSetColor(0xffffff);
-	ofxLightsOff();
-	trailTex.draw(0,0);
-	*/
 	ofEnableAlphaBlending();
 	
 	glDisable(GL_DEPTH_TEST);
@@ -115,7 +90,9 @@ void phyParticleSystem::explode( Particle * particle ){
 		
 		angle += angleAdd;
 		
-		particle->targetScale *= 1.03f;
+		particle->targetScale *= ofRandom(1.01, 1.05f);
+		particle->rotation += ofRandom(-60,60);
+		particle->vel *= -2;
 		
 		p->setInitialCondition(particle->getLoc().x, particle->getLoc().y, particle->getLoc().z, aVel.x, aVel.y, ofRandom(-5.0f, 5.0f));
 		p->setColor(particle->color);

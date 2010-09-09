@@ -18,11 +18,6 @@
 #include "ParticleTrails.h"
 #include "phyParticleSystem.h"
 
-//#define FLUID_EFFECT_SYSTEM
-#ifdef FLUID_EFFECT_SYSTEM
-#include "EffectsSystem.h"
-#endif
-
 #include "Columns.h"
 
 enum {
@@ -55,28 +50,25 @@ public:
 	//event to forward on particle to top app
 	void elementLeftScreen( ParticleEventArgs & args );
 	
-	ofTrueTypeFont			font;	
 	Emitter					particleManager;
-		
-	int drawMode;
 	
+	//TRAILS
+	ParticleTrails trails;
+	
+// calibration
+	ofTrueTypeFont			font;	
+	int drawMode;
 	ofxLabProjectionTools	projection;
+	
+	// PARTICLE EFFECTS
 	phyParticleSystem *		system;
 	ofxFBOTexture			explosionFBO;
-		
-#ifdef FLUID_EFFECT_SYSTEM
-	EffectsSystem			effectsSystem;
-#endif
 	
 	//lighting
 	ofxLight light1; //this will be a directional light
 	ofxLight light2; //this one a spot light
 	ofxLight light3; //and this one a point light
-	
 	ofxVec3f lightPos;
-	
-	//particle effects
-	ParticleTrails trails;
 	
 private:
 	bool			bDrawDebug;
@@ -85,7 +77,6 @@ private:
 	ofxOscSender	sender;
 	
 	Columns			columns;
-	
 	int				mouseX, mouseY;
 	string			mouseButtonState;
 };

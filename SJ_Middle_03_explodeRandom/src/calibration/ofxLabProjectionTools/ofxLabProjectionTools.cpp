@@ -238,28 +238,38 @@ void ofxLabProjectionTools::update(){
 //----------------------------------------------------------------------------
 void ofxLabProjectionTools::draw(){
 #ifdef USE_SHADERS
-	screen.clear();
-	screen.swapIn();
-	ofEnableSmoothing();
-#endif	
+	if (floorf(amplifyAmount) != 1.0f){
+		if (screen.getWidth() == 100){
+			screen.allocate(ofGetWidth(), ofGetHeight(), GL_RGB, 4);
+		};
+		screen.clear();
+		screen.swapIn();
+		ofEnableSmoothing();
+	} else {
+		//if (screen.getWidth() != 100) screen.allocate(100, 100, GL_RGB);	
+	}
+#endif
+	ofDisableAlphaBlending();
+	//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
+	//ofEnableAlphaBlending();
 	for (int i=0; i<views.size(); i++){
 		draw(i);
 	}
 #ifdef USE_SHADERS
-	screen.swapOut();
-	
-	amplify.begin();
-	screen.bind();
-	amplify.setUniform("mult", amplifyAmount);
-	amplify.setUniform("src_tex_unit0", 0);
-	
+	if (floorf(amplifyAmount) != 1.0f){
+		screen.swapOut();
+		amplify.begin();
+		screen.bind();
+		amplify.setUniform("mult", amplifyAmount);
+		amplify.setUniform("src_tex_unit0", 0);
 	//views[which]->getTexture().bind();
 	//amplify.setUniform("src_tex_unit0", 0);
 	//views[which]->getTexture().unbind();
 	
-	screen.draw(0, 0, screen.getWidth(), screen.getHeight());
-	amplify.end();
-	screen.unbind();
+		screen.draw(0, 0, screen.getWidth(), screen.getHeight());
+		amplify.end();
+		screen.unbind();
+	}
 #endif
 	
 	string modeString = "";

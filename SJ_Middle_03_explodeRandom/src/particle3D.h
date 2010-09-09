@@ -33,8 +33,7 @@ public:
 	float distance;
 	bool bAdd;
 	
-	float lineWidth;
-	
+	float lineWidth;	
 	float scaleSpeed;
 	
 	particle3D(){
@@ -56,7 +55,7 @@ public:
 		startScale.y = 0;
 		scale = startScale;
 		type = (int) floor(ofRandom(0,4));
-		alphaDamping = .989;
+		alphaDamping = ofRandom(.980, .985);
 		
 		age = 0;
 		lastAdded = 10;
@@ -107,12 +106,27 @@ public:
 		fillColor.blue = _b;
 		fillColor.updateHsv();
 		
-		fillColor.hue *= ofRandom(.99f, 1.05f);
+		color[0] = fillColor.red/255.;
+		color[1] = fillColor.green/255.;
+		color[2] = fillColor.blue/255.;
+		color[3] = 0.5;
+		
+		fillColor.hue *= ofRandom(.80f, 1.3f);
 		fillColor.value = 400;//ofRandom(1.01f, 1.1f);
 		fillColor.saturation = 400;//;ofRandom(.99, 1.2f);
 		
 		fillColor.updateRgb();
 		
+		color[4] = fillColor.red/255.;
+		color[5] = fillColor.green/255.;
+		color[6] = fillColor.blue/255.;
+		color[7] = 1.0;
+		
+		color[8] = fillColor.red/255.;
+		color[9] = fillColor.green/255.;
+		color[10] = fillColor.blue/255.;
+		color[11] = 1.0;
+						
 		/*r *= 3.f;
 		g *= 3.f;
 		b *= 3.f;*/
@@ -157,13 +171,16 @@ public:
 			p1.rotate(angle-90, pos);
 			p2.rotate(-(angle-90), pos);
 			
-			float dist = ofDist(pos.x, pos.y, lastPoint[1].x, lastPoint[1].y);
+			float dist = ofDist(p2.x, p2.y, lastPoint[1].x, lastPoint[1].y);
 			
 			//if (dist > 50.0f){
 				float increment = dist/lineWidth;
 				float yadd = increment;
 				increment = floor(increment);
 				
+			
+			//if (increment > 4){
+			
 				for (int i=0; i<increment; i+=4){	
 					if (i + 2 <increment){
 						ofQuad newQuad;
@@ -180,19 +197,25 @@ public:
 						newQuad.points[2].x = ofLerp(lastPoint[1].x, p2.x, (i+2)/increment); //lastPoint[0].x;
 						newQuad.points[2].y = ofLerp(lastPoint[1].y, p2.y, (i+2)/increment); //lastPoint[0].y;
 						//newQuad.points[2].z = ofLerp(lastPoint[1].z, pos.z-scale.x, (i+2)/increment); //lastPoint[0].z;
+												
 						quads.push_back(newQuad);
+						
 					}					
 				}
+				
 			//}
-			if (increment > 2){
-				lastPoint[0].x = p1.x;
-				lastPoint[0].y = p1.y;
-				lastPoint[1].x = p2.x;
-				lastPoint[1].y = p2.y;
-				//lastPoint[1].z = pos.z - scale.x;
-				//lastPoint[0].z = pos.z + scale.x;
-			}			
+				if (increment > 2){
+					lastPoint[0].x = p1.x;
+					lastPoint[0].y = p1.y;
+					lastPoint[1].x = p2.x;
+					lastPoint[1].y = p2.y;
+					//lastPoint[1].z = pos.z - scale.x;
+					//lastPoint[0].z = pos.z + scale.x;
+				}	
+			//}		
 		};
+		/*color[3] = */color[7] = color[11] = fillColor.alpha/255.0f;
+		age++;
 	};
 	
 	void draw(){
@@ -205,9 +228,12 @@ public:
 		glPushMatrix();{		
 			ofxLightsOff();
 			if (type >= 3){
+				//glEnableClientState(GL_COLOR_ARRAY);
+				//glColorPointer(4, GL_FLOAT, 0, &color[0]);
 				for (int i=0; i<quads.size(); i++){
 					quads[i].draw();
 				};
+				//glDisableClientState(GL_COLOR_ARRAY);
 			} else {
 				pos.z = 0;
 				
@@ -231,7 +257,10 @@ public:
 				p1.rotate(angle-90, pos);
 				p2.rotate(-(angle-90), pos);
 				
+				glEnableClientState(GL_COLOR_ARRAY);
+				glColorPointer(4, GL_FLOAT, 0, &color[0]);
 				ofTriangle(startPoint.x, startPoint.y, startPoint.z, p1.x, p1.y, 0, p2.x, p2.y, 0);
+				glDisableClientState(GL_COLOR_ARRAY);
 			} 
 			ofxLightsOn();
 			
@@ -265,5 +294,9 @@ public:
 		ofSetRectMode(OF_RECTMODE_CORNER);
 		ofSetColor(0xffffff);
 	};
+	
+private:
+	
+	float color[16];
 	
 };

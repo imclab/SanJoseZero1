@@ -243,7 +243,7 @@
         <val_0>-92.000000</val_0>
     </LEFT_MASK_ROTATE_0>
     <GUI_AMP>
-        <val_0>0.907500</val_0>
+        <val_0>1.110455</val_0>
     </GUI_AMP>
     <TOP_MASK_X_1>
         <val_0>1024.000000</val_0>
@@ -441,9 +441,15 @@
         <val_0>5.000000</val_0>
     </SCALE_MIN>
     <SCALE_MAX>
-        <val_0>10.688637</val_0>
+        <val_0>14.049999</val_0>
     </SCALE_MAX>
     <GROUP_TIME>
-        <val_0>2000.000000</val_0>
+        <val_0>500.000000</val_0>
     </GROUP_TIME>
+    <SPEED_MAX>
+        <val_0>14.972727</val_0>
+    </SPEED_MAX>
+    <SPEED_MIN>
+        <val_0>5.979545</val_0>
+    </SPEED_MIN>
 </settings>

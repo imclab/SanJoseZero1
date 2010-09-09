@@ -33,6 +33,7 @@ public:
 		bSend = bSent = bExploded = false;
 		
 		setMinSpeed(5.);
+		setMaxSpeed(100.0f);
 		
 		vel.x = 0;
 		vel.y = -minSpeed;
@@ -65,6 +66,7 @@ public:
 	}
 	
 	~Particle() {
+		particle3D = NULL;
 		neighbors.clear();
 	}
 	
@@ -551,6 +553,8 @@ public:
 			vel.y = -minSpeed;
 		}
 		
+		vel.limit(maxSpeed);
+		
 		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
 		
 		if ((!bLeaving) || index == 0){
@@ -733,6 +737,10 @@ public:
 		}
 	};
 	
+	void setMaxSpeed( float speed ){
+		maxSpeed = speed;
+	};
+	
 	int drawType;
 	ofPoint scale;
 	float targetScale;
@@ -751,7 +759,7 @@ private:
 	
 	bool bAlive,bSend;
 	float minScale, maxScale, bMaxScale;
-	float minSpeed;
+	float minSpeed, maxSpeed;
 	
 	//NEIGHBOR VARS:
 	int frame;

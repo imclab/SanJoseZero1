@@ -170,7 +170,6 @@ public:
 	
 	void draw(){
 		
-		ofEnableAlphaBlending();
 		if (!bDrawCrop){
 			if (!bMoving) texture.bind();
 			else ofSetColor(255,255,0);

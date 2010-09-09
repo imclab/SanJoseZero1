@@ -7,7 +7,7 @@
 void testApp::setup(){	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(false);
-	ofSetFrameRate(60);	
+	ofSetFrameRate(120);	
 	
 	//load settings from xml
 	ofxXmlSettings settings;
@@ -87,10 +87,6 @@ void testApp::setup(){
 	system = new phyParticleSystem( &particleManager );
 	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
 	
-#ifdef FLUID_EFFECT_SYSTEM
-	effectsSystem.setup(&particleManager);
-#endif	
-	
 	//setup view if not loaded via xml
 	if (!projection.bSettingsLoaded){
 		projection.addView(0,0,ofGetWidth(), ofGetHeight());
@@ -101,7 +97,7 @@ void testApp::setup(){
 	
 	//setup lights
 	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
-	ofxMaterialShininess(30); //how concentrated the reflexion will be (between 0 and 128
+	ofxMaterialShininess(100); //how concentrated the reflexion will be (between 0 and 128
 	
 	//each light will emit white reflexions
 	//light1.ambient(50,50,50);
@@ -137,6 +133,7 @@ void testApp::setup(){
 	float L3PosY = 0;
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
+	
 	ofHideCursor();
 }
 
@@ -166,12 +163,11 @@ void testApp::update(){
 		}
 		
 		particleManager.update();
-#ifdef FLUID_EFFECT_SYSTEM
-		effectsSystem.update();
-#endif
 		trails.update();
-		
 		system->update();
+
+		// DRAW EXPLOSION FBO HERE
+		// TO AVOID MESSING UP SCREEN MATRICES
 		
 		explosionFBO.clear();
 		explosionFBO.begin();
@@ -185,6 +181,9 @@ void testApp::update(){
 	ofxLabGui * gui = projection.getGui();
 	particleManager.setMinScale(gui->getValueF("SCALE_MIN"));
 	particleManager.setMaxScale(gui->getValueF("SCALE_MAX"));
+	particleManager.setMinSpeed(gui->getValueF("SPEED_MIN"));
+	particleManager.setMaxSpeed(gui->getValueF("SPEED_MAX"));
+	particleManager.setGroupingTolerance(gui->getValueI("GROUP_TIME"));
 	
 	bool bNewCalibration = false;
 	int numColumns = columns.getNumColumns();
@@ -228,16 +227,14 @@ void testApp::draw(){
 	ofSetColor(0xffffff);
 	
 	ofxLightsOff();
-#ifdef FLUID_EFFECT_SYSTEM
-	effectsSystem.draw();
-#endif
 	
 	projection.pushView(0);
 	
 	//draw particle effects
 	glDisable(GL_DEPTH_TEST);
-	ofSetColor(0xffffff);	
+	ofSetColor(255,255,255,150);	
 	trails.draw();
+	ofSetColor(0xffffff);	
 	explosionFBO.draw(0,0);	
 	glEnable(GL_DEPTH_TEST);
 	
@@ -283,10 +280,6 @@ void testApp::keyPressed  (int key){
 			projection.setMode(drawMode-2);
 		}
 		saveSettings();
-	} else if (key == 'd'){
-#ifdef FLUID_EFFECT_SYSTEM
-		effectsSystem.showSettings = !effectsSystem.showSettings;
-#endif
 	}
 	
 	if (drawMode != LAB_MODE_RENDER){
@@ -358,9 +351,6 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-#ifdef FLUID_EFFECT_SYSTEM
-	effectsSystem.windowResized(w,h);
-#endif
 	explosionFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);//, 4);
 }
 
@@ -370,7 +360,6 @@ void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	m.setAddress(args.address);
 	m.addFloatArg( (float) args.loc.x );
 	m.addFloatArg( (float) args.vel.y );
-	cout<<args.vel.y<<endl;
 	m.addStringArg( args.data );
 	sender.sendMessage(m);	
 };
@@ -390,7 +379,7 @@ void testApp::saveSettings(){
 		settings.setValue("columns:numColums",columns.getNumColumns());
 		settings.setValue("columns:spacing", columns.getSpacing());
 		settings.setValue("columns:border", columns.getBorder());
-		
+				
 		//input positions
 		for (int i=0; i<particleManager.getNumTypes(); i++) {
 			BuildingType * type = particleManager.getType(i);
@@ -413,7 +402,9 @@ void testApp::setupGui(){
 	projection.addDefaultGroup("settings", true);
 	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
 	gui->addSlider("maximumScale", "SCALE_MAX", 10.0f, 1.0f, 30.0f, false);
-	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 2000, false);
+	gui->addSlider("maximum speed", "SPEED_MAX", 10.0f, 1.0f, 30.0f, false);
+	gui->addSlider("minumum speed", "SPEED_MIN", 5.0f, .1f, 20.0f, false);
+	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 10000, false);
 	projection.loadGuiSettings();
 	
 	gui->setPanelIndex("particles", 0);

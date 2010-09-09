@@ -26,7 +26,4 @@ public:
 	Emitter * emitter;
 	vector<particle3D *> particles;
 	vector<LineExplosion *> explosions;
-	
-protected:
-	//ofxFBOTexture trailTex;
 };
