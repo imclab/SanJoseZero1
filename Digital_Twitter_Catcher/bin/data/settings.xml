@@ -3,16 +3,36 @@
     <port>12345</port>
     <searchUrl>http://plug-in-play.com/services/twitter/rl_twitter.php</searchUrl>
     <messages>
-        <!-- NOTE: THESE MUST BE IN  ORDER  -->
-        <message>/pluginplay/twitter</message>
-        <message>/pluginplay/twitter/search</message>
+        <message>
+            <type>0</type>
+            <string>/pluginplay/twitter</string>
+            <time>10000.000000</time>
+            <lastId>23170246819</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/twitter/search</string>
+            <tag>newyork</tag>
+            <time>2050.000000</time>
+            <lastId>24053985819</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/twitter/search/1</string>
+            <tag>america</tag>
+            <time>2000.000000</time>
+            <lastId>24054159658</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/twitter/search/2</string>
+            <tag>zero1</tag>
+            <time>2100.000000</time>
+            <lastId>24040205883</lastId>
+        </message>
     </messages>
-    <search>
-        <lastHashID>23939150871</lastHashID>
-        <lastReplyID>23170246819</lastReplyID>
-    </search>
     <logLevel>2</logLevel>
-    <searchTime>5000.000000</searchTime>
-    <replySearchTime>10000.000000</replySearchTime>
     <sendTime>500.000000</sendTime>
+    <searchTime>0.000000</searchTime>
+    <replySearchTime>0.000000</replySearchTime>
 </settings>

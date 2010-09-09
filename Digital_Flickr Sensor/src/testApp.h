@@ -22,9 +22,8 @@ class testApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		
-		FlickrSearcher * tagSearcher;
-		FlickrSearcher * nearbySearcher;
+		int lastSent;
+		vector<FlickrSearcher * > searchers;
 	
 		void keyPressed  (int key);
 		void keyReleased(int key);

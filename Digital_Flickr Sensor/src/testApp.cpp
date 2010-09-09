@@ -6,9 +6,6 @@ void testApp::setup(){
 	ofSetLogLevel(OF_LOG_WARNING);
 	string searchUrl = "http://plug-in-play.com/services/flickr/rl_flickr.php";
 	
-	string lastTagId = "";
-	string lastNearbyId = "";
-
 	//geo params
 	string radius = "10";
 	string lat = "40.735844095042395";
@@ -16,10 +13,11 @@ void testApp::setup(){
 	
 	//tags
 	vector<string>tags;
-	
+	lastSent = 0;
+		
 	// SETUP OSC SENDER
 	ofxXmlSettings settings;
-	bool bLoaded = settings.loadFile("settings.xml");
+	bool bLoaded = settings.loadFile("settings/settings.xml");
 	string host = "localhost";
 	int port = 12345;
 	if (bLoaded){
@@ -30,40 +28,50 @@ void testApp::setup(){
 			//php settings
 			searchUrl = settings.getValue("searchUrl", searchUrl);
 			
-			//in case we need to reset message names 
+			//get messages + data for each sender
 			settings.pushTag("messages");{
 				for (int i=0; i<settings.getNumTags("message"); i++){
-					string message = settings.getValue("message", "/pluginplay/twitter", i);
-					messageStrings.push_back(message);
+					settings.pushTag("message", i);{
+						int type = settings.getValue("type", 1);
+						
+						string message = settings.getValue("string", "/pluginplay/flickr");
+						float searchTime = settings.getValue("time", (float) SEARCH_TIME_SECONDS);
+						string lastId = settings.getValue("lastId", lastId);
+						
+						if (type == 0){
+							//get geo params
+							radius = settings.getValue("geo:radius", radius);
+							lat = settings.getValue("geo:lat", lat);
+							longitude = settings.getValue("geo:long", longitude);
+							ofLog(OF_LOG_VERBOSE, "Geo search: "+lat+", "+longitude+", "+radius);
+							
+							FlickrSearcher * nearbySearcher = new FlickrSearcher( "nearbySearch", message, searchUrl, &sender, searchTime );
+							nearbySearcher->lastID = lastId;
+							nearbySearcher->setGeoParams(radius, lat, longitude);
+							searchers.push_back(nearbySearcher);
+						} else {
+							FlickrSearcher * tagSearcher = new FlickrSearcher( "tagSearch "+i, message, searchUrl, &sender, searchTime );
+							
+							// add tags (doing it this way = multiple tags per sender if you want)
+							for (int j=0; j<settings.getNumTags("tag"); j++){
+								string tag = settings.getValue("tag", "", j);
+								tags.push_back(tag);
+								tagSearcher->addTag(tag);
+								cout<<"add tag "<<tag<<" "<<searchers.size()<<endl;
+							}
+							tagSearcher->lastID = lastId;
+							searchers.push_back(tagSearcher);
+						}
+					} settings.popTag();
 				}
 			} settings.popTag();
-			
-			//get last IDs sent
-			settings.pushTag("search");{
-				lastNearbyId = settings.getValue("lastNearbyId", "");
-				lastTagId = settings.getValue("lastTagId", "");
-			} settings.popTag();
-			
+						
 			//console logging
 			logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
 			
-			//how often we search
-			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+			//how often we send
 			sendTime = settings.getValue("sendTime", 2000 );
-			cout<<"send time is "<<sendTime<<endl;
 			
-			//get geo params
-			radius = settings.getValue("geo:radius", radius);
-			lat = settings.getValue("geo:lat", lat);
-			longitude = settings.getValue("geo:long", longitude);
-			
-			//get tags to search
-			settings.pushTag("tags");{
-				for (int i=0; i<settings.getNumTags("tag"); i++){
-					string tag = settings.getValue("tag", "",i);
-					tags.push_back(tag);
-				}
-			} settings.popTag();
 			
 		}settings.popTag();
 	} else {
@@ -75,28 +83,11 @@ void testApp::setup(){
 	//setup OSC
 	sender.setup(host, port);
 	
-	string atMessage = "/pluginplay/twitter";
-	string tagMessage = "/pluginplay/twitter";
-	if (messageStrings.size() > 0) atMessage = messageStrings[0];
-	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
-		
-	nearbySearcher = new FlickrSearcher( "atSearch", atMessage, searchUrl, &sender, searchTime );
-	nearbySearcher->lastID = lastNearbyId;
-	nearbySearcher->setGeoParams(radius, lat, longitude);
-	
-	tagSearcher = new FlickrSearcher( "tagSearch", tagMessage, searchUrl, &sender, searchTime );
-	tagSearcher->lastID = lastTagId;
-	
-	//loop through tags vector and add to searcher
-	for (int i=0; i<tags.size(); i++){
-		tagSearcher->addTag(tags[i]);
-	}
-	
 	// Initialize the time variables
 	lastForwardTime = ofGetElapsedTimeMillis();
 	lastHashtagsUpdateTime = ofGetElapsedTimeMillis();
 	
-	ofLog(OF_LOG_VERBOSE,  "num of tags: "+ofToString(tagSearcher->getNumTags()));
+	ofLog(OF_LOG_VERBOSE,  "num of tags: "+ofToString((int)tags.size()));
 	ofSetFrameRate(60);
 	
 	//load display font
@@ -112,34 +103,67 @@ void testApp::update(){
 	if (curTime - lastHashtagsUpdateTime >= UPDATE_HASHTAGS_SECONDS) {
 		lastHashtagsUpdateTime = curTime;
 		ofxXmlSettings settings;
-		bool bLoaded = settings.loadFile("settings.xml");
+		bool bLoaded = settings.loadFile("settings/settings.xml");
 		
 		if (bLoaded) {
-			tagSearcher->clearTags(); 
 			settings.pushTag("settings");{
 				
-				settings.pushTag("tags");{
-					for (int i = 0; i < settings.getNumTags("tag"); i++) {
-						tagSearcher->addTag(settings.getValue("tag","void",i));
+				settings.pushTag("messages");{
+					
+					for (int i=0; i<settings.getNumTags("message"); i++){
+						settings.pushTag("message", i);{
+							int type = settings.getValue("type", 1);
+							
+							string message = settings.getValue("string", "/pluginplay/flickr");
+							float searchTime = settings.getValue("time", (float) SEARCH_TIME_SECONDS);
+							string lastId = settings.getValue("lastId", lastId);
+							
+							if (type == 0){
+								//get geo params
+								string radius = settings.getValue("geo:radius", radius);
+								string lat = settings.getValue("geo:lat", lat);
+								string longitude = settings.getValue("geo:long", longitude);
+								ofLog(OF_LOG_VERBOSE, "Geo search: "+(lat)+", "+(longitude)+", "+(radius));
+								
+								if (i > searchers.size()){									
+									FlickrSearcher * nearbySearcher = new FlickrSearcher( "nearbySearch", message, searchUrl, &sender, searchTime );
+									nearbySearcher->lastID = lastId;
+									nearbySearcher->setGeoParams(radius, lat, longitude);
+									searchers.push_back(nearbySearcher);
+								} else {
+									searchers[i]->setSearchTime(searchTime);
+									searchers[i]->lastID = lastId;
+									searchers[i]->setGeoParams(radius, lat, longitude);
+								};
+							} else {
+								
+								if (i > searchers.size()){
+									FlickrSearcher * tagSearcher = new FlickrSearcher( "tagSearch "+ofToString(i), message, searchUrl, &sender, searchTime );
+									
+									// add tags (doing it this way = multiple tags per sender if you want)
+									for (int i=0; i<settings.getNumTags("tag"); i++){
+										string tag = settings.getValue("tag", "", i);
+										tagSearcher->addTag(tag);
+									}
+									searchers.push_back(tagSearcher);
+								} else {
+									searchers[i]->clearTags();
+									for (int j=0; j<settings.getNumTags("tag"); j++){
+										string tag = settings.getValue("tag", "", j);
+										searchers[i]->addTag(tag);
+									}
+									searchers[i]->setSearchTime(searchTime);
+								};
+							}
+						} settings.popTag();
 					}
-				} settings.popTag();
+				} settings.popTag();;
 				
 				//console logging
 				logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
 								
 				//search + send time
-				searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
 				sendTime = settings.getValue("sendTime", 2000 );
-				
-				nearbySearcher->setSearchTime(searchTime);
-				tagSearcher->setSearchTime(searchTime);
-				
-				//geo params
-				string radius = settings.getValue("geo:radius", radius);
-				string lat = settings.getValue("geo:lat", lat);
-				string longitude = settings.getValue("geo:long", longitude);
-				
-				nearbySearcher->setGeoParams(radius, lat, longitude);
 				
 			} settings.popTag();
 		}		
@@ -149,16 +173,34 @@ void testApp::update(){
 	
 	// Update the XML file from the PHP script if enough time has elapsed
 	
-	if ( tagSearcher->bReadyToSearch() ) 
-		tagSearcher->doSearch();
-
-	if ( nearbySearcher->bReadyToSearch() ) 
-		nearbySearcher->doSearch();
+	for (int i=0; i<searchers.size(); i++){
+		if (searchers[i]->bReadyToSearch())
+			searchers[i]->doSearch();
+	};
 	
 	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
 		lastForwardTime = ofGetElapsedTimeMillis();
-		tagSearcher->sendOSCSetup();
-		nearbySearcher->sendOSCSetup();
+		lastSent++;
+		if (lastSent > searchers.size()) lastSent = 0;
+		
+		bool bSent = false;
+		for (int i=lastSent; i<searchers.size(); i++){
+			if (searchers[i]->hasWaitingResults()){
+				searchers[i]->sendOSCSetup();
+				lastSent = i;
+				bSent = true;
+				break;
+			}			
+		};
+		if (!bSent){
+			for (int i=0; i<lastSent; i++){
+				if (searchers[i]->hasWaitingResults()){
+					searchers[i]->sendOSCSetup();
+					lastSent = i;
+					break;
+				}			
+			};
+		};
 	}
 		
 }
@@ -168,8 +210,10 @@ void testApp::draw(){
 	ofSetColor(255,0,132);
 	font.drawString("FLICKR", 20, 60);
 	ofSetColor(0xffffff);
-	nearbySearcher->draw(20,100);
-	tagSearcher->draw(400,100);
+	
+	for (int i=0; i<searchers.size(); i++){
+		searchers[i]->draw(20+200*i,100);
+	}
 	
 	//ofDrawBitmapString(newestTweet, 10, 10);
 }
@@ -184,13 +228,22 @@ void testApp::saveSettings(){
 	// + save things like log level + timing to make sure we see them
 	// in the xml
 	
-	settings.loadFile("settings.xml");
-	settings.setValue("settings:search:lastTagId", tagSearcher->lastID);
-	settings.setValue("settings:search:lastNearbyId", nearbySearcher->lastID);
+	settings.loadFile("settings/settings.xml");
+	
+	settings.pushTag("settings");{
+		settings.pushTag("messages");{
+			for (int i=0; i<searchers.size(); i++){
+				settings.pushTag("message", i);{				
+					settings.setValue("lastId", searchers[i]->lastID);
+				} settings.popTag();
+			}
+		} settings.popTag();
+	} settings.popTag();
+	
 	settings.setValue("settings:logLevel", logLevel);
 	settings.setValue("settings:searchTime", searchTime );
 	settings.setValue("settings:sendTime", sendTime );
-	settings.saveFile("settings.xml");
+	settings.saveFile("settings/settings.xml");
 };
 
 //--------------------------------------------------------------

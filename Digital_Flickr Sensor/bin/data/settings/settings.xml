@@ -1,0 +1,42 @@
+<settings>
+    <host>localhost</host>
+    <port>12345</port>
+    <searchUrl>http://plug-in-play.com/services/flickr/rl_flickr.php</searchUrl>
+    <messages>
+        <message>
+            <type>0</type>
+            <string>/pluginplay/flickr/nearby</string>
+            <time>4000.000000</time>
+            <geo>
+                <lat>40.735844095042395</lat>
+                <long>-73.9904522895813</long>
+                <radius>30</radius>
+            </geo>
+            <lastId>1</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/flickr</string>
+            <tag>new york</tag>
+            <time>4000.000000</time>
+            <lastId>1284075714</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/flickr/1</string>
+            <tag>san jose</tag>
+            <time>4000.000000</time>
+            <lastId>1284075462</lastId>
+        </message>
+        <message>
+            <type>1</type>
+            <string>/pluginplay/flickr/2</string>
+            <tag>beiber</tag>
+            <time>4000.000000</time>
+            <lastId>1284044333</lastId>
+        </message>
+    </messages>
+    <logLevel>2</logLevel>
+    <sendTime>500.000000</sendTime>
+    <searchTime>0.000000</searchTime>
+</settings>

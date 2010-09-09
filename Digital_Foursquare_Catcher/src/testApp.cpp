@@ -71,6 +71,7 @@ void testApp::setup(){
 	checkinSearcher = new FoursquareSearcher( "venue_"+venueId, message, searchUrl, &sender, searchTime );
 	checkinSearcher->venueId = venueId;
 	checkinSearcher->lastID = lastTimeStamp;
+	if (messageStrings.size() > 1) message = messageStrings[1];
 	
 	nearbySearcher = new FoursquareSearcher( "nearby_"+venueId, message, searchUrl, &sender, nearbySearchTime );
 	nearbySearcher->venueId = venueId;

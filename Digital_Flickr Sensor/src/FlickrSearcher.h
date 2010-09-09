@@ -197,6 +197,10 @@ public:
 				dummyRespose.popTag();
 				
 				responses.push_back(response);
+				
+				//get next set of responses! (mostly for the first time this loads up)
+				if (curResult == maxNumOfResults)
+					getNextResponseSet();
 			}
 			
 		}
@@ -205,6 +209,10 @@ public:
 /***********************************************************
 	 SEND OSC
 ***********************************************************/
+	
+	bool hasWaitingResults(){
+		return curResult < maxNumOfResults;
+	};
 	
 	void sendOSCSetup(){
 		ofLog(OF_LOG_VERBOSE, "TRYING TO SEND "+ofToString(curResult)+ ":"+ofToString(maxNumOfResults));

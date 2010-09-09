@@ -27,9 +27,8 @@ class testApp : public ofBaseApp{
 			saveSettings();
 		}
 		
-		TwitterSearcher * tagSearcher;
-		TwitterSearcher * atSearcher;
-	
+		vector<TwitterSearcher *> searchers;	
+		int lastSent;
 
 		void keyPressed  (int key);
 		void keyReleased(int key);

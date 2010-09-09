@@ -9,6 +9,8 @@ void testApp::setup(){
 	string lastHashID = "";
 	string lastReplyID = "";
 	
+	lastSent = 0;
+	
 	// SETUP OSC SENDER
 	ofxXmlSettings settings;
 	bool bLoaded = settings.loadFile("settings.xml");
@@ -21,27 +23,40 @@ void testApp::setup(){
 			
 			//php settings
 			searchUrl = settings.getValue("searchUrl", "http://plug-in-play.com/services/twitter/rl_twitter.php");
-			
-			//in case we need to reset message names 
+						
+			//get messages + data for each sender
 			settings.pushTag("messages");{
 				for (int i=0; i<settings.getNumTags("message"); i++){
-					string message = settings.getValue("message", "/pluginplay/twitter", i);
-					messageStrings.push_back(message);
+					settings.pushTag("message", i);{
+						int type = settings.getValue("type", 1);
+						
+						string message = settings.getValue("string", "/pluginplay/twitter");
+						float searchTime = settings.getValue("time", (float) SEARCH_TIME_SECONDS);
+						string lastId = settings.getValue("lastId", lastId);
+						
+						if (type == 0){					
+							TwitterSearcher * atSearcher = new TwitterSearcher( "atSearch", message, searchUrl, &sender, searchTime );
+							atSearcher->lastID = lastId;
+							searchers.push_back(atSearcher);
+						} else {
+							TwitterSearcher * tagSearcher = new TwitterSearcher( "tagSearch "+i, message, searchUrl, &sender, searchTime );
+							
+							// add tags (doing it this way = multiple tags per sender if you want)
+							for (int j=0; j<settings.getNumTags("tag"); j++){
+								string tag = settings.getValue("tag", "", j);
+								tagSearcher->addTag(tag);
+							}
+							tagSearcher->lastID = lastId;
+							searchers.push_back(tagSearcher);
+						}
+					} settings.popTag();
 				}
 			} settings.popTag();
-			
-			//get last IDs sent
-			settings.pushTag("search");{
-				lastHashID = settings.getValue("lastHashID", "");
-				lastReplyID = settings.getValue("lastReplyID", "");
-			} settings.popTag();
-			
+						
 			//console logging
 			logLevel = settings.getValue("logLevel", OF_LOG_WARNING );
 			
-			//how often we search
-			replySearchTime = settings.getValue("replySearchTime", (float) SEARCH_TIME_SECONDS );
-			searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
+			//how often we send
 			sendTime = settings.getValue("sendTime", 2000 );
 			
 		}settings.popTag();
@@ -52,39 +67,12 @@ void testApp::setup(){
 	ofSetLogLevel(logLevel);
 	
 	//setup OSC
-	sender.setup(host, port);
-	
-	string atMessage = "/pluginplay/twitter";
-	string tagMessage = "/pluginplay/twitter";
-	if (messageStrings.size() > 0) atMessage = messageStrings[0];
-	if (messageStrings.size() > 1) tagMessage = messageStrings[1];
-	
-	atSearcher = new TwitterSearcher( "atSearch", atMessage, searchUrl, &sender, replySearchTime );
-	atSearcher->lastID = lastReplyID;
-	
-	tagSearcher = new TwitterSearcher( "tagSearch", tagMessage, searchUrl, &sender, searchTime );
-	tagSearcher->lastID = lastHashID;
-	
+	sender.setup(host, port);		
 	
 	// Initialize the time variables
 	lastForwardTime = ofGetElapsedTimeMillis();
 	lastHashtagsUpdateTime = ofGetElapsedTimeMillis();
 	
-	// Update the hashtags to search for
-	ofxXmlSettings hTags;
-	bLoaded = hTags.loadFile("hashtags.xml");
-	if (bLoaded) {
-		hTags.pushTag("settings");
-		
-//		curNumOfTags = hTags.getNumTags("tag");
-		for (int i = 0; i < hTags.getNumTags("tag"); i++) {
-			tagSearcher->addTag(hTags.getValue("tag","void",i));
-			//hashTags.push_back(hTags.getValue("tag","void",i));
-		}
-		hTags.popTag();
-	}
-	
-	ofLog(OF_LOG_VERBOSE,  "num of tags: "+ofToString(tagSearcher->getNumTags()));
 	ofSetFrameRate(60);
 	
 	//load display font
@@ -100,32 +88,52 @@ void testApp::update(){
 	// Update the hashtags to search for in case they've changed
 	if (curTime - lastHashtagsUpdateTime >= UPDATE_HASHTAGS_MILLIS) {
 		lastHashtagsUpdateTime = curTime;
-		ofxXmlSettings hTags;
-		bool bLoaded = hTags.loadFile("hashtags.xml");
-		if (bLoaded) {
-			tagSearcher->clearTags(); 
-			hTags.pushTag("settings");{
-				
-				for (int i = 0; i < hTags.getNumTags("tag"); i++) {
-					tagSearcher->addTag(hTags.getValue("tag","void",i));
-				}
-				
-				//console logging
-				logLevel = hTags.getValue("logLevel", OF_LOG_WARNING );
-			} hTags.popTag();
-		} else {
-		}
 		
 		ofxXmlSettings settings;
-		bLoaded = settings.loadFile("settings.xml");
+		bool bLoaded = settings.loadFile("settings.xml");
 		if (bLoaded){
 			settings.pushTag("settings");{
 				//how often we search
-				searchTime = settings.getValue("searchTime", (float) SEARCH_TIME_SECONDS );
 				sendTime = settings.getValue("sendTime", 2000 );
-				
-				atSearcher->setSearchTime(searchTime);
-				tagSearcher->setSearchTime(searchTime);
+				settings.pushTag("messages");{					
+					for (int i=0; i<settings.getNumTags("message"); i++){
+						settings.pushTag("message", i);{
+							int type = settings.getValue("type", 1);
+							
+							string message = settings.getValue("string", "/pluginplay/twitter");
+							float searchTime = settings.getValue("time", (float) SEARCH_TIME_SECONDS);
+							string lastId = settings.getValue("lastId", lastId);
+							
+							if (type == 0){								
+								if (i > searchers.size()){									
+									TwitterSearcher * nearbySearcher = new TwitterSearcher( "repySearch", message, searchUrl, &sender, searchTime );
+									searchers.push_back(nearbySearcher);
+								} else {
+									searchers[i]->setSearchTime(searchTime);
+								};
+							} else {
+								
+								if (i > searchers.size()){
+									TwitterSearcher * tagSearcher = new TwitterSearcher( "tagSearch "+ofToString(i), message, searchUrl, &sender, searchTime );
+									
+									// add tags (doing it this way = multiple tags per sender if you want)
+									for (int i=0; i<settings.getNumTags("tag"); i++){
+										string tag = settings.getValue("tag", "", i);
+										tagSearcher->addTag(tag);
+									}
+									searchers.push_back(tagSearcher);
+								} else {
+									searchers[i]->clearTags();
+									for (int j=0; j<settings.getNumTags("tag"); j++){
+										string tag = settings.getValue("tag", "", j);
+										searchers[i]->addTag(tag);
+									}
+									searchers[i]->setSearchTime(searchTime);
+								};
+							}
+						} settings.popTag();
+					}
+				} settings.popTag();;
 			} settings.popTag();
 		}	
 		saveSettings();	
@@ -134,18 +142,34 @@ void testApp::update(){
 	
 	// Update the XML file from the PHP script if enough time has elapsed
 	
-	if ( tagSearcher->bReadyToSearch() ) 
-		tagSearcher->doSearch();
-
-	if ( atSearcher->bReadyToSearch() ) 
-		atSearcher->doSearch();
+	for (int i=0; i<searchers.size(); i++){
+		if (searchers[i]->bReadyToSearch())
+			searchers[i]->doSearch();
+	};
 	
 	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
 		lastForwardTime = ofGetElapsedTimeMillis();
-		if (bSendAtReplies && atSearcher->hasWaitingResults())
-			atSearcher->sendOSCSetup();
-		else			
-			tagSearcher->sendOSCSetup();
+		lastSent++;
+		if (lastSent > searchers.size()) lastSent = 0;
+		
+		bool bSent = false;
+		for (int i=lastSent; i<searchers.size(); i++){
+			if (searchers[i]->hasWaitingResults()){
+				searchers[i]->sendOSCSetup();
+				lastSent = i;
+				bSent = true;
+				break;
+			}			
+		};
+		if (!bSent){
+			for (int i=0; i<lastSent; i++){
+				if (searchers[i]->hasWaitingResults()){
+					searchers[i]->sendOSCSetup();
+					lastSent = i;
+					break;
+				}			
+			};
+		};
 		
 		bSendAtReplies = !bSendAtReplies;
 	}
@@ -156,8 +180,9 @@ void testApp::draw(){
 	ofSetColor(50,204,255);
 	font.drawString("TWITTER", 20, 60);
 	ofSetColor(0xffffff);
-	atSearcher->draw(20,100);
-	tagSearcher->draw(400,100);
+	for (int i=0; i<searchers.size(); i++){
+		searchers[i]->draw(20+200*i,100);
+	}
 	
 	//ofDrawBitmapString(newestTweet, 10, 10);
 }
@@ -173,8 +198,15 @@ void testApp::saveSettings(){
 	// in the xml
 	
 	settings.loadFile("settings.xml");
-	settings.setValue("settings:search:lastHashID", tagSearcher->lastID);
-	settings.setValue("settings:search:lastReplyID", atSearcher->lastID);
+	settings.pushTag("settings");{
+		settings.pushTag("messages");{
+			for (int i=0; i<searchers.size(); i++){
+				settings.pushTag("message", i);{				
+					settings.setValue("lastId", searchers[i]->lastID);
+				} settings.popTag();
+			}
+		} settings.popTag();
+	} settings.popTag();	
 	settings.setValue("settings:logLevel", logLevel);
 	settings.setValue("settings:searchTime", searchTime );
 	settings.setValue("settings:replySearchTime", replySearchTime );
