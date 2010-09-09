@@ -43,7 +43,7 @@ void testApp::draw(){
 void testApp::sendSignal(){
 	bSent = true;
 	ofxOscMessage m;
-	m.setAddress("/pluginplay/signal");
+	m.setAddress("/pluginplay/signal_00");
 	m.addIntArg(0);
 	sender.sendMessage(m);
 }

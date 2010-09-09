@@ -4,7 +4,15 @@
 		<name>megaphone</name>
 		<message>
 			<image>images/mega00.png</image>
-			<messageString>/pluginplay/megaphone</messageString>
+			<messageString>/pluginplay/megaphone/0</messageString>
+		</message>
+		<message>
+			<image>images/mega00.png</image>
+			<messageString>/pluginplay/megaphone/1</messageString>
+		</message>
+		<message>
+			<image>images/mega00.png</image>
+			<messageString>/pluginplay/megaphone/2</messageString>
 		</message>
 		<sendsound>0</sendsound>
 	</input>
@@ -20,7 +28,15 @@
 		<name>picnic</name>
 		<message>
 			<image>images/picnic00.png</image>
-			<messageString>/pluginplay/picnictable</messageString>
+			<messageString>/pluginplay/picnictable/0</messageString>
+		</message>
+		<message>
+			<image>images/picnic01.png</image>
+			<messageString>/pluginplay/picnictable/1</messageString>
+		</message>
+		<message>
+			<image>images/picnic02.png</image>
+			<messageString>/pluginplay/picnictable/2</messageString>
 		</message>
 		<sendsound>0</sendsound>
 	</input>
@@ -41,6 +57,14 @@
 			<image>images/twitter1.png</image>
 			<messageString>/pluginplay/twitter/search</messageString>
 		</message>
+		<message>
+			<image>images/twitter1.png</image>
+			<messageString>/pluginplay/twitter/search/1</messageString>
+		</message>
+		<message>
+			<image>images/twitter1.png</image>
+			<messageString>/pluginplay/twitter/search/2</messageString>
+		</message>
 		<sendsound>1</sendsound>
 	</input>
 	<input>
@@ -52,6 +76,14 @@
 		<message>
 			<image>images/flickr01.png</image>
 			<messageString>/pluginplay/flickr/nearby</messageString>
+		</message>
+		<message>
+			<image>images/flickr02.png</image>
+			<messageString>/pluginplay/flickr/1</messageString>
+		</message>
+		<message>
+			<image>images/flickr03.png</image>
+			<messageString>/pluginplay/flickr/2</messageString>
 		</message>
 		<sendsound>1</sendsound>
 	</input>

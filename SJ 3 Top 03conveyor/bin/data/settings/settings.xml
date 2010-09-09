@@ -19,8 +19,8 @@
 </color>
 -->
         <position>
-            <x>186.000000</x>
-            <y>1336.000000</y>
+            <x>133.000000</x>
+            <y>1632.000000</y>
         </position>
     </input>
     <input>
@@ -29,23 +29,41 @@
             <image>models/flickr/flickr.3ds</image>
             <messageString>/pluginplay/flickr</messageString>
             <color>
-                <r>161</r>
-                <g>186</g>
-                <b>203</b>
+                <r>178</r>
+                <g>208</g>
+                <b>214</b>
             </color>
         </message>
         <message>
             <image>models/flickr/flickr_02.3DS</image>
             <messageString>/pluginplay/flickr/nearby</messageString>
             <color>
-                <r>161</r>
-                <g>186</g>
-                <b>203</b>
+                <r>164</r>
+                <g>227</g>
+                <b>117</b>
+            </color>
+        </message>
+        <message>
+            <image>models/flickr/flickr_03.3DS</image>
+            <messageString>/pluginplay/flickr/1</messageString>
+            <color>
+                <r>164</r>
+                <g>132</g>
+                <b>151</b>
+            </color>
+        </message>
+        <message>
+            <image>models/flickr/flickr_04.3DS</image>
+            <messageString>/pluginplay/flickr/2</messageString>
+            <color>
+                <r>118</r>
+                <g>159</g>
+                <b>190</b>
             </color>
         </message>
         <position>
-            <x>263.000000</x>
-            <y>1341.000000</y>
+            <x>239.000000</x>
+            <y>1630.000000</y>
         </position>
     </input>
     <input>
@@ -68,9 +86,27 @@
                 <b>199</b>
             </color>
         </message>
+        <message>
+            <image>models/foursquare/foursq02.3ds</image>
+            <messageString>/pluginplay/foursquare/1</messageString>
+            <color>
+                <r>220</r>
+                <g>182</g>
+                <b>144</b>
+            </color>
+        </message>
+        <message>
+            <image>models/foursquare/foursq03.3ds</image>
+            <messageString>/pluginplay/foursquare/2</messageString>
+            <color>
+                <r>97</r>
+                <g>119</g>
+                <b>116</b>
+            </color>
+        </message>
         <position>
-            <x>374.000000</x>
-            <y>1354.000000</y>
+            <x>343.000000</x>
+            <y>1632.000000</y>
         </position>
     </input>
     <input>
@@ -265,35 +301,92 @@
             </color>
         </message>
         <position>
-            <x>484.000000</x>
-            <y>1345.000000</y>
+            <x>456.000000</x>
+            <y>1630.000000</y>
         </position>
     </input>
     <input>
         <name>megaphone</name>
         <message>
             <image>models/megaphone/mega00.3DS</image>
-            <messageString>/pluginplay/megaphone</messageString>
+            <messageString>/pluginplay/megaphone/0</messageString>
             <color>
-                <r>252</r>
-                <g>253</g>
-                <b>25</b>
+                <r>220</r>
+                <g>217</g>
+                <b>184</b>
+            </color>
+        </message>
+        <message>
+            <image>models/megaphone/mega01.3DS</image>
+            <messageString>/pluginplay/megaphone/1</messageString>
+            <color>
+                <r>255</r>
+                <g>145</g>
+                <b>0</b>
+            </color>
+        </message>
+        <message>
+            <image>models/megaphone/mega02.3DS/2</image>
+            <messageString>/pluginplay/megaphone/2</messageString>
+            <color>
+                <r>220</r>
+                <g>230</g>
+                <b>0</b>
             </color>
         </message>
         <position>
-            <x>578.000000</x>
-            <y>1341.000000</y>
+            <x>535.000000</x>
+            <y>1608.000000</y>
         </position>
     </input>
     <input>
         <name>picnic</name>
         <message>
             <image>models/picnic/picnic00.3ds</image>
-            <messageString>/pluginplay/picnictable</messageString>
+            <messageString>/pluginplay/picnictable/0</messageString>
             <color>
-                <r>51</r>
+                <r>0</r>
+                <g>228</g>
+                <b>214</b>
+            </color>
+        </message>
+        <position>
+            <x>639.000000</x>
+            <y>1624.000000</y>
+        </position>
+        <message>
+            <image>models/picnic/picnic01.3ds</image>
+            <messageString>/pluginplay/picnictable/1</messageString>
+            <color>
+                <r>189</r>
                 <g>255</g>
-                <b>242</b>
+                <b>230</b>
+            </color>
+        </message>
+        <position>
+            <x>672.000000</x>
+            <y>1338.000000</y>
+        </position>
+        <message>
+            <image>models/picnic/picnic02.3ds</image>
+            <messageString>/pluginplay/picnictable/2</messageString>
+            <color>
+                <r>0</r>
+                <g>147</g>
+                <b>241</b>
+            </color>
+        </message>
+        <position>
+            <x>672.000000</x>
+            <y>1338.000000</y>
+        </position>
+        <message>
+            <image>models/picnic/picnic03.3ds</image>
+            <messageString>/pluginplay/picnictable/3</messageString>
+            <color>
+                <r>0</r>
+                <g>135</g>
+                <b>243</b>
             </color>
         </message>
         <position>
@@ -307,14 +400,14 @@
             <image>models/playground/play00.3DS</image>
             <messageString>/pluginplay/playground</messageString>
             <color>
-                <r>210</r>
-                <g>159</g>
-                <b>111</b>
+                <r>40</r>
+                <g>140</g>
+                <b>230</b>
             </color>
         </message>
         <position>
-            <x>778.000000</x>
-            <y>1333.000000</y>
+            <x>769.000000</x>
+            <y>1616.000000</y>
         </position>
     </input>
     <input>
@@ -329,7 +422,7 @@
             </color>
         </message>
         <message>
-            <image>models/signal/signal_01.3ds</image>
+            <image>models/signal/signal_02.3ds</image>
             <messageString>/pluginplay/signal_01</messageString>
             <color>
                 <r>255</r>
@@ -338,7 +431,7 @@
             </color>
         </message>
         <message>
-            <image>models/signal/signal_02.3ds</image>
+            <image>models/signal/signal_03.3ds</image>
             <messageString>/pluginplay/signal_02</messageString>
             <color>
                 <r>62</r>
@@ -347,8 +440,8 @@
             </color>
         </message>
         <position>
-            <x>886.000000</x>
-            <y>1339.000000</y>
+            <x>852.000000</x>
+            <y>1622.000000</y>
         </position>
     </input>
     <input>
@@ -366,14 +459,32 @@
             <image>models/twitter/twitter_01.3DS</image>
             <messageString>/pluginplay/twitter/search</messageString>
             <color>
-                <r>0</r>
-                <g>0</g>
-                <b>255</b>
+                <r>49</r>
+                <g>144</g>
+                <b>210</b>
+            </color>
+        </message>
+        <message>
+            <image>models/twitter/twitter_02.3DS</image>
+            <messageString>/pluginplay/twitter/search/1</messageString>
+            <color>
+                <r>226</r>
+                <g>172</g>
+                <b>108</b>
+            </color>
+        </message>
+        <message>
+            <image>models/twitter/twitter_03.3DS</image>
+            <messageString>/pluginplay/twitter/search/2</messageString>
+            <color>
+                <r>224</r>
+                <g>222</g>
+                <b>222</b>
             </color>
         </message>
         <position>
-            <x>979.000000</x>
-            <y>1331.000000</y>
+            <x>954.000000</x>
+            <y>1633.000000</y>
         </position>
     </input>
     <input>
@@ -382,9 +493,9 @@
             <image>models/open/open.3DS</image>
             <messageString>/pluginplay/openplug</messageString>
             <color>
-                <r>0</r>
-                <g>180</g>
-                <b>0</b>
+                <r>2</r>
+                <g>149</g>
+                <b>79</b>
             </color>
         </message>
         <position>
