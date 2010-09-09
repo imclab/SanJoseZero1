@@ -20,7 +20,7 @@ void testApp::setup(){
 	int numReceivers = settings.getNumTags("input");
 	
 	int emitDelay = 500;
-	int logDelayThreshold = 500;
+	int logDelayThreshold = 250;
 	
 	settings.pushTag("misc");{
 		emitDelay = settings.getValue("emitdelay",emitDelay);

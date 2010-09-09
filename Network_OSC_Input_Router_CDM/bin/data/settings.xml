@@ -196,6 +196,6 @@
 	</osc>
 	<misc>
 		<emitdelay>300</emitdelay>
-        <logdelay>300</logdelay>
+        <logdelay>3000</logdelay>
 	</misc>
 </settings>

@@ -23,6 +23,8 @@ public:
 	CONSTRUCTOR / SETUP
 *********************************************/
 	Logger(int _threshold, string _url) {
+		logNumParticles = 0;
+		
 		postURL = _url;
 		
 		xmlGetter.start();
@@ -32,21 +34,12 @@ public:
 		lastEmitTime = ofGetElapsedTimeMillis();
 
 		// Set the sDate variable
-		time_t curTime;
-		struct tm* timeInfo;
-		
-		time(&curTime);
-		timeInfo = localtime(&curTime);
-		
-		int month = timeInfo->tm_mon;
-		int day = timeInfo->tm_mday;
-		month++;  // Because month range goes from 0 - 11; however, day range already starts at 1
-
+		int month = ofGetMonth();
+		int day = ofGetDay();
 		if (month < 10) {
 			sDate = "0";
 		}
 		sDate += ofToString(month);
-
 		if (day < 10) {
 			sDate += "0";
 		}
@@ -64,7 +57,10 @@ public:
 	DATA SENDING / LOGGING FUNCTION
 *********************************************/
 	void logData() {
+		cout << "logging\n";
+		
 		int curElapsedTime = ofGetElapsedTimeMillis() - lastEmitTime;
+		logNumParticles++;
 		
 		if ( curElapsedTime <= logDelayThreshold) {
 			// Too soon to log!
@@ -76,14 +72,17 @@ public:
 		ofxHttpForm form;
 		form.action = postURL;
 		form.method = OFX_HTTP_POST;
-
 		
 		form.addFormField("logData","1");
 		form.addFormField("curEmitID",ofToString(++curEmitID));
 		form.addFormField("date",sDate);
 		form.addFormField("milliseconds",ofToString(curElapsedTime));
+		form.addFormField("activeParticles",ofToString(logNumParticles));
 		
 		xmlGetter.addForm(form);
+		
+		// Reset the number of active particles to log
+		logNumParticles = 0;
 		
 	};
 	
@@ -92,9 +91,14 @@ public:
 	DATA RECEIVING FUNCTION
 *********************************************/
 	void response(ofxHttpResponse &response) {
+		cout << "receiving\n";
+		string sResults;
+		
 		ofxXmlSettings xmlResponse;
 		xmlResponse.loadFromBuffer(response.responseBody);
-
+		xmlResponse.copyXmlToString(sResults);
+		cout << sResults << endl << endl;
+		
 		
 		// Did we get a blank response?
 		bool bCorrectFormatting = xmlResponse.pushTag("results");
@@ -125,6 +129,7 @@ private:
 	string sDate;
 	int lastEmitTime;
 	int logDelayThreshold;
+	int logNumParticles;
 
 	
 
