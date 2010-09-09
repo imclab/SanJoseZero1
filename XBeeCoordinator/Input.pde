@@ -1,3 +1,8 @@
+class Message
+{
+  int threshold;
+  String messageString; 
+};
 class Input
 {
   int[] values;
@@ -8,8 +13,13 @@ class Input
   int fontSize;
   int deadFrames = 0;
   boolean newFrame;
+  boolean[] newThings;
   boolean sendSound;
   boolean doesSendOsc;
+  OscP5 oscP5;
+  NetAddress demoLocation;
+  
+  ArrayList[] messages;
   
   //buttons
   
@@ -25,8 +35,12 @@ class Input
   SETUP
 **********************************************************/
   
-  Input(String _address, int numValues, PFont _font, int _fontSize ){
+  Input(OscP5 _oscP5, NetAddress _demoLocation, String _address, int numValues, PFont _font, int _fontSize ){
+    oscP5 = _oscP5;
+    demoLocation = _demoLocation;
     values = new int[numValues];
+    newThings = new boolean[numValues];
+    messages = new ArrayList[numValues];
     x = y = 0;
     address = _address;
     font = _font;
@@ -43,6 +57,16 @@ class Input
     soundButton.width = 75;
     soundButton.height = 20;
     soundButton.name = "play sound";
+    for (int i=0; i<numValues; i++){
+      messages[i] = new ArrayList();
+    }
+  };
+  
+  void addMessage( String ms, int thresh, int index){
+    Message m = new Message();
+    m.messageString = ms;
+    m.threshold = thresh;
+    messages[index].add(m);    
   };
   
 /**********************************************************
@@ -105,13 +129,42 @@ class Input
     newFrame = false;
     for (int i=0; i<vals.length; i++){
       if (values[i] != vals[i] && vals[i] > 0){
+        newThings[i] = true;
         newFrame = true;
+      } else {
+        newThings[i] = false;
       }
     }
     values = vals;
     deadFrames = 0;
     return newFrame;
   }
+  
+  void send(){
+    for (int i=0; i<newThings.length; i++){
+      if (newThings[i] == true){
+        OscMessage msg = new OscMessage(getMessageString(i));
+        msg.add(values[i]);
+        oscP5.send(msg, demoLocation);
+          
+        newThings[i] = false;
+      }
+    }  
+  }
+  
+  String getMessageString( int index ){
+      int which = 0;
+      int lastThresh = -9999;
+      for (int i=0; i<messages[index].size(); i++){
+        Message m = (Message) messages[index].get(index);
+        if (values[index] >= m.threshold && m.threshold > lastThresh){
+          which = i;
+          lastThresh = m.threshold;
+        }
+      };
+      
+      return ((Message) messages[index].get(index)).messageString;
+  };
   
   boolean mousePressed( int x, int y){
     if (doesSendOsc && oscButton.mousePressed(x,y)){

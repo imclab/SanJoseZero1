@@ -117,11 +117,24 @@ import netP5.*;
       
       println(name+":"+id+":"+sendOsc);
       
-      Input input = new Input (id, numValues, font, fontSize);
+      Input input = new Input (oscP5, demoLocation, id, numValues, font, fontSize);
       input.setName(name);
       input.width = spacingX;
       input.height = spacingY;
       
+      //get messages to send via OSC
+      
+      XMLElement[] valueMessages = sensor.getChildren("value");
+      for (int j=0; j<valueMessages.length; j++){
+        for (int k=0; k<valueMessages[j].getChildCount(); k++){
+          XMLElement message = valueMessages[j].getChild(k);
+          input.addMessage( message.getChild("string").getContent(), 
+          Integer.parseInt(message.getChild("threshold").getContent()), j);
+          
+          println(message.getChild("string").getContent()+":"+Integer.parseInt(message.getChild("threshold").getContent())+":"+j);
+        }
+      }
+            
       if (sendOsc == 0) input.doesSendOsc = false;
       else input.doesSendOsc = true;
       if (input.doesSendOsc==true) input.dFill += 20;
@@ -178,10 +191,10 @@ import netP5.*;
         // and traffic (sends 'r')
         if (input.sendSound==true){
           if (input.name.equals("foursquare")){
-            port.write('s');
+            if (bSerial) port.write('s');
             println("play sound: s");
           } else if (input.name.equals("traffic")){
-            port.write('r');
+            if (bSerial) port.write('r');
             println("play sound: s");
           } else {
             if (bSerial) port.write(input.name.charAt(0));
@@ -190,9 +203,7 @@ import netP5.*;
         
         //are we sending OSC this frame?
         } else if (input.newFrame==true){
-          OscMessage msg = new OscMessage("/pluginplay/"+input.name);
-          msg.add(input.values[0]);
-          oscP5.send(msg, demoLocation);
+          input.send();
           println("sending "+"/pluginplay/"+input.name);
         };
         

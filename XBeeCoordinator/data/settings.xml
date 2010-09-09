@@ -10,24 +10,86 @@
 			<id>405DAF8D</id>
 			<sendosc>1</sendosc>
 			<values>1</values>
+			<value>
+				<message>
+					<string>/pluginplay/megaphone/0</string>
+					<threshold>1</threshold>
+				</message>
+				<message>
+					<string>/pluginplay/megaphone/1</string>
+					<threshold>10</threshold>
+				</message>
+				<message>
+					<string>/pluginplay/megaphone/2</string>
+					<threshold>50</threshold>
+				</message>
+			</value>
 		</sensor>
 		<sensor>
 			<name>birdfeeder</name>
 			<id>405DAF9B</id>
 			<sendosc>1</sendosc>
 			<values>1</values>
+			<value>
+				<message>
+					<string>/pluginplay/birdfeeder</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
 		</sensor>
 		<sensor>
 			<name>picnictable</name>
 			<id>405DAF9E</id>
 			<sendosc>1</sendosc>
 			<values>6</values>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/0</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/1</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/2</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/0</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/1</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
+			<value>
+				<message>
+					<string>/pluginplay/picnictable/2</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
 		</sensor>
 		<sensor>
 			<name>openplug</name>
 			<id>405DAFAA</id>
 			<sendosc>1</sendosc>
 			<values>1</values>
+			<value>
+				<message>
+					<string>/pluginplay/openplug</string>
+					<threshold>1</threshold>
+				</message>
+			</value>
 		</sensor>
 		<sensor>
 			<name>twitter</name>
