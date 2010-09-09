@@ -1,8 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <results>
     <checkin>
-        <person_name>Kyle</person_name>
+        <person_name>Capt Awesome</person_name>
         <venue_name>New York Penn Station</venue_name>
-        <timestamp>1283898930</timestamp>
+        <timestamp>1283974502</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>jessie m.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283973012</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Maya S.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283972723</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Kashif I.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283971751</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Dave A.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283970369</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Nachiket D.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283969558</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Nathaniel H.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283966734</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Gabriel C.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283966638</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Marina P.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283966586</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Vito O.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283965995</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Eric L.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283965509</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Bill S.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283964620</timestamp>
+    </checkin>
+    <checkin>
+        <person_name>Kate Z.</person_name>
+        <venue_name>New York Penn Station</venue_name>
+        <timestamp>1283964182</timestamp>
     </checkin>
 </results>

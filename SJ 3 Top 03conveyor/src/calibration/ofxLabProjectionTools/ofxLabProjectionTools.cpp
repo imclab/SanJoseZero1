@@ -555,6 +555,7 @@ void ofxLabProjectionTools::keyPressed( ofKeyEventArgs & e ){
 				drawOverlays(false);
 				ofShowCursor();
 			} else if ( drawMode == LAB_DRAW_MODE_CROP){
+				cout<<"draw crop?"<<endl;
 				drawCrop(true);
 				drawGui(true);
 				drawSkew(false);
@@ -606,6 +607,8 @@ void ofxLabProjectionTools::nextMode(){
 void ofxLabProjectionTools::setMode( int which ){
 	drawMode = which;
 	
+	cout<<"draw mode is "<<which<<endl;
+	
 	if (which == LAB_DRAW_MODE_SKEW){
 		drawSkew(true);
 		drawGui(false);
@@ -613,6 +616,7 @@ void ofxLabProjectionTools::setMode( int which ){
 		drawOverlays(false);
 		ofShowCursor();
 	} else if ( which == LAB_DRAW_MODE_CROP){
+		cout<<"crop?"<<endl;
 		drawCrop(true);
 		drawGui(true);
 		drawSkew(false);

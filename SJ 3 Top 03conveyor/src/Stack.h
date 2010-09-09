@@ -20,14 +20,14 @@ public:
 		index = 0;
 		height = 0;
 		rotAxis.set(1,0,0);
-		angle = 0;
+		angle = lastAngle = 0;
 	};
 	
 	Stack( int _index ){
 		index = _index;
 		height = 0;
 		rotAxis.set(1,0,0);
-		angle = 270;
+		angle = lastAngle = 270;
 	};
 	
 	
@@ -54,6 +54,7 @@ public:
 	
 	void update(){
 		height = 0;
+		
 		for (int i=0; i<buildings.size(); i++){
 			height += buildings[i]->getHeight();
 			width = fmax(width, buildings[i]->getWidth());
@@ -63,9 +64,9 @@ public:
 	void draw(){
 		ofPushMatrix();{
 			ofTranslate(pos.x, pos.y, pos.z);
+			
 			ofRotate(angle, rotAxis.x, rotAxis.y, rotAxis.z);
-			//ofTranslate(0, buildings[0]->getWidth(), 0);
-			//ofTranslate(0.0, -width, 0.0);
+			
 			for (int i=0; i<buildings.size(); i++){
 				ofPushMatrix();{ //LARS//
 					buildings[i]->draw();
@@ -100,9 +101,9 @@ public:
 	vector <Building *> buildings;	
 	
 	ofxVec3f rotAxis;
-	float angle;
+	float angle, lastAngle;
 protected:
-	ofPoint pos;
+	ofxVec3f pos;
 	float height;
 	float width;
 };

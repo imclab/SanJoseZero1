@@ -41,12 +41,13 @@ public:
 		size.y = 70;
 		
 		//build base columns
-		float increment = ROW_SPACING;
-			
+		float curX = ROW_BUFFER + ROW_SPACING;
+					
 		for (int i=0; i<NUMBER_OF_ROWS; i++){
 			Stack * s = new Stack(i);
-			s->setPosition(ROW_BUFFER + i*increment, pos.z);
+			s->setPosition(curX, pos.z);
 			stacks.push_back(s);
+			curX += ROW_SPACING;
 		};
 	}
 	
@@ -84,7 +85,7 @@ public:
 		int columnIndex = -1;
 		for (int i=0; i<stacks.size(); i++){
 			float dist = fabs(position - stacks[i]->getPosition().x);
-			if ( dist <closest){
+			if ( dist < closest){
 				closest = dist;
 				columnIndex = i;
 			};

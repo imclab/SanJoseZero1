@@ -27,7 +27,7 @@ public:
 		//setup different building types
 		
 		ofxXmlSettings settings;
-		settings.loadFile("settings.xml");
+		settings.loadFile("settings/settings.xml");
 		settings.pushTag("settings");
 		
 		int numReceivers = settings.getNumTags("input");
@@ -56,6 +56,7 @@ public:
 		
 		//set up first row		
 		currentRow = new BuildingRow(ceiling);
+		cout<<"emitter set up"<<endl;
 	};
 
 	
@@ -121,11 +122,7 @@ public:
 	
 	void draw(){
 		glDisable(GL_DEPTH_TEST);
-		ofSetColor(255,0,0);
-		ofLine(0, ceiling, ofGetWidth(), ceiling);
-		
-		currentRow->draw();
-		
+		currentRow->draw();		
 		glEnable(GL_DEPTH_TEST);
 		
 		for (int i=0; i<buildings.size(); i++){
@@ -182,8 +179,8 @@ public:
 	float originalCeiling;
 	
 	void windowResized(){
-		
-		currentRow->windowResized();
+		if ( currentRow != NULL)
+			currentRow->windowResized();
 		
 		for (int i=0; i<types.size(); i++){			
 			types[i]->setPosition( 25 + (float)(ofGetWidth()/types.size())*i, ofGetHeight() );
