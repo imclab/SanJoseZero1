@@ -214,8 +214,8 @@
 	</input>
 	<osc>
 		<sender>
-			<!-- <host>10.1.2.143</host> -->
 			<host>localhost</host>
+			<host>10.1.2.64</host>
 			<port>12000</port>
 		</sender>	
 		<soundsender>
@@ -227,6 +227,6 @@
 		</receiver>
 	</osc>
 	<misc>
-		<emitdelay>300</emitdelay>
+		<emitdelay>200</emitdelay>
 	</misc>
 </settings>

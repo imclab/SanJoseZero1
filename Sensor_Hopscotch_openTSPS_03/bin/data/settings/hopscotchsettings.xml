@@ -1,8 +1,8 @@
 <settings>
     <rect>
         <address>/pluginplay/hopscotch</address>
-        <x>154.000000</x>
-        <y>198.000000</y>
+        <x>150.000000</x>
+        <y>199.000000</y>
         <x>224.000000</x>
         <y>199.000000</y>
         <x>221.000000</x>
@@ -12,7 +12,7 @@
     </rect>
     <rect>
         <address>/pluginplay/hopscotch</address>
-        <x>232.000000</x>
+        <x>234.000000</x>
         <y>121.000000</y>
         <x>302.000000</x>
         <y>122.000000</y>
@@ -40,8 +40,8 @@
         <y>201.000000</y>
         <x>382.000000</x>
         <y>269.000000</y>
-        <x>316.000000</x>
-        <y>269.000000</y>
+        <x>319.000000</x>
+        <y>279.000000</y>
     </rect>
     <rect>
         <address>/pluginplay/hopscotch</address>

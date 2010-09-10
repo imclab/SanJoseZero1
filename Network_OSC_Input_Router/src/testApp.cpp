@@ -104,7 +104,11 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-			
+	
+	for (int i=0; i<emitters.size(); i++){
+		emitters[i]->bEmitted = false;
+	}
+	
 	// check for waiting messages
 	while( receiver.hasWaitingMessages() )
 	{
@@ -120,8 +124,9 @@ void testApp::update(){
 				
 				//has it been long enough that it's OK to emit?
 				
-				bool bCanEmit = emitters[i]->emit(emitters[i]->lastFoundString);
+				bool bCanEmit = emitters[i]->emit( m );
 				if (bCanEmit){
+					emitters[i]->bEmitted = true;
 						
 					//send "emit!" message to bottom app with its address + data
 					
@@ -137,8 +142,7 @@ void testApp::update(){
 										
 					sender.sendMessage(forwardedMessage);					
 					
-					bool bSendSound = emitters[i]->sendSound();
-					
+					bool bSendSound = emitters[i]->sendSound();					
 					if (bSendSound){
 						ofxOscMessage m;
 						m.setAddress("/pluginplay/sound");
@@ -150,11 +154,11 @@ void testApp::update(){
 						debugString[i] = debugString[i-1];
 					};
 					
-					if (bSendSound) debugString[0] = "Sent message and sound: "+m.getAddress()+" at frame "+ofToString(ofGetFrameNum())+"\n";
-					else debugString[0] = "Sent message: "+m.getAddress()+" at "+ofToString(ofGetFrameNum())+"\n";
+					//if (bSendSound) debugString[0] = "Sent message and sound: "+m.getAddress()+" at frame "+ofToString(ofGetFrameNum())+"\n";
+					//else debugString[0] = "Sent message: "+m.getAddress()+" at "+ofToString(ofGetFrameNum())+"\n";
 						
-					if (bHasData)
-						debugString[0] += m.getArgAsString(0)+"\n";
+					//if (bHasData)
+					//	debugString[0] += m.getArgAsString(0)+"\n";
 					
 					cout<< debugString[0]<<endl;
 				}
@@ -173,6 +177,43 @@ void testApp::update(){
 			errorString[0] = "ERROR: Unrecongnized message: "+m.getAddress()+" at frame "+ofToString(ofGetFrameNum())+"\n";
 		}
 		
+	}
+	
+	for (int i=0; i<emitters.size(); i++){
+		emitters[i]->update();
+		if (!emitters[i]->bEmitted && emitters[i]->bHasWaitingMessages()){
+						
+			if (emitters[i]->emit()){						
+				Message nextMessage = emitters[i]->nextMessage();
+				
+				ofxOscMessage forwardedMessage;
+				forwardedMessage.setAddress(nextMessage.messageString);
+				
+				//is there data?
+				forwardedMessage.addStringArg( nextMessage.data );
+				
+				sender.sendMessage(forwardedMessage);					
+				
+				bool bSendSound = emitters[i]->sendSound();					
+				if (bSendSound){
+					ofxOscMessage m;
+					m.setAddress("/pluginplay/sound");
+					m.addStringArg(emitters[i]->getName());
+					soundSender.sendMessage(m);
+				}
+				
+				for (int i=NUM_STRINGS-1; i>=1; i--){
+					debugString[i] = debugString[i-1];
+				};
+				
+				if (bSendSound) debugString[0] = "Sent message and sound: "+nextMessage.messageString+" at frame "+ofToString(ofGetFrameNum())+"\n";
+				else debugString[0] = "Sent message: "+nextMessage.messageString+" at "+ofToString(ofGetFrameNum())+"\n";
+
+				debugString[0] += nextMessage.data+"\n";
+				
+				cout<< debugString[0]<<endl;
+			};
+		}
 	}
 	
 	ofSetWindowTitle("fps: "+ofToString(ofGetFrameRate()));

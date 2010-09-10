@@ -9,17 +9,32 @@
 
 #pragma once
 #include "ofMain.h"
+#include "ofxOsc.h"
 #include <algorithm>
 #include <string>
 
-#define EMITTER_TIME 750
+#define EMITTER_TIME 500
 
+class Message
+{
+public:
+	
+	string messageString;
+	string data;
+	int time;
+	
+	Message(){
+		data = "";
+	}
+};
 
 class Emitter : public ofRectangle
 {
 public:
 	
 	ofColor color;
+	vector<Message> currentMessages;
+	bool bEmitted;
 	
 	Emitter(){
 		lastEmitted = ofGetElapsedTimeMillis();
@@ -31,6 +46,7 @@ public:
 		color.r = color.g = color.b = 50;
 		bSetFont = false;
 		bSent = false;
+		bEmitted = false;
 	};
 	
 	ofTrueTypeFont * font;
@@ -67,8 +83,28 @@ public:
 		emitDelay = _emitDelay;
 	}
 	
+	bool bHasWaitingMessages(){
+		return (currentMessages.size() > 0);
+	};
+	
+	Message nextMessage(){
+		cout<<"get next?"<<endl;
+		Message m;
+		if (currentMessages.size() > 0){
+			m = currentMessages[0];
+			currentMessages.erase(currentMessages.begin());
+		} 
+		return m;
+	};
+	
 	void update(){
-		
+		//cout<<currentMessages.size()<<endl;
+		for (int i=currentMessages.size()-1; i>=0; i--){
+			// greater than 3 queued, basically
+			if (ofGetElapsedTimeMillis() - currentMessages[i].time > 1500){
+				currentMessages.erase(currentMessages.begin() + i);
+			};
+		};
 	};
 	
 	void draw(){
@@ -94,14 +130,35 @@ public:
 		bSent = false;
 	};
 	
-	bool emit( int index = 0){
+	bool emit(){
 		if (ofGetElapsedTimeMillis() - lastEmitted > emitDelay){
 			lastEmitted = ofGetElapsedTimeMillis();
 			bSent = true;
 			return true;
 		}
 		bSent = false;
-		cout <<"too soon!"<<endl;
+		return false;
+	}
+	
+	bool emit( ofxOscMessage m ){
+		if (ofGetElapsedTimeMillis() - lastEmitted > emitDelay){
+			lastEmitted = ofGetElapsedTimeMillis();
+			if (currentMessages.size() <= 0){
+				bSent = true;
+				return true;
+			}
+		}
+		Message newMessage;
+		newMessage.messageString = m.getAddress();
+		newMessage.time = ofGetElapsedTimeMillis();
+		if (m.getNumArgs() > 0){
+			newMessage.data = m.getArgAsString(0);
+		} 
+		currentMessages.push_back(newMessage);
+		
+		cout<<currentMessages.size()<<endl;
+		
+		bSent = false;
 		return false;
 	}
 		
