@@ -522,6 +522,7 @@
         <rowBuffer>0.000000</rowBuffer>
         <uIncrement>0.005000</uIncrement>
         <conveyorY>111.363632</conveyorY>
+        <backgroundimage>_ceiling_huge.jpg</backgroundimage>
     </conveyor>
     <light>
         <position>

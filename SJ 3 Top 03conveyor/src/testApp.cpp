@@ -648,7 +648,7 @@ void testApp::updateFromGui(){
 
 //--------------------------------------------------------------
 void testApp::loadSettings(){
-	string ceilingImagePath = "_ceiling_huge.jpg";	
+	ceilingImagePath = "_ceiling_huge.jpg";	
 	conveyorScaleY = 1.5f;
 	conveyorY = 135;
 	
@@ -696,6 +696,7 @@ void testApp::loadSettings(){
 void testApp::saveSettings(){
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
+	settings.setValue("settings:conveyor:backgroundimage",ceilingImagePath);
 	//settings.setValue("settings:conveyor:conveyorScaleY",conveyorScaleY);
 	settings.setValue("settings:conveyor:rowBuffer",ROW_BUFFER);
 	settings.setValue("settings:conveyor:rowCount",NUMBER_OF_ROWS);

@@ -41,6 +41,7 @@ class testApp : public ofBaseApp{
 	
 	//calibration
 		int lastEmitted;
+		string ceilingImagePath;
 	
 		int drawMode;
 		bool bUseProjectionTools;
