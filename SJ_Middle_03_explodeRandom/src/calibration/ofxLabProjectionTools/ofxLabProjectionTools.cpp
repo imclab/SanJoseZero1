@@ -236,32 +236,23 @@ void ofxLabProjectionTools::update(){
 };
 
 //----------------------------------------------------------------------------
-void ofxLabProjectionTools::draw(){
+void ofxLabProjectionTools::draw( bool bDrawFBO ){
+	if (bDrawFBO){
 #ifdef USE_SHADERS
-	if (floorf(amplifyAmount) != 1.0f){
-		if (screen.getWidth() == 100){
-			screen.allocate(ofGetWidth(), ofGetHeight(), GL_RGB, 4);
-		};
 		screen.clear();
 		screen.swapIn();
-		ofEnableSmoothing();
-	} else {
-		//if (screen.getWidth() != 100) screen.allocate(100, 100, GL_RGB);	
-	}
-#endif
-	ofDisableAlphaBlending();
-	//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
-	//ofEnableAlphaBlending();
-	for (int i=0; i<views.size(); i++){
-		draw(i);
-	}
+#endif	
+		for (int i=0; i<views.size(); i++){
+			draw(i);
+		}
 #ifdef USE_SHADERS
-	if (floorf(amplifyAmount) != 1.0f){
 		screen.swapOut();
+	
 		amplify.begin();
 		screen.bind();
 		amplify.setUniform("mult", amplifyAmount);
 		amplify.setUniform("src_tex_unit0", 0);
+	
 	//views[which]->getTexture().bind();
 	//amplify.setUniform("src_tex_unit0", 0);
 	//views[which]->getTexture().unbind();
@@ -269,8 +260,13 @@ void ofxLabProjectionTools::draw(){
 		screen.draw(0, 0, screen.getWidth(), screen.getHeight());
 		amplify.end();
 		screen.unbind();
-	}
 #endif
+	} else {
+		ofEnableSmoothing();
+		for (int i=0; i<views.size(); i++){
+			views[i]->drawDebug();
+		}
+	}
 	
 	string modeString = "";
 	
@@ -565,6 +561,7 @@ void ofxLabProjectionTools::keyPressed( ofKeyEventArgs & e ){
 				drawOverlays(false);
 				ofShowCursor();
 			} else if ( drawMode == LAB_DRAW_MODE_CROP){
+				cout<<"draw crop?"<<endl;
 				drawCrop(true);
 				drawGui(true);
 				drawSkew(false);
@@ -616,6 +613,8 @@ void ofxLabProjectionTools::nextMode(){
 void ofxLabProjectionTools::setMode( int which ){
 	drawMode = which;
 	
+	cout<<"draw mode is "<<which<<endl;
+	
 	if (which == LAB_DRAW_MODE_SKEW){
 		drawSkew(true);
 		drawGui(false);
@@ -623,6 +622,7 @@ void ofxLabProjectionTools::setMode( int which ){
 		drawOverlays(false);
 		ofShowCursor();
 	} else if ( which == LAB_DRAW_MODE_CROP){
+		cout<<"crop?"<<endl;
 		drawCrop(true);
 		drawGui(true);
 		drawSkew(false);

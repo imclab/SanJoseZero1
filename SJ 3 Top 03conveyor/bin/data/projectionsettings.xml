@@ -21,7 +21,7 @@
             </point>
             <point>
                 <x>0.000000</x>
-                <y>1679.000000</y>
+                <y>1680.000000</y>
             </point>
         </skew>
         <crop>
@@ -39,36 +39,14 @@
             </point>
             <point>
                 <x>0.000000</x>
-                <y>1679.000000</y>
+                <y>1680.000000</y>
             </point>
         </crop>
         <overlays>
             <overlay>
                 <position>
-                    <x>281.000000</x>
-                    <y>229.000000</y>
-                </position>
-                <point>
-                    <x>0.000000</x>
-                    <y>0.000000</y>
-                </point>
-                <point>
-                    <x>0.000000</x>
-                    <y>0.000000</y>
-                </point>
-                <point>
-                    <x>0.000000</x>
-                    <y>0.000000</y>
-                </point>
-                <point>
-                    <x>0.000000</x>
-                    <y>0.000000</y>
-                </point>
-            </overlay>
-            <overlay>
-                <position>
-                    <x>606.000000</x>
-                    <y>747.000000</y>
+                    <x>525.000000</x>
+                    <y>424.000000</y>
                 </position>
                 <point>
                     <x>0.000000</x>

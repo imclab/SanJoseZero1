@@ -27,6 +27,7 @@
 #include "ofxFBOTextureMS.h"
 //#include "ofxFBOTexture.h"
 #include "ofxLabProjectionOverlay.h"
+#include "ofxLabUtils.h"
 
 
 class ofxLabProjectedView
@@ -168,6 +169,47 @@ public:
 	}
 	
 //----------------------------------------------------------------------------
+	
+	void drawDebug(){
+		glDisable(GL_DEPTH_TEST);
+		for (int i=0; i<overlays.size(); i++){
+			overlays[i]->render();
+			overlays[i]->draw();
+		};
+		
+		float squareWidth = 10;
+		if (bDrawSkew){
+			ofPushStyle();{
+				ofSetColor(255,0,0);
+				ofRect(skewCorners[0].x, skewCorners[0].y, squareWidth, squareWidth);
+				ofSetColor(0,255,0);
+				ofRect(skewCorners[1].x-squareWidth, skewCorners[1].y, squareWidth, squareWidth);
+				ofSetColor(0,0,255);
+				ofRect(skewCorners[2].x-squareWidth, skewCorners[2].y-squareWidth, squareWidth, squareWidth);
+				ofSetColor(255,255,0);
+				ofRect(skewCorners[3].x, skewCorners[3].y-squareWidth, squareWidth, squareWidth);
+			}ofPopStyle();
+		} else if (bDrawCrop){ 
+			ofSetColor(0xffffff);
+			
+			ofPushStyle();{
+				ofSetColor(150,50,150);
+				ofRect(cropCorners[0].x, cropCorners[0].y, squareWidth, squareWidth);
+				ofSetColor(0,150,150);
+				ofRect(cropCorners[1].x-squareWidth, cropCorners[1].y, squareWidth, squareWidth);
+				ofSetColor(150,100,0);
+				ofRect(cropCorners[2].x-squareWidth, cropCorners[2].y-squareWidth, squareWidth, squareWidth);
+				ofSetColor(50,150,50);
+				ofRect(cropCorners[3].x, cropCorners[3].y-squareWidth, squareWidth, squareWidth);
+			}ofPopStyle();			
+		} 
+		
+		ofSetColor(0x000000);
+		glDisable(GL_DEPTH_TEST);
+		ofQuad3D(cropCorners[1],ofPoint(width,0),ofPoint(width,height),cropCorners[2]);
+		ofSetColor(0xffffff);
+			
+	};
 	
 	void draw(){
 		
@@ -315,6 +357,11 @@ public:
 //----------------------------------------------------------------------------
 	ofPoint getRenderPosition(){
 		return ofPoint(x,y);
+	}
+	
+//----------------------------------------------------------------------------
+	float getCroppedWidth(){
+		return (cropCorners[1].x - cropCorners[0].x);
 	}
 					   
 					   

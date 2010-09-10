@@ -326,7 +326,7 @@
             </color>
         </message>
         <message>
-            <image>models/megaphone/mega02.3DS/2</image>
+            <image>models/megaphone/mega02.3DS</image>
             <messageString>/pluginplay/megaphone/2</messageString>
             <color>
                 <r>220</r>
@@ -519,15 +519,18 @@
     <conveyor>
         <conveyorScaleY>2.000000</conveyorScaleY>
         <rowCount>18</rowCount>
-        <rowBuffer>10.000000</rowBuffer>
+        <rowBuffer>0.000000</rowBuffer>
         <uIncrement>0.005000</uIncrement>
-        <conveyorY>135.000000</conveyorY>
+        <conveyorY>111.363632</conveyorY>
     </conveyor>
     <light>
         <position>
-            <x>841.000000</x>
+            <x>36.000000</x>
             <y>840.000000</y>
             <z>2520.000000</z>
         </position>
     </light>
+    <calibration>
+        <bUseProjectionTools>0</bUseProjectionTools>
+    </calibration>
 </settings>

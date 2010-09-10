@@ -446,4 +446,19 @@
     <GROUP_TIME>
         <val_0>2000.000000</val_0>
     </GROUP_TIME>
+    <ROTATE_TIME>
+        <val_0>4.976363</val_0>
+    </ROTATE_TIME>
+    <ROTATE_AMOUNT>
+        <val_0>5.275000</val_0>
+    </ROTATE_AMOUNT>
+    <CONVEYOR_SCALE_Y>
+        <val_0>270.913635</val_0>
+    </CONVEYOR_SCALE_Y>
+    <CONVEYOR_Y>
+        <val_0>111.363632</val_0>
+    </CONVEYOR_Y>
+    <ROW_BUFFER>
+        <val_0>0.000000</val_0>
+    </ROW_BUFFER>
 </settings>

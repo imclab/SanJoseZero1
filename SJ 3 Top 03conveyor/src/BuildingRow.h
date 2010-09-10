@@ -37,7 +37,7 @@ public:
 		pos.x = 0;//ofGetWidth()/2.0;
 		pos.y = 0;//ofGetHeight()/2.0;
 		rotation.x = 270;
-		size.x = ofGetWidth();
+		size.x = screenWidth;
 		size.y = 70;
 		
 		//build base columns

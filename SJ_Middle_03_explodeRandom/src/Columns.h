@@ -33,7 +33,7 @@ public:
 		
 		for (int i=0; i<number; i++){
 			Column c = Column();
-			c.x = border+spacing*i;
+			c.x = colBorder+spacing*i;
 			c.y = 0;
 			column_vect.push_back(c);
 		}
