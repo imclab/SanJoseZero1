@@ -1,8 +1,0 @@
-*.o
-*.lo
-*.la
-.deps
-.libs
-config.h
-config.h.in
-stamp-*
