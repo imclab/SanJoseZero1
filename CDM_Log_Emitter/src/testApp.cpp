@@ -142,6 +142,9 @@ void testApp::update(){
 		// SEND OSC MESSAGE only if timestamp exists for this emission
 		if (data != "") {
 			LOG = "emit ID: " + ofToString(curEmitID) + "\n";
+			LOG += "data: " + data + "\n";
+			cout << "emit ID: " << curEmitID << endl;
+			cout << "data: " << data << endl << endl;
 			sendOSCMessage(data);
 		}
 		
