@@ -1,5 +1,4 @@
 import processing.serial.*;
-import processing.opengl.*;
 import oscP5.*;
 import netP5.*;
 
@@ -56,7 +55,7 @@ import netP5.*;
 **********************************************************/
   
   void setup () {
-    size (1024, 768, OPENGL);
+    size (1024, 768);
     font = loadFont("Rockwell-Light-20.vlw");
     inputs = new ArrayList();
     
@@ -158,7 +157,7 @@ import netP5.*;
     //draw text labels
     pushMatrix();
       translate(10, spacingY+10);
-      rotateZ(radians(-90));
+      rotate(radians(-90));
       fill(100,100,100);
       rect(0,0,spacingY, 30);
       fill(200);
@@ -168,7 +167,7 @@ import netP5.*;
     
     pushMatrix();
       translate(10, spacingY*2+20);
-      rotateZ(radians(-90));
+      rotate(radians(-90));
       fill(100,100,100);
       rect(0,0,spacingY, 30);
       fill(200);
