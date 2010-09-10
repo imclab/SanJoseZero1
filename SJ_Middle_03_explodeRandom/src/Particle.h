@@ -327,12 +327,12 @@ public:
 		if ( (bTransformed || bLeaving) && index != 0){
 			
 			//steer
-			float maxspeed = 30.0f; //arbitrary top speed for now...
+			float maxSeekSpeed = maxSpeed; //arbitrary top speed for now...
 			float maxforce = 2.0f;
 			
 			//make slow if haven't blown up yet
 			if (bTransforming && !bTransformed){
-				maxspeed = 10.0f;				
+				maxSeekSpeed = 10.0f;				
 			} 
 			
 			//seek harder if exploded
@@ -365,7 +365,7 @@ public:
 			// If the distance is greater than 0, calc steering (otherwise return zero vector)
 			if (d > 0) {				
 				desired /= d; // Normalize desired
-				desired *= maxspeed;
+				desired *= maxSeekSpeed;
 				if (d < 100) desired *= d/100.0f;
 				// Steering = Desired minus Velocity
 				steer = desired - vel;
@@ -382,15 +382,15 @@ public:
 			
 			//steer
 			
-			float maxspeed = 30.0f;
+			float maxSeekSpeed = maxSpeed;
 			float maxforce = 2.0f;
 			
 			// force slowness unless on the way out
 			
 			if (bLeaving){
-				maxspeed = minSpeed;
+				maxSeekSpeed = minSpeed;
 			} else if (bTransforming && !bTransformed){
-				maxspeed = 10.0f;				
+				maxSeekSpeed = 10.0f;				
 			}
 			
 			ofxVec3f steer;  // The steering vector
@@ -402,7 +402,7 @@ public:
 			// If the distance is greater than 10
 			if (distance > 10) {				
 				desired /= distance; // Normalize desired
-				desired *= maxspeed;
+				desired *= maxSeekSpeed;
 				
 				//slow down unless on the way out
 				if (distance < 100 && !bLeaving){
@@ -543,6 +543,9 @@ public:
 				
 		// UPDATE VELOCITY + ACCELERATION
 		
+		//acc.x = ofClamp(acc.x, -maxSpeed, maxSpeed);
+		//acc.y = ofClamp(acc.y, -maxSpeed, maxSpeed);
+		
 		if (index != 0 && !bLeaving || !bLeaving)
 			vel += acc;
 		else if (index == 0 && bLeaving){
@@ -553,7 +556,6 @@ public:
 			vel.y = -minSpeed;
 		}
 		
-		vel.limit(maxSpeed);
 		
 		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
 		

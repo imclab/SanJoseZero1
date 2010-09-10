@@ -56,6 +56,7 @@ public:
 	ParticleTrails trails;
 	
 // calibration
+	bool bUseProjectionTools;
 	ofTrueTypeFont			font;	
 	int drawMode;
 	ofxLabProjectionTools	projection;

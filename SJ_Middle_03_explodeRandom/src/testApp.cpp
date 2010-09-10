@@ -7,12 +7,16 @@
 void testApp::setup(){	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(false);
-	ofSetFrameRate(120);	
+	ofSetFrameRate(60);	
+	
+	bUseProjectionTools = true;
 	
 	//load settings from xml
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
 	settings.pushTag("settings");{
+		
+		bUseProjectionTools = settings.getValue("bUseProjectionTools", bUseProjectionTools);
 		
 		//SETUP OSC
 				
@@ -228,7 +232,7 @@ void testApp::draw(){
 	
 	ofxLightsOff();
 	
-	projection.pushView(0);
+	if (bUseProjectionTools) projection.pushView(0);
 	
 	//draw particle effects
 	glDisable(GL_DEPTH_TEST);
@@ -243,7 +247,7 @@ void testApp::draw(){
 	glDisable(GL_DEPTH_TEST);
 	ofSetColor( 255, 255, 255 );
 	ofxLightsOff();
-	projection.popView();
+	if (bUseProjectionTools) projection.popView();
 	ofEnableAlphaBlending();
 	glDisable(GL_DEPTH_TEST);
 	
@@ -257,7 +261,7 @@ void testApp::draw(){
 		//calibrate particle scale
 		particleManager.drawDebugParticles();
 	}
-	projection.draw();
+	projection.draw(bUseProjectionTools);
 	
 	if ( drawMode == LAB_MODE_CALIBRATE){
 		columns.draw();
@@ -325,6 +329,9 @@ void testApp::keyPressed  (int key){
 	} else {
 		projection.drawGui(true);
 	};
+	if (key =='p'){
+		bUseProjectionTools = !bUseProjectionTools;
+	}
 }
 
 //--------------------------------------------------------------
@@ -370,7 +377,9 @@ void testApp::saveSettings(){
 	
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
-	settings.pushTag("settings");{		
+	settings.pushTag("settings");{				
+		settings.setValue("bUseProjectionTools", bUseProjectionTools);
+		
 		//transform start + end
 		settings.setValue("transform:start", particleManager.getTransformStart());
 		settings.setValue("transform:end", particleManager.getTransformEnd());
@@ -402,7 +411,7 @@ void testApp::setupGui(){
 	projection.addDefaultGroup("settings", true);
 	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
 	gui->addSlider("maximumScale", "SCALE_MAX", 10.0f, 1.0f, 30.0f, false);
-	gui->addSlider("maximum speed", "SPEED_MAX", 10.0f, 1.0f, 30.0f, false);
+	gui->addSlider("maximum speed", "SPEED_MAX", 10.0f, 1.0f, 100.0f, false);
 	gui->addSlider("minumum speed", "SPEED_MIN", 5.0f, .1f, 20.0f, false);
 	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 10000, false);
 	projection.loadGuiSettings();

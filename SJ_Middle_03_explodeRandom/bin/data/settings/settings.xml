@@ -326,7 +326,7 @@
             </color>
         </message>
         <message>
-            <image>models/megaphone/mega02.3DS/2</image>
+            <image>models/megaphone/mega02.3DS</image>
             <messageString>/pluginplay/megaphone/2</messageString>
             <color>
                 <r>220</r>
@@ -520,8 +520,9 @@
         <end>248.000000</end>
     </transform>
     <columns>
-        <numColums>10</numColums>
-        <spacing>105.000305</spacing>
-        <border>52.500153</border>
+        <numColums>18</numColums>
+        <spacing>59.625179</spacing>
+        <border>59.625179</border>
     </columns>
+    <bUseProjectionTools>0</bUseProjectionTools>
 </settings>
