@@ -110,12 +110,6 @@ void testApp::setup(){
 	drawStatus[1] = 0;
 	drawStatus[2] = 0;
 	drawMode = 0;
-	
-	
-	// ZACK: Initialize last emit times for each quad to the current time
-//	for (int i = 0; i < stoplight.numRects; i++) {
-//		time(&lastEmitTimes[i]);
-//	}
 }
 
 //--------------------------------------------------------------
@@ -193,13 +187,10 @@ void testApp::update(){
 		
 		if (lightIndex == 0) {
 			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
-			//			colorDist = redLight.distance(curPixel,OF_COLOR_RGB);
 		} else if (lightIndex == 1) {
 			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
-			//colorDist = yellowLight.distance(curPixel,OF_COLOR_RGB);
 		} else {
 			colorDist = stoplight.quads[lightIndex].quadColor.distance(curPixel,OF_COLOR_RGB);
-			//colorDist = greenLight.distance(curPixel,OF_COLOR_RGB);
 		}
 		
 		// See if the current pixel matches the set color for this quad
@@ -221,7 +212,7 @@ void testApp::update(){
 				cout << "light: " << (*lightQ).name << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
 			}
 			sendOscMessage(lightIndex);
-				if (lightIndex == 0)
+			if (lightIndex == 0)
 				lightIndex = 2;
 			else
 				lightIndex--;
@@ -233,7 +224,7 @@ void testApp::update(){
 				cout << "light: " << (*lightQ).name << ", colorDist: " << colorDist << ", " << curPixel.red << ":" << curPixel.green << ":" << curPixel.blue << endl;
 			}
 			sendOscMessage(lightIndex);
-				if (lightIndex == 0)
+			if (lightIndex == 0)
 				lightIndex = 2;
 			else
 				lightIndex--;
@@ -255,20 +246,7 @@ void testApp::update(){
 
 // ZACK: sends an OSC message for the given quad
 void testApp::sendOscMessage(int quadIndex) {
-	time_t sendTime;
-	time(&sendTime);
-	
-	lastEmitTimes[quadIndex] = sendTime;
 	stoplight.send(quadIndex);
-
-	// Test that enough time has elapsed since the last sent message for the given quad
-//	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= *particleEmitThresholdSeconds) {
-//		lastEmitTimes[quadIndex] = sendTime;
-//		stoplight.send(quadIndex);
-//		if (DEBUG) cout << "emitted: " << stoplight.names[quadIndex] << endl;
-//	} else {
-//		if (DEBUG) cout << "too soon\n";
-//	}
 }
 
 

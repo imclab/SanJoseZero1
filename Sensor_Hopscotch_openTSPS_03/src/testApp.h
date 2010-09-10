@@ -53,13 +53,11 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 		ofxCvColorImage		colorImg;	
 
 		float* opticalFlowDetectionThreshold;
-//		float* particleEmitThresholdSeconds;
 	
 	
 	//hopscotch
 		int drawMode;
 		Hopscotch hopscotch;
-		time_t lastEmitTimes[NUM_OF_QUADS];
 	
 	//status bar stuff
 		ofImage statusBar;

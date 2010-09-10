@@ -79,12 +79,6 @@ void testApp::setup(){
 	drawStatus[1] = 0;
 	drawStatus[2] = 0;
 	drawMode = 0;
-	
-	
-	// ZACK: Initialize last emit times for each quad to the current time
-//	for (int i = 0; i < blocks.numRects; i++) {
-//		time(&lastEmitTimes[i]);
-//	}
 }
 
 //--------------------------------------------------------------
@@ -140,20 +134,7 @@ void testApp::update(){
 
 // ZACK: sends an OSC message for the given quad
 void testApp::sendOscMessage(int quadIndex) {
-	time_t sendTime;
-	time(&sendTime);
-	
-	blocks.quads[quadIndex].lastEmitTime = sendTime;
 	blocks.send(quadIndex);
-
-	// Test that enough time has elapsed since the last sent message for the given quad
-//	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= *particleEmitThresholdSeconds) {
-//		lastEmitTimes[quadIndex] = sendTime;
-//		blocks.send(quadIndex, (int)ofRandom(0,3));
-//		cout << "emitted: " << blocks.names[quadIndex] << endl;
-//	} else {
-//		cout << "too soon\n";
-//	}
 }
 
 

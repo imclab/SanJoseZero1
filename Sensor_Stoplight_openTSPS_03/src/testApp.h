@@ -57,7 +57,6 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 	//stoplight
 		int drawMode;
 		Stoplight stoplight;
-		time_t lastEmitTimes[NUM_OF_QUADS];
 	
 	//status bar stuff
 		ofImage statusBar;

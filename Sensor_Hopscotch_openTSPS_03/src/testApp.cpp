@@ -79,12 +79,6 @@ void testApp::setup(){
 	drawStatus[1] = 0;
 	drawStatus[2] = 0;
 	drawMode = 0;
-	
-	
-	// ZACK: Initialize last emit times for each quad to the current time
-//	for (int i = 0; i < hopscotch.numRects; i++) {
-//		time(&lastEmitTimes[i]);
-//	}
 }
 
 //--------------------------------------------------------------
@@ -132,7 +126,7 @@ void testApp::update(){
 		
 		// Test that enough movement has occured to trigger a sendSignalOSC event
 		if (fabs(myPoint.x) + fabs(myPoint.y) > *opticalFlowDetectionThreshold) {
-			cout << "GOT IT! Quad: " << (*q).name << ",  " << myPoint.x << "," << myPoint.y << endl;
+			if (DEBUG) cout << "GOT IT! Quad: " << (*q).name << ",  " << myPoint.x << "," << myPoint.y << endl;
 			sendOscMessage(i);
 		}
 	}
@@ -140,20 +134,7 @@ void testApp::update(){
 
 // ZACK: sends an OSC message for the given quad
 void testApp::sendOscMessage(int quadIndex) {
-	time_t sendTime;
-	time(&sendTime);
-	
-	lastEmitTimes[quadIndex] = sendTime;
 	hopscotch.send(quadIndex, (int)ofRandom(0,3));
-
-	// Test that enough time has elapsed since the last sent message for the given quad
-//	if (difftime(sendTime,lastEmitTimes[quadIndex]) >= *particleEmitThresholdSeconds) {
-//		lastEmitTimes[quadIndex] = sendTime;
-//		hopscotch.send(quadIndex, (int)ofRandom(0,3));
-//		cout << "emitted: " << hopscotch.names[quadIndex] << endl;
-//	} else {
-//		cout << "too soon\n";
-//	}
 }
 
 

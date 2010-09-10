@@ -43,10 +43,10 @@
     <val_0>6.916667</val_0>
 </SMOOTH_AMOUNT>
 <MIN_BLOB>
-    <val_0>0.100000</val_0>
+    <val_0>2.000000</val_0>
 </MIN_BLOB>
 <MAX_BLOB>
-    <val_0>100.000000</val_0>
+    <val_0>0.100000</val_0>
 </MAX_BLOB>
 <FIND_HOLES>
     <val_0>0.000000</val_0>
