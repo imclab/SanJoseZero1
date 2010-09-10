@@ -195,7 +195,7 @@
         <val_0>1024.000000</val_0>
     </BOTTOM_MASK_WIDTH_0>
     <BOTTOM_MASK_HEIGHT_0>
-        <val_0>0.000000</val_0>
+        <val_0>179.199997</val_0>
     </BOTTOM_MASK_HEIGHT_0>
     <LEFT_MASK_X_0>
         <val_0>-394.666626</val_0>
@@ -447,13 +447,13 @@
         <val_0>2000.000000</val_0>
     </GROUP_TIME>
     <ROTATE_TIME>
-        <val_0>4.976363</val_0>
+        <val_0>0.100000</val_0>
     </ROTATE_TIME>
     <ROTATE_AMOUNT>
-        <val_0>5.275000</val_0>
+        <val_0>1.000000</val_0>
     </ROTATE_AMOUNT>
     <CONVEYOR_SCALE_Y>
-        <val_0>270.913635</val_0>
+        <val_0>252.768173</val_0>
     </CONVEYOR_SCALE_Y>
     <CONVEYOR_Y>
         <val_0>111.363632</val_0>

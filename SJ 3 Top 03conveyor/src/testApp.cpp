@@ -971,7 +971,7 @@ void testApp::scaleConveyorY(float scale){
 	//reset texture coords of image
 	
 	float yImgScale = numCurves+numCurves*scale;	
-	float xImgScale = numSubdivisions+numSubdivisions*scale;
+	float xImgScale = numSubdivisions+numSubdivisions;//*scale;
 	
 	for(int i=0; i<numCurves;i++){
 		for(int j=0; j<numSubdivisions;j++){
