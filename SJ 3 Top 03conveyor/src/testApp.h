@@ -43,12 +43,16 @@ class testApp : public ofBaseApp{
 		int lastEmitted;
 	
 		int drawMode;
+		bool bUseProjectionTools;
 		ofxLabProjectionTools projection;
 		bool bDrawCurves;
 		bool bInited;
 		void setupGui();
+		void updateFromGui();
+	
 		bool bWindowResized;
 		float conveyorY;
+		float rowRealBuffer;
 	
 	//  settings
 		void loadSettings();
@@ -144,8 +148,7 @@ class testApp : public ofBaseApp{
 		vector <Stack> stacks;
 		vector <int> refVerts;
 	
-		//screen vars
-		int screenWidth, screenHeight;		
+		//screen vars	
 		float halfFov, theTan, screenFov, aspect;
 	
 		float eyeX;

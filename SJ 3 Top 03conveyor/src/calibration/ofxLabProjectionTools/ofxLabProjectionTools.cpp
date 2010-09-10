@@ -236,31 +236,37 @@ void ofxLabProjectionTools::update(){
 };
 
 //----------------------------------------------------------------------------
-void ofxLabProjectionTools::draw(){
+void ofxLabProjectionTools::draw( bool bDrawFBO ){
+	if (bDrawFBO){
 #ifdef USE_SHADERS
-	screen.clear();
-	screen.swapIn();
-	ofEnableSmoothing();
+		screen.clear();
+		screen.swapIn();
+		ofEnableSmoothing();
 #endif	
-	for (int i=0; i<views.size(); i++){
-		draw(i);
-	}
+		for (int i=0; i<views.size(); i++){
+			draw(i);
+		}
 #ifdef USE_SHADERS
-	screen.swapOut();
+		screen.swapOut();
 	
-	amplify.begin();
-	screen.bind();
-	amplify.setUniform("mult", amplifyAmount);
-	amplify.setUniform("src_tex_unit0", 0);
+		amplify.begin();
+		screen.bind();
+		amplify.setUniform("mult", amplifyAmount);
+		amplify.setUniform("src_tex_unit0", 0);
 	
 	//views[which]->getTexture().bind();
 	//amplify.setUniform("src_tex_unit0", 0);
 	//views[which]->getTexture().unbind();
 	
-	screen.draw(0, 0, screen.getWidth(), screen.getHeight());
-	amplify.end();
-	screen.unbind();
+		screen.draw(0, 0, screen.getWidth(), screen.getHeight());
+		amplify.end();
+		screen.unbind();
 #endif
+	} else {
+		for (int i=0; i<views.size(); i++){
+			views[i]->drawDebug();
+		}
+	}
 	
 	string modeString = "";
 	

@@ -12,7 +12,7 @@ void testApp::setup(){
 	
 	ofBackground( 0, 0, 0 );
 	ofSetVerticalSync(true);
-	ofSetFrameRate(120);
+	ofSetFrameRate(60);
 	ofHideCursor();
 	ofDisableArbTex();
 	
@@ -20,22 +20,8 @@ void testApp::setup(){
 	
 	ofxMaterialSpecular(120, 120, 120); //how much specular light will be reflect by the surface
 	ofxMaterialShininess(30); //how concentrated the reflexion will be (between 0 and 128
-	
-	//*** SCREEN MATRIX ************************************************
-	
-	screenWidth = ofGetWidth();
-	screenHeight = ofGetHeight();		
-	screenFov 		= 60.0f; //adjust this to alter the perspective
-	eyeX 		= (float)screenWidth / 2.0;
-	eyeY 		= (float)screenHeight / 2.0;
-	targetPos.set(eyeX, eyeX, 205);
-	halfFov 		= PI * screenFov / 360.0;
-	theTan 			= tanf(halfFov);
-	dist 		= eyeY / theTan;
-	nearDist		= 150; //dist / 50.0;	// near / far clip plane
-	farDist		= dist * 50.0;
-	aspect 			= (float)screenWidth/(float)screenHeight;
-	
+	ofxSetSmoothLight(true);
+		
 	//*** SHADERS ************************************************
 	
 	depthShader.setup("shaders/depthShader");
@@ -65,7 +51,7 @@ void testApp::setup(){
 	numSubdivisions = 25;
 	uIncrement = .02; //this gets added to advance mesh verts and stack positions. added to uVal per frame
 	
-	lightPosition.x = projection.getView(0)->width;
+	lightPosition.x = projection.getView(0)->getCroppedWidth();
 	lightPosition.y = projection.getView(0)->height*.5;
 	lightPosition.z = projection.getView(0)->height*1.5;
 	bLightSourceChanged = true;
@@ -80,10 +66,11 @@ void testApp::setup(){
 	//*** CALIBRATION ************************************************ 
 	
 	//setup view if not loaded via xml
+	bUseProjectionTools = true;
 	if (!projection.bSettingsLoaded){
 		projection.addView(0,0,ofGetWidth(), ofGetHeight());
 	}
-	lightPosition.x = projection.getView(0)->width;
+	lightPosition.x = projection.getView(0)->getCroppedWidth();
 	lightPosition.y = projection.getView(0)->height*.5;
 	lightPosition.z = projection.getView(0)->height*1.5;
 	
@@ -94,10 +81,48 @@ void testApp::setup(){
 	//load settings from xml
 	loadSettings();
 	
+	
+	//*** SCREEN MATRIX ************************************************
+	
+	screenWidth = projection.getView(0)->getCroppedWidth();
+	screenHeight = projection.getView(0)->height;		
+	screenFov 		= 60.0f; //adjust this to alter the perspective
+	eyeX 		= (float)screenWidth / 2.0;
+	eyeY 		= (float)screenHeight / 2.0;
+	targetPos.set(eyeX, eyeX, 205);
+	halfFov 		= PI * screenFov / 360.0;
+	theTan 			= tanf(halfFov);
+	dist 		= eyeY / theTan;
+	nearDist		= 150; //dist / 50.0;	// near / far clip plane
+	farDist		= dist * 50.0;
+	aspect 			= (float)screenWidth/(float)screenHeight;
+	
+		
+	//*** SETUP + SCALE CONVEYOR ************************************************ 
+	
+	setupConveyorMesh();
+	bInited = true;
+	bWindowResized = true;
+	bSaveSettings = false;
+	lastEmitted = 0;
+	
+	float xStep = (projection.getView(0)->getCroppedWidth() + ROW_SPACING)/float(numCurves);	
+	for(int i=0; i<numCurves; i++){
+		moveCurveX(i, i*xStep+ROW_BUFFER);//+xStep/2);
+	}
+	
+	ROW_SPACING = vertices[getVertPointer(1, sweetSpot[2].uPos)].pos.x - vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x ;
+	
 	//*** BUILD EMITTER ************************************************
 	
 	particleManager = new Emitter(ceiling);
 	particleManager->setAdvanceCeilingBool(&advanceCeiling);
+	
+	// add listener to send to the logger app
+	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
+	
+	updateFromGui();
+	scaleConveyorY(conveyorScaleY);
 	
 	//*** ROW CALIBRATION ************************************************ 
 	ofxOscMessage rowMessage;
@@ -107,25 +132,13 @@ void testApp::setup(){
 	
 	ofxOscMessage spacerMessage;
 	spacerMessage.setAddress("/pluginplay/calibration/buffers");
-	spacerMessage.addFloatArg( ROW_BUFFER);
+	spacerMessage.addFloatArg( ROW_SPACING + ROW_BUFFER );
 	calibrationSender.sendMessage(spacerMessage);
 	
 	ofxOscMessage spaceMessage;
 	spaceMessage.setAddress("/pluginplay/calibration/spacing");
 	spaceMessage.addFloatArg( ROW_SPACING);
 	calibrationSender.sendMessage(spaceMessage);
-	
-	// add listener to send to the logger app
-	ofAddListener(particleManager->rowComplete,this,&testApp::rowIsComplete);
-		
-	//*** SETUP + SCALE CONVEYOR ************************************************ 
-	
-	setupConveyorMesh();
-	scaleConveyorY(conveyorScaleY);
-	bInited = true;
-	bWindowResized = true;
-	bSaveSettings = false;
-	lastEmitted = 0;
 }
 
 /*********************************************************************************
@@ -138,8 +151,8 @@ void testApp::update(){
 		//particleManager->emitRandom();
 	}
 	
-	//yikes, gross hack
-	//if (ofGetElapsedTimeMillis() - fullScreenStarted < fullScreenWaitTime) return;
+	//*** GET EMITTER MESSAGES ************************************************ 
+	updateFromGui();
 	
 	//*** GET EMITTER MESSAGES ************************************************ 
 	while( receiver.hasWaitingMessages() )
@@ -156,6 +169,22 @@ void testApp::update(){
 		{
 			cout << "did not recognize: "<<m.getAddress()<<endl;
 			// unrecognized message
+			if (m.getAddress() == "/pluginplay/getcalibration"){
+				ofxOscMessage rowMessage;
+				rowMessage.setAddress("/pluginplay/calibration/numrows");
+				rowMessage.addIntArg((int) NUMBER_OF_ROWS);
+				calibrationSender.sendMessage(rowMessage);	
+				
+				ofxOscMessage spacerMessage;
+				spacerMessage.setAddress("/pluginplay/calibration/buffers");
+				spacerMessage.addFloatArg( rowRealBuffer );
+				calibrationSender.sendMessage(spacerMessage);
+				
+				ofxOscMessage spaceMessage;
+				spaceMessage.setAddress("/pluginplay/calibration/spacing");
+				spaceMessage.addFloatArg( ROW_SPACING);
+				calibrationSender.sendMessage(spaceMessage);
+			};
 		}
 	};	
 	
@@ -219,26 +248,25 @@ void testApp::update(){
 		
 	//*** UPDATE ROW SPACING ************************************************ 
 	
-	float oldRowBuffer = ROW_BUFFER;
+	float oldRowBuffer = rowRealBuffer;
 	float oldRowSpacing = ROW_SPACING;	
 	
 	//ROW_BUFFER = vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x;
 	ROW_SPACING = vertices[getVertPointer(1, sweetSpot[2].uPos)].pos.x - vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.x ;
+	rowRealBuffer = ROW_SPACING + ROW_BUFFER;
 	
 	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
-	
-	if (oldRowBuffer != ROW_BUFFER){
-		ofxOscMessage spacerMessage;
-		spacerMessage.setAddress("/pluginplay/calibration/buffers");
-		spacerMessage.addFloatArg( ROW_BUFFER);
-		calibrationSender.sendMessage(spacerMessage);
-	}
-	
-	if (oldRowSpacing != ROW_SPACING){
+		
+	if (oldRowSpacing != ROW_SPACING || oldRowBuffer != rowRealBuffer){
 		ofxOscMessage spaceMessage;
 		spaceMessage.setAddress("/pluginplay/calibration/spacing");
 		spaceMessage.addFloatArg( ROW_SPACING);
 		calibrationSender.sendMessage(spaceMessage);
+		
+		ofxOscMessage bufferMessage;
+		bufferMessage.setAddress("/pluginplay/calibration/buffers");
+		bufferMessage.addFloatArg( rowRealBuffer );
+		calibrationSender.sendMessage(bufferMessage);
 	}
 	
 	//*** LIGHT AND SHADOW SETUP ************************************************ 
@@ -305,7 +333,7 @@ void testApp::draw(){
 	} fbo.end();
 	glPopMatrix();
 	
-	projection.pushView(0);
+	if(bUseProjectionTools) projection.pushView(0);
 	
 //draw geometry
 	//set camera
@@ -318,8 +346,10 @@ void testApp::draw(){
 	gluLookAt(eyeX, eyeY, dist,
 			  eyeX, eyeY, 0.0,
 			  0.0, 1.0, 0.0);	
-	//glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
-	//glTranslatef(0, -screenHeight, 0);       // shift origin up to upper-left corner.
+	if (!bUseProjectionTools){
+		glScalef(1, -1, 1);           // invert Y axis so increasing Y goes down.
+		glTranslatef(0, -screenHeight, 0);       // shift origin up to upper-left corner.
+	}
 	
 	shadowShader.begin();{	
 		shadowShader.setUniform("sampStep", 1.f/float(fbo.getWidth()), 1.f/float(fbo.getHeight()));	
@@ -404,10 +434,10 @@ void testApp::draw(){
 			curX += ROW_SPACING;
 		};
 	}	
-	projection.popView();
+	if (bUseProjectionTools) projection.popView();
 	ofxLightsOff();
 	ofSetColor(0xffffff);
-	projection.draw();
+	projection.draw(bUseProjectionTools);
 }
 
 /*********************************************************************************
@@ -466,7 +496,7 @@ void testApp::keyPressed(int key){
 		if(wireFrame)	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		else	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	} /*else if(key == 's'){
-		scaleConveyorY(float(mouseY)/float(projection.getView(0)->width));
+		scaleConveyorY(float(mouseY)/float(projection.getView(0)->getCroppedWidth()));
 	} */else if (key == 'm'){
 		drawMode++;
 		if (drawMode > NUM_DRAW_MODES-1){
@@ -481,6 +511,10 @@ void testApp::keyPressed(int key){
 		particleManager->emitRandom();
 	} else if (key == 's'){
 		saveSettings();
+	} else if (key == 'd'){
+		bDrawCurves = !bDrawCurves;
+	} else if ( key == 'p'){
+		bUseProjectionTools = !bUseProjectionTools;
 	}
 }
 
@@ -500,9 +534,11 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	bDragging = true;
-	lightPosition.x = x;
-	bLightSourceChanged = true;
+	//bDragging = true;
+	if (drawMode == 0){
+		lightPosition.x = x;
+		bLightSourceChanged = true;
+	}
 }
 
 //--------------------------------------------------------------
@@ -526,7 +562,7 @@ void testApp::windowResized(int w, int h){
 	if (particleManager != NULL){
 		particleManager->windowResized();
 	}	
-	float xStep = (h + ROW_SPACING)/float(numCurves);
+	float xStep = (projection.getView(0)->getCroppedWidth() + ROW_SPACING)/float(numCurves);
 	//float yStep = h/float(numCVs);
 	
 	for(int i=0; i<numCurves; i++){
@@ -555,16 +591,59 @@ void testApp::windowResized(int w, int h){
 	CALIBRATION
 *********************************************************************************/
 
-//--------------------------------------------------------------
+// BUILD GUI --------------------------------------------------------------
+
 void testApp::setupGui(){
 	ofxLabGui * gui = projection.getGui();
-	//guiTypePanel * panel = projection.addDefaultPanel("particles");
-	//projection.addDefaultGroup("settings", true);
-	//projection.loadGuiSettings();
+	guiTypePanel * panel = projection.addDefaultPanel("conveyor");
+	projection.addDefaultGroup("conveyor", true);
+	gui->addSlider("Rotate delay (in seconds)", "ROTATE_TIME", 2.f, .1f, 15.0f, false);
+	gui->addSlider("Rotate amount", "ROTATE_AMOUNT", 5, 1, 100, false);
+	gui->addSlider("conveyor scale (in %)", "CONVEYOR_SCALE_Y", 150.f, 1, 500.0f, false);
+	gui->addSlider("conveyor position.y", "CONVEYOR_Y", 135, 0, 1000.0f, true);
+		
+	projection.addDefaultGroup("rows", true);
+	gui->addSlider("row start X", "ROW_BUFFER", 10.0f, -50.0f, 500.0f, false);	
+	gui->update();
 	
-	//gui->setPanelIndex("particles", 0);
+	projection.loadGuiSettings();	
+	
+	gui->setPanelIndex("conveyor", 0);
 	gui->update();
 	gui->setupOscReceiving(3001);
+};
+
+// LOAD VARS --------------------------------------------------------------
+void testApp::updateFromGui(){
+	float oldConveyorScale = conveyorScaleY;
+	float oldConveyorY = conveyorY;
+	float oldRowBuffer = ROW_BUFFER;
+	
+	ofxLabGui * gui = projection.getGui();	
+	gui->update();
+	uIncrement = gui->getValueF( "ROTATE_AMOUNT" ) /1000.0f;
+	ROTATE_TIME = gui->getValueF( "ROTATE_TIME" ) * 1000.f;
+	conveyorScaleY = gui->getValueF( "CONVEYOR_SCALE_Y" ) /100.0f;
+	conveyorY = gui->getValueF( "CONVEYOR_Y" );
+	
+	ROW_BUFFER = gui->getValueF("ROW_BUFFER");
+	rowRealBuffer = ROW_SPACING + ROW_BUFFER;
+	
+	if (oldConveyorScale != conveyorScaleY) scaleConveyorY(conveyorScaleY);
+	if (oldConveyorY != conveyorY) moveConveyorY( conveyorY - oldConveyorY );
+	if (oldRowBuffer != ROW_BUFFER ){
+		
+		float xStep = (projection.getView(0)->getCroppedWidth() + ROW_SPACING)/float(numCurves);
+		
+		for(int i=0; i<numCurves; i++){
+			moveCurveX(i, i*xStep+ROW_BUFFER);//+xStep/2);
+		}
+		
+		ofxOscMessage spacerMessage;
+		spacerMessage.setAddress("/pluginplay/calibration/buffers");
+		spacerMessage.addFloatArg( rowRealBuffer );
+		calibrationSender.sendMessage(spacerMessage);
+	}
 };
 
 //--------------------------------------------------------------
@@ -576,6 +655,8 @@ void testApp::loadSettings(){
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
 	settings.pushTag("settings");{
+		
+		bUseProjectionTools = settings.getValue("calibration:bUseProjectionTools",bUseProjectionTools);
 		
 		//get port for receiver
 		int rPort = 12001;
@@ -595,11 +676,11 @@ void testApp::loadSettings(){
 		calibrationSender.setup(cHost, cPort);
 		
 		ceilingImagePath = settings.getValue("conveyor:backgroundimage",ceilingImagePath);
-		conveyorScaleY = settings.getValue("conveyor:conveyorScaleY",conveyorScaleY);
-		ROW_BUFFER = settings.getValue("conveyor:rowBuffer",ROW_BUFFER);
+		//conveyorScaleY = settings.getValue("conveyor:conveyorScaleY",conveyorScaleY);
+		//ROW_BUFFER = settings.getValue("conveyor:rowBuffer",ROW_BUFFER);
 		NUMBER_OF_ROWS = settings.getValue("conveyor:rowCount",NUMBER_OF_ROWS);
-		uIncrement = settings.getValue("conveyor:uIncrement", uIncrement);
-		conveyorY = settings.getValue("conveyor:conveyorY", conveyorY);
+		//uIncrement = settings.getValue("conveyor:uIncrement", uIncrement);
+		//conveyorY = settings.getValue("conveyor:conveyorY", conveyorY);
 		
 		lightPosition.x = settings.getValue("light:position:x",lightPosition.x);
 		lightPosition.y = settings.getValue("light:position:y",lightPosition.y);
@@ -615,14 +696,15 @@ void testApp::loadSettings(){
 void testApp::saveSettings(){
 	ofxXmlSettings settings;
 	settings.loadFile("settings/settings.xml");
-	settings.setValue("settings:conveyor:conveyorScaleY",conveyorScaleY);
+	//settings.setValue("settings:conveyor:conveyorScaleY",conveyorScaleY);
 	settings.setValue("settings:conveyor:rowBuffer",ROW_BUFFER);
 	settings.setValue("settings:conveyor:rowCount",NUMBER_OF_ROWS);
 	settings.setValue("settings:conveyor:conveyorY", conveyorY);
 	settings.setValue("settings:light:position:x",lightPosition.x);
 	settings.setValue("settings:light:position:y",lightPosition.y);
 	settings.setValue("settings:light:position:z",lightPosition.z);
-	settings.setValue("settings:conveyor:uIncrement", uIncrement);
+	settings.setValue("settings:calibration:bUseProjectionTools", bUseProjectionTools);
+	//settings.setValue("settings:conveyor:uIncrement", uIncrement);
 	
 	settings.saveFile("settings/settings.xml");
 };
@@ -642,7 +724,7 @@ void testApp::grabMatrices(GLenum gl_textureTarget){
 		0.5, 0.5, 0.5, 1.0};
 	
 	// Grab modelview and transformation matrices
-	if (bLightSourceChanged || ofGetFrameNum() < 120){
+	if (bLightSourceChanged || ofGetElapsedTimeMillis() < 2000){
 		glGetDoublev(GL_MODELVIEW_MATRIX, shadowModelView); 
 		glGetFloatv(GL_MODELVIEW_MATRIX, shadowModelViewFloat); 
 		glGetDoublev(GL_PROJECTION_MATRIX, shadowProjection);
@@ -790,7 +872,6 @@ void testApp::setupConveyorMesh(){
 	refPoses[1].set(0, 1.03782, 0);
 	refPoses[2].set(0, 1.15437, 0);//0.0157448);
 	refPoses[3].set(0, 1.09218, 0.130563);
-	//refPoses[3].set(0, 1.18961, 0.130563);
 	refPoses[4].set(0, 1.09218, 0.181413);
 	refPoses[5].set(0, 0.986734, 0.191166);
 	refPoses[6].set(0, 0.881457, 0.19796);
@@ -944,18 +1025,13 @@ void testApp::scaleConveyorY(float scale){
 	
 	//send calibration?
 	
-	if (oldRowBuffer != ROW_BUFFER){
-		ofxOscMessage spacerMessage;
-		spacerMessage.setAddress("/pluginplay/calibration/buffers");
-		spacerMessage.addFloatArg( ROW_BUFFER);
-		calibrationSender.sendMessage(spacerMessage);
-	}
-	
 	if (oldRowSpacing != ROW_SPACING){
 		ofxOscMessage spaceMessage;
 		spaceMessage.setAddress("/pluginplay/calibration/spacing");
 		spaceMessage.addFloatArg( ROW_SPACING);
 		calibrationSender.sendMessage(spaceMessage);
+		
+		
 	}
 	
 	particleManager->setCeiling(vertices[getVertPointer(0, sweetSpot[1].uPos)].pos.y);
@@ -983,4 +1059,5 @@ void testApp::exit(){
 	sweetSpotPos.clear();
 	
 	fbo.clear();
+	saveSettings();
 };

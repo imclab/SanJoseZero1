@@ -178,7 +178,7 @@ static void setOrthographicProjection(float xMin, float xMax, float yMin, float 
 }
 
 //--------------------------------------------------------------
-void drawTex(int x, int y, int w, int h){
+static void drawTex(int x, int y, int w, int h){
 	glNormal3f(0.0, 0.0, 1.0);
 	ofSetColor(255,255,255);
 	glBegin(GL_QUADS);	

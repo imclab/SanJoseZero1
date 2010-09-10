@@ -21,8 +21,8 @@ public:
 	
 	Emitter( float _ceiling ){
 		ceiling = _ceiling;
-		rotateAmount = 0;
-		lastRotated = 0;//ofGetElapsedTimeMillis();
+		rotateAmount = ROTATE_INCREMENT;
+		lastRotated = -ROTATE_TIME;//ofGetElapsedTimeMillis();
 		
 		//setup different building types
 		

@@ -71,7 +71,7 @@ public:
 	void pushView( int which );
 	void popView();
 	void update();
-	void draw();
+	void draw( bool bDrawFBO=true );
 	void draw( int which );
 
 /**************************************************************************
