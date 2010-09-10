@@ -9,33 +9,41 @@
 /* Begin PBXBuildFile section */
 		2E29259B120352E000074368 /* del_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E292596120352E000074368 /* del_impl.cpp */; };
 		2EF1B1521152C650005C4028 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EF1B1511152C650005C4028 /* icon.icns */; };
-		9A98C7501219C2F400C6A657 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A98C7471219C2F400C6A657 /* install.xml */; };
-		9A98C7511219C2F400C6A657 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7491219C2F400C6A657 /* tinyxml.cpp */; };
-		9A98C7521219C2F400C6A657 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C74B1219C2F400C6A657 /* tinyxmlerror.cpp */; };
-		9A98C7531219C2F400C6A657 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C74C1219C2F400C6A657 /* tinyxmlparser.cpp */; };
-		9A98C7541219C2F400C6A657 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C74E1219C2F400C6A657 /* ofxXmlSettings.cpp */; };
-		9A98C7801219C30900C6A657 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A98C7561219C30900C6A657 /* install.xml */; };
-		9A98C7811219C30900C6A657 /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A98C76B1219C30900C6A657 /* osc.a */; };
-		9A98C7831219C30900C6A657 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7711219C30900C6A657 /* ofxOscBundle.cpp */; };
-		9A98C7841219C30900C6A657 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7731219C30900C6A657 /* ofxOscMessage.cpp */; };
-		9A98C7851219C30900C6A657 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7751219C30900C6A657 /* ofxOscReceiver.cpp */; };
-		9A98C7861219C30900C6A657 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7771219C30900C6A657 /* ofxOscSender.cpp */; };
-		9A98C7871219C30900C6A657 /* Instructions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A98C77B1219C30900C6A657 /* Instructions.txt */; };
-		9A98C7881219C30900C6A657 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A98C77C1219C30900C6A657 /* install.xml */; };
-		9A98C7891219C30900C6A657 /* ofxThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C77E1219C30900C6A657 /* ofxThread.cpp */; };
-		9A98C7F71219C32C00C6A657 /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C78F1219C32A00C6A657 /* ofxDirList.cpp */; };
-		9A98C80E1219C32C00C6A657 /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7C01219C32A00C6A657 /* ofxTCPClient.cpp */; };
-		9A98C80F1219C32C00C6A657 /* ofxTCPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7C21219C32A00C6A657 /* ofxTCPManager.cpp */; };
-		9A98C8101219C32C00C6A657 /* ofxTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7C41219C32A00C6A657 /* ofxTCPServer.cpp */; };
-		9A98C8111219C32C00C6A657 /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7C61219C32A00C6A657 /* ofxUDPManager.cpp */; };
-		9A98C8121219C32C00C6A657 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A98C7C91219C32A00C6A657 /* install.xml */; };
-		9A98C8131219C32C00C6A657 /* openCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A98C7DF1219C32B00C6A657 /* openCV.a */; };
-		9A98C8171219C32C00C6A657 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7E61219C32C00C6A657 /* ofxCvColorImage.cpp */; };
-		9A98C8181219C32C00C6A657 /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7E91219C32C00C6A657 /* ofxCvContourFinder.cpp */; };
-		9A98C8191219C32C00C6A657 /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7EB1219C32C00C6A657 /* ofxCvFloatImage.cpp */; };
-		9A98C81A1219C32C00C6A657 /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7ED1219C32C00C6A657 /* ofxCvGrayscaleImage.cpp */; };
-		9A98C81B1219C32C00C6A657 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7EF1219C32C00C6A657 /* ofxCvImage.cpp */; };
-		9A98C81C1219C32C00C6A657 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98C7F21219C32C00C6A657 /* ofxCvShortImage.cpp */; };
+		9A447386123AEA8100FE025D /* Instructions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A447311123AEA8000FE025D /* Instructions.txt */; };
+		9A447387123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A447312123AEA8000FE025D /* install.xml */; };
+		9A447388123AEA8100FE025D /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447314123AEA8000FE025D /* ofxDirList.cpp */; };
+		9A447389123AEA8100FE025D /* Instructions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A447318123AEA8000FE025D /* Instructions.txt */; };
+		9A44738A123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A447319123AEA8000FE025D /* install.xml */; };
+		9A44738B123AEA8100FE025D /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44731C123AEA8000FE025D /* ofxTCPClient.cpp */; };
+		9A44738C123AEA8100FE025D /* ofxTCPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44731E123AEA8000FE025D /* ofxTCPManager.cpp */; };
+		9A44738D123AEA8100FE025D /* ofxTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447320123AEA8000FE025D /* ofxTCPServer.cpp */; };
+		9A44738E123AEA8100FE025D /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447322123AEA8000FE025D /* ofxUDPManager.cpp */; };
+		9A44738F123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A447325123AEA8000FE025D /* install.xml */; };
+		9A447390123AEA8100FE025D /* openCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44733B123AEA8000FE025D /* openCV.a */; };
+		9A447391123AEA8100FE025D /* libcv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44733D123AEA8000FE025D /* libcv.a */; };
+		9A447392123AEA8100FE025D /* libcvaux.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44733E123AEA8000FE025D /* libcvaux.a */; };
+		9A447393123AEA8100FE025D /* libcxcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44733F123AEA8000FE025D /* libcxcore.a */; };
+		9A447394123AEA8100FE025D /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447342123AEA8000FE025D /* ofxCvColorImage.cpp */; };
+		9A447395123AEA8100FE025D /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447345123AEA8000FE025D /* ofxCvContourFinder.cpp */; };
+		9A447396123AEA8100FE025D /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447347123AEA8000FE025D /* ofxCvFloatImage.cpp */; };
+		9A447397123AEA8100FE025D /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447349123AEA8000FE025D /* ofxCvGrayscaleImage.cpp */; };
+		9A447398123AEA8100FE025D /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44734B123AEA8000FE025D /* ofxCvImage.cpp */; };
+		9A447399123AEA8100FE025D /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44734E123AEA8000FE025D /* ofxCvShortImage.cpp */; };
+		9A44739A123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A447352123AEA8000FE025D /* install.xml */; };
+		9A44739B123AEA8100FE025D /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A447367123AEA8100FE025D /* osc.a */; };
+		9A44739C123AEA8100FE025D /* oscpack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A447369123AEA8100FE025D /* oscpack.a */; };
+		9A44739D123AEA8100FE025D /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44736D123AEA8100FE025D /* ofxOscBundle.cpp */; };
+		9A44739E123AEA8100FE025D /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44736F123AEA8100FE025D /* ofxOscMessage.cpp */; };
+		9A44739F123AEA8100FE025D /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447371123AEA8100FE025D /* ofxOscReceiver.cpp */; };
+		9A4473A0123AEA8100FE025D /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447373123AEA8100FE025D /* ofxOscSender.cpp */; };
+		9A4473A1123AEA8100FE025D /* Instructions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A447377123AEA8100FE025D /* Instructions.txt */; };
+		9A4473A2123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A447378123AEA8100FE025D /* install.xml */; };
+		9A4473A3123AEA8100FE025D /* ofxThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44737A123AEA8100FE025D /* ofxThread.cpp */; };
+		9A4473A4123AEA8100FE025D /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9A44737D123AEA8100FE025D /* install.xml */; };
+		9A4473A5123AEA8100FE025D /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A44737F123AEA8100FE025D /* tinyxml.cpp */; };
+		9A4473A6123AEA8100FE025D /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447381123AEA8100FE025D /* tinyxmlerror.cpp */; };
+		9A4473A7123AEA8100FE025D /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447382123AEA8100FE025D /* tinyxmlparser.cpp */; };
+		9A4473A8123AEA8100FE025D /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A447384123AEA8100FE025D /* ofxXmlSettings.cpp */; };
 		9AC80DAD122439DA0089EDFE /* ofxColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC80DAB122439DA0089EDFE /* ofxColor.cpp */; };
 		A658D7E111518839008B1830 /* ofxCvHaarFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A658D76011518839008B1830 /* ofxCvHaarFinder.cpp */; };
 		A658D7E211518839008B1830 /* ofxCvHaarTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A658D76211518839008B1830 /* ofxCvHaarTracker.cpp */; };
@@ -148,88 +156,96 @@
 		2E29259A120352E000074368 /* triangle_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = triangle_impl.hpp; sourceTree = "<group>"; };
 		2EF1B1511152C650005C4028 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		9A304F231225B1B200B26B44 /* CDMblocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMblocks.h; sourceTree = "<group>"; };
+		9A447311123AEA8000FE025D /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
+		9A447312123AEA8000FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A447314123AEA8000FE025D /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDirList.cpp; sourceTree = "<group>"; };
+		9A447315123AEA8000FE025D /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDirList.h; sourceTree = "<group>"; };
+		9A447318123AEA8000FE025D /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
+		9A447319123AEA8000FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A44731B123AEA8000FE025D /* ofxNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNetwork.h; sourceTree = "<group>"; };
+		9A44731C123AEA8000FE025D /* ofxTCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPClient.cpp; sourceTree = "<group>"; };
+		9A44731D123AEA8000FE025D /* ofxTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPClient.h; sourceTree = "<group>"; };
+		9A44731E123AEA8000FE025D /* ofxTCPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPManager.cpp; sourceTree = "<group>"; };
+		9A44731F123AEA8000FE025D /* ofxTCPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPManager.h; sourceTree = "<group>"; };
+		9A447320123AEA8000FE025D /* ofxTCPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPServer.cpp; sourceTree = "<group>"; };
+		9A447321123AEA8000FE025D /* ofxTCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPServer.h; sourceTree = "<group>"; };
+		9A447322123AEA8000FE025D /* ofxUDPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUDPManager.cpp; sourceTree = "<group>"; };
+		9A447323123AEA8000FE025D /* ofxUDPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUDPManager.h; sourceTree = "<group>"; };
+		9A447325123AEA8000FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A447329123AEA8000FE025D /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
+		9A44732A123AEA8000FE025D /* cv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cv.hpp; sourceTree = "<group>"; };
+		9A44732B123AEA8000FE025D /* cvaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvaux.h; sourceTree = "<group>"; };
+		9A44732C123AEA8000FE025D /* cvaux.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvaux.hpp; sourceTree = "<group>"; };
+		9A44732D123AEA8000FE025D /* cvcompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvcompat.h; sourceTree = "<group>"; };
+		9A44732E123AEA8000FE025D /* cvmat.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvmat.hpp; sourceTree = "<group>"; };
+		9A44732F123AEA8000FE025D /* cvstreams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvstreams.h; sourceTree = "<group>"; };
+		9A447330123AEA8000FE025D /* cvtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvtypes.h; sourceTree = "<group>"; };
+		9A447331123AEA8000FE025D /* cvver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvver.h; sourceTree = "<group>"; };
+		9A447332123AEA8000FE025D /* cvvidsurv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvvidsurv.hpp; sourceTree = "<group>"; };
+		9A447333123AEA8000FE025D /* cvwimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvwimage.h; sourceTree = "<group>"; };
+		9A447334123AEA8000FE025D /* cxcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxcore.h; sourceTree = "<group>"; };
+		9A447335123AEA8000FE025D /* cxcore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxcore.hpp; sourceTree = "<group>"; };
+		9A447336123AEA8000FE025D /* cxerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxerror.h; sourceTree = "<group>"; };
+		9A447337123AEA8000FE025D /* cxmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxmisc.h; sourceTree = "<group>"; };
+		9A447338123AEA8000FE025D /* cxtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxtypes.h; sourceTree = "<group>"; };
+		9A44733B123AEA8000FE025D /* openCV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = openCV.a; sourceTree = "<group>"; };
+		9A44733D123AEA8000FE025D /* libcv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcv.a; sourceTree = "<group>"; };
+		9A44733E123AEA8000FE025D /* libcvaux.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvaux.a; sourceTree = "<group>"; };
+		9A44733F123AEA8000FE025D /* libcxcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcxcore.a; sourceTree = "<group>"; };
+		9A447341123AEA8000FE025D /* ofxCvBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
+		9A447342123AEA8000FE025D /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
+		9A447343123AEA8000FE025D /* ofxCvColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
+		9A447344123AEA8000FE025D /* ofxCvConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvConstants.h; sourceTree = "<group>"; };
+		9A447345123AEA8000FE025D /* ofxCvContourFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvContourFinder.cpp; sourceTree = "<group>"; };
+		9A447346123AEA8000FE025D /* ofxCvContourFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvContourFinder.h; sourceTree = "<group>"; };
+		9A447347123AEA8000FE025D /* ofxCvFloatImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvFloatImage.cpp; sourceTree = "<group>"; };
+		9A447348123AEA8000FE025D /* ofxCvFloatImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvFloatImage.h; sourceTree = "<group>"; };
+		9A447349123AEA8000FE025D /* ofxCvGrayscaleImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvGrayscaleImage.cpp; sourceTree = "<group>"; };
+		9A44734A123AEA8000FE025D /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
+		9A44734B123AEA8000FE025D /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
+		9A44734C123AEA8000FE025D /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
+		9A44734D123AEA8000FE025D /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
+		9A44734E123AEA8000FE025D /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
+		9A44734F123AEA8000FE025D /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
+		9A447350123AEA8000FE025D /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
+		9A447352123AEA8000FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A447357123AEA8000FE025D /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
+		9A447358123AEA8000FE025D /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
+		9A447359123AEA8000FE025D /* PacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
+		9A44735A123AEA8000FE025D /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
+		9A44735B123AEA8000FE025D /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
+		9A44735D123AEA8000FE025D /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
+		9A44735E123AEA8000FE025D /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
+		9A44735F123AEA8000FE025D /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
+		9A447360123AEA8000FE025D /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
+		9A447361123AEA8000FE025D /* OscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
+		9A447362123AEA8000FE025D /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
+		9A447363123AEA8000FE025D /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
+		9A447364123AEA8000FE025D /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
+		9A447367123AEA8100FE025D /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
+		9A447369123AEA8100FE025D /* oscpack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = oscpack.a; sourceTree = "<group>"; };
+		9A44736B123AEA8100FE025D /* ofxOsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOsc.h; sourceTree = "<group>"; };
+		9A44736C123AEA8100FE025D /* ofxOscArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscArg.h; sourceTree = "<group>"; };
+		9A44736D123AEA8100FE025D /* ofxOscBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscBundle.cpp; sourceTree = "<group>"; };
+		9A44736E123AEA8100FE025D /* ofxOscBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscBundle.h; sourceTree = "<group>"; };
+		9A44736F123AEA8100FE025D /* ofxOscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscMessage.cpp; sourceTree = "<group>"; };
+		9A447370123AEA8100FE025D /* ofxOscMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscMessage.h; sourceTree = "<group>"; };
+		9A447371123AEA8100FE025D /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscReceiver.cpp; sourceTree = "<group>"; };
+		9A447372123AEA8100FE025D /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
+		9A447373123AEA8100FE025D /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
+		9A447374123AEA8100FE025D /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		9A447377123AEA8100FE025D /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
+		9A447378123AEA8100FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A44737A123AEA8100FE025D /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
+		9A44737B123AEA8100FE025D /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
+		9A44737D123AEA8100FE025D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		9A44737F123AEA8100FE025D /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		9A447380123AEA8100FE025D /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		9A447381123AEA8100FE025D /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		9A447382123AEA8100FE025D /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		9A447384123AEA8100FE025D /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		9A447385123AEA8100FE025D /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		9A88138A1219D030003E569D /* Quad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quad.h; sourceTree = "<group>"; };
-		9A98C7471219C2F400C6A657 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		9A98C7491219C2F400C6A657 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
-		9A98C74A1219C2F400C6A657 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
-		9A98C74B1219C2F400C6A657 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
-		9A98C74C1219C2F400C6A657 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		9A98C74E1219C2F400C6A657 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
-		9A98C74F1219C2F400C6A657 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
-		9A98C7561219C30900C6A657 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		9A98C75B1219C30900C6A657 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
-		9A98C75C1219C30900C6A657 /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
-		9A98C75D1219C30900C6A657 /* PacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
-		9A98C75E1219C30900C6A657 /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
-		9A98C75F1219C30900C6A657 /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
-		9A98C7611219C30900C6A657 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
-		9A98C7621219C30900C6A657 /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
-		9A98C7631219C30900C6A657 /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
-		9A98C7641219C30900C6A657 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
-		9A98C7651219C30900C6A657 /* OscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
-		9A98C7661219C30900C6A657 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
-		9A98C7671219C30900C6A657 /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
-		9A98C7681219C30900C6A657 /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
-		9A98C76B1219C30900C6A657 /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
-		9A98C76F1219C30900C6A657 /* ofxOsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOsc.h; sourceTree = "<group>"; };
-		9A98C7701219C30900C6A657 /* ofxOscArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscArg.h; sourceTree = "<group>"; };
-		9A98C7711219C30900C6A657 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscBundle.cpp; sourceTree = "<group>"; };
-		9A98C7721219C30900C6A657 /* ofxOscBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscBundle.h; sourceTree = "<group>"; };
-		9A98C7731219C30900C6A657 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscMessage.cpp; sourceTree = "<group>"; };
-		9A98C7741219C30900C6A657 /* ofxOscMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscMessage.h; sourceTree = "<group>"; };
-		9A98C7751219C30900C6A657 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscReceiver.cpp; sourceTree = "<group>"; };
-		9A98C7761219C30900C6A657 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
-		9A98C7771219C30900C6A657 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
-		9A98C7781219C30900C6A657 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
-		9A98C77B1219C30900C6A657 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
-		9A98C77C1219C30900C6A657 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		9A98C77E1219C30900C6A657 /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
-		9A98C77F1219C30900C6A657 /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
-		9A98C78F1219C32A00C6A657 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDirList.cpp; sourceTree = "<group>"; };
-		9A98C7901219C32A00C6A657 /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDirList.h; sourceTree = "<group>"; };
-		9A98C7BF1219C32A00C6A657 /* ofxNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNetwork.h; sourceTree = "<group>"; };
-		9A98C7C01219C32A00C6A657 /* ofxTCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPClient.cpp; sourceTree = "<group>"; };
-		9A98C7C11219C32A00C6A657 /* ofxTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPClient.h; sourceTree = "<group>"; };
-		9A98C7C21219C32A00C6A657 /* ofxTCPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPManager.cpp; sourceTree = "<group>"; };
-		9A98C7C31219C32A00C6A657 /* ofxTCPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPManager.h; sourceTree = "<group>"; };
-		9A98C7C41219C32A00C6A657 /* ofxTCPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPServer.cpp; sourceTree = "<group>"; };
-		9A98C7C51219C32A00C6A657 /* ofxTCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTCPServer.h; sourceTree = "<group>"; };
-		9A98C7C61219C32A00C6A657 /* ofxUDPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUDPManager.cpp; sourceTree = "<group>"; };
-		9A98C7C71219C32A00C6A657 /* ofxUDPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUDPManager.h; sourceTree = "<group>"; };
-		9A98C7C91219C32A00C6A657 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		9A98C7CD1219C32A00C6A657 /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
-		9A98C7CE1219C32A00C6A657 /* cv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cv.hpp; sourceTree = "<group>"; };
-		9A98C7CF1219C32A00C6A657 /* cvaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvaux.h; sourceTree = "<group>"; };
-		9A98C7D01219C32A00C6A657 /* cvaux.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvaux.hpp; sourceTree = "<group>"; };
-		9A98C7D11219C32A00C6A657 /* cvcompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvcompat.h; sourceTree = "<group>"; };
-		9A98C7D21219C32A00C6A657 /* cvmat.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvmat.hpp; sourceTree = "<group>"; };
-		9A98C7D31219C32A00C6A657 /* cvstreams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvstreams.h; sourceTree = "<group>"; };
-		9A98C7D41219C32A00C6A657 /* cvtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvtypes.h; sourceTree = "<group>"; };
-		9A98C7D51219C32A00C6A657 /* cvver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvver.h; sourceTree = "<group>"; };
-		9A98C7D61219C32A00C6A657 /* cvvidsurv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cvvidsurv.hpp; sourceTree = "<group>"; };
-		9A98C7D71219C32A00C6A657 /* cvwimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvwimage.h; sourceTree = "<group>"; };
-		9A98C7D81219C32A00C6A657 /* cxcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxcore.h; sourceTree = "<group>"; };
-		9A98C7D91219C32A00C6A657 /* cxcore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxcore.hpp; sourceTree = "<group>"; };
-		9A98C7DA1219C32A00C6A657 /* cxerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxerror.h; sourceTree = "<group>"; };
-		9A98C7DB1219C32A00C6A657 /* cxmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxmisc.h; sourceTree = "<group>"; };
-		9A98C7DC1219C32A00C6A657 /* cxtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxtypes.h; sourceTree = "<group>"; };
-		9A98C7DF1219C32B00C6A657 /* openCV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = openCV.a; sourceTree = "<group>"; };
-		9A98C7E51219C32C00C6A657 /* ofxCvBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
-		9A98C7E61219C32C00C6A657 /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
-		9A98C7E71219C32C00C6A657 /* ofxCvColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
-		9A98C7E81219C32C00C6A657 /* ofxCvConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvConstants.h; sourceTree = "<group>"; };
-		9A98C7E91219C32C00C6A657 /* ofxCvContourFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvContourFinder.cpp; sourceTree = "<group>"; };
-		9A98C7EA1219C32C00C6A657 /* ofxCvContourFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvContourFinder.h; sourceTree = "<group>"; };
-		9A98C7EB1219C32C00C6A657 /* ofxCvFloatImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvFloatImage.cpp; sourceTree = "<group>"; };
-		9A98C7EC1219C32C00C6A657 /* ofxCvFloatImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvFloatImage.h; sourceTree = "<group>"; };
-		9A98C7ED1219C32C00C6A657 /* ofxCvGrayscaleImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvGrayscaleImage.cpp; sourceTree = "<group>"; };
-		9A98C7EE1219C32C00C6A657 /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
-		9A98C7EF1219C32C00C6A657 /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
-		9A98C7F01219C32C00C6A657 /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
-		9A98C7F11219C32C00C6A657 /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
-		9A98C7F21219C32C00C6A657 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
-		9A98C7F31219C32C00C6A657 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
-		9A98C7F41219C32C00C6A657 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		9AC80DAB122439DA0089EDFE /* ofxColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxColor.cpp; sourceTree = "<group>"; };
 		9AC80DAC122439DA0089EDFE /* ofxColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxColor.h; sourceTree = "<group>"; };
 		A658D76011518839008B1830 /* ofxCvHaarFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvHaarFinder.cpp; sourceTree = "<group>"; };
@@ -402,8 +418,12 @@
 				E4C242CD10CC650E004149E2 /* libfmodex.dylib in Frameworks */,
 				E49DA7BE10CD396F0006B5A8 /* freeimage.a in Frameworks */,
 				A658D80011518839008B1830 /* libOsc.a in Frameworks */,
-				9A98C7811219C30900C6A657 /* osc.a in Frameworks */,
-				9A98C8131219C32C00C6A657 /* openCV.a in Frameworks */,
+				9A447390123AEA8100FE025D /* openCV.a in Frameworks */,
+				9A447391123AEA8100FE025D /* libcv.a in Frameworks */,
+				9A447392123AEA8100FE025D /* libcvaux.a in Frameworks */,
+				9A447393123AEA8100FE025D /* libcxcore.a in Frameworks */,
+				9A44739B123AEA8100FE025D /* osc.a in Frameworks */,
+				9A44739C123AEA8100FE025D /* oscpack.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,285 +456,331 @@
 			path = triangle;
 			sourceTree = "<group>";
 		};
-		9A98C7461219C2F300C6A657 /* ofxXmlSettings */ = {
+		9A44730F123AEA8000FE025D /* ofxDirList */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7471219C2F400C6A657 /* install.xml */,
-				9A98C7481219C2F400C6A657 /* libs */,
-				9A98C74D1219C2F400C6A657 /* src */,
+				9A447310123AEA8000FE025D /* doc */,
+				9A447312123AEA8000FE025D /* install.xml */,
+				9A447313123AEA8000FE025D /* src */,
 			);
-			path = ofxXmlSettings;
+			name = ofxDirList;
+			path = src/addons/ofxDirList;
+			sourceTree = SOURCE_ROOT;
+		};
+		9A447310123AEA8000FE025D /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				9A447311123AEA8000FE025D /* Instructions.txt */,
+			);
+			path = doc;
 			sourceTree = "<group>";
 		};
-		9A98C7481219C2F400C6A657 /* libs */ = {
+		9A447313123AEA8000FE025D /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7491219C2F400C6A657 /* tinyxml.cpp */,
-				9A98C74A1219C2F400C6A657 /* tinyxml.h */,
-				9A98C74B1219C2F400C6A657 /* tinyxmlerror.cpp */,
-				9A98C74C1219C2F400C6A657 /* tinyxmlparser.cpp */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		9A98C74D1219C2F400C6A657 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C74E1219C2F400C6A657 /* ofxXmlSettings.cpp */,
-				9A98C74F1219C2F400C6A657 /* ofxXmlSettings.h */,
+				9A447314123AEA8000FE025D /* ofxDirList.cpp */,
+				9A447315123AEA8000FE025D /* ofxDirList.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		9A98C7551219C30900C6A657 /* ofxOsc */ = {
+		9A447316123AEA8000FE025D /* ofxNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7561219C30900C6A657 /* install.xml */,
-				9A98C7571219C30900C6A657 /* libs */,
-				9A98C76E1219C30900C6A657 /* src */,
+				9A447317123AEA8000FE025D /* docs */,
+				9A447319123AEA8000FE025D /* install.xml */,
+				9A44731A123AEA8000FE025D /* src */,
 			);
-			path = ofxOsc;
-			sourceTree = "<group>";
+			name = ofxNetwork;
+			path = src/addons/ofxNetwork;
+			sourceTree = SOURCE_ROOT;
 		};
-		9A98C7571219C30900C6A657 /* libs */ = {
+		9A447317123AEA8000FE025D /* docs */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7581219C30900C6A657 /* oscpack */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		9A98C7581219C30900C6A657 /* oscpack */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7591219C30900C6A657 /* include */,
-				9A98C7691219C30900C6A657 /* lib */,
-			);
-			path = oscpack;
-			sourceTree = "<group>";
-		};
-		9A98C7591219C30900C6A657 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C75A1219C30900C6A657 /* ip */,
-				9A98C7601219C30900C6A657 /* osc */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		9A98C75A1219C30900C6A657 /* ip */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C75B1219C30900C6A657 /* IpEndpointName.h */,
-				9A98C75C1219C30900C6A657 /* NetworkingUtils.h */,
-				9A98C75D1219C30900C6A657 /* PacketListener.h */,
-				9A98C75E1219C30900C6A657 /* TimerListener.h */,
-				9A98C75F1219C30900C6A657 /* UdpSocket.h */,
-			);
-			path = ip;
-			sourceTree = "<group>";
-		};
-		9A98C7601219C30900C6A657 /* osc */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7611219C30900C6A657 /* MessageMappingOscPacketListener.h */,
-				9A98C7621219C30900C6A657 /* OscException.h */,
-				9A98C7631219C30900C6A657 /* OscHostEndianness.h */,
-				9A98C7641219C30900C6A657 /* OscOutboundPacketStream.h */,
-				9A98C7651219C30900C6A657 /* OscPacketListener.h */,
-				9A98C7661219C30900C6A657 /* OscPrintReceivedElements.h */,
-				9A98C7671219C30900C6A657 /* OscReceivedElements.h */,
-				9A98C7681219C30900C6A657 /* OscTypes.h */,
-			);
-			path = osc;
-			sourceTree = "<group>";
-		};
-		9A98C7691219C30900C6A657 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C76A1219C30900C6A657 /* osx */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		9A98C76A1219C30900C6A657 /* osx */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C76B1219C30900C6A657 /* osc.a */,
-			);
-			path = osx;
-			sourceTree = "<group>";
-		};
-		9A98C76E1219C30900C6A657 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C76F1219C30900C6A657 /* ofxOsc.h */,
-				9A98C7701219C30900C6A657 /* ofxOscArg.h */,
-				9A98C7711219C30900C6A657 /* ofxOscBundle.cpp */,
-				9A98C7721219C30900C6A657 /* ofxOscBundle.h */,
-				9A98C7731219C30900C6A657 /* ofxOscMessage.cpp */,
-				9A98C7741219C30900C6A657 /* ofxOscMessage.h */,
-				9A98C7751219C30900C6A657 /* ofxOscReceiver.cpp */,
-				9A98C7761219C30900C6A657 /* ofxOscReceiver.h */,
-				9A98C7771219C30900C6A657 /* ofxOscSender.cpp */,
-				9A98C7781219C30900C6A657 /* ofxOscSender.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		9A98C7791219C30900C6A657 /* ofxThread */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C77A1219C30900C6A657 /* docs */,
-				9A98C77C1219C30900C6A657 /* install.xml */,
-				9A98C77D1219C30900C6A657 /* src */,
-			);
-			path = ofxThread;
-			sourceTree = "<group>";
-		};
-		9A98C77A1219C30900C6A657 /* docs */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C77B1219C30900C6A657 /* Instructions.txt */,
+				9A447318123AEA8000FE025D /* Instructions.txt */,
 			);
 			path = docs;
 			sourceTree = "<group>";
 		};
-		9A98C77D1219C30900C6A657 /* src */ = {
+		9A44731A123AEA8000FE025D /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C77E1219C30900C6A657 /* ofxThread.cpp */,
-				9A98C77F1219C30900C6A657 /* ofxThread.h */,
+				9A44731B123AEA8000FE025D /* ofxNetwork.h */,
+				9A44731C123AEA8000FE025D /* ofxTCPClient.cpp */,
+				9A44731D123AEA8000FE025D /* ofxTCPClient.h */,
+				9A44731E123AEA8000FE025D /* ofxTCPManager.cpp */,
+				9A44731F123AEA8000FE025D /* ofxTCPManager.h */,
+				9A447320123AEA8000FE025D /* ofxTCPServer.cpp */,
+				9A447321123AEA8000FE025D /* ofxTCPServer.h */,
+				9A447322123AEA8000FE025D /* ofxUDPManager.cpp */,
+				9A447323123AEA8000FE025D /* ofxUDPManager.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		9A98C78A1219C32A00C6A657 /* ofxDirList */ = {
+		9A447324123AEA8000FE025D /* ofxOpenCv */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C78E1219C32A00C6A657 /* src */,
+				9A447325123AEA8000FE025D /* install.xml */,
+				9A447326123AEA8000FE025D /* libs */,
+				9A447340123AEA8000FE025D /* src */,
 			);
-			path = ofxDirList;
-			sourceTree = "<group>";
+			name = ofxOpenCv;
+			path = src/addons/ofxOpenCv;
+			sourceTree = SOURCE_ROOT;
 		};
-		9A98C78E1219C32A00C6A657 /* src */ = {
+		9A447326123AEA8000FE025D /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C78F1219C32A00C6A657 /* ofxDirList.cpp */,
-				9A98C7901219C32A00C6A657 /* ofxDirList.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		9A98C7911219C32A00C6A657 /* ofxNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7BE1219C32A00C6A657 /* src */,
-			);
-			path = ofxNetwork;
-			sourceTree = "<group>";
-		};
-		9A98C7BE1219C32A00C6A657 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7BF1219C32A00C6A657 /* ofxNetwork.h */,
-				9A98C7C01219C32A00C6A657 /* ofxTCPClient.cpp */,
-				9A98C7C11219C32A00C6A657 /* ofxTCPClient.h */,
-				9A98C7C21219C32A00C6A657 /* ofxTCPManager.cpp */,
-				9A98C7C31219C32A00C6A657 /* ofxTCPManager.h */,
-				9A98C7C41219C32A00C6A657 /* ofxTCPServer.cpp */,
-				9A98C7C51219C32A00C6A657 /* ofxTCPServer.h */,
-				9A98C7C61219C32A00C6A657 /* ofxUDPManager.cpp */,
-				9A98C7C71219C32A00C6A657 /* ofxUDPManager.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		9A98C7C81219C32A00C6A657 /* ofxOpenCv */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7C91219C32A00C6A657 /* install.xml */,
-				9A98C7CA1219C32A00C6A657 /* libs */,
-				9A98C7E41219C32C00C6A657 /* src */,
-			);
-			path = ofxOpenCv;
-			sourceTree = "<group>";
-		};
-		9A98C7CA1219C32A00C6A657 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				9A98C7CB1219C32A00C6A657 /* opencv */,
+				9A447327123AEA8000FE025D /* opencv */,
 			);
 			path = libs;
 			sourceTree = "<group>";
 		};
-		9A98C7CB1219C32A00C6A657 /* opencv */ = {
+		9A447327123AEA8000FE025D /* opencv */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7CC1219C32A00C6A657 /* include */,
-				9A98C7DD1219C32A00C6A657 /* lib */,
+				9A447328123AEA8000FE025D /* include */,
+				9A447339123AEA8000FE025D /* lib */,
 			);
 			path = opencv;
 			sourceTree = "<group>";
 		};
-		9A98C7CC1219C32A00C6A657 /* include */ = {
+		9A447328123AEA8000FE025D /* include */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7CD1219C32A00C6A657 /* cv.h */,
-				9A98C7CE1219C32A00C6A657 /* cv.hpp */,
-				9A98C7CF1219C32A00C6A657 /* cvaux.h */,
-				9A98C7D01219C32A00C6A657 /* cvaux.hpp */,
-				9A98C7D11219C32A00C6A657 /* cvcompat.h */,
-				9A98C7D21219C32A00C6A657 /* cvmat.hpp */,
-				9A98C7D31219C32A00C6A657 /* cvstreams.h */,
-				9A98C7D41219C32A00C6A657 /* cvtypes.h */,
-				9A98C7D51219C32A00C6A657 /* cvver.h */,
-				9A98C7D61219C32A00C6A657 /* cvvidsurv.hpp */,
-				9A98C7D71219C32A00C6A657 /* cvwimage.h */,
-				9A98C7D81219C32A00C6A657 /* cxcore.h */,
-				9A98C7D91219C32A00C6A657 /* cxcore.hpp */,
-				9A98C7DA1219C32A00C6A657 /* cxerror.h */,
-				9A98C7DB1219C32A00C6A657 /* cxmisc.h */,
-				9A98C7DC1219C32A00C6A657 /* cxtypes.h */,
+				9A447329123AEA8000FE025D /* cv.h */,
+				9A44732A123AEA8000FE025D /* cv.hpp */,
+				9A44732B123AEA8000FE025D /* cvaux.h */,
+				9A44732C123AEA8000FE025D /* cvaux.hpp */,
+				9A44732D123AEA8000FE025D /* cvcompat.h */,
+				9A44732E123AEA8000FE025D /* cvmat.hpp */,
+				9A44732F123AEA8000FE025D /* cvstreams.h */,
+				9A447330123AEA8000FE025D /* cvtypes.h */,
+				9A447331123AEA8000FE025D /* cvver.h */,
+				9A447332123AEA8000FE025D /* cvvidsurv.hpp */,
+				9A447333123AEA8000FE025D /* cvwimage.h */,
+				9A447334123AEA8000FE025D /* cxcore.h */,
+				9A447335123AEA8000FE025D /* cxcore.hpp */,
+				9A447336123AEA8000FE025D /* cxerror.h */,
+				9A447337123AEA8000FE025D /* cxmisc.h */,
+				9A447338123AEA8000FE025D /* cxtypes.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		9A98C7DD1219C32A00C6A657 /* lib */ = {
+		9A447339123AEA8000FE025D /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7DE1219C32A00C6A657 /* osx */,
+				9A44733A123AEA8000FE025D /* osx */,
+				9A44733C123AEA8000FE025D /* win_cb */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		9A98C7DE1219C32A00C6A657 /* osx */ = {
+		9A44733A123AEA8000FE025D /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7DF1219C32B00C6A657 /* openCV.a */,
+				9A44733B123AEA8000FE025D /* openCV.a */,
 			);
 			path = osx;
 			sourceTree = "<group>";
 		};
-		9A98C7E41219C32C00C6A657 /* src */ = {
+		9A44733C123AEA8000FE025D /* win_cb */ = {
 			isa = PBXGroup;
 			children = (
-				9A98C7E51219C32C00C6A657 /* ofxCvBlob.h */,
-				9A98C7E61219C32C00C6A657 /* ofxCvColorImage.cpp */,
-				9A98C7E71219C32C00C6A657 /* ofxCvColorImage.h */,
-				9A98C7E81219C32C00C6A657 /* ofxCvConstants.h */,
-				9A98C7E91219C32C00C6A657 /* ofxCvContourFinder.cpp */,
-				9A98C7EA1219C32C00C6A657 /* ofxCvContourFinder.h */,
-				9A98C7EB1219C32C00C6A657 /* ofxCvFloatImage.cpp */,
-				9A98C7EC1219C32C00C6A657 /* ofxCvFloatImage.h */,
-				9A98C7ED1219C32C00C6A657 /* ofxCvGrayscaleImage.cpp */,
-				9A98C7EE1219C32C00C6A657 /* ofxCvGrayscaleImage.h */,
-				9A98C7EF1219C32C00C6A657 /* ofxCvImage.cpp */,
-				9A98C7F01219C32C00C6A657 /* ofxCvImage.h */,
-				9A98C7F11219C32C00C6A657 /* ofxCvMain.h */,
-				9A98C7F21219C32C00C6A657 /* ofxCvShortImage.cpp */,
-				9A98C7F31219C32C00C6A657 /* ofxCvShortImage.h */,
-				9A98C7F41219C32C00C6A657 /* ofxOpenCv.h */,
+				9A44733D123AEA8000FE025D /* libcv.a */,
+				9A44733E123AEA8000FE025D /* libcvaux.a */,
+				9A44733F123AEA8000FE025D /* libcxcore.a */,
+			);
+			path = win_cb;
+			sourceTree = "<group>";
+		};
+		9A447340123AEA8000FE025D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9A447341123AEA8000FE025D /* ofxCvBlob.h */,
+				9A447342123AEA8000FE025D /* ofxCvColorImage.cpp */,
+				9A447343123AEA8000FE025D /* ofxCvColorImage.h */,
+				9A447344123AEA8000FE025D /* ofxCvConstants.h */,
+				9A447345123AEA8000FE025D /* ofxCvContourFinder.cpp */,
+				9A447346123AEA8000FE025D /* ofxCvContourFinder.h */,
+				9A447347123AEA8000FE025D /* ofxCvFloatImage.cpp */,
+				9A447348123AEA8000FE025D /* ofxCvFloatImage.h */,
+				9A447349123AEA8000FE025D /* ofxCvGrayscaleImage.cpp */,
+				9A44734A123AEA8000FE025D /* ofxCvGrayscaleImage.h */,
+				9A44734B123AEA8000FE025D /* ofxCvImage.cpp */,
+				9A44734C123AEA8000FE025D /* ofxCvImage.h */,
+				9A44734D123AEA8000FE025D /* ofxCvMain.h */,
+				9A44734E123AEA8000FE025D /* ofxCvShortImage.cpp */,
+				9A44734F123AEA8000FE025D /* ofxCvShortImage.h */,
+				9A447350123AEA8000FE025D /* ofxOpenCv.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		9A447351123AEA8000FE025D /* ofxOsc */ = {
+			isa = PBXGroup;
+			children = (
+				9A447352123AEA8000FE025D /* install.xml */,
+				9A447353123AEA8000FE025D /* libs */,
+				9A44736A123AEA8100FE025D /* src */,
+			);
+			name = ofxOsc;
+			path = src/addons/ofxOsc;
+			sourceTree = SOURCE_ROOT;
+		};
+		9A447353123AEA8000FE025D /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				9A447354123AEA8000FE025D /* oscpack */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		9A447354123AEA8000FE025D /* oscpack */ = {
+			isa = PBXGroup;
+			children = (
+				9A447355123AEA8000FE025D /* include */,
+				9A447365123AEA8000FE025D /* lib */,
+			);
+			path = oscpack;
+			sourceTree = "<group>";
+		};
+		9A447355123AEA8000FE025D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				9A447356123AEA8000FE025D /* ip */,
+				9A44735C123AEA8000FE025D /* osc */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		9A447356123AEA8000FE025D /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				9A447357123AEA8000FE025D /* IpEndpointName.h */,
+				9A447358123AEA8000FE025D /* NetworkingUtils.h */,
+				9A447359123AEA8000FE025D /* PacketListener.h */,
+				9A44735A123AEA8000FE025D /* TimerListener.h */,
+				9A44735B123AEA8000FE025D /* UdpSocket.h */,
+			);
+			path = ip;
+			sourceTree = "<group>";
+		};
+		9A44735C123AEA8000FE025D /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				9A44735D123AEA8000FE025D /* MessageMappingOscPacketListener.h */,
+				9A44735E123AEA8000FE025D /* OscException.h */,
+				9A44735F123AEA8000FE025D /* OscHostEndianness.h */,
+				9A447360123AEA8000FE025D /* OscOutboundPacketStream.h */,
+				9A447361123AEA8000FE025D /* OscPacketListener.h */,
+				9A447362123AEA8000FE025D /* OscPrintReceivedElements.h */,
+				9A447363123AEA8000FE025D /* OscReceivedElements.h */,
+				9A447364123AEA8000FE025D /* OscTypes.h */,
+			);
+			path = osc;
+			sourceTree = "<group>";
+		};
+		9A447365123AEA8000FE025D /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				9A447366123AEA8000FE025D /* osx */,
+				9A447368123AEA8100FE025D /* win_cb */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		9A447366123AEA8000FE025D /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				9A447367123AEA8100FE025D /* osc.a */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		9A447368123AEA8100FE025D /* win_cb */ = {
+			isa = PBXGroup;
+			children = (
+				9A447369123AEA8100FE025D /* oscpack.a */,
+			);
+			path = win_cb;
+			sourceTree = "<group>";
+		};
+		9A44736A123AEA8100FE025D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9A44736B123AEA8100FE025D /* ofxOsc.h */,
+				9A44736C123AEA8100FE025D /* ofxOscArg.h */,
+				9A44736D123AEA8100FE025D /* ofxOscBundle.cpp */,
+				9A44736E123AEA8100FE025D /* ofxOscBundle.h */,
+				9A44736F123AEA8100FE025D /* ofxOscMessage.cpp */,
+				9A447370123AEA8100FE025D /* ofxOscMessage.h */,
+				9A447371123AEA8100FE025D /* ofxOscReceiver.cpp */,
+				9A447372123AEA8100FE025D /* ofxOscReceiver.h */,
+				9A447373123AEA8100FE025D /* ofxOscSender.cpp */,
+				9A447374123AEA8100FE025D /* ofxOscSender.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		9A447375123AEA8100FE025D /* ofxThread */ = {
+			isa = PBXGroup;
+			children = (
+				9A447376123AEA8100FE025D /* docs */,
+				9A447378123AEA8100FE025D /* install.xml */,
+				9A447379123AEA8100FE025D /* src */,
+			);
+			name = ofxThread;
+			path = src/addons/ofxThread;
+			sourceTree = SOURCE_ROOT;
+		};
+		9A447376123AEA8100FE025D /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				9A447377123AEA8100FE025D /* Instructions.txt */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
+		9A447379123AEA8100FE025D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9A44737A123AEA8100FE025D /* ofxThread.cpp */,
+				9A44737B123AEA8100FE025D /* ofxThread.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		9A44737C123AEA8100FE025D /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				9A44737D123AEA8100FE025D /* install.xml */,
+				9A44737E123AEA8100FE025D /* libs */,
+				9A447383123AEA8100FE025D /* src */,
+			);
+			name = ofxXmlSettings;
+			path = src/addons/ofxXmlSettings;
+			sourceTree = SOURCE_ROOT;
+		};
+		9A44737E123AEA8100FE025D /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				9A44737F123AEA8100FE025D /* tinyxml.cpp */,
+				9A447380123AEA8100FE025D /* tinyxml.h */,
+				9A447381123AEA8100FE025D /* tinyxmlerror.cpp */,
+				9A447382123AEA8100FE025D /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		9A447383123AEA8100FE025D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9A447384123AEA8100FE025D /* ofxXmlSettings.cpp */,
+				9A447385123AEA8100FE025D /* ofxXmlSettings.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -975,13 +1041,13 @@
 		E44665C70F5B3E03005D0BF0 /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				9A44730F123AEA8000FE025D /* ofxDirList */,
+				9A447316123AEA8000FE025D /* ofxNetwork */,
+				9A447324123AEA8000FE025D /* ofxOpenCv */,
+				9A447351123AEA8000FE025D /* ofxOsc */,
+				9A447375123AEA8100FE025D /* ofxThread */,
+				9A44737C123AEA8100FE025D /* ofxXmlSettings */,
 				9AC80DAA122439DA0089EDFE /* ofxColor */,
-				9A98C78A1219C32A00C6A657 /* ofxDirList */,
-				9A98C7911219C32A00C6A657 /* ofxNetwork */,
-				9A98C7C81219C32A00C6A657 /* ofxOpenCv */,
-				9A98C7551219C30900C6A657 /* ofxOsc */,
-				9A98C7791219C30900C6A657 /* ofxThread */,
-				9A98C7461219C2F300C6A657 /* ofxXmlSettings */,
 				2E29258F120352E000074368 /* ofxContourAnalysis */,
 				A658D75F11518839008B1830 /* ofxCvHaarTracker */,
 				A658D76611518839008B1830 /* ofxFileDialog */,
@@ -1348,11 +1414,15 @@
 				A658D7EA11518839008B1830 /* LICENSE.txt in Resources */,
 				A658D7F911518839008B1830 /* Doxyfile in Resources */,
 				2EF1B1521152C650005C4028 /* icon.icns in Resources */,
-				9A98C7501219C2F400C6A657 /* install.xml in Resources */,
-				9A98C7801219C30900C6A657 /* install.xml in Resources */,
-				9A98C7871219C30900C6A657 /* Instructions.txt in Resources */,
-				9A98C7881219C30900C6A657 /* install.xml in Resources */,
-				9A98C8121219C32C00C6A657 /* install.xml in Resources */,
+				9A447386123AEA8100FE025D /* Instructions.txt in Resources */,
+				9A447387123AEA8100FE025D /* install.xml in Resources */,
+				9A447389123AEA8100FE025D /* Instructions.txt in Resources */,
+				9A44738A123AEA8100FE025D /* install.xml in Resources */,
+				9A44738F123AEA8100FE025D /* install.xml in Resources */,
+				9A44739A123AEA8100FE025D /* install.xml in Resources */,
+				9A4473A1123AEA8100FE025D /* Instructions.txt in Resources */,
+				9A4473A2123AEA8100FE025D /* install.xml in Resources */,
+				9A4473A4123AEA8100FE025D /* install.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1407,27 +1477,27 @@
 				A658D7FE11518839008B1830 /* ofxTuioServer.cpp in Sources */,
 				A658D80411518839008B1830 /* TuioTcpXmlServer.cpp in Sources */,
 				2E29259B120352E000074368 /* del_impl.cpp in Sources */,
-				9A98C7511219C2F400C6A657 /* tinyxml.cpp in Sources */,
-				9A98C7521219C2F400C6A657 /* tinyxmlerror.cpp in Sources */,
-				9A98C7531219C2F400C6A657 /* tinyxmlparser.cpp in Sources */,
-				9A98C7541219C2F400C6A657 /* ofxXmlSettings.cpp in Sources */,
-				9A98C7831219C30900C6A657 /* ofxOscBundle.cpp in Sources */,
-				9A98C7841219C30900C6A657 /* ofxOscMessage.cpp in Sources */,
-				9A98C7851219C30900C6A657 /* ofxOscReceiver.cpp in Sources */,
-				9A98C7861219C30900C6A657 /* ofxOscSender.cpp in Sources */,
-				9A98C7891219C30900C6A657 /* ofxThread.cpp in Sources */,
-				9A98C7F71219C32C00C6A657 /* ofxDirList.cpp in Sources */,
-				9A98C80E1219C32C00C6A657 /* ofxTCPClient.cpp in Sources */,
-				9A98C80F1219C32C00C6A657 /* ofxTCPManager.cpp in Sources */,
-				9A98C8101219C32C00C6A657 /* ofxTCPServer.cpp in Sources */,
-				9A98C8111219C32C00C6A657 /* ofxUDPManager.cpp in Sources */,
-				9A98C8171219C32C00C6A657 /* ofxCvColorImage.cpp in Sources */,
-				9A98C8181219C32C00C6A657 /* ofxCvContourFinder.cpp in Sources */,
-				9A98C8191219C32C00C6A657 /* ofxCvFloatImage.cpp in Sources */,
-				9A98C81A1219C32C00C6A657 /* ofxCvGrayscaleImage.cpp in Sources */,
-				9A98C81B1219C32C00C6A657 /* ofxCvImage.cpp in Sources */,
-				9A98C81C1219C32C00C6A657 /* ofxCvShortImage.cpp in Sources */,
 				9AC80DAD122439DA0089EDFE /* ofxColor.cpp in Sources */,
+				9A447388123AEA8100FE025D /* ofxDirList.cpp in Sources */,
+				9A44738B123AEA8100FE025D /* ofxTCPClient.cpp in Sources */,
+				9A44738C123AEA8100FE025D /* ofxTCPManager.cpp in Sources */,
+				9A44738D123AEA8100FE025D /* ofxTCPServer.cpp in Sources */,
+				9A44738E123AEA8100FE025D /* ofxUDPManager.cpp in Sources */,
+				9A447394123AEA8100FE025D /* ofxCvColorImage.cpp in Sources */,
+				9A447395123AEA8100FE025D /* ofxCvContourFinder.cpp in Sources */,
+				9A447396123AEA8100FE025D /* ofxCvFloatImage.cpp in Sources */,
+				9A447397123AEA8100FE025D /* ofxCvGrayscaleImage.cpp in Sources */,
+				9A447398123AEA8100FE025D /* ofxCvImage.cpp in Sources */,
+				9A447399123AEA8100FE025D /* ofxCvShortImage.cpp in Sources */,
+				9A44739D123AEA8100FE025D /* ofxOscBundle.cpp in Sources */,
+				9A44739E123AEA8100FE025D /* ofxOscMessage.cpp in Sources */,
+				9A44739F123AEA8100FE025D /* ofxOscReceiver.cpp in Sources */,
+				9A4473A0123AEA8100FE025D /* ofxOscSender.cpp in Sources */,
+				9A4473A3123AEA8100FE025D /* ofxThread.cpp in Sources */,
+				9A4473A5123AEA8100FE025D /* tinyxml.cpp in Sources */,
+				9A4473A6123AEA8100FE025D /* tinyxmlerror.cpp in Sources */,
+				9A4473A7123AEA8100FE025D /* tinyxmlparser.cpp in Sources */,
+				9A4473A8123AEA8100FE025D /* ofxXmlSettings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1531,6 +1601,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../../addons/ofxTuioWrapper/oscpack/lib/win32\"";
@@ -1548,6 +1622,10 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21 = "\"$(SRCROOT)/../../../addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../libs/GLee/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../../../libs/poco/lib/osx\"";
@@ -1685,6 +1763,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../../addons/ofxTuioWrapper/oscpack/lib/win32\"";
@@ -1702,6 +1784,10 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21 = "\"$(SRCROOT)/../../../addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../libs/GLee/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../../../libs/poco/lib/osx\"";
@@ -1765,6 +1851,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/freeimage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../../addons/ofxTuioWrapper/oscpack/lib/win32\"";
@@ -1782,6 +1872,10 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_21 = "\"$(SRCROOT)/../../../addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_22 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_23 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_24 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_25 = "\"$(SRCROOT)/src/addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_26 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_27 = "\"$(SRCROOT)/src/addons/ofxOsc/libs/oscpack/lib/win_cb\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../libs/FreeImage/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../libs/GLee/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../../../libs/poco/lib/osx\"";
