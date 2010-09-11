@@ -143,8 +143,10 @@ void testApp::update(){
 		if (data != "") {
 			LOG = "emit ID: " + ofToString(curEmitID) + "\n";
 			LOG += "data: " + data + "\n";
+			LOG += "City Hall emit time: " + ofToString(ofGetHours()) + ":" + ofToString(ofGetMinutes()) + ":" + ofToString(ofGetSeconds()) + "\n";
 			cout << "emit ID: " << curEmitID << endl;
 			cout << "data: " << data << endl << endl;
+			cout << "City Hall emit time: " << ofGetHours() << ":" << ofGetMinutes() << ":" << ofGetSeconds() << endl;
 			sendOSCMessage(data);
 		}
 		
