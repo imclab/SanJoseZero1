@@ -1,0 +1,135 @@
+<prefs>
+    <Send_Full_Spectrum>false</Send_Full_Spectrum>
+    <mode>3</mode>
+    <song>mp3/ripper.mp3</song>
+</prefs>
+<osc>
+    <host>localhost</host>
+    <port>12001</port>
+</osc>
+<!--
+<Trigger>
+    <name>bass</name>
+    <low_band>20</low_band>
+    <high_band>21</high_band>
+    <height>0.857422</height>
+</Trigger>
+<Trigger>
+    <name>snare</name>
+    <low_band>60</low_band>
+    <high_band>62</high_band>
+    <height>0.697266</height>
+</Trigger>
+-->
+<Trigger>
+    <name>megaphone</name>
+    <messageString>/pluginplay/megaphone/0</messageString>
+    <messageString>/pluginplay/megaphone/1</messageString>
+    <messageString>/pluginplay/megaphone/2</messageString>
+    <low_band>6</low_band>
+    <high_band>8</high_band>
+    <height>0.255859</height>
+</Trigger>
+<Trigger>
+    <name>birdfeeder</name>
+    <messageString>/pluginplay/birdfeeder</messageString>
+    <low_band>128</low_band>
+    <high_band>168</high_band>
+    <height>0.035156</height>
+</Trigger>
+<Trigger>
+    <name>picnic</name>
+    <messageString>/pluginplay/picnictable/0</messageString>
+    <messageString>/pluginplay/picnictable/1</messageString>
+    <messageString>/pluginplay/picnictable/2</messageString>
+    <low_band>27</low_band>
+    <high_band>29</high_band>
+    <height>0.126953</height>
+</Trigger>
+<Trigger>
+    <name>openplug</name>
+    <messageString>/pluginplay/openplug</messageString>
+    <low_band>172</low_band>
+    <high_band>212</high_band>
+    <height>0.035156</height>
+</Trigger>
+<Trigger>
+    <name>twitter</name>
+    <messageString>/pluginplay/twitter</messageString>
+    <messageString>/pluginplay/twitter/search</messageString>
+    <messageString>/pluginplay/twitter/search/1</messageString>
+    <messageString>/pluginplay/twitter/search/2</messageString>
+    <low_band>46</low_band>
+    <high_band>48</high_band>
+    <height>0.083984</height>
+</Trigger>
+<Trigger>
+    <name>flickr</name>
+    <messageString>/pluginplay/flickr</messageString>
+    <messageString>/pluginplay/flickr/1</messageString>
+    <messageString>/pluginplay/flickr/2</messageString>
+    <messageString>/pluginplay/flickr/nearby</messageString>
+    <low_band>11</low_band>
+    <high_band>13</high_band>
+    <height>0.166016</height>
+</Trigger>
+<Trigger>
+    <name>foursquare</name>
+    <messageString>/pluginplay/foursquare</messageString>
+    <messageString>/pluginplay/foursquare/nearby</messageString>
+    <low_band>54</low_band>
+    <high_band>59</high_band>
+    <height>0.056641</height>
+</Trigger>
+<Trigger>
+    <name>stoplight</name>
+    <messageString>/pluginplay/signal_00</messageString>
+    <messageString>/pluginplay/signal_01</messageString>
+    <messageString>/pluginplay/signal_02</messageString>
+    <low_band>67</low_band>
+    <high_band>71</high_band>
+    <height>0.031250</height>
+</Trigger>
+<Trigger>
+    <name>playground</name>
+    <messageString>/pluginplay/playground</messageString>
+    <low_band>92</low_band>
+    <high_band>122</high_band>
+    <height>0.039062</height>
+</Trigger>
+<Trigger>
+    <name>hopscotch</name>
+    <messageString>/pluginplay/hopscotch_00</messageString>
+    <messageString>/pluginplay/hopscotch_10</messageString>
+    <messageString>/pluginplay/hopscotch_20</messageString>
+    <messageString>/pluginplay/hopscotch_01</messageString>
+    <messageString>/pluginplay/hopscotch_11</messageString>
+    <messageString>/pluginplay/hopscotch_21</messageString>
+    <messageString>/pluginplay/hopscotch_02</messageString>
+    <messageString>/pluginplay/hopscotch_12</messageString>
+    <messageString>/pluginplay/hopscotch_22</messageString>
+    <messageString>/pluginplay/hopscotch_03</messageString>
+    <messageString>/pluginplay/hopscotch_13</messageString>
+    <messageString>/pluginplay/hopscotch_23</messageString>
+    <messageString>/pluginplay/hopscotch_04</messageString>
+    <messageString>/pluginplay/hopscotch_14</messageString>
+    <messageString>/pluginplay/hopscotch_24</messageString>
+    <messageString>/pluginplay/hopscotch_05</messageString>
+    <messageString>/pluginplay/hopscotch_15</messageString>
+    <messageString>/pluginplay/hopscotch_25</messageString>
+    <messageString>/pluginplay/hopscotch_06</messageString>
+    <messageString>/pluginplay/hopscotch_16</messageString>
+    <messageString>/pluginplay/hopscotch_26</messageString>
+    <messageString>/pluginplay/hopscotch_07</messageString>
+    <messageString>/pluginplay/hopscotch_17</messageString>
+    <messageString>/pluginplay/hopscotch_27</messageString>
+    <low_band>1</low_band>
+    <high_band>3</high_band>
+    <height>0.611328</height>
+</Trigger>
+<Trigger>
+    <name>deleteme</name>
+    <low_band>21</low_band>
+    <high_band>106</high_band>
+    <height>0.933594</height>
+</Trigger>
