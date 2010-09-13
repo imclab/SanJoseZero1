@@ -29,6 +29,12 @@ public:
 	int oscPort;
 	
 	ofPoint testPoint;
+
+	// Variables to test is a whole quad is being dragged
+	bool bJustClickedInQuad;
+	bool bQuadJustDragged;
+	int lastQuadSelected;
+	
 	
 	Hopscotch(){
 		
@@ -55,7 +61,10 @@ public:
 		x = 350;
 		y = 10;
 		
-//		sender.setup(oscHost, oscPort);
+		bQuadJustDragged = false;
+		bJustClickedInQuad = false;
+		lastQuadSelected = -1;
+		
 		cout<<"SETTING UP OSC "<<oscHost<<":"<<oscPort<<endl;
 	};
 	
@@ -140,6 +149,10 @@ public:
 		float storeDist = 9999999.0;
 		selectedQuad   = -1;
 		selectedPoint  = -1;	
+
+		
+		// SEE IF A QUAD CORNER WAS SELECTED
+		cout << "glutGetModifiers: " << glutGetModifiers() << ", GLUT_ACTIVE_SHIFT: " << GLUT_ACTIVE_SHIFT << endl;
 		if (glutGetModifiers() == GLUT_ACTIVE_SHIFT){
 			for (int i=0; i<quads.size(); i++){
 				Quad q = quads[i];
@@ -214,11 +227,37 @@ public:
 		if (selectedQuad != -1 && selectedPoint != -1){
 			quads[selectedQuad].selected[selectedPoint] = true;
 			cout << "SELECTED: " << quads[selectedQuad].name << endl;
+
+			
+		// ZACK BOKA: 
+		// SEE IF THE INSIDE OF A QUAD WAS SELECTED
+		} else {
+			for (int i = 0; i < quads.size(); i++ ) {
+				ofRectangle curRect;
+				curRect.x = quads[i].p1.x;
+				curRect.y = quads[i].p1.y;
+				curRect.width = quads[i].p2.x - quads[i].p1.x;
+				curRect.height = quads[i].p4.y - quads[i].p1.y;
+				
+				if (isInsideRect(mX, mY, curRect)) {
+					bJustClickedInQuad = true;
+					lastQuadSelected = i;
+					cout << "Selected quad: " << quads[i].name << endl;
+				}
+			}
 		}
+		
 	}
 	
 	void mouseDragged(int mx, int my){
+		if (bJustClickedInQuad) {
+			bQuadJustDragged = true;
+		}
+		
+		
 		for (int i=0; i<quads.size(); i++){
+
+			// SEE IF WHOLE QUAD IS BEING DRAGGED
 			if (quads[i].pressed){
 				quads[i].p2.x = mx - x + fabs(quads[i].p1.x - quads[i].p2.x);		
 				quads[i].p2.y = my - y + fabs(quads[i].p1.y - quads[i].p2.y);
@@ -230,7 +269,20 @@ public:
 				quads[i].p1.y = my - y;	
 				
 				cout << "DRAGGED: pressed  " << quads[i].name << endl;
+			} else if (bQuadJustDragged && lastQuadSelected == i) {
+				quads[i].p2.x = mx - x + fabs(quads[i].p1.x - quads[i].p2.x);		
+				quads[i].p2.y = my - y + fabs(quads[i].p1.y - quads[i].p2.y);
+				quads[i].p3.x = mx - x + fabs(quads[i].p1.x - quads[i].p3.x);	
+				quads[i].p3.y = my - y + fabs(quads[i].p1.y - quads[i].p3.y);	
+				quads[i].p4.x = mx - x + fabs(quads[i].p1.x - quads[i].p4.x);		
+				quads[i].p4.y = my - y + fabs(quads[i].p1.y - quads[i].p4.y);						
+				quads[i].p1.x = mx - x;		
+				quads[i].p1.y = my - y;	
 				
+				cout << "DRAGGED: pressed " << quads[i].name << endl;
+				
+				
+			// SEE IF CORNER OF QUAD IS BEING DRAGGED
 			} else if (quads[i].selected[0]){
 				quads[i].p1.x = mx - x;		
 				quads[i].p1.y = my - y;
@@ -267,6 +319,11 @@ public:
 	};
 	
 	void mouseReleased(){
+		if (bQuadJustDragged) {
+			bJustClickedInQuad = false;
+			bQuadJustDragged = false;
+		}
+		
 		for (int i=0; i<quads.size(); i++){
 			quads[i].pressed = false;
 			for (int j=0; j<4; j++){
