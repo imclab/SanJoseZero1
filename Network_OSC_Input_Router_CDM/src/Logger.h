@@ -34,8 +34,8 @@ public:
 		lastEmitTime = ofGetElapsedTimeMillis();
 
 		// Set the sDate variable
-		int month = ofGetMonth();
-		int day = ofGetDay();
+		month = ofGetMonth();
+		day = ofGetDay();
 		if (month < 10) {
 			sDate = "0";
 		}
@@ -58,6 +58,22 @@ public:
 *********************************************/
 	void logData() {
 		cout << "logging\n";
+		
+		// See if sDate needs to be reset
+		if (day != ofGetDay()) {
+			sDate = "";
+			month = ofGetMonth();
+			day = ofGetDay();
+			if (month < 10) {
+				sDate = "0";
+			}
+			sDate += ofToString(month);
+			if (day < 10) {
+				sDate += "0";
+			}
+			sDate += ofToString(day);
+		}
+		
 		
 		int curElapsedTime = ofGetElapsedTimeMillis() - lastEmitTime;
 		logNumParticles++;
@@ -130,6 +146,10 @@ private:
 	int lastEmitTime;
 	int logDelayThreshold;
 	int logNumParticles;
+	
+	// date fields
+	int month;
+	int day;
 
 	
 
