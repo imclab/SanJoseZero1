@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2ECBAF3211DCF0AF00C82C40 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2B11DCF0AF00C82C40 /* tinyxml.cpp */; };
-		2ECBAF3311DCF0AF00C82C40 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2D11DCF0AF00C82C40 /* tinyxmlerror.cpp */; };
-		2ECBAF3411DCF0AF00C82C40 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF2E11DCF0AF00C82C40 /* tinyxmlparser.cpp */; };
-		2ECBAF3511DCF0AF00C82C40 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBAF3011DCF0AF00C82C40 /* ofxXmlSettings.cpp */; };
 		9AB63A7C122C0A7A004935BD /* ofxHttpUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB63A7A122C0A7A004935BD /* ofxHttpUtils.cpp */; };
 		9AB63AA4122C10B1004935BD /* ofxThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB63AA2122C10B1004935BD /* ofxThread.cpp */; };
+		A936F894123E9B3100A7B269 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A936F88D123E9B3100A7B269 /* tinyxml.cpp */; };
+		A936F895123E9B3100A7B269 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A936F88F123E9B3100A7B269 /* tinyxmlerror.cpp */; };
+		A936F896123E9B3100A7B269 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A936F890123E9B3100A7B269 /* tinyxmlparser.cpp */; };
+		A936F897123E9B3100A7B269 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A936F892123E9B3100A7B269 /* ofxXmlSettings.cpp */; };
 		E0F05B5312241AB500FFD3A0 /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F05B4712241AB500FFD3A0 /* osc.a */; };
 		E0F05B5412241AB500FFD3A0 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0F05B4B12241AB500FFD3A0 /* ofxOscBundle.cpp */; };
 		E0F05B5512241AB500FFD3A0 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0F05B4D12241AB500FFD3A0 /* ofxOscMessage.cpp */; };
@@ -31,7 +31,7 @@
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
-		E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */; };
+		E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -90,13 +90,6 @@
 
 /* Begin PBXFileReference section */
 		2E5F3C291231AC2500A6D545 /* TwitterSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterSearcher.h; sourceTree = "<group>"; };
-		2ECBAF2911DCF0AF00C82C40 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		2ECBAF2B11DCF0AF00C82C40 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
-		2ECBAF2C11DCF0AF00C82C40 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
-		2ECBAF2D11DCF0AF00C82C40 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
-		2ECBAF2E11DCF0AF00C82C40 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		2ECBAF3011DCF0AF00C82C40 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
-		2ECBAF3111DCF0AF00C82C40 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		9AB63A79122C0A7A004935BD /* ofxHttpTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxHttpTypes.h; sourceTree = "<group>"; };
 		9AB63A7A122C0A7A004935BD /* ofxHttpUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxHttpUtils.cpp; sourceTree = "<group>"; };
 		9AB63A7B122C0A7A004935BD /* ofxHttpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxHttpUtils.h; sourceTree = "<group>"; };
@@ -104,6 +97,13 @@
 		9AB63AA0122C10B1004935BD /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		9AB63AA2122C10B1004935BD /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
 		9AB63AA3122C10B1004935BD /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
+		A936F88B123E9B3100A7B269 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		A936F88D123E9B3100A7B269 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		A936F88E123E9B3100A7B269 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		A936F88F123E9B3100A7B269 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		A936F890123E9B3100A7B269 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		A936F892123E9B3100A7B269 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		A936F893123E9B3100A7B269 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		E0F05B3212241AB500FFD3A0 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		E0F05B3712241AB500FFD3A0 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
 		E0F05B3812241AB500FFD3A0 /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C2422B10CC554B004149E2 /* openFrameworksUniversal.a in Frameworks */,
+				E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */,
 				E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */,
 				E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
@@ -206,37 +206,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2ECBAF2811DCF0AF00C82C40 /* ofxXmlSettings */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAF2911DCF0AF00C82C40 /* install.xml */,
-				2ECBAF2A11DCF0AF00C82C40 /* libs */,
-				2ECBAF2F11DCF0AF00C82C40 /* src */,
-			);
-			name = ofxXmlSettings;
-			path = ../../../addons/ofxXmlSettings;
-			sourceTree = SOURCE_ROOT;
-		};
-		2ECBAF2A11DCF0AF00C82C40 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAF2B11DCF0AF00C82C40 /* tinyxml.cpp */,
-				2ECBAF2C11DCF0AF00C82C40 /* tinyxml.h */,
-				2ECBAF2D11DCF0AF00C82C40 /* tinyxmlerror.cpp */,
-				2ECBAF2E11DCF0AF00C82C40 /* tinyxmlparser.cpp */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		2ECBAF2F11DCF0AF00C82C40 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2ECBAF3011DCF0AF00C82C40 /* ofxXmlSettings.cpp */,
-				2ECBAF3111DCF0AF00C82C40 /* ofxXmlSettings.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		9AB63A73122C0A7A004935BD /* ofxHttpUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +247,36 @@
 			children = (
 				9AB63AA2122C10B1004935BD /* ofxThread.cpp */,
 				9AB63AA3122C10B1004935BD /* ofxThread.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A936F88A123E9B3100A7B269 /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				A936F88B123E9B3100A7B269 /* install.xml */,
+				A936F88C123E9B3100A7B269 /* libs */,
+				A936F891123E9B3100A7B269 /* src */,
+			);
+			path = ofxXmlSettings;
+			sourceTree = "<group>";
+		};
+		A936F88C123E9B3100A7B269 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				A936F88D123E9B3100A7B269 /* tinyxml.cpp */,
+				A936F88E123E9B3100A7B269 /* tinyxml.h */,
+				A936F88F123E9B3100A7B269 /* tinyxmlerror.cpp */,
+				A936F890123E9B3100A7B269 /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		A936F891123E9B3100A7B269 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A936F892123E9B3100A7B269 /* ofxXmlSettings.cpp */,
+				A936F893123E9B3100A7B269 /* ofxXmlSettings.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -569,9 +568,9 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A936F88A123E9B3100A7B269 /* ofxXmlSettings */,
 				9AB63A9D122C10B1004935BD /* ofxThread */,
 				9AB63A73122C0A7A004935BD /* ofxHttpUtils */,
-				2ECBAF2811DCF0AF00C82C40 /* ofxXmlSettings */,
 				E0F05B3112241AB500FFD3A0 /* ofxOsc */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
@@ -584,7 +583,7 @@
 		E4C2421710CC549C004149E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */,
+				E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -712,10 +711,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4C2421E10CC549C004149E2 /* openFrameworksUniversal.a */ = {
+		E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworksUniversal.a;
+			path = openFrameworksDebug.a;
 			remoteRef = E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -744,16 +743,16 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				2ECBAF3211DCF0AF00C82C40 /* tinyxml.cpp in Sources */,
-				2ECBAF3311DCF0AF00C82C40 /* tinyxmlerror.cpp in Sources */,
-				2ECBAF3411DCF0AF00C82C40 /* tinyxmlparser.cpp in Sources */,
-				2ECBAF3511DCF0AF00C82C40 /* ofxXmlSettings.cpp in Sources */,
 				E0F05B5412241AB500FFD3A0 /* ofxOscBundle.cpp in Sources */,
 				E0F05B5512241AB500FFD3A0 /* ofxOscMessage.cpp in Sources */,
 				E0F05B5612241AB500FFD3A0 /* ofxOscReceiver.cpp in Sources */,
 				E0F05B5712241AB500FFD3A0 /* ofxOscSender.cpp in Sources */,
 				9AB63A7C122C0A7A004935BD /* ofxHttpUtils.cpp in Sources */,
 				9AB63AA4122C10B1004935BD /* ofxThread.cpp in Sources */,
+				A936F894123E9B3100A7B269 /* tinyxml.cpp in Sources */,
+				A936F895123E9B3100A7B269 /* tinyxmlerror.cpp in Sources */,
+				A936F896123E9B3100A7B269 /* tinyxmlparser.cpp in Sources */,
+				A936F897123E9B3100A7B269 /* ofxXmlSettings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,25 +14,25 @@
             <string>/pluginplay/twitter/search</string>
             <tag>newyork</tag>
             <time>2050.000000</time>
-            <lastId>24114483004</lastId>
+            <lastId>24413877084</lastId>
         </message>
         <message>
             <type>1</type>
             <string>/pluginplay/twitter/search/1</string>
             <tag>america</tag>
             <time>2000.000000</time>
-            <lastId>24113786622</lastId>
+            <lastId>24413997755</lastId>
         </message>
         <message>
             <type>1</type>
             <string>/pluginplay/twitter/search/2</string>
             <tag>zero1</tag>
             <time>2100.000000</time>
-            <lastId>24040205883</lastId>
+            <lastId>24389281667</lastId>
         </message>
     </messages>
     <logLevel>2</logLevel>
     <sendTime>500.000000</sendTime>
-    <searchTime>2000.000000</searchTime>
-    <replySearchTime>10000.000000</replySearchTime>
+    <searchTime>0.000000</searchTime>
+    <replySearchTime>0.000000</replySearchTime>
 </settings>
