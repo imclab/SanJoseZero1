@@ -282,6 +282,15 @@ public:
 		};		
 	};
 	
+	float scaleOut;
+	
+	void setScaleOut( float _scaleOut ){
+		scaleOut = _scaleOut;
+		for (int i=0; i<particles.size(); i++){
+			particles[i]->setScaleOut(scaleOut);
+		};		
+	};
+	
 	void setMaxScale( float _maxscale ){
 		maxScale = _maxscale;
 		

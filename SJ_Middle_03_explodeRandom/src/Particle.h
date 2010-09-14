@@ -146,6 +146,11 @@ public:
 			maxScale *= 1.5f;
 		}
 	}
+	float scaleOut;
+	
+	void setScaleOut( float _scaleOut){
+		scaleOut = _scaleOut;
+	};
 	
 	//frame
 	
@@ -473,8 +478,8 @@ public:
 			if (extrudeTimer < 10){
 				extrudeTimer++;
 				scale.z = ofLerp(lastScale.z, .01, extrudeTimer/10.);
-				scale.x = ofLerp(lastScale.y, minScale, extrudeTimer/10.);
-				scale.y = ofLerp(lastScale.x, minScale, extrudeTimer/10.);
+				scale.x = ofLerp(lastScale.y, scaleOut, extrudeTimer/10.);
+				scale.y = ofLerp(lastScale.x, scaleOut, extrudeTimer/10.);
 				
 				rotation.x = ofLerp(lastRotation.x, targetRotation.x, extrudeTimer/10.);
 				rotation.y = ofLerp(lastRotation.y, targetRotation.y, extrudeTimer/10.);
@@ -489,7 +494,7 @@ public:
 				};
 				
 			} else {
-				scale.x = scale.y = minScale;
+				scale.x = scale.y = scaleOut;
 				scale.z = .01;
 				rotation.x = targetRotation.x;
 				rotation.y = targetRotation.y;

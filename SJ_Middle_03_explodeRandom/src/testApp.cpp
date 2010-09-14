@@ -185,6 +185,7 @@ void testApp::update(){
 	ofxLabGui * gui = projection.getGui();
 	particleManager.setMinScale(gui->getValueF("SCALE_MIN"));
 	particleManager.setMaxScale(gui->getValueF("SCALE_MAX"));
+	particleManager.setScaleOut(gui->getValueF("SCALE_OUT"));
 	particleManager.setMinSpeed(gui->getValueF("SPEED_MIN"));
 	particleManager.setMaxSpeed(gui->getValueF("SPEED_MAX"));
 	particleManager.setGroupingTolerance(gui->getValueI("GROUP_TIME"));
@@ -411,6 +412,7 @@ void testApp::setupGui(){
 	projection.addDefaultGroup("settings", true);
 	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
 	gui->addSlider("maximumScale", "SCALE_MAX", 10.0f, 1.0f, 30.0f, false);
+	gui->addSlider("outbound scale", "SCALE_OUT", 4.0f, 0.01, 10.0f, false);
 	gui->addSlider("maximum speed", "SPEED_MAX", 10.0f, 1.0f, 100.0f, false);
 	gui->addSlider("minumum speed", "SPEED_MIN", 5.0f, .1f, 20.0f, false);
 	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 10000, false);
