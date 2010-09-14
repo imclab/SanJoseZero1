@@ -227,12 +227,12 @@ public:
 	void setTransformStart( float _startPos){
 		startPos = _startPos;
 		startPos.y += ofRandom(-50.f, 200.f);
-		explodeLocation = ofRandom(endPos.y, startPos.y);
+		explodeLocation = ofRandom(endPos.y*5./6., startPos.y);
 	}
 	
 	void setTransformEnd( float _endPos ){
 		endPos.y = _endPos;
-		explodeLocation = ofRandom(endPos.y, startPos.y);
+		explodeLocation = ofRandom(endPos.y*5./6., startPos.y);
 	}
 	
 	void setTargetPoint( float x, float y, float z=0 ){
@@ -472,9 +472,9 @@ public:
 		} else if (bLeaving){
 			if (extrudeTimer < 10){
 				extrudeTimer++;
-				scale.z = ofLerp(maxScale, .01, extrudeTimer/10.);
-				scale.x = ofLerp(maxScale, minScale, extrudeTimer/10.);
-				scale.y = ofLerp(maxScale, minScale, extrudeTimer/10.);
+				scale.z = ofLerp(lastScale.z, .01, extrudeTimer/10.);
+				scale.x = ofLerp(lastScale.y, minScale, extrudeTimer/10.);
+				scale.y = ofLerp(lastScale.x, minScale, extrudeTimer/10.);
 				
 				rotation.x = ofLerp(lastRotation.x, targetRotation.x, extrudeTimer/10.);
 				rotation.y = ofLerp(lastRotation.y, targetRotation.y, extrudeTimer/10.);
@@ -539,6 +539,7 @@ public:
 				targetRotation = rotate360N;
 			}
 			lastPosition = pos;
+			lastScale = scale;
 		};
 				
 		// UPDATE VELOCITY + ACCELERATION
@@ -744,7 +745,7 @@ public:
 	};
 	
 	int drawType;
-	ofPoint scale;
+	ofPoint scale, lastScale;
 	float targetScale;
 	
 private:

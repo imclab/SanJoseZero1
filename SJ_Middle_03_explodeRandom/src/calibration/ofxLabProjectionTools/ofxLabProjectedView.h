@@ -207,6 +207,7 @@ public:
 		ofSetColor(0x000000);
 		glDisable(GL_DEPTH_TEST);
 		ofQuad3D(cropCorners[1],ofPoint(width,0),ofPoint(width,height),cropCorners[2]);
+		ofQuad3D(ofPoint(0,0),cropCorners[0],cropCorners[3],ofPoint(0,height));
 		ofSetColor(0xffffff);
 			
 	};
