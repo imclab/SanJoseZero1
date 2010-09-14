@@ -50,6 +50,7 @@ class testApp : public ofBaseApp{
 		bool bInited;
 		void setupGui();
 		void updateFromGui();
+		float particleScale;
 	
 		bool bWindowResized;
 		float conveyorY;

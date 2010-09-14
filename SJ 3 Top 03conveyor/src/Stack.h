@@ -36,6 +36,17 @@ public:
 		pos.y = y;
 	};
 	
+	void setScale( float scale ){
+		for (int i=0; i<buildings.size(); i++){
+			if (buildings[i]->scale.z < .9f){
+				buildings[i]->setScaleY(scale);
+				buildings[i]->setScaleX(scale);
+			} else {
+				buildings[i]->setScale(scale,scale,scale);
+			}
+		}
+	}
+	
 	void setPosition( ofxVec3f newPos){	//LARS//
 		//newPos.y += buildings[0]->getWidth();//<----//this centers the stack,
 													//ultimately this should be fixed
@@ -92,7 +103,7 @@ public:
 	
 	void setComplete(){
 		for (int i=0; i<buildings.size(); i++){
-			buildings[i]->setScaleZ(1.0f);
+			buildings[i]->setScaleZ(buildings[i]->scale.x);
 			//buildings[i]->rotate.x += -270;
 		};
 	};

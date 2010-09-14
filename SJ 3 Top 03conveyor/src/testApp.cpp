@@ -598,9 +598,10 @@ void testApp::setupGui(){
 	guiTypePanel * panel = projection.addDefaultPanel("conveyor");
 	projection.addDefaultGroup("conveyor", true);
 	gui->addSlider("Rotate delay (in seconds)", "ROTATE_TIME", 2.f, .1f, 15.0f, false);
-	gui->addSlider("Rotate amount", "ROTATE_AMOUNT", 5, 1, 100, false);
-	gui->addSlider("conveyor scale (in %)", "CONVEYOR_SCALE_Y", 150.f, 1, 500.0f, false);
+	gui->addSlider("Rotate amount", "ROTATE_AMOUNT", 5, .001, 10, false);
+	gui->addSlider("conveyor scale (in %)", "CONVEYOR_SCALE_Y", 150.f, 1, 1000.0f, false);
 	gui->addSlider("conveyor position.y", "CONVEYOR_Y", 135, 0, 1000.0f, true);
+	gui->addSlider("particle scale", "PARTICLE_SCALE", 5, 0, 10.0f, false);
 		
 	projection.addDefaultGroup("rows", true);
 	gui->addSlider("row start X", "ROW_BUFFER", 10.0f, -50.0f, 500.0f, false);	
@@ -611,6 +612,7 @@ void testApp::setupGui(){
 	gui->setPanelIndex("conveyor", 0);
 	gui->update();
 	gui->setupOscReceiving(3001);
+
 };
 
 // LOAD VARS --------------------------------------------------------------
@@ -618,6 +620,7 @@ void testApp::updateFromGui(){
 	float oldConveyorScale = conveyorScaleY;
 	float oldConveyorY = conveyorY;
 	float oldRowBuffer = ROW_BUFFER;
+	float oldparticleScale = particleScale;
 	
 	ofxLabGui * gui = projection.getGui();	
 	gui->update();
@@ -625,6 +628,16 @@ void testApp::updateFromGui(){
 	ROTATE_TIME = gui->getValueF( "ROTATE_TIME" ) * 1000.f;
 	conveyorScaleY = gui->getValueF( "CONVEYOR_SCALE_Y" ) /100.0f;
 	conveyorY = gui->getValueF( "CONVEYOR_Y" );
+	
+	particleScale = gui->getValueF( "PARTICLE_SCALE" );
+	
+	if (particleScale != oldparticleScale){
+		particleManager->setScale(particleScale);
+		
+		for (int i=0; i<stacks.size(); i++){
+			//stacks[i].setScale( particleScale );
+		}
+	}
 	
 	ROW_BUFFER = gui->getValueF("ROW_BUFFER");
 	rowRealBuffer = ROW_SPACING + ROW_BUFFER;

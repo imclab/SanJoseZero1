@@ -47,17 +47,21 @@ public:
 	}
 	
 	float getHeight(){
-		return img->getYdim()*img->scale.x;
+		img->setScale(1.0,1.0,1.0);
+		cout<<"height is "<<img->getYdim()*scale.y<<endl;
+		return img->getYdim()*scale.y;
 		//return img->width;
 	}
 	
 	float getWidth(){
-		return img->getXdim()*img->scale.x;
+		img->setScale(1.0,1.0,1.0);
+		return img->getXdim()*scale.x;
 		//return img->width;
 	}
 	
 	float getDepth(){
-		return img->getZdim()*img->scale.x;
+		img->setScale(1.0,1.0,1.0);
+		return img->getZdim()*scale.z;
 		//return img->width;
 	}
 	

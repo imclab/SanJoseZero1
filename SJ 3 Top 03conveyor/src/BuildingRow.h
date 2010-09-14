@@ -98,6 +98,12 @@ public:
 		stacks[ b->getWhichStack() ]->addBuilding(b);
 	};
 	
+	void setScale( float scale ){
+		for (int i=0; i<stacks.size(); i++){
+			stacks[i]->setScale(scale);
+		}
+	}
+	
 	void update(){
 		
 		//update ceiling

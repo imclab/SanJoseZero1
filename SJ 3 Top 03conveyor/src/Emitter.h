@@ -54,6 +54,8 @@ public:
 		}
 		settings.popTag();
 		
+		scale = 5.0f;
+		
 		//set up first row		
 		currentRow = new BuildingRow(ceiling);
 		cout<<"emitter set up"<<endl;
@@ -145,6 +147,21 @@ public:
 		checkMessageString(types[ran]->getRandomMessageString(), ranX);
 	};
 	
+	float scale;
+	
+	void setScale( float _scale ){
+		scale = _scale;
+		for (int i=0; i<buildings.size(); i++){
+			if (buildings[i]->scale.z < .9f){
+				buildings[i]->setScaleX(scale);
+				buildings[i]->setScaleY(scale);
+			} else {
+				buildings[i]->setScale(scale,scale,scale);
+			}				
+		}
+		currentRow->setScale(scale);
+	}
+	
 	void setAdvanceCeilingBool(bool *pointer2advCeilBool){advanceCeiling = pointer2advCeilBool;}
 /***********************************************************
 	MANAGE ASSETS
@@ -161,7 +178,9 @@ public:
 					Stack * stack = currentRow->getClosestStack(position);
 					part->setStackIndex(stack->index);
 					part->setCeiling( currentRow->getCeiling(stack->index) );					
-					part->setImage( types[i]->getModel(messageIndex) );		
+					part->setImage( types[i]->getModel(messageIndex) );
+					part->setScaleX( scale );
+					part->setScaleY( scale );
 					part->setPos( stack->getPosition().x, types[i]->getPosition().y + part->getHeight(), 0 );		
 					part->setType( types[i]->getMessage(messageIndex) );
 					part->speed = speed;
