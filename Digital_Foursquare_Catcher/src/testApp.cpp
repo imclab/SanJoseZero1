@@ -109,7 +109,7 @@ void testApp::update(){
 				venueId = settings.getValue("venue", "61626");
 			}
 			settings.popTag();
-			checkinSearcher->venueId = venueId;
+			checkinSearcher->venueId = nearbySearcher->venueId = venueId;
 			checkinSearcher->name="venue_"+venueId;
 			
 			checkinSearcher->setSearchTime(searchTime);
@@ -124,7 +124,7 @@ void testApp::update(){
 		checkinSearcher->doSearch();
 	
 	if ( nearbySearcher->bReadyToSearch() ) 
-		nearbySearcher->doSearch();
+		nearbySearcher->doSearch(); 
 
 	
 	if (ofGetElapsedTimeMillis() - lastForwardTime >= sendTime) {
