@@ -63,12 +63,12 @@ import netP5.*;
     xml = new XMLElement(this, "settings.xml");
     XMLElement oscSettings = xml.getChild("osc");
     
-    println(oscSettings.getChildCount());
+    //println(oscSettings.getChildCount());
     
     println("Available serial ports:");
     println(Serial.list());   
     if (Serial.list().length > 4){
-      port = new Serial(this, Serial.list()[0], 9600);
+      port = new Serial(this, Serial.list()[0], 115200);
      bSerial = true; 
     } else {
       bSerial = false;
@@ -114,7 +114,7 @@ import netP5.*;
       int numValues   = Integer.parseInt(sensor.getChild("values").getContent());
       int sendOsc = Integer.parseInt(sensor.getChild("sendosc").getContent());
       
-      println(name+":"+id+":"+sendOsc);
+      //println(name+":"+id+":"+sendOsc);
       
       Input input = new Input (oscP5, demoLocation, id, numValues, font, fontSize);
       input.setName(name);
@@ -130,7 +130,7 @@ import netP5.*;
           input.addMessage( message.getChild("string").getContent(), 
           Integer.parseInt(message.getChild("threshold").getContent()), j);
           
-          println(message.getChild("string").getContent()+":"+Integer.parseInt(message.getChild("threshold").getContent())+":"+j);
+          //println(message.getChild("string").getContent()+":"+Integer.parseInt(message.getChild("threshold").getContent())+":"+j);
         }
       }
             
@@ -191,19 +191,19 @@ import netP5.*;
         if (input.sendSound==true){
           if (input.name.equals("foursquare")){
             if (bSerial) port.write('s');
-            println("play sound: s");
+            //println("play sound: foursquare (s)");
           } else if (input.name.equals("traffic")){
             if (bSerial) port.write('r');
-            println("play sound: s");
+            //println("play sound: traffic (r)");
           } else {
             if (bSerial) port.write(input.name.charAt(0));
-            println("play sound: "+input.name.charAt(0));
+            //println("play sound: "+input.name.charAt(0));
           }
         
         //are we sending OSC this frame?
         } else if (input.newFrame==true){
           input.send();
-          println("sending "+"/pluginplay/"+input.name);
+          //println("sending "+"/pluginplay/"+input.name);
         };
         
         input.sendSound = false;
@@ -238,7 +238,7 @@ void oscEvent(OscMessage theOscMessage) {
   if(theOscMessage.checkAddrPattern("/pluginplay/sound")==true) {
       /* parse theOscMessage and extract the values from the osc message arguments. */
       String name = theOscMessage.get(0).stringValue();
-      println("caught "+name);
+      //println("caught "+name);
       //find name in array      
       for (int i=inputs.size()-1; i>=0; i--){
         Input input = (Input) inputs.get(i);
@@ -249,7 +249,7 @@ void oscEvent(OscMessage theOscMessage) {
       }
       return;
   } 
-  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
+  //println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
 }
   
 /**********************************************************
@@ -286,6 +286,7 @@ void oscEvent(OscMessage theOscMessage) {
                for (int j=1; j<values.length; j++){
                   vals[j-1] = unhex(values[j]);
                }
+               println(vals[1]+":"+vals[2]+":"+vals[3]+":"+vals[4]+":"+vals[5]);
                newFrame = input.update( vals );//unhex(hexVal) );
             //only 3 values: so it's mic or birdfeeder
             } 
@@ -297,11 +298,11 @@ void oscEvent(OscMessage theOscMessage) {
               newFrame = input.update( vals );
             }
           } else if (input.name.equals("megaphone")){
-            println(values.length);
+            //println(values.length);
             if (values.length > 2){
               vals = new int[1];
               String hexVal = values[1]+""+values[2];
-              println(values[1]+":"+values[2]+"::"+unhex(hexVal));
+              //println(values[1]+":"+values[2]+"::"+unhex(hexVal));
               vals[0] = unhex(hexVal);
               newFrame = input.update( vals );
             } else if (values.length > 1){
@@ -311,7 +312,7 @@ void oscEvent(OscMessage theOscMessage) {
               newFrame = input.update( vals );
             }
           } else {
-            println("unknown value "+input.name);
+            //println("unknown value "+input.name);
           }        
           
           break;

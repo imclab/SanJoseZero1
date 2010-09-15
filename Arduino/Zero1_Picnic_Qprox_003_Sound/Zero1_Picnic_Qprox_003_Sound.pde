@@ -122,7 +122,7 @@ ZBTxStatusResponse txStatus = ZBTxStatusResponse();
       if (!root.openRoot(vol)){
         error("openRoot");
       } else {
-        PgmPrintln("Index files");
+        //PgmPrintln("Index files");
         indexFiles();
         openByIndex(0); // open first file
         wave.play();
@@ -164,9 +164,9 @@ void loop()
    
      if(millis()-t > PLAY_TIME){
        t = millis();
-       wave.stop();
-       openByIndex(0); // open first file
-       wave.play();
+       //wave.stop();
+      //openByIndex(0); // open first file
+       //wave.play();
       }
    }
 
@@ -263,7 +263,7 @@ void loop()
       // Current position is just after entry so subtract one.
       fileIndex[i] = root.readPosition()/32 - 1;   
     }
-    PgmPrintln("Done");
+   // PgmPrintln("Done");
   }
   /*
    * Play file by index and print latency in ms
@@ -291,7 +291,7 @@ void loop()
     
     // check for play errors
     sdErrorCheck();
-    PgmPrintln("Done");
+    //("Done");
   }
   /*
    * Play file by name and print latency in ms
@@ -327,6 +327,6 @@ void loop()
       // check for play errors
       sdErrorCheck();
     }
-    PgmPrintln("Done");
+    //PgmPrintln("Done");
   }
 

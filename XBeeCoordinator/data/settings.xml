@@ -17,11 +17,11 @@
 				</message>
 				<message>
 					<string>/pluginplay/megaphone/1</string>
-					<threshold>10</threshold>
+					<threshold>100</threshold>
 				</message>
 				<message>
 					<string>/pluginplay/megaphone/2</string>
-					<threshold>50</threshold>
+					<threshold>400</threshold>
 				</message>
 			</value>
 		</sensor>
@@ -110,6 +110,12 @@
 			<values>1</values>
 		</sensor>
 		<sensor>
+			<name>playground</name>
+			<id>405DAFB1</id>
+			<sendosc>0</sendosc>
+			<values>1</values>
+		</sensor>
+		<sensor>
 			<name>hopscotch</name>
 			<id>405DAF99</id>
 			<sendosc>0</sendosc>
@@ -118,12 +124,6 @@
 		<sensor>
 			<name>traffic</name>
 			<id>405DAF9A</id>
-			<sendosc>0</sendosc>
-			<values>1</values>
-		</sensor>
-		<sensor>
-			<name>playground</name>
-			<id>405DAFB1</id>
 			<sendosc>0</sendosc>
 			<values>1</values>
 		</sensor>

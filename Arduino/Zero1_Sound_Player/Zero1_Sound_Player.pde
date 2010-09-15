@@ -93,7 +93,8 @@
           if(millis()-t > PLAY_TIME){
             t = millis();
             wave.stop();
-            openByIndex(0); // open first file
+            root.rewind();
+            //openByIndex(0); // open first file
             wave.play();
           }
     
@@ -197,8 +198,8 @@
     //wave.stop();
     
     // check for play errors
-    sdErrorCheck();
-    PgmPrintln("Done");
+    //sdErrorCheck();
+    //PgmPrintln("Done");
   }
   /*
    * Play file by name and print latency in ms

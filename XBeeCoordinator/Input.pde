@@ -128,7 +128,7 @@ class Input
   boolean update( int[] vals ){
     newFrame = false;
     for (int i=0; i<vals.length; i++){
-      if (values[i] != vals[i] && vals[i] > 0){
+      if ((values[i] != vals[i] && vals[i] > 0) || values[i] == 1){
         newThings[i] = true;
         newFrame = true;
       } else {
@@ -156,14 +156,14 @@ class Input
       int which = 0;
       int lastThresh = -9999;
       for (int i=0; i<messages[index].size(); i++){
-        Message m = (Message) messages[index].get(index);
+        Message m = (Message) messages[index].get(i);
         if (values[index] >= m.threshold && m.threshold > lastThresh){
           which = i;
           lastThresh = m.threshold;
         }
       };
       
-      return ((Message) messages[index].get(index)).messageString;
+      return ((Message) messages[index].get(which)).messageString;
   };
   
   boolean mousePressed( int x, int y){

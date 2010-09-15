@@ -58,7 +58,7 @@
   void setup() {  
     // start serial + xbee
     xbee.begin(9600);
-    nss.begin(9600);
+    nss.begin(115200);
     
     //twitter
     XBeeAddressesHIGH[0] = 0x0013a200;
@@ -83,7 +83,7 @@
     //cdm
     XBeeAddressesHIGH[5] = 0x0013a200;
     XBeeAddressesLOW[5]  = 0x405DAFB1;
-        
+    
     //setup each XBee
     for (int i=0; i<NUM_XBEES; i++){
       //init payload
@@ -98,7 +98,6 @@
       }
     };
     
-    delay(100);
     if (verbose) nss.println("starting up!");
   }
   
@@ -175,11 +174,13 @@
           xbee.getResponse().getZBTxStatusResponse(txStatus);
     		
     	   // get the delivery status, the fifth byte
-           if (txStatus.getDeliveryStatus() == SUCCESS) {
-             if (verbose) nss.println("send success");
-           } else {
-             if (verbose) nss.println("send beefed");
-           }
+            if (verbose){
+              if (txStatus.getDeliveryStatus() == SUCCESS) {
+                nss.println("send success");
+              } else {
+                nss.println("send beefed");
+             }
+            }
           
         //error?
         } else if (xbee.getResponse().isError()) {
@@ -188,7 +189,7 @@
         }
           
         //  check serial to see if we are going to send anything
-        while (nss.available() > 0){
+        while (nss.available()){
           char inByte = nss.read();
           
           if (verbose){
@@ -224,10 +225,11 @@
               xbee.send(zbTx[4]);
               
             //cdm
-            } else if (inByte == 'c'){
+            } else if (inByte == 'p'){
               payload[5][0] = 0 & 0xff;   
               xbee.send(zbTx[5]);
             } 
           //};
         }
+    delay(10);
   }
