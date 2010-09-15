@@ -59,6 +59,7 @@ public:
 	bool bUseProjectionTools;
 	ofTrueTypeFont			font;	
 	int drawMode;
+	ofColor					bgColor;
 	ofxLabProjectionTools	projection;
 	
 	// PARTICLE EFFECTS

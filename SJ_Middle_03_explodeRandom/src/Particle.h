@@ -292,13 +292,16 @@ public:
 		prevPos = pos;
 		
 		// Check to see if we are still alive
-		if (pos.y <= getHeight() && !bSend && !bTransformed){
+		if (pos.y <= getHeight() && !bSend && bLeaving && !bSent){
+			cout<<"do it!"<<endl;
 			bSend = true;
 		}
 		
+		if (pos.y <= 0) bOffScreen = true;
+		
 		if (!bAlive) return;
 				
-		if (pos.y <= endPoint.y){
+		if (pos.y <= endPoint.y && bSent && okToErase()){
 			bAlive = false;
 						
 			return;
@@ -310,10 +313,10 @@ public:
 					nAlive = true;
 				};
 			};
-			if (!nAlive && neighbors.size() > 0){
+			/*if (!nAlive && neighbors.size() > 0){
 				bAlive = false;
 				return;
-			}
+			}*/
 		}	
 		
 		// are we past the threshold? + are we a follower particle?
@@ -405,7 +408,7 @@ public:
 			float distance = ofDist3D(targetPoint.x, targetPoint.y, targetPoint.z, pos.x, pos.y, pos.z);
 			
 			// If the distance is greater than 10
-			if (distance > 10) {				
+			if (distance > 50) {				
 				desired /= distance; // Normalize desired
 				desired *= maxSeekSpeed;
 				
@@ -422,7 +425,7 @@ public:
 				if (targetPoint.y == endPos.y){
 					setTargetPoint(endPoint.x, endPoint.y, 0);
 				} else {
-					setTargetPoint(ofRandom(getWidth(),ofGetWidth()-getWidth()), pos.y - ofRandom(50,ofGetHeight()/4.0f));
+					setTargetPoint(/*ofRandom(getWidth(),ofGetWidth()-getWidth())*/ofRandom(pos.x - getWidth()*4.0f, pos.x + getWidth()*4.0f), pos.y - ofRandom(getHeight()*3.0f,ofGetHeight()/4.0f));
 					
 					if (targetPoint.y <= endPos.y){
 						setTargetPoint(endPoint.x, endPoint.y, 0);
@@ -557,11 +560,9 @@ public:
 		else if (index == 0 && bLeaving){
 			vel.y = -minSpeed;
 			vel.x = 0;
-		} else if (bLeaving){
-			
+		} else if (bLeaving){			
 			vel.y = -minSpeed;
 		}
-		
 		
 		// UPDATE POSITION: HOME PARTICLE OR NOT CLICKED INTO PLACE
 		
@@ -570,17 +571,36 @@ public:
 			
 			// UPDATE POSITION: FOLLOWER PARTICLE THAT IS CLICKED INTO PLACE
 			
+			// CHECK MINUMUM Y IF IN TRANSFORM MODE
+			
+			if (bTransformed /*bTransforming*/){
+				if (pos.y >startPos.y){
+					pos.y = startPos.y;
+					vel.y *= -2.5f;
+					//vel.y *= -ofRandom(1.,2.75f);
+				}
+				if ( pos.x > ofGetWidth() - getWidth()){
+					vel.x *= -2;
+					vel.y *= 2.f;
+					pos.x = ofGetWidth() - getWidth();
+					setTargetPoint(ofRandom(pos.x - getWidth()*4.0f, pos.x + getWidth()*4.0f), pos.y - ofRandom(getHeight()*3.0f,ofGetHeight()/4.0f));
+					
+					if (targetPoint.y <= endPos.y){
+						setTargetPoint(endPoint.x, endPoint.y, 0);
+					}
+				} else if (pos.x < getWidth() ){
+					vel.x *= -2;
+					vel.y *= 2.0f;
+					pos.x = getWidth();
+					setTargetPoint(ofRandom(pos.x - getWidth()*4.0f, pos.x + getWidth()*4.0f), pos.y - ofRandom(getHeight()*3.0f,ofGetHeight()/4.0f));
+					if (targetPoint.y <= endPos.y){
+						setTargetPoint(endPoint.x, endPoint.y, 0);
+					}
+				};
+			}
+			
 		} else {
 			pos = destPt;
-		}
-		
-		// CHECK MINUMUM Y IF IN TRANSFORM MODE
-		
-		if (bTransformed /*bTransforming*/){
-			if (pos.y >startPos.y){
-				pos.y = startPos.y;
-				//vel.y *= -ofRandom(1.,2.75f);
-			}
 		}
 		
 		acc = 0;	
@@ -635,7 +655,7 @@ public:
 	
 	double count;
 	
-	void drawTrail( float rotate=0.0f){
+	void drawTrail( int drawMode = 1 ){
 		ofPushMatrix();{
 			rotatedPos = pos;
 			if (index != 0){
@@ -658,11 +678,12 @@ public:
 				ofRotateZ( rotation.z );
 			}
 			
-			ofRotateZ(rotate);
+			//ofRotateZ(rotate);
 						
 			count +=.1;
 						
-			particle3D->setScale(scale.x/2.0f + sinf(count)*2.0f,scale.y/2.0f*2.0f+ sinf(count)*2.0f,scale.z/2.0f+ sinf(count)*2.0f);
+			if (drawMode == 0) particle3D->setScale(scale.x/2.0f + sinf(count)*2.0f,scale.y/2.0f*2.0f+ sinf(count)*2.0f,scale.z/2.0f+ sinf(count)*2.0f);
+			else particle3D->setScale(scale.x,scale.y,scale.z);
 			ofSetColor(color.r, color.g, color.b);
 			particle3D->draw();
 			
@@ -683,13 +704,15 @@ public:
 		bool good = true;
 		
 		for (int i=0; i<neighbors.size(); i++){
-			if (!neighbors[i]->bSent){
+			if (!neighbors[i]->bSent || !neighbors[i]->bOffScreen){
 				good = false;
+				break;
 			};
 		};
 		
 		if (good){
 			if (index == 0){
+				cout<<"good for murders"<<endl;
 				for (int i=0; i<neighbors.size(); i++){
 					neighbors[i]->bAlive = false;
 				}
@@ -765,7 +788,7 @@ private:
 	//timing vars
 	int duration, subDuration;
 	
-	bool bAlive,bSend;
+	bool bAlive,bSend,bOffScreen;
 	float minScale, maxScale, bMaxScale;
 	float minSpeed, maxSpeed;
 	

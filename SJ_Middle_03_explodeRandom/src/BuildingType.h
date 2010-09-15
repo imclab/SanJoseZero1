@@ -19,11 +19,16 @@
 class BuildingType
 {
 public:	
+	float alpha;
+	float width, height;
 	
 	BuildingType(){		
 		lastEmitted = ofGetElapsedTimeMillis();
 		setEmitterTime(0);
 		bPressed = false;
+		alpha = 0.0f;
+		width = 10;
+		height = 20;
 	}
 	
 /***************************************************************
@@ -43,6 +48,7 @@ public:
 	bool canEmit(){		
 		if (ofGetElapsedTimeMillis() - lastEmitted > EMITTER_TIME){
 			lastEmitted = ofGetElapsedTimeMillis();
+			alpha = 255.0f;
 			return true;
 		}
 		return false;
@@ -196,6 +202,12 @@ public:
 				models[0]->draw();
 			} ofPopMatrix();
 		};
+	};
+	
+	void draw(){
+		ofSetColor(255,255,255,alpha);
+		ofRect(emitPosition.x - width/2.0f, emitPosition.y, width, height);
+		alpha *= .95f;
 	};
 	
 private:	

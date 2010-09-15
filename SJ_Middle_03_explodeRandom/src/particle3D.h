@@ -55,13 +55,13 @@ public:
 		startScale.y = 0;
 		scale = startScale;
 		type = (int) floor(ofRandom(0,4));
-		alphaDamping = ofRandom(.980, .985);
+		alphaDamping = 1.0f;//ofRandom(.980, .985);
 		
 		age = 0;
 		lastAdded = 10;
 		bAdd = false;
 		
-		life = ofRandom(30, 140);
+		life = ofRandom(30, 100);
 		scaleSpeed = ofRandom( 5, 30);
 		lineWidth = ofRandom(5,20.0f);
 	}
@@ -216,6 +216,7 @@ public:
 		};
 		/*color[3] = */color[7] = color[11] = fillColor.alpha/255.0f;
 		age++;
+		if (age > life) fillColor.alpha = 0;
 	};
 	
 	void draw(){

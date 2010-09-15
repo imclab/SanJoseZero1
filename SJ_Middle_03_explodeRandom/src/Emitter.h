@@ -68,6 +68,7 @@ public:
 				negativeStackHeight += currentParticles[i]->getHeight();
 				endPoint = currentParticles[i]->getEndPoint();
 				endPoint.y = -negativeStackHeight;
+				currentParticles[i]->setEndPoint(endPoint.x, endPoint.y, endPoint.z);
 				//endPoint.z += ofRandom(-200,400);
 			}
 			currentParticles[i]->setIndex(i);
@@ -100,7 +101,7 @@ public:
 				
 				particles[i]->setColumn(closest);
 				particles[i]->setEndPointX(closest->x);
-				particles[i]->setTargetPointX(closest->y);
+				particles[i]->setTargetPointX(closest->x);
 				
 				//closest->y += particles[i]->getBaseHeight()*particles[i]->numNeighbors();
 				
@@ -111,7 +112,7 @@ public:
 		for (int i=particles.size()-1; i>=0; i--){			
 			if (particles[i]->send() && !particles[i]->bSent){
 				particleArgs.loc.x = particles[i]->getLoc().x;
-				particleArgs.loc.y = particles[i]->getLoc().y;
+				particleArgs.loc.y = particles[i]->getHeight()-particles[i]->getLoc().y;
 				particleArgs.address = particles[i]->getMessageString();
 				particleArgs.data = particles[i]->getData();
 				particleArgs.vel = particles[i]->getVelocity();
@@ -134,6 +135,14 @@ public:
 			}
 		}
 	};
+	
+	void setEmitterDimensions( float w, float h){
+		for (int i=0; i<types.size(); i++){
+			types[i]->width = w;
+			types[i]->height = h;
+		}
+	}
+		
 
 	void draw(){
 		ofEnableAlphaBlending();
@@ -141,6 +150,9 @@ public:
 						
 			for (int i=0; i<particles.size(); i++){
 				particles[i]->draw();
+			}
+			for (int i=0; i<types.size(); i++){
+				types[i]->draw();
 			}
 		} ofPopMatrix();
 		ofDisableAlphaBlending();
@@ -378,6 +390,8 @@ public:
 	
 	void drawTypes(){
 		for (int i=0; i<types.size(); i++){
+			ofSetColor(150,150,150);
+			ofRect(types[i]->getPosition().x-types[i]->width/2.0f, types[i]->getPosition().y, types[i]->width, types[i]->height);
 			ofSetColor(150,0,0);
 			ofRect(types[i]->getPosition().x, types[i]->getPosition().y, 20, 20);
 			ofSetColor(0xffffff);

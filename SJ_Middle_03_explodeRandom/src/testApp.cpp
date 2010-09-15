@@ -6,10 +6,13 @@
 //--------------------------------------------------------------
 void testApp::setup(){	
 	ofBackground( 0, 0, 0 );
-	ofSetVerticalSync(false);
+	ofSetVerticalSync(true);
 	ofSetFrameRate(60);	
 	
 	bUseProjectionTools = true;
+	bgColor.r = 0;
+	bgColor.g = 0;
+	bgColor.b = 0;
 	
 	//load settings from xml
 	ofxXmlSettings settings;
@@ -138,6 +141,7 @@ void testApp::setup(){
 	float L3PosZ = 500;
 	light3.pointLight(255, 255, 255, L3PosX, L3PosY, L3PosZ);
 	
+	ofBackground(bgColor.r, bgColor.g, bgColor.b);
 	ofHideCursor();
 }
 
@@ -183,12 +187,23 @@ void testApp::update(){
 	
 	//get values from gui
 	ofxLabGui * gui = projection.getGui();
+	gui->update();
+	
 	particleManager.setMinScale(gui->getValueF("SCALE_MIN"));
 	particleManager.setMaxScale(gui->getValueF("SCALE_MAX"));
 	particleManager.setScaleOut(gui->getValueF("SCALE_OUT"));
 	particleManager.setMinSpeed(gui->getValueF("SPEED_MIN"));
 	particleManager.setMaxSpeed(gui->getValueF("SPEED_MAX"));
 	particleManager.setGroupingTolerance(gui->getValueI("GROUP_TIME"));
+	
+	bgColor.r = gui->getValueF("BG_COLOR_R");
+	bgColor.g = gui->getValueF("BG_COLOR_G");
+	bgColor.b = gui->getValueF("BG_COLOR_B");
+	
+	particleManager.setEmitterDimensions( gui->getValueI("E_WIDTH"), gui->getValueI("E_HEIGHT") );
+	
+	trails.setDrawMode(gui->getValueI("T_DRAW_MODE"));
+	trails.setFade(gui->getValueF("T_FADE"));
 	
 	bool bNewCalibration = false;
 	int numColumns = columns.getNumColumns();
@@ -229,6 +244,7 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+	ofBackground( bgColor.r, bgColor.g, bgColor.b );
 	ofSetColor(0xffffff);
 	
 	ofxLightsOff();
@@ -261,6 +277,7 @@ void testApp::draw(){
 		
 		//calibrate particle scale
 		particleManager.drawDebugParticles();
+		particleManager.drawTypes();
 	}
 	projection.draw(bUseProjectionTools);
 	
@@ -369,6 +386,7 @@ void testApp::elementLeftScreen( ParticleEventArgs & args ){
 	m.addFloatArg( (float) args.loc.x );
 	m.addFloatArg( (float) args.vel.y );
 	m.addStringArg( args.data );
+	m.addFloatArg( (float) args.loc.y );
 	sender.sendMessage(m);	
 };
 
@@ -408,6 +426,7 @@ void testApp::saveSettings(){
 //--------------------------------------------------------------
 void testApp::setupGui(){
 	ofxLabGui * gui = projection.getGui();
+	gui->setDimensions(800, 800);
 	guiTypePanel * panel = projection.addDefaultPanel("particles");
 	projection.addDefaultGroup("settings", true);
 	gui->addSlider("minimumScale", "SCALE_MIN", 4.0f, 0.01, 5.0f, false);
@@ -416,9 +435,25 @@ void testApp::setupGui(){
 	gui->addSlider("maximum speed", "SPEED_MAX", 10.0f, 1.0f, 100.0f, false);
 	gui->addSlider("minumum speed", "SPEED_MIN", 5.0f, .1f, 20.0f, false);
 	gui->addSlider("grouping time", "GROUP_TIME", 300, 0, 10000, false);
+	
+	projection.addDefaultGroup("trails", true);
+	gui->addSlider("draw mode", "T_DRAW_MODE", 1, 0, 2, true);
+	gui->addSlider("fade amount", "T_FADE", 5., 0., 255., false);
+	
+	projection.addDefaultPanel("background");
+	projection.addDefaultGroup("background", true);
+	gui->addSlider("background color red", "BG_COLOR_R", bgColor.r, 0.0, 255.0f, true);
+	gui->addSlider("background color green", "BG_COLOR_G", bgColor.g, 0.0, 255.0f, true);
+	gui->addSlider("background color blue", "BG_COLOR_B", bgColor.b, 0.0, 255.0f, true);
+	
+	projection.addDefaultGroup("emitters", true);
+	gui->addSlider("width", "E_WIDTH", 100, 1, 500.0f, true);
+	gui->addSlider("height", "E_HEIGHT", 400, 1, 600, true);	
+	
 	projection.loadGuiSettings();
 	
 	gui->setPanelIndex("particles", 0);
+	gui->setPanelIndex("background", 1);
 	gui->update();
 	gui->setupOscReceiving(3000);
 };

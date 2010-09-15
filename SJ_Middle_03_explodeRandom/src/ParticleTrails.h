@@ -19,7 +19,16 @@ public:
 	ParticleTrails(){
 		bSetup = false;
 		trailsFBO.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+		drawMode = 1;
 		ofAddListener(ofEvents.windowResized, this, &ParticleTrails::windowResized);
+	}
+	
+	void setDrawMode( int which ){
+		drawMode = which;
+	}
+	
+	void setFade( float _particleFade ){
+		particleFade = _particleFade;
 	}
 	
 	void setup( Emitter * _e ){
@@ -28,7 +37,7 @@ public:
 	
 	void update(){
 		trailsFBO.begin();
-		ofSetColor(0,0,0,8);
+		ofSetColor(0,0,0,particleFade);
 		glDisable(GL_DEPTH_TEST);
 		ofRect(0,0,trailsFBO.getWidth(), trailsFBO.getHeight());
 		trailsFBO.end();
@@ -36,10 +45,13 @@ public:
 		
 		glEnable(GL_DEPTH_TEST);
 		for (int i=0; i<emitter->particles.size(); i++){
-			if (emitter->particles[i]->bTransformed){// && emitter->particles[i]->drawType == 1){
+			if ( (drawMode == 0 && emitter->particles[i]->bTransformed) ||
+				 (drawMode == 1 && !emitter->particles[i]->bTransformed) ||
+				(drawMode == 2))				
+			{// && emitter->particles[i]->drawType == 1){
 				trailsFBO.begin();
 				ofPushMatrix();
-				emitter->particles[i]->drawTrail();
+				emitter->particles[i]->drawTrail(drawMode);
 				ofPopMatrix();
 				trailsFBO.end();
 			}
@@ -48,7 +60,7 @@ public:
 	}
 	
 	void draw(){		
-		ofSetColor(255,255,255,200);
+		ofSetColor(255,255,255,255);
 		trailsFBO.draw(0, 0);
 		ofSetColor(255,255,255,255);
 	}
@@ -58,7 +70,9 @@ public:
 	}
 	
 protected:
-	bool bSetup;
+	int		drawMode;
+	float	particleFade;
+	bool	bSetup;
 	Emitter * emitter;
 	ofxFBOTexture trailsFBO;
 	

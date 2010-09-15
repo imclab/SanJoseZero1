@@ -29,8 +29,8 @@ public:
 	
 	LineExplosion(){
 		age = 0;
-		life = ofRandom(5, 100);
-		complexity = ofRandom(5,30);
+		life = ofRandom(5, 50);
+		complexity = ofRandom(5,10);
 		vertices = colors = 0;
 		vertices = (float *) realloc(vertices, 2 * 4 * complexity * SIZEOF_FLOAT);
 		colors = (float *) realloc(colors, 4 * 4 * complexity * SIZEOF_FLOAT);

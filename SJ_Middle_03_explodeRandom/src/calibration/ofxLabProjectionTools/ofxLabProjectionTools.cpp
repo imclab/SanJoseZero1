@@ -83,11 +83,10 @@ ofxLabProjectedView * ofxLabProjectionTools::addView( int x, int y, int width, i
 	ofxLabProjectedView * view = new ofxLabProjectedView(views.size(), x,y,width,height);
 	views.push_back(view);
 	
-	stringstream name;
-	name<<"edges "<<views.size();
+	string name;
+	name = "edges "+ofToString((int)views.size());
 	
-	stringstream index;
-	index<<views.size()-1;
+	string index = ofToString((int)views.size()-1);
 	
 #ifdef USE_LAB_GUI
 	
@@ -96,44 +95,44 @@ ofxLabProjectedView * ofxLabProjectionTools::addView( int x, int y, int width, i
 	guiTypePanel * panel = addDefaultPanel("refine edges");
 	
 	// video settings
-	gui.setWhichPanel(name.str());
+	gui.setWhichPanel(name);
 	addDefaultGroup("soften edges");	
-	gui.addSlider("top", "TOP_MASK_HEIGHT_"+index.str(), view->edges[0].height,0,view->height,false);
-	gui.addSlider("bottom", "BOTTOM_MASK_HEIGHT_"+index.str(), view->edges[2].height,0,view->height,false);
-	gui.addSlider("left", "LEFT_MASK_HEIGHT_"+index.str(), view->edges[3].height,0,view->width,false);
-	gui.addSlider("right", "RIGHT_MASK_HEIGHT_"+index.str(), view->edges[1].height,0,view->width,false);	
+	gui.addSlider("top", "TOP_MASK_HEIGHT_"+index, view->edges[0].height,0,view->height,false);
+	gui.addSlider("bottom", "BOTTOM_MASK_HEIGHT_"+index, view->edges[2].height,0,view->height,false);
+	gui.addSlider("left", "LEFT_MASK_HEIGHT_"+index, view->edges[3].height,0,view->width,false);
+	gui.addSlider("right", "RIGHT_MASK_HEIGHT_"+index, view->edges[1].height,0,view->width,false);	
 #else
 	
-	guiTypePanel * panel = addDefaultPanel(name.str()+" TB");
+	guiTypePanel * panel = addDefaultPanel(name+" TB");
 	
 	// video settings
-	gui.setWhichPanel(name.str());
+	gui.setWhichPanel(name);
 	addDefaultGroup("top mask");
-	gui.addSlider("top mask: x", "TOP_MASK_X_"+index.str(), view->edges[0].x,-view->width,view->width,false);
-	gui.addSlider("top mask: y", "TOP_MASK_Y_"+index.str(), view->edges[0].y,-view->height,view->height,false);
-	gui.addSlider("top mask: width", "TOP_MASK_WIDTH_"+index.str(), view->edges[0].width,0,view->width,false);
-	gui.addSlider("top mask: height", "TOP_MASK_HEIGHT_"+index.str(), view->edges[0].height,0,view->height,false);
-	gui.addSlider("top mask: rotation", "TOP_MASK_ROTATE_"+index.str(), view->edges[0].rotation,-180,180,false);
+	gui.addSlider("top mask: x", "TOP_MASK_X_"+index, view->edges[0].x,-view->width,view->width,false);
+	gui.addSlider("top mask: y", "TOP_MASK_Y_"+index, view->edges[0].y,-view->height,view->height,false);
+	gui.addSlider("top mask: width", "TOP_MASK_WIDTH_"+index, view->edges[0].width,0,view->width,false);
+	gui.addSlider("top mask: height", "TOP_MASK_HEIGHT_"+index, view->edges[0].height,0,view->height,false);
+	gui.addSlider("top mask: rotation", "TOP_MASK_ROTATE_"+index, view->edges[0].rotation,-180,180,false);
 	addDefaultGroup("bottom mask");
-	gui.addSlider("bottom mask: x", "BOTTOM_MASK_X_"+index.str(), view->edges[2].x,-view->width,view->width,false);
-	gui.addSlider("bottom mask: y", "BOTTOM_MASK_Y_"+index.str(), view->edges[2].y,-view->height,view->height,false);
-	gui.addSlider("bottom mask: width", "BOTTOM_MASK_WIDTH_"+index.str(), view->edges[2].width,0,view->width,false);
-	gui.addSlider("bottom mask: height", "BOTTOM_MASK_HEIGHT_"+index.str(), view->edges[2].height,0,view->height,false);
-	gui.addSlider("bottom mask: rotation", "BOTTOM_MASK_ROTATE_"+index.str(), view->edges[2].rotation,-180,180,false);
+	gui.addSlider("bottom mask: x", "BOTTOM_MASK_X_"+index, view->edges[2].x,-view->width,view->width,false);
+	gui.addSlider("bottom mask: y", "BOTTOM_MASK_Y_"+index, view->edges[2].y,-view->height,view->height,false);
+	gui.addSlider("bottom mask: width", "BOTTOM_MASK_WIDTH_"+index, view->edges[2].width,0,view->width,false);
+	gui.addSlider("bottom mask: height", "BOTTOM_MASK_HEIGHT_"+index, view->edges[2].height,0,view->height,false);
+	gui.addSlider("bottom mask: rotation", "BOTTOM_MASK_ROTATE_"+index, view->edges[2].rotation,-180,180,false);
 	
-	guiTypePanel * panel2 = addDefaultPanel(name.str()+" LR");
+	guiTypePanel * panel2 = addDefaultPanel(name+" LR");
 	addDefaultGroup("left mask");
-	gui.addSlider("left mask: x", "LEFT_MASK_X_"+index.str(), view->edges[3].x,-view->width,view->width,false);
-	gui.addSlider("left mask: y", "LEFT_MASK_Y_"+index.str(), view->edges[3].y,-view->height,view->height,false);
-	gui.addSlider("left mask: width", "LEFT_MASK_WIDTH_"+index.str(), view->edges[3].width,0,view->height,false);
-	gui.addSlider("left mask: height", "LEFT_MASK_HEIGHT_"+index.str(), view->edges[3].height,0,view->width,false);
-	gui.addSlider("left mask: rotation", "LEFT_MASK_ROTATE_"+index.str(), view->edges[3].rotation,-180,180,false);
+	gui.addSlider("left mask: x", "LEFT_MASK_X_"+index, view->edges[3].x,-view->width,view->width,false);
+	gui.addSlider("left mask: y", "LEFT_MASK_Y_"+index, view->edges[3].y,-view->height,view->height,false);
+	gui.addSlider("left mask: width", "LEFT_MASK_WIDTH_"+index, view->edges[3].width,0,view->height,false);
+	gui.addSlider("left mask: height", "LEFT_MASK_HEIGHT_"+index, view->edges[3].height,0,view->width,false);
+	gui.addSlider("left mask: rotation", "LEFT_MASK_ROTATE_"+index, view->edges[3].rotation,-180,180,false);
 	addDefaultGroup("right mask");
-	gui.addSlider("right mask: x", "RIGHT_MASK_X_"+index.str(), view->edges[1].x,-view->width,view->width,false);
-	gui.addSlider("right mask: y", "RIGHT_MASK_Y_"+index.str(), view->edges[1].y,-view->height,view->height,false);
-	gui.addSlider("right mask: width", "RIGHT_MASK_WIDTH_"+index.str(), view->edges[1].width,0,view->height,false);
-	gui.addSlider("right mask: height", "RIGHT_MASK_HEIGHT_"+index.str(), view->edges[1].height,0,view->width,false);
-	gui.addSlider("right mask: rotation", "RIGHT_MASK_ROTATE_"+index.str(), view->edges[1].rotation,-180,180,false);
+	gui.addSlider("right mask: x", "RIGHT_MASK_X_"+index, view->edges[1].x,-view->width,view->width,false);
+	gui.addSlider("right mask: y", "RIGHT_MASK_Y_"+index, view->edges[1].y,-view->height,view->height,false);
+	gui.addSlider("right mask: width", "RIGHT_MASK_WIDTH_"+index, view->edges[1].width,0,view->height,false);
+	gui.addSlider("right mask: height", "RIGHT_MASK_HEIGHT_"+index, view->edges[1].height,0,view->width,false);
+	gui.addSlider("right mask: rotation", "RIGHT_MASK_ROTATE_"+index, view->edges[1].rotation,-180,180,false);
 #endif
 			
 	gui.loadSettings("settings/guisettings.xml");
@@ -178,57 +177,56 @@ void ofxLabProjectionTools::update(){
 	amplifyAmount = gui.getValueF("GUI_AMP");
 #endif
 	for (int i=0; i<views.size(); i++){
-		stringstream index;
-		index<<i;
+		string index = ofToString(i);
 		
 #ifndef USE_ADV_MODE		
 		views[i]->edges[0].x = views[i]->width;
 		views[i]->edges[0].y = views[i]->height;
 		views[i]->edges[0].width = views[i]->width;
-		views[i]->edges[0].height = gui.getValueF("TOP_MASK_HEIGHT_"+index.str());
+		views[i]->edges[0].height = gui.getValueF("TOP_MASK_HEIGHT_"+index);
 		views[i]->edges[0].rotation = 180;
 		
 		views[i]->edges[1].x = views[i]->width;
 		views[i]->edges[1].y = 0;
 		views[i]->edges[1].width = views[i]->width;
-		views[i]->edges[1].height = gui.getValueF("RIGHT_MASK_HEIGHT_"+index.str());
+		views[i]->edges[1].height = gui.getValueF("RIGHT_MASK_HEIGHT_"+index);
 		views[i]->edges[1].rotation = 90;
 		
 		views[i]->edges[2].x = 0;
 		views[i]->edges[2].y = 0;
 		views[i]->edges[2].width = views[i]->width;
-		views[i]->edges[2].height = gui.getValueF("BOTTOM_MASK_HEIGHT_"+index.str());
+		views[i]->edges[2].height = gui.getValueF("BOTTOM_MASK_HEIGHT_"+index);
 		views[i]->edges[2].rotation = 0;
 		
 		views[i]->edges[3].x = 0;
 		views[i]->edges[3].y = views[i]->width;;
 		views[i]->edges[3].width = views[i]->width;
-		views[i]->edges[3].height = gui.getValueF("LEFT_MASK_HEIGHT_"+index.str());
+		views[i]->edges[3].height = gui.getValueF("LEFT_MASK_HEIGHT_"+index);
 		views[i]->edges[3].rotation = -90;
 #else
-		views[i]->edges[0].x = gui.getValueF("TOP_MASK_X_"+index.str());
-		views[i]->edges[0].y = gui.getValueF("TOP_MASK_Y_"+index.str());
-		views[i]->edges[0].width = gui.getValueF("TOP_MASK_WIDTH_"+index.str());
-		views[i]->edges[0].height = gui.getValueF("TOP_MASK_HEIGHT_"+index.str());
-		views[i]->edges[0].rotation = gui.getValueF("TOP_MASK_ROTATE_"+index.str());
+		views[i]->edges[0].x = gui.getValueF("TOP_MASK_X_"+index);
+		views[i]->edges[0].y = gui.getValueF("TOP_MASK_Y_"+index);
+		views[i]->edges[0].width = gui.getValueF("TOP_MASK_WIDTH_"+index);
+		views[i]->edges[0].height = gui.getValueF("TOP_MASK_HEIGHT_"+index);
+		views[i]->edges[0].rotation = gui.getValueF("TOP_MASK_ROTATE_"+index);
 		
-		views[i]->edges[1].x = gui.getValueF("RIGHT_MASK_X_"+index.str());
-		views[i]->edges[1].y = gui.getValueF("RIGHT_MASK_Y_"+index.str());
-		views[i]->edges[1].width = gui.getValueF("RIGHT_MASK_WIDTH_"+index.str());
-		views[i]->edges[1].height = gui.getValueF("RIGHT_MASK_HEIGHT_"+index.str());
-		views[i]->edges[1].rotation = gui.getValueF("RIGHT_MASK_ROTATE_"+index.str());
+		views[i]->edges[1].x = gui.getValueF("RIGHT_MASK_X_"+index);
+		views[i]->edges[1].y = gui.getValueF("RIGHT_MASK_Y_"+index);
+		views[i]->edges[1].width = gui.getValueF("RIGHT_MASK_WIDTH_"+index);
+		views[i]->edges[1].height = gui.getValueF("RIGHT_MASK_HEIGHT_"+index);
+		views[i]->edges[1].rotation = gui.getValueF("RIGHT_MASK_ROTATE_"+index);
 		
-		views[i]->edges[2].x = gui.getValueF("BOTTOM_MASK_X_"+index.str());
-		views[i]->edges[2].y = gui.getValueF("BOTTOM_MASK_Y_"+index.str());
-		views[i]->edges[2].width = gui.getValueF("BOTTOM_MASK_WIDTH_"+index.str());
-		views[i]->edges[2].height = gui.getValueF("BOTTOM_MASK_HEIGHT_"+index.str());
-		views[i]->edges[2].rotation = gui.getValueF("BOTTOM_MASK_ROTATE_"+index.str());
+		views[i]->edges[2].x = gui.getValueF("BOTTOM_MASK_X_"+index);
+		views[i]->edges[2].y = gui.getValueF("BOTTOM_MASK_Y_"+index);
+		views[i]->edges[2].width = gui.getValueF("BOTTOM_MASK_WIDTH_"+index);
+		views[i]->edges[2].height = gui.getValueF("BOTTOM_MASK_HEIGHT_"+index);
+		views[i]->edges[2].rotation = gui.getValueF("BOTTOM_MASK_ROTATE_"+index);
 		
-		views[i]->edges[3].x = gui.getValueF("LEFT_MASK_X_"+index.str());
-		views[i]->edges[3].y = views[i]->width;//gui.getValueF("LEFT_MASK_Y_"+index.str());
-		views[i]->edges[3].width = views[i]->width;//gui.getValueF("LEFT_MASK_WIDTH_"+index.str());
-		views[i]->edges[3].height = gui.getValueF("LEFT_MASK_HEIGHT_"+index.str());
-		views[i]->edges[3].rotation = -90;gui.getValueF("LEFT_MASK_ROTATE_"+index.str());
+		views[i]->edges[3].x = gui.getValueF("LEFT_MASK_X_"+index);
+		views[i]->edges[3].y = views[i]->width;//gui.getValueF("LEFT_MASK_Y_"+index);
+		views[i]->edges[3].width = views[i]->width;//gui.getValueF("LEFT_MASK_WIDTH_"+index);
+		views[i]->edges[3].height = gui.getValueF("LEFT_MASK_HEIGHT_"+index);
+		views[i]->edges[3].rotation = -90;gui.getValueF("LEFT_MASK_ROTATE_"+index);
 #endif
 		
 	};

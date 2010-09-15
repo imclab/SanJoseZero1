@@ -20,7 +20,7 @@
 -->
         <position>
             <x>133.000000</x>
-            <y>1632.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -63,7 +63,7 @@
         </message>
         <position>
             <x>239.000000</x>
-            <y>1630.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -106,7 +106,7 @@
         </message>
         <position>
             <x>343.000000</x>
-            <y>1632.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -302,7 +302,7 @@
         </message>
         <position>
             <x>456.000000</x>
-            <y>1630.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -336,7 +336,7 @@
         </message>
         <position>
             <x>535.000000</x>
-            <y>1608.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -352,7 +352,7 @@
         </message>
         <position>
             <x>639.000000</x>
-            <y>1624.000000</y>
+            <y>1000.000000</y>
         </position>
         <message>
             <image>models/picnic/picnic01.3ds</image>
@@ -365,7 +365,7 @@
         </message>
         <position>
             <x>672.000000</x>
-            <y>1338.000000</y>
+            <y>1000.000000</y>
         </position>
         <message>
             <image>models/picnic/picnic02.3ds</image>
@@ -378,7 +378,7 @@
         </message>
         <position>
             <x>672.000000</x>
-            <y>1338.000000</y>
+            <y>1000.000000</y>
         </position>
         <message>
             <image>models/picnic/picnic03.3ds</image>
@@ -391,7 +391,7 @@
         </message>
         <position>
             <x>672.000000</x>
-            <y>1338.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -407,7 +407,7 @@
         </message>
         <position>
             <x>769.000000</x>
-            <y>1616.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -441,7 +441,7 @@
         </message>
         <position>
             <x>852.000000</x>
-            <y>1622.000000</y>
+            <y>1000.000000</y>
         </position>
     </input>
     <input>
@@ -483,8 +483,8 @@
             </color>
         </message>
         <position>
-            <x>954.000000</x>
-            <y>1633.000000</y>
+            <x>976.000000</x>
+            <y>472.000000</y>
         </position>
     </input>
     <input>
@@ -499,8 +499,8 @@
             </color>
         </message>
         <position>
-            <x>51.000000</x>
-            <y>1676.000000</y>
+            <x>26.000000</x>
+            <y>999.000000</y>
         </position>
     </input>
     <osc>
@@ -516,13 +516,13 @@
         </sender>
     </osc>
     <transform>
-        <start>1364.000000</start>
-        <end>374.000000</end>
+        <start>898.000000</start>
+        <end>300.000000</end>
     </transform>
     <columns>
         <numColums>18</numColums>
-        <spacing>59.625179</spacing>
-        <border>59.625179</border>
+        <spacing>59.899918</spacing>
+        <border>59.899918</border>
     </columns>
     <bUseProjectionTools>0</bUseProjectionTools>
 </settings>

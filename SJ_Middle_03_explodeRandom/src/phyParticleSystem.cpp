@@ -90,10 +90,11 @@ void phyParticleSystem::explode( Particle * particle ){
 		
 		angle += angleAdd;
 		
-		particle->targetScale *= ofRandom(1.01, 1.05f);
-		particle->rotation += ofRandom(-60,60);
-		particle->vel *= -2;
-		
+		if (!particle->bLeaving){
+			particle->targetScale *= ofRandom(1.001, 1.002f);
+			particle->rotation += ofRandom(-60,60);
+			//particle->vel *= -2;
+		}
 		p->setInitialCondition(particle->getLoc().x, particle->getLoc().y, particle->getLoc().z, aVel.x, aVel.y, ofRandom(-5.0f, 5.0f));
 		p->setColor(particle->color);
 		
