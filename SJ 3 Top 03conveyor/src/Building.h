@@ -48,7 +48,6 @@ public:
 	
 	float getHeight(){
 		img->setScale(1.0,1.0,1.0);
-		cout<<"height is "<<img->getYdim()*scale.y<<endl;
 		return img->getYdim()*scale.y;
 		//return img->width;
 	}
@@ -114,6 +113,7 @@ public:
 	}
 	
 	void update(){
+		//if (bAlive) cout<<"my speed is "<<speed<<endl;
 		position.y += speed;
 		//rotate.x += SPEED * .5;
 		//rotate.y += SPEED * .5;

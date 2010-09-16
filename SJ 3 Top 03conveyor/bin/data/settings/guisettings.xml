@@ -447,18 +447,33 @@
         <val_0>2000.000000</val_0>
     </GROUP_TIME>
     <ROTATE_TIME>
-        <val_0>0.100000</val_0>
+        <val_0>2.555741</val_0>
     </ROTATE_TIME>
     <ROTATE_AMOUNT>
-        <val_0>1.000000</val_0>
+        <val_0>5.130116</val_0>
     </ROTATE_AMOUNT>
     <CONVEYOR_SCALE_Y>
-        <val_0>252.768173</val_0>
+        <val_0>82.736359</val_0>
     </CONVEYOR_SCALE_Y>
     <CONVEYOR_Y>
         <val_0>111.363632</val_0>
     </CONVEYOR_Y>
     <ROW_BUFFER>
-        <val_0>0.000000</val_0>
+        <val_0>57.962959</val_0>
     </ROW_BUFFER>
+    <PARTICLE_SCALE>
+        <val_0>3.500000</val_0>
+    </PARTICLE_SCALE>
+    <LIGHT_X>
+        <val_0>49.777779</val_0>
+    </LIGHT_X>
+    <LIGHT_Y>
+        <val_0>525.000000</val_0>
+    </LIGHT_Y>
+    <LIGHT_Z>
+        <val_0>1481.666626</val_0>
+    </LIGHT_Z>
+    <ROW_NUM>
+        <val_0>4.729630</val_0>
+    </ROW_NUM>
 </settings>

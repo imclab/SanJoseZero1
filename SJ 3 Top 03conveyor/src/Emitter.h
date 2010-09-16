@@ -114,7 +114,6 @@ public:
 			if (bWasAlive && !buildings[i]->alive()){	
 				currentRow->addToStack( buildings[i] );
 				buildings.erase(buildings.begin()+i);
-				
 				for (int j=0; j<buildings.size(); j++){
 					buildings[j]->setCeiling( currentRow->getCeiling( buildings[j]->getWhichStack() ) );
 				}
@@ -167,7 +166,7 @@ public:
 	MANAGE ASSETS
 ***********************************************************/
 		
-	bool checkMessageString(string msg, float position, float speed=-5.0f, string data=""){
+	bool checkMessageString(string msg, float position, float speed=-5.0f, string data="", float yOffset= 0.0f){
 		for (int i=0; i<types.size(); i++){
 			int messageIndex = types[i]->checkMessageString(msg);
 			if (messageIndex >= 0){		
@@ -181,7 +180,7 @@ public:
 					part->setImage( types[i]->getModel(messageIndex) );
 					part->setScaleX( scale );
 					part->setScaleY( scale );
-					part->setPos( stack->getPosition().x, types[i]->getPosition().y + part->getHeight(), 0 );		
+					part->setPos( stack->getPosition().x, types[i]->getPosition().y + part->getHeight() - yOffset, 0 );		
 					part->setType( types[i]->getMessage(messageIndex) );
 					part->speed = speed;
 					part->setData( data);

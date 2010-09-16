@@ -518,17 +518,17 @@
     </osc>
     <conveyor>
         <conveyorScaleY>2.000000</conveyorScaleY>
-        <rowCount>18</rowCount>
-        <rowBuffer>0.000000</rowBuffer>
+        <rowCount>20</rowCount>
+        <rowBuffer>57.962959</rowBuffer>
         <uIncrement>0.005000</uIncrement>
         <conveyorY>111.363632</conveyorY>
         <backgroundimage>_ceiling_huge.jpg</backgroundimage>
     </conveyor>
     <light>
         <position>
-            <x>36.000000</x>
-            <y>840.000000</y>
-            <z>2520.000000</z>
+            <x>49.777779</x>
+            <y>525.000000</y>
+            <z>1481.666626</z>
         </position>
     </light>
     <calibration>

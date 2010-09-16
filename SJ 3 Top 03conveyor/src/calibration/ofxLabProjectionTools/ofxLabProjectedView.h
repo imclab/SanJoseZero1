@@ -364,6 +364,10 @@ public:
 	float getCroppedWidth(){
 		return (cropCorners[1].x - cropCorners[0].x);
 	}
+	
+	float getCropBegin(){
+		return (cropCorners[0].x);
+	}
 					   
 					   
 //----------------------------------------------------------------------------

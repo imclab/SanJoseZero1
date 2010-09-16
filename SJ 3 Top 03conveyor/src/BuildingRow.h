@@ -43,7 +43,7 @@ public:
 		//build base columns
 		float curX = ROW_BUFFER + ROW_SPACING;
 					
-		for (int i=0; i<NUMBER_OF_ROWS; i++){
+		for (int i=0; i<NUMBER_OF_ROWS-2; i++){
 			Stack * s = new Stack(i);
 			s->setPosition(curX, pos.z);
 			stacks.push_back(s);

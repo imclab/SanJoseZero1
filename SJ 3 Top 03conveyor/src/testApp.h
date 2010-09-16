@@ -109,6 +109,7 @@ class testApp : public ofBaseApp{
 		float shadowModelViewFloat[16];
 		double shadowProjection[16];
 	
+		float modelView[16];
 	private:
 		//band-aid vars
 		int fullScreenWaitTime, fullScreenStarted;
