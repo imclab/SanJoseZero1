@@ -56,6 +56,7 @@ class testApp : public ofBaseApp, public ofxPersonListener {
 	
 	//stoplight
 		int drawMode;
+		int lastSent;
 		Stoplight stoplight;
 	
 	//status bar stuff

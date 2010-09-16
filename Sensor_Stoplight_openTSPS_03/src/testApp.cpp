@@ -52,7 +52,7 @@ void testApp::setup(){
 	colorDisplayCtr = 0;
 	
 	
-	
+	lastSent = ofGetElapsedTimeMillis();
 	
 	
 	ofSetVerticalSync(true);
@@ -246,7 +246,11 @@ void testApp::update(){
 
 // ZACK: sends an OSC message for the given quad
 void testApp::sendOscMessage(int quadIndex) {
-	stoplight.send(quadIndex);
+	if (ofGetElapsedTimeMillis() - lastSent > 1000){
+		stoplight.send(quadIndex);
+		lastSent = ofGetElapsedTimeMillis();
+		cout<<"send"<<endl;
+	}
 }
 
 
