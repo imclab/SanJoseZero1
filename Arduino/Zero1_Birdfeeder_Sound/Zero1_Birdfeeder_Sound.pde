@@ -1,3 +1,4 @@
+//takes thresholded readings + sends serial based on threshold
 
 /* Based on XBee RX, whcih is copyright (c) 2009 Andrew Rapp. All rights reserved. */
 /* This example is for Series 2 XBee */
@@ -12,12 +13,17 @@
 
   // create the XBee object
   XBee xbee = XBee();
+  
+  uint8_t payload[] = { 0 };
+  
+  // SH + SL Address of receiving XBee
+  XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x406003b6);
+  ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
+  
+  ZBTxStatusResponse txStatus = ZBTxStatusResponse();
   ZBRxResponse rx = ZBRxResponse();
   
-  boolean LED_on = true;
-  boolean verbose = false;
-  
-/*********************************************************************
+ /*********************************************************************
   WAVE SHIELD VARS
 *********************************************************************/
 
@@ -28,26 +34,33 @@
   WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
   
   // time to play each tone in milliseconds
-  #define PLAY_TIME 100
+  #define PLAY_TIME 1000
   int t = 0;
   
   #define error(msg) error_P(PSTR(msg)) //Define macro to put error messages in flash memory
+  
+/*********************************************************************
+  THRESHOLD STORAGE VARS
+*********************************************************************/
 
+  int pin0 = 0;
+  
 /*********************************************************************
   SETUP
 *********************************************************************/
   
   void setup() {  
     xbee.begin(9600);
-    Serial.begin(9600);
+    //Serial.begin(9600);
+ 
     
-    //setup wave
+   //setup wave sheild 
     if (!card.init()) error("card.init");
-
-    // enable optimized read - some cards may timeout
+    
+     // enable optimized read - some cards may timeout
     card.partialBlockRead(true);
-  
-    // Now we will look for a FAT partition!
+ 
+     // Now we will look for a FAT partition!
     uint8_t part;
     for (part = 0; part < 5; part++) {     // we have up to 5 slots to look in
       if (vol.init(card, part)) 
@@ -65,8 +78,14 @@
         indexFiles();
         openByIndex(0); // open first file
         wave.play();
-      }
+     
+     
     }
+    }
+     
+    
+    
+    
   }
 
 /*********************************************************************
@@ -74,38 +93,29 @@
 *********************************************************************/
 
   void loop()
-  { 
-    
-    //did we get anything from the controller?
-    xbee.readPacket();
-    
-    if (xbee.getResponse().isAvailable()) {
-      // got something
+  {
+    pin0 = digitalRead(14);
+    if (pin0 > 0){
+      // break down 10-bit reading into two bytes and place in payload    
+      payload[0] = pin0 & 0xff;
       
-        if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
-          // got a zb rx packet
-          
-          // now fill our zb rx class
-          //xbee.getResponse().getZBRxResponse(rx);
-          
-          if(millis()-t > PLAY_TIME && !wave.isplaying){
+             // Play the sound
+           if(millis()-t > PLAY_TIME){
             t = millis();
             wave.stop();
             openByIndex(0); // open first file
             wave.play();
           }
-    
-          // stop after PLAY_TIME ms
-          //while((millis() - t) < PLAY_TIME);
-          //wave.stop();
-        }
-        
+          
+          
+      xbee.send(zbTx);      
     }
    
-    delay(15);
+    delay(5);
   }
   
-/*********************************************************************
+   
+ /*********************************************************************
   WAVE FUNCTIONS
 *********************************************************************/
   
@@ -195,8 +205,8 @@
     //wave.stop();
     
     // check for play errors
-    //sdErrorCheck();
-    //PgmPrintln("Done");
+    sdErrorCheck();
+    PgmPrintln("Done");
   }
   /*
    * Play file by name and print latency in ms

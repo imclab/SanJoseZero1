@@ -117,7 +117,7 @@
       payload[1] = absoluteValue & 0xff;
       
              // Play the sound
-           if(millis()-t > PLAY_TIME){
+           if(millis()-t > PLAY_TIME && !wave.isplaying){
             t = millis();
             wave.stop();
             openByIndex(0); // open first file
