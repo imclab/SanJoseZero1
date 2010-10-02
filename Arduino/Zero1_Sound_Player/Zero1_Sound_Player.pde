@@ -16,6 +16,7 @@
   
   boolean LED_on = true;
   boolean verbose = false;
+  boolean bVerbose = false;
   
 /*********************************************************************
   WAVE SHIELD VARS
@@ -38,8 +39,7 @@
 *********************************************************************/
   
   void setup() {  
-    xbee.begin(9600);
-    Serial.begin(9600);
+    if (bVerbose) Serial.begin(9600);
     
     //setup wave
     if (!card.init()) error("card.init");
@@ -61,12 +61,13 @@
       if (!root.openRoot(vol)){
         error("openRoot");
       } else {
-        PgmPrintln("Index files");
+        if (bVerbose) PgmPrintln("Index files");
         indexFiles();
         openByIndex(0); // open first file
         wave.play();
       }
     }
+    xbee.begin(115200);
   }
 
 /*********************************************************************
@@ -85,12 +86,20 @@
         if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
           // got a zb rx packet
           
-          // now fill our zb rx class
-          //xbee.getResponse().getZBRxResponse(rx);
+        // now fill our zb rx class
+          xbee.getResponse().getZBRxResponse(rx);
+          
+          if (rx.getOption() == ZB_PACKET_ACKNOWLEDGED) {
+            // the sender got an ACK
+             if (bVerbose) Serial.println("packet acknowledged");
+          } else {
+             if (bVerbose) Serial.println("packet not acknowledged");
+          }
           
           if(millis()-t > PLAY_TIME && !wave.isplaying){
+            if (bVerbose) Serial.println("play");
             t = millis();
-            wave.stop();
+            //wave.stop();
             openByIndex(0); // open first file
             wave.play();
           }
@@ -100,7 +109,18 @@
           //wave.stop();
         }
         
-    }
+     } else if (xbee.getResponse().isError()) {
+       if(bVerbose) Serial.print("oh no!!! error code:");
+       if(bVerbose) Serial.println(xbee.getResponse().getErrorCode());
+       
+       if(millis()-t > PLAY_TIME && !wave.isplaying){
+            if (bVerbose) Serial.println("play");
+            t = millis();
+            //wave.stop();
+            openByIndex(0); // open first file
+            wave.play();
+          }
+     }
    
     delay(15);
   }
@@ -115,10 +135,10 @@
    */
   void error_P(const char *str)
   {
-    PgmPrint("Error: ");
+    if (bVerbose) PgmPrint("Error: ");
     SerialPrint_P(str);
     sdErrorCheck();
-    while(1);
+    //while(1);
   }
   /*
    * print error message and halt if SD I/O error, great for debugging!
@@ -126,11 +146,11 @@
   void sdErrorCheck(void)
   {
     if (!card.errorCode()) return;
-    PgmPrint("\r\nSD I/O error: ");
-    Serial.print(card.errorCode(), HEX);
-    PgmPrint(", ");
-    Serial.println(card.errorData(), HEX);
-    while(1);
+    if (bVerbose) PgmPrint("\r\nSD I/O error: ");
+    if (bVerbose) Serial.print(card.errorCode(), HEX);
+    if (bVerbose) PgmPrint(", ");
+    if (bVerbose) Serial.println(card.errorData(), HEX);
+    //while(1);
   }
   
   // Number of files.
@@ -168,7 +188,7 @@
       // Current position is just after entry so subtract one.
       fileIndex[i] = root.readPosition()/32 - 1;   
     }
-    PgmPrintln("Done");
+    if (bVerbose) PgmPrintln("Done");
   }
   /*
    * Play file by index and print latency in ms
@@ -223,7 +243,7 @@
       wave.play();
       
       // print time
-      Serial.println(millis() - t);
+      if (bVerbose) Serial.println(millis() - t);
       
       // stop after PLAY_TIME ms
       while((millis() - t) < PLAY_TIME);
@@ -232,5 +252,5 @@
       // check for play errors
       sdErrorCheck();
     }
-    PgmPrintln("Done");
+    if (bVerbose) PgmPrintln("Done");
   }
