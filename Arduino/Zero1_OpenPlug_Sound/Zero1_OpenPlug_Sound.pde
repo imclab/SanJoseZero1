@@ -50,7 +50,7 @@
 *********************************************************************/
   
   void setup() {  
-    xbee.begin(9600);
+    xbee.begin(115200);
     //Serial.begin(9600);
  
     
@@ -95,7 +95,7 @@
   void loop()
   {
     pin0 = digitalRead(14);
-    if (pin0 == 0){
+    if (pin0 > 0){
       // break down 10-bit reading into two bytes and place in payload    
       payload[0] = pin0 & 0xff;
       

@@ -1,3 +1,4 @@
+
 /* BASED ON XBEE-ARDUINO RX EXAMPLE, which is Copyright (c) 2009 Andrew Rapp. All rights reserved. */
 /* This is for Series 2 XBee */ 
 
@@ -57,8 +58,9 @@
 *********************************************************************/
   void setup() {  
     // start serial + xbee
-    xbee.begin(9600);
+    xbee.begin(115200);
     nss.begin(115200);
+    nss.flush();
     
     //twitter
     XBeeAddressesHIGH[0] = 0x0013a200;
@@ -231,5 +233,6 @@
             } 
           //};
         }
+        nss.flush();
     delay(10);
   }
