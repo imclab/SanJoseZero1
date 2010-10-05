@@ -1,0 +1,5 @@
+<osc>
+	<host>localhost</host>
+	<port>12345</port>
+</osc>
+<message>/pluginplay/playground</message>

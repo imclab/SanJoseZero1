@@ -191,13 +191,13 @@ import netP5.*;
         if (input.sendSound==true){
           if (input.name.equals("foursquare")){
             if (bSerial) port.write('s');
-            //println("play sound: foursquare (s)");
+            println("play sound: foursquare (s)");
           } else if (input.name.equals("traffic")){
             if (bSerial) port.write('r');
-            //println("play sound: traffic (r)");
+            println("play sound: traffic (r)");
           } else {
             if (bSerial) port.write(input.name.charAt(0));
-            //println("play sound: "+input.name.charAt(0));
+            println("play sound: "+input.name.charAt(0));
           }
         
         //are we sending OSC this frame?
