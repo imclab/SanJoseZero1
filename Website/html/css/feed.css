@@ -1,0 +1,8 @@
+#screen-wrapper { background: #ffffff; border: 2px solid #ec027d; width: 742px; position: relative; height: 412px; overflow: hidden; }
+
+#screen-wrapper .emitters { position: absolute; left: 0px; bottom: 0px; }
+
+#screen-wrapper .emitters .emitter { position: absolute; left: 0px; bottom: 0px; width: 25px; height: 25px; }
+#screen-wrapper .emitters .emitter .parts { display: none; }
+
+#screen-wrapper .emitter img { width: 25px; height: 25px; display: block;}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<settings>
+	<tweet>
+		<user_id>14787753</user_id>
+		<user_name>Chocobot</user_name>
+		<content>@pluginplay testing</content>
+		<tweet_id>22292513154</tweet_id>
+		<timestamp>1282937568</timestamp>
+	</tweet>
+	<tweet>
+		<user_id>116859961</user_id>
+		<user_name>plug-in-play</user_name>
+		<content>@pluginplay hey, testing this out</content>
+		<tweet_id>22292444186</tweet_id>
+		<timestamp>1282937498</timestamp>
+	</tweet>
+</settings>

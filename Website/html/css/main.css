@@ -1,17 +1,99 @@
-.row
-{
-	height:5px;
-	padding:10px;
-	background-color:#333333;
-};
+* { margin: 0; }
+html, body { height: 100%; }
 
-.building
-{
-	float:left;
-}
+#wrapper { background: url("../img/common/bg_tile.png") top left repeat; min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -14px; }
+#footer, .push { height: 14px; clear: both; }
 
-.stack
-{
-	float:left;
-	margin-right:20px;
+.cols { margin-bottom: 20px; }
+.cols:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
 }
+.cols {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .cols {height: 1%;}
+.cols {display: block;}
+/* End hide from IE-mac */
+
+.left { float: left; margin-top: 11px; width: 200px; }
+
+#pip-logo { display: block; width: 122px; 122px; margin: 0 auto; }
+.right { float: left; width: 746px; }
+
+/* NAV */
+#nav-wrapper { width: 152px; margin: 0 auto; }
+#nav { margin-top: 17px; margin-bottom: 16px; }
+#nav .item {  position: relative; height: 25px; width: 152px; margin-bottom: 5px; }
+#nav .item a { position: absolute; display: block; height: 25px; width: 152px; }
+
+#nav .item #home { background: url('../img/common/nav_btns.png') -152px 0px no-repeat; }
+#nav .item #home:hover { background: url('../img/common/nav_btns.png') 0px 0px no-repeat; }
+
+#nav .item #info { background: url('../img/common/nav_btns.png') -152px -25px no-repeat; }
+#nav .item #info:hover { background: url('../img/common/nav_btns.png') 0px -25px no-repeat; }
+
+#nav .item #part { background: url('../img/common/nav_btns.png') -152px -50px no-repeat; }
+#nav .item #part:hover { background: url('../img/common/nav_btns.png') 0px -50px no-repeat; }
+
+#nav .item #doc { background: url('../img/common/nav_btns.png') -152px -75px no-repeat; }
+#nav .item #doc:hover { background: url('../img/common/nav_btns.png') 0px -75px no-repeat; }
+
+#nav .item #feed { background: url('../img/common/nav_btns.png') -152px -100px no-repeat; }
+#nav .item #feed:hover { background: url('../img/common/nav_btns.png') 0px -100px no-repeat; }
+
+#thing { display: block; width: 36px; height: 8px; margin-bottom: 16px; margin-left: 24px; }
+#rl-logo { width: 153px; height: 80px; margin: 0 auto; }
+#z1-logo { width: 153px; height: 17px; margin: 17px auto; }
+
+/* END NAV */
+
+/* HOME and INFO*/
+#home p { background: #ffffff; }
+#home #video iframe { border: 6px solid #006c89; }
+
+#info p { background: #feefea; }
+#info #video iframe { border: 6px solid #fab89e; }
+
+.right #video p { letter-spacing: -1px; text-align: justify; width: 530px; font: normal 13px Courier New; color: #006c89; line-height: 25px; margin: 21px 0px 15px 0px; }
+.right #video { margin-top: 16px; }
+
+/* END HOME and INFO */
+
+/* FEED */
+#feed-nav { text-align: right; }
+/* END FEED */
+
+/* PARTICIPATING */
+#ways { margin-top: 16px; float:left;  }
+#ways .header { margin-bottom: 18px; position: relative; }
+#ways .way { margin-bottom: 18px; position: relative; min-height: 145px; width:525px; }
+#ways .way img { position: relative; }
+#ways .docimg { position: relative; left: -14px; }
+#ways .spaceimg { position: relative; margin-top:6px; }
+/* END PARTICIPATING */
+
+/* DOCUMENTATION */
+#doc .cols {  margin-top: 16px;  }
+
+#posts { float: left; width: 539px; }
+.post { left: -14px; position: relative; padding-left: 134px; padding-bottom: 18px; margin-bottom: 18px; min-height: 145px; }
+.dark { background:#CAEAE5 url("../img/doc/doc_post_dark.png") 0px 0px no-repeat; }
+.light { background:#E1F3F0 url("../img/doc/doc_post_light.png") 0px 0px no-repeat; }
+.post .post-img { position: absolute; left: 40px; top: 34px;  }
+.post h3 { padding-top: 18px; font: bold 12px Courier New; text-transform: uppercase; color: #006c89; }
+.post p { width: 395px; font: normal 12px Courier New; color: #006c89; line-height: 17px; text-align: justify; }
+.post p a { font-size: 10px; font-weight: bold; color: #006c89; }
+
+#arch { float: left; background: #ffffff; width: 196px; min-height: 630px; margin-left: 11px; }
+#arch a { color: #006c89; font: normal 12px Courier New; }
+#arch ul { margin-bottom: 30px; }
+#arch ul li { padding-left: 12px; margin-bottom: 12px; font: normal 12px Courier New; color: #006c89; }
+
+/* DOCUMENTATION */
+
+/* FOOTER */
+#footer {padding-left: 24px; width: 703px; }
+/* FOOTER */
